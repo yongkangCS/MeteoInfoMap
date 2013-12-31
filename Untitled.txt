@@ -1,0 +1,21 @@
+﻿# -*- coding: utf8 -*-
+import time
+import sys
+sys.add_package('MeteoInfoLib')
+from MeteoInfoLib import *
+import os
+
+fn = 'D:/Temp/测试/test.txt'
+print fn
+if os.path.isfile(fn):
+	print fn
+	df = open(fn)
+	for line in df:
+		print line
+	df.close()
+else:
+	print fn + ' is not a file!'
+
+#df = open('D:\\Temp\\测试\\test.txt','w')
+#df.write('测试')
+#df.close()
