@@ -350,6 +350,9 @@
         <Property name="dividerLocation" type="int" value="300"/>
         <Property name="orientation" type="int" value="0"/>
       </Properties>
+      <Events>
+        <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="jSplitPane1ComponentResized"/>
+      </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
       <SubComponents>

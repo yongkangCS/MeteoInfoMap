@@ -82,14 +82,14 @@ public class Program {
                         if (ext.equals("groovy")) {
                             System.out.println("Running Groovy script...");
                             GroovyShell shell = new GroovyShell();
-                            //shell.setVariable("miapp", new FrmMain());
+                            //shell.setVariable("miapp", new FrmMainOld());
                             Script script = shell.parse(new File(fn));
                             script.run();
                             System.exit(0);
                         } else if (ext.equals("py")) {
                             System.out.println("Running Jython script...");
                             PythonInterpreter interp = new PythonInterpreter();
-                            //interp.set("miapp", new FrmMain());
+                            //interp.set("miapp", new FrmMainOld());
                             interp.execfile(fn);
                             System.exit(0);
                         }
@@ -170,7 +170,7 @@ public class Program {
     
     private static void registerFonts() {
         FontUtil.registerWeatherFont();
-        String fn = GlobalUtil.getAppPath(FrmMain.class);
+        String fn = GlobalUtil.getAppPath(FrmMainOld.class);
         //fn = fn.substring(0, fn.lastIndexOf("/"));
         String path = fn + File.separator + "font";
         File pathDir = new File(path);

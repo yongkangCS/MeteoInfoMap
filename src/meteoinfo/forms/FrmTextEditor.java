@@ -9,6 +9,7 @@ import groovy.lang.GroovyShell;
 import groovy.lang.Script;
 import groovy.ui.Console;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,6 +36,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
     private FrmMain _parent = null;
     private Font _font = new Font("Simsun", Font.PLAIN, 15);
     private String _scriptLanguage = "Groovy";
+    private Dimension _splitPanelSize;
 
     /**
      * Get font
@@ -106,6 +108,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
         }        
         this.setScriptLanguage(_scriptLanguage);
         addNewTextEditor("New file");
+        this._splitPanelSize = this.jSplitPane1.getBounds().getSize();
     }
 
     /**
@@ -257,6 +260,11 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
         jSplitPane1.setDividerLocation(300);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                jSplitPane1ComponentResized(evt);
+            }
+        });
 
         jTextArea_Output.setColumns(20);
         jTextArea_Output.setRows(5);
@@ -565,6 +573,14 @@ public class FrmTextEditor extends javax.swing.JFrame {
         //this.jRadioButtonMenuItem_Groovy.setSelected(false);
         //this.jRadioButtonMenuItem_Jython.setSelected(true);
     }//GEN-LAST:event_jRadioButtonMenuItem_JythonActionPerformed
+
+    private void jSplitPane1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jSplitPane1ComponentResized
+        // TODO add your handling code here:
+        Dimension size = this.jSplitPane1.getBounds().getSize();
+        int heightdelta = size.height - this._splitPanelSize.height;
+        this.jSplitPane1.setDividerLocation(this.jSplitPane1.getDividerLocation() + heightdelta);
+        this._splitPanelSize = this.jSplitPane1.getBounds().getSize();
+    }//GEN-LAST:event_jSplitPane1ComponentResized
     
     private void runPythonScript() {
         

@@ -237,7 +237,7 @@ public class FrmProjection extends javax.swing.JDialog {
         ProjectionInfo aProjInfo = _parent.getMapDocument().getActiveMapFrame().getMapView().getProjection().getProjInfo();
         Projection aProj = aProjInfo.getCoordinateReferenceSystem().getProjection();
 
-        //this.jLabel_RefLat.setText("RefLat_Text");
+        this.jLabel_RefLat.setText("Reference Latitude:");
         switch (aPrjName) {
             case LongLat:
                 this.jPanel_Parameters.setEnabled(false);
@@ -335,6 +335,24 @@ public class FrmProjection extends javax.swing.JDialog {
                     this.jTextField_CentralMeridian.setText("105");
                 }
                 break;
+            case Geostationary_Satellite:
+                this.jPanel_Parameters.setEnabled(true);
+                for (Component aControl : this.jPanel_Parameters.getComponents()) {
+                    aControl.setVisible(false);
+                }
+                this.jLabel_CentralMeridian.setVisible(true);
+                this.jTextField_CentralMeridian.setVisible(true);
+                this.jLabel_RefLat.setText("Height of Orbit:");
+                this.jLabel_RefLat.setVisible(true);
+                this.jTextField_RefLat.setVisible(true);
+                if (aProjInfo.getProjectionName() == aPrjName) {
+                    this.jTextField_CentralMeridian.setText(String.valueOf(aProj.getProjectionLongitudeDegrees()));
+                    this.jTextField_RefLat.setText(String.valueOf(aProj.getHeightOfOrbit()));
+                } else {
+                    this.jTextField_CentralMeridian.setText("105");
+                    this.jTextField_RefLat.setText("35785831");
+                }
+                break;
             case Orthographic_Azimuthal:
             case Oblique_Stereographic_Alternative:
             case Transverse_Mercator:
@@ -392,29 +410,7 @@ public class FrmProjection extends javax.swing.JDialog {
                     this.jTextField_FalseNorthing.setText("0");
                 }
                 break;
-//                case ProjectionNames.Geostationary:
-//                    GB_Parameters.Enabled = true;
-//                    foreach (Control aControl in GB_Parameters.Controls)
-//                    {
-//                        aControl.Visible = false;
-//                    }
-//                    Lab_CentralMeridian.Visible = true;
-//                    TB_CentralMeridian.Visible = true;
-//                    Lab_RefLat.Text = Resources.GlobalResource.ResourceManager.GetString("Height_Orbit");
-//                    Lab_RefLat.Visible = true;
-//                    TB_RefLat.Visible = true;
-//                    if (frmMain.CurrentWin.MapDocument.ActiveMapFrame.MapView.Projection.ProjInfo.Transform.ProjectionName == ProjectionNames.Geostationary)
-//                    {
-//                        TB_CentralMeridian.Text = frmMain.CurrentWin.MapDocument.ActiveMapFrame.MapView.Projection.ProjInfo.CentralMeridian.ToString();
-//                        TB_RefLat.Text = frmMain.CurrentWin.MapDocument.ActiveMapFrame.MapView.Projection.ProjInfo.ParamD("h").ToString();
-//                    }
-//                    else
-//                    {
-//                        TB_CentralMeridian.Text = "105";
-//                        TB_RefLat.Text = "35785831";
-//                    }
-//                    break;
-            }
+        }
 
         if (this.jTextField_FalseEasting.getText().isEmpty()) {
             this.jTextField_FalseEasting.setText("0");
@@ -480,11 +476,11 @@ public class FrmProjection extends javax.swing.JDialog {
                         + " +lon_0=" + this.jTextField_CentralMeridian.getText()
                         + " +lat_0=" + this.jTextField_RefLat.getText();
                 break;
-//                case ProjectionNames.Geostationary:
-//                    toProjStr = "+proj=geos" +
-//                        " +lon_0=" + TB_CentralMeridian.Text +
-//                        " +h=" + TB_RefLat.Text;
-//                    break;
+            case Geostationary_Satellite:
+                toProjStr = "+proj=geos"
+                        + " +lon_0=" + this.jTextField_CentralMeridian.getText()
+                        + " +h=" + this.jTextField_RefLat.getText();
+                break;
             case Oblique_Stereographic_Alternative:
                 toProjStr = "+proj=stere"
                         + " +lon_0=" + this.jTextField_CentralMeridian.getText()

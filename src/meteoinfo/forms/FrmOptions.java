@@ -6,6 +6,7 @@ package meteoinfo.forms;
 
 import com.l2fprod.common.swing.JFontChooser;
 import java.awt.Font;
+import javax.swing.JFrame;
 import meteoinfo.classes.Options;
 
 /**
@@ -21,11 +22,11 @@ public class FrmOptions extends javax.swing.JDialog {
     /**
      * Creates new form FrmOptions
      */
-    public FrmOptions(FrmMain parent, boolean modal) {
+    public FrmOptions(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        _parent = parent;
+        _parent = (FrmMain)parent;
         Options options = _parent.getOptions();
         _legendFont = options.getLegendFont();
         _textFont = options.getTextFont();
@@ -298,7 +299,7 @@ public class FrmOptions extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmOptions dialog = new FrmOptions(new FrmMain(), true);
+                FrmOptions dialog = new FrmOptions(new FrmMainOld(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

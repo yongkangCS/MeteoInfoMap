@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import javax.swing.JFrame;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -51,10 +52,10 @@ public class ProjectFile {
      *
      * @param mainForm Main form
      */
-    public ProjectFile(FrmMain mainForm) {
+    public ProjectFile(JFrame mainForm) {
         _fileName = "";
         _pathFileName = "";
-        _mainForm = mainForm;
+        _mainForm = (FrmMain)mainForm;
     }
     // </editor-fold>
     // <editor-fold desc="Get Set Methods">
@@ -155,7 +156,7 @@ public class ProjectFile {
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
-        Document doc = db.parse(aFile);
+        Document doc = db.parse(new File(aFile));
 
         Element root = doc.getDocumentElement();
 

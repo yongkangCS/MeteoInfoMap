@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="gb2312"?>
+<LegendScheme FieldName="WPSCF" LegendType="GraduatedColor" ShapeType="Polygon" BreakNum="6" HasNoData="False" MinValue="0" MaxValue="0.529268292682927" UNDEF="-9999">
+  <Breaks>
+    <Break Caption="&lt; 0.3" StartValue="0" EndValue="0.3" Color="White" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="False" OutlineSize="1" />
+    <Break Caption="0.3 - 0.4" StartValue="0.3" EndValue="0.4" Color="#FFE0C0" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="True" OutlineSize="1" />
+    <Break Caption="0.4 - 0.5" StartValue="0.4" EndValue="0.5" Color="#FFC080" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="True" OutlineSize="1" />
+    <Break Caption="0.5 - 0.6" StartValue="0.5" EndValue="0.6" Color="#FFC0FF" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="True" OutlineSize="1" />
+    <Break Caption="0.6 - 0.7" StartValue="0.6" EndValue="0.7" Color="Fuchsia" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="True" OutlineSize="1" />
+    <Break Caption="&gt; 0.7" StartValue="0.7" EndValue="1.1" Color="Red" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="True" OutlineSize="1" />
+  </Breaks>
+</LegendScheme>

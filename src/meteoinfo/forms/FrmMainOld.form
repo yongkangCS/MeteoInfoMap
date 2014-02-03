@@ -6,7 +6,7 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator14">
     </Component>
-    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+    <Menu class="javax.swing.JMenuBar" name="jMenuBar_Main">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="&#x5fae;&#x8f6f;&#x96c5;&#x9ed1;" size="14" style="0"/>
@@ -16,7 +16,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu_Project">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenu_Project.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenu_Project.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -29,7 +29,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/Folder_1_16x16x8.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_Open.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_Open.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -45,7 +45,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/Disk_1_16x16x8.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_Save.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_Save.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -55,7 +55,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_SaveAs">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_SaveAs.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_SaveAs.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -67,7 +67,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu_View">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenu_View.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenu_View.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -77,7 +77,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/Layers.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_Layers.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_Layers.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -90,7 +90,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSMI_AttriData.Image.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_AttributeData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_AttributeData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -102,7 +102,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_LayoutProperty">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_LayoutProperty.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_LayoutProperty.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -114,7 +114,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_MapProperty">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_MapProperty.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_MapProperty.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -124,7 +124,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_MaskOut">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_MaskOut.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_MaskOut.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -136,7 +136,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_Projection">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_Projection.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_Projection.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -148,14 +148,14 @@
         <Menu class="javax.swing.JMenu" name="jMenu_Insert">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenu_Insert.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenu_Insert.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_InsertMapFrame">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_InsertMapFrame.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_InsertMapFrame.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -167,7 +167,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_InsertTitle">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_InsertTitle.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_InsertTitle.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -177,7 +177,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_InsertText">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_InsertText.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_InsertText.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -192,7 +192,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSMI_InsertLegend.Image.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_InsertLegend.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_InsertLegend.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -202,7 +202,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_InsertScaleBar">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_InsertScaleBar.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_InsertScaleBar.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -212,7 +212,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_InsertNorthArrow">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_InsertNorthArrow.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_InsertNorthArrow.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -224,7 +224,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_InsertWindArrow">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_InsertWindArrow.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_InsertWindArrow.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -236,14 +236,14 @@
         <Menu class="javax.swing.JMenu" name="jMenu_Selection">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenu_Selection.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenu_Selection.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_SelByAttr">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_SelByAttr.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_SelByAttr.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -253,7 +253,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_SelByLocation">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_SelByLocation.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_SelByLocation.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -265,7 +265,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_ClearSelection">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_ClearSelection.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_ClearSelection.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -277,7 +277,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu_Tools">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenu_Tools.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenu_Tools.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -287,7 +287,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/snake.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_Script.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_Script.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -299,7 +299,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_Options">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_Options.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_Options.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -311,7 +311,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_OutputMapData">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_OutputMapData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_OutputMapData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -321,7 +321,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_Clipping">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_Clipping.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_Clipping.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -330,24 +330,41 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu_PlugIn">
+        <Menu class="javax.swing.JMenu" name="jMenu_Plugin">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenu_PlugIn.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenu_Plugin.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_PluginManager">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/meteoinfo/resources/plugin_edit_green.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_PluginManager.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_PluginManagerActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator18">
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu_Help">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenu_Help.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenu_Help.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_About">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_About.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_About.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -359,7 +376,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_Help">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jMenuItem_Help.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jMenuItem_Help.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -375,7 +392,7 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar_Main"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
@@ -399,7 +416,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel3" max="32767" attributes="0"/>
+          <Component id="jPanel_MainToolBar" max="32767" attributes="0"/>
           <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
           <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
       </Group>
@@ -407,7 +424,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+              <Component id="jPanel_MainToolBar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jPanel4" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -417,34 +434,35 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel3">
+    <Container class="javax.swing.JPanel" name="jPanel_MainToolBar">
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jToolBar_Main" min="-2" max="-2" attributes="0"/>
+                  <Component id="jToolBar_Base" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jToolBar_Graphic" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jToolBar_Layout" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="967" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="1" attributes="0">
-              <Component id="jToolBar_Main" min="-2" pref="25" max="-2" attributes="0"/>
+              <Component id="jToolBar_Base" min="-2" pref="25" max="-2" attributes="0"/>
               <Component id="jToolBar_Graphic" min="-2" pref="25" max="-2" attributes="0"/>
               <Component id="jToolBar_Layout" alignment="1" min="-2" pref="25" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JToolBar" name="jToolBar_Main">
+        <Container class="javax.swing.JToolBar" name="jToolBar_Base">
           <Properties>
             <Property name="floatable" type="boolean" value="false"/>
             <Property name="rollover" type="boolean" value="true"/>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
@@ -455,7 +473,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/Add_1_16x16x8.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_AddLayer.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_AddLayer.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -471,7 +489,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/Folder_1_16x16x8.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_OpenData.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_OpenData.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -487,7 +505,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_RemoveDataLayes.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_RemoveDataLayers.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_RemoveDataLayers.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -505,7 +523,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/Arrow_1_16x16x8.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_SelectElement.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_SelectElement.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -521,7 +539,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_ZoomIn.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_ZoomIn.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_ZoomIn.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -537,7 +555,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_ZoomOut.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_ZoomOut.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_ZoomOut.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -553,7 +571,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_Pan.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_Pan.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_Pan.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -569,7 +587,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_FullExent.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_FullExtent.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_FullExtent.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -585,7 +603,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_ZoomToLayer.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_ZoomToLayer.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_ZoomToLayer.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -601,7 +619,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_ZoomToExtent.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_ZoomToExtent.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_ZoomToExtent.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -617,7 +635,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/information.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_Identifer.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_Identifer.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -635,7 +653,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_SelectFeatures.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_SelectFeatures.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_SelectFeatures.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -651,7 +669,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_Measurement.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_Measurement.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_Measurement.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -667,7 +685,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_LabelSet.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_LabelSet.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_LabelSet.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -685,7 +703,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/image_1.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_SavePicture.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_SavePicture.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -713,7 +731,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewLabel.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewLabel.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewLabel.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -729,7 +747,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewPoint.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewPoint.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewPoint.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -745,7 +763,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewPolyline.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewPolyline.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewPolyline.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -761,7 +779,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewFreehand.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewFreehand.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewFreehand.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -777,7 +795,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewCurve.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewCurve.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewCurve.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -793,7 +811,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewPolygon.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewPolygon.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewPolygon.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -809,7 +827,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewCurvePolygon.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewCurvePolygon.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewCurvePolygon.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -825,7 +843,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewRectangle.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewRectangle.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewRectangle.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -841,7 +859,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewCircle.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewCircle.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewCircle.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -857,7 +875,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_NewEllipse.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_NewEllipse.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_NewEllipse.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -873,7 +891,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_EditVertices.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_EditVertices.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_EditVertices.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -901,7 +919,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/page_portrait.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_PageSet.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_PageSet.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -917,7 +935,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_PageZoomIn.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_PageZoomIn.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_PageZoomIn.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -933,7 +951,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/TSB_PageZoomOut.Image.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_PageZoomOut.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_PageZoomOut.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -946,7 +964,7 @@
                   <Image iconType="3" name="/meteoinfo/resources/ZoomFullMap.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_FitToScreen.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jButton_FitToScreen.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -1022,9 +1040,9 @@
                 <Container class="javax.swing.JPanel" name="jPanel_MapTab">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Map">
+                      <JTabbedPaneConstraints tabName="&lt;FrmMainOld.jPanel_MapTab.TabConstraints.tabTitle&gt;">
                         <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jPanel_MapTab.TabConstraints.tabTitle" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jPanel_MapTab.TabConstraints.tabTitle" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </JTabbedPaneConstraints>
                     </Constraint>
@@ -1051,12 +1069,12 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="637" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="1598" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="458" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="478" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
@@ -1066,9 +1084,9 @@
                 <Container class="javax.swing.JPanel" name="jPanel_LayoutTab">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Layout">
+                      <JTabbedPaneConstraints tabName="&lt;FrmMainOld.jPanel_LayoutTab.TabConstraints.tabTitle&gt;">
                         <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jPanel_LayoutTab.TabConstraints.tabTitle" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jPanel_LayoutTab.TabConstraints.tabTitle" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </JTabbedPaneConstraints>
                     </Constraint>
@@ -1092,12 +1110,12 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="637" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="1598" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="458" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="478" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
@@ -1146,14 +1164,14 @@
         <Component class="javax.swing.JLabel" name="jLabel_Status">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jLabel_Status.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jLabel_Status.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_Coordinate">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jLabel_Coordinate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMainOld.jLabel_Coordinate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>

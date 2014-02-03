@@ -7,12 +7,12 @@ package meteoinfo.forms;
 import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.map.MapView;
-import org.meteoinfo.shape.ShapeTypes;
 
 /**
  *
@@ -27,11 +27,11 @@ public class FrmClipping extends javax.swing.JDialog {
     /**
      * Creates new form FrmClipping
      */
-    public FrmClipping(FrmMain parent, boolean modal) {
+    public FrmClipping(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
-        _parent = parent;
+        _parent = (FrmMain)parent;
         this.initialize();
     }
 
@@ -213,7 +213,7 @@ public class FrmClipping extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmClipping dialog = new FrmClipping(new FrmMain(), true);
+                FrmClipping dialog = new FrmClipping(new FrmMainOld(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -45,11 +45,11 @@ public class FrmOutputMapData extends javax.swing.JDialog {
     /**
      * Creates new form FrmOutputMapData
      */
-    public FrmOutputMapData(FrmMain parent, boolean modal) {
+    public FrmOutputMapData(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
-        _parent = parent;
+        _parent = (FrmMain)parent;
         initialize();
     }
 
@@ -659,7 +659,7 @@ public class FrmOutputMapData extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmOutputMapData dialog = new FrmOutputMapData(new FrmMain(), true);
+                FrmOutputMapData dialog = new FrmOutputMapData(new FrmMainOld(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

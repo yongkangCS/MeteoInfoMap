@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<MeteoInfo File="default.mip" Type="projectfile">
+  <MapFrames>
+    <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Dialog.plain" GridFontSize="12" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="22" Width="606">
+      <Extents xMax="145.02364600254947" xMin="65.9646829188805" yMax="54.956214036629746" yMin="14.469409026577274"/>
+      <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" SmoothingMode="false"/>
+      <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash"/>
+      <MaskOut MaskLayer="Xinjiang.wmp" SetMaskLayer="false"/>
+      <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees " RefCutLon="180.0" RefLon="0.0"/>
+      <GroupLayer>
+        <Group Expanded="false" GroupHandle="1" GroupName="CWT"/>
+        <Group Expanded="false" GroupHandle="2" GroupName="PSCF"/>
+        <Group Expanded="true" GroupHandle="3" GroupName="Geo Data">
+          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+            <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
+              <Breaks>
+                <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0"/>
+              </Breaks>
+            </LegendScheme>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+            <Graphics/>
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+              <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+                <Breaks/>
+              </LegendScheme>
+            </ChartSet>
+            <ChartGraphics/>
+          </Layer>
+          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\..\Temp\Map\china.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="china.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="false">
+            <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
+              <Breaks>
+                <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0"/>
+              </Breaks>
+            </LegendScheme>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+            <Graphics/>
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+              <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+                <Breaks/>
+              </LegendScheme>
+            </ChartSet>
+            <ChartGraphics/>
+          </Layer>
+          <Layer AvoidCollision="true" Expanded="true" FileName="..\..\..\..\..\..\Temp\Map\bou2_4p.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+            <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
+              <Breaks>
+                <Break BackColor="0xffffffff" Caption="" Color="0x7ffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff666666" OutlineSize="1.0" StartValue="0"/>
+              </Breaks>
+            </LegendScheme>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+            <Graphics/>
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+              <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+                <Breaks/>
+              </LegendScheme>
+            </ChartSet>
+            <ChartGraphics/>
+          </Layer>
+          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\..\Temp\Map\rivers.shp" Handle="4" IsMaskout="false" LayerDrawType="Map" LayerName="rivers.shp" LayerType="VectorLayer" ShapeType="Polyline" TransparencyPerc="0" Visible="false">
+            <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polyline" UNDEF="-9999.0">
+              <Breaks>
+                <Break Caption="" Color="0xff404040" DrawShape="true" DrawSymbol="false" EndValue="0" Size="1.0" StartValue="0" Style="Solid" SymbolColor="0xff404040" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
+              </Breaks>
+            </LegendScheme>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+            <Graphics/>
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+              <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+                <Breaks/>
+              </LegendScheme>
+            </ChartSet>
+            <ChartGraphics/>
+          </Layer>
+        </Group>
+        <Group Expanded="true" GroupHandle="4" GroupName="Trajectory"/>
+        <Group Expanded="false" GroupHandle="5" GroupName="Cluster"/>
+        <Group Expanded="false" GroupHandle="6" GroupName="Station"/>
+      </GroupLayer>
+      <Graphics/>
+    </MapFrame>
+  </MapFrames>
+  <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="false">
+    <LayoutElements>
+      <LayoutMap DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="22" Width="606"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="20" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="657" LegendLayer="bou2_4p.shp" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="131" Width="15"/>
+    </LayoutElements>
+  </Layout>
+</MeteoInfo>

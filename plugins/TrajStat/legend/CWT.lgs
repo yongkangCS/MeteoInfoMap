@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="gb2312"?>
+<LegendScheme FieldName="WCWT" LegendType="GraduatedColor" ShapeType="Polygon" BreakNum="4" HasNoData="False" MinValue="0" MaxValue="368.0075" UNDEF="-9999">
+  <Breaks>
+    <Break Caption="&lt; 150" StartValue="0" EndValue="150" Color="White" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="False" OutlineSize="1" />
+    <Break Caption="150 - 200" StartValue="150" EndValue="200" Color="#FFE0C0" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="True" OutlineSize="1" />
+    <Break Caption="200 - 300" StartValue="200" EndValue="300" Color="#FF8000" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="True" OutlineSize="1" />
+    <Break Caption="&gt; 300" StartValue="300" EndValue="10000" Color="Red" DrawShape="True" OutlineColor="Gray" DrawOutline="False" DrawFill="True" OutlineSize="1" />
+  </Breaks>
+</LegendScheme>

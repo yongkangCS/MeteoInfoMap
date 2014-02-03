@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,7 +35,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -48,9 +52,13 @@ public class Options {
     private Font _textFont = new Font("Simsun", Font.PLAIN, 15);
     private Font _legendFont;
     private String _scriptLanguage = "Groovy";
+    private List<Plugin> _plugins = new ArrayList<Plugin>();
+    private String _pluginPath;
     // </editor-fold>
     // <editor-fold desc="Constructor">
-
+    
+    // </editor-fold>
+    // <editor-fold desc="Get Set Methods">
     /**
      * Get text font
      *
@@ -113,8 +121,38 @@ public class Options {
     public void setScriptLanguage(String value) {
         this._scriptLanguage = value;
     }
-    // </editor-fold>
-    // <editor-fold desc="Get Set Methods">
+    
+    /**
+     * Get plugins
+     * @return Plugins
+     */
+    public List<Plugin> getPlugins(){
+        return this._plugins;
+    }
+    
+    /**
+     * Set plugins
+     * @param value Plugins
+     */
+    public void setPlugins(List<Plugin> value){
+        this._plugins = value;
+    }    
+    
+    /**
+     * Get plugin path
+     * @return Plugin path
+     */
+    public String getPluginPath(){
+        return this._pluginPath;
+    }
+    
+    /**
+     * Set plugin path
+     * @param value Plugin path
+     */
+    public void setPluginPath(String value){
+        this._pluginPath = value;
+    }
     // </editor-fold>
     // <editor-fold desc="Methods">
 
@@ -171,6 +209,38 @@ public class Options {
         slAttr.setValue(this._scriptLanguage);
         scriptlang.setAttributeNode(slAttr);
         root.appendChild(scriptlang);
+        
+        //Plugins
+        Element pluginsElem = doc.createElement("Plugins");
+        for (Plugin plugin : this._plugins){
+            Element pluginElem = doc.createElement("Plugin");
+            Attr pluginNameAttr = doc.createAttribute("Name");
+            Attr pluginAuthorAttr = doc.createAttribute("Author");
+            Attr pluginVersionAttr = doc.createAttribute("Version");
+            Attr pluginDescriptionAttr = doc.createAttribute("Description");
+            Attr pluginJarPathAttr = doc.createAttribute("JarPath");
+            Attr pluginClassNameAttr = doc.createAttribute("ClassName");
+            Attr pluginIsLoadAttr = doc.createAttribute("IsLoad");
+            
+            pluginNameAttr.setValue(plugin.getName());
+            pluginAuthorAttr.setValue(plugin.getAuthor());
+            pluginVersionAttr.setValue(plugin.getVersion());
+            pluginDescriptionAttr.setValue(plugin.getDescription());
+            pluginJarPathAttr.setValue(plugin.getJarPath());
+            pluginClassNameAttr.setValue(plugin.getClassName());
+            pluginIsLoadAttr.setValue(String.valueOf(plugin.isLoad()));
+            
+            pluginElem.setAttributeNode(pluginNameAttr);
+            pluginElem.setAttributeNode(pluginAuthorAttr);
+            pluginElem.setAttributeNode(pluginVersionAttr);
+            pluginElem.setAttributeNode(pluginDescriptionAttr);
+            pluginElem.setAttributeNode(pluginJarPathAttr);
+            pluginElem.setAttributeNode(pluginClassNameAttr);
+            pluginElem.setAttributeNode(pluginIsLoadAttr);
+            
+            pluginsElem.appendChild(pluginElem);
+        } 
+        root.appendChild(pluginsElem);
 
         try {
             TransformerFactory tf = TransformerFactory.newInstance();
@@ -225,6 +295,26 @@ public class Options {
             //Script language
             Node scriptlang = root.getElementsByTagName("ScriptLanguage").item(0);
             this._scriptLanguage = scriptlang.getAttributes().getNamedItem("Language").getNodeValue();
+            
+            //Plugins
+            this._plugins.clear();
+            Element pluginsElem = (Element)root.getElementsByTagName("Plugins").item(0);
+            NodeList pluginNodeList =  pluginsElem.getElementsByTagName("Plugin");
+            for (int i = 0; i < pluginNodeList.getLength(); i++){
+                Node pluginNode = pluginNodeList.item(i);
+                Plugin plugin = new Plugin();
+                NamedNodeMap attrs = pluginNode.getAttributes();
+                plugin.setName(attrs.getNamedItem("Name").getNodeValue());
+                plugin.setAuthor(attrs.getNamedItem("Author").getNodeValue());
+                plugin.setVersion(attrs.getNamedItem("Version").getNodeValue());
+                plugin.setDescription(attrs.getNamedItem("Description").getNodeValue());
+                String jarPath = attrs.getNamedItem("JarPath").getNodeValue();
+                jarPath = this._pluginPath + File.separator + jarPath;
+                plugin.setJarFileName(jarPath);
+                plugin.setClassName(attrs.getNamedItem("ClassName").getNodeValue());
+                plugin.setLoad(Boolean.parseBoolean(attrs.getNamedItem("IsLoad").getNodeValue()));
+                this._plugins.add(plugin);
+            }
         } catch (Exception e) {
         }
     }
