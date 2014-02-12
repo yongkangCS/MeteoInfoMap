@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import meteoinfo.classes.Plugin;
+import meteoinfo.classes.PluginCollection;
 import org.meteoinfo.global.GlobalUtil;
 import org.meteoinfo.global.ui.CheckBoxListEntry;
 
@@ -23,7 +24,7 @@ import org.meteoinfo.global.ui.CheckBoxListEntry;
 public class FrmPluginManager extends javax.swing.JDialog {
 
     private FrmMain _parent;
-    List<Plugin> _plugins = new ArrayList<Plugin>();
+    PluginCollection _plugins = new PluginCollection();
 
     /**
      * Creates new form FrmPluginManager
@@ -37,7 +38,7 @@ public class FrmPluginManager extends javax.swing.JDialog {
     }
 
     private void initialize() {
-        this._plugins = _parent.getOptions().getPlugins();
+        this._plugins = _parent.getPlugins();
         this.updatePluginCheckList();
     }
 
@@ -175,17 +176,18 @@ public class FrmPluginManager extends javax.swing.JDialog {
 
     private void jButton_UpdateListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpdateListActionPerformed
         // TODO add your handling code here:
-        List<String> jarPathList = new ArrayList<String>();
-        for (Plugin plugin : _plugins) {
-            jarPathList.add(plugin.getJarFileName());
-        }
+//        List<String> jarPathList = new ArrayList<String>();
+//        for (Plugin plugin : _plugins) {
+//            jarPathList.add(plugin.getJarFileName());
+//        }
 
+        _plugins.clear();
         String pluginPath = _parent.getStartupPath() + File.separator + "plugins";
         if (new File(pluginPath).isDirectory()) {
             List<String> fileNames = GlobalUtil.getFiles(pluginPath, ".jar");
-            boolean isChanged = false;
+            //boolean isChanged = false;
             for (String fn : fileNames) {
-                if (!jarPathList.contains(fn)) {
+                //if (!jarPathList.contains(fn)) {
                     Plugin plugin = _parent.readPlugin(fn);
                     _plugins.add(plugin);
                     try {
@@ -193,12 +195,12 @@ public class FrmPluginManager extends javax.swing.JDialog {
                     } catch (IOException ex) {
                         Logger.getLogger(FrmPluginManager.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    isChanged = true;
-                }
+                    //isChanged = true;
+                //}
             }
-            if (isChanged) {
+//            if (isChanged) {
                 this.updatePluginCheckList();
-            }
+//            }
         }
     }//GEN-LAST:event_jButton_UpdateListActionPerformed
 
@@ -232,7 +234,7 @@ public class FrmPluginManager extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmPluginManager dialog = new FrmPluginManager(new FrmMainOld(), true);
+                FrmPluginManager dialog = new FrmPluginManager(new FrmMain(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
