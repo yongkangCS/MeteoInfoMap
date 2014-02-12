@@ -298,8 +298,9 @@ public class FrmOptions extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                FrmOptions dialog = new FrmOptions(new FrmMainOld(), true);
+                FrmOptions dialog = new FrmOptions(new FrmMain(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

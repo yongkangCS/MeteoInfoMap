@@ -7,8 +7,8 @@ package meteoinfo.forms;
 import java.util.ArrayList;
 import java.util.List;
 import org.meteoinfo.data.meteodata.GridDataSetting;
-import org.meteoinfo.data.meteodata.InterpolationMethods;
-import org.meteoinfo.data.meteodata.InterpolationSetting;
+import org.meteoinfo.geoprocess.analysis.InterpolationMethods;
+import org.meteoinfo.geoprocess.analysis.InterpolationSetting;
 
 /**
  *

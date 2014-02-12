@@ -658,8 +658,9 @@ public class FrmOutputMapData extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                FrmOutputMapData dialog = new FrmOutputMapData(new FrmMainOld(), true);
+                FrmOutputMapData dialog = new FrmOutputMapData(new FrmMain(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

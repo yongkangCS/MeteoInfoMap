@@ -6,8 +6,4 @@
     <LegendFont FontName="宋体" FontSize="14"/>
   </Font>
   <ScriptLanguage Language="Jython"/>
-  <Plugins>
-    <Plugin Author="Yaqiang Wang" ClassName="plugin.Sample" Description="MeteoInfo Java plugin sample" IsLoad="true" JarPath="sample\PluginSample.jar" Name="Sample" Version="0.1"/>
-    <Plugin Author="Yaqiang Wang" ClassName="trajstat.Main" Description="Trajctory statictis plugin" IsLoad="true" JarPath="TrajStat\TrajStat.jar" Name="TrajStat" Version="0.1"/>
-  </Plugins>
 </MeteoInfo>

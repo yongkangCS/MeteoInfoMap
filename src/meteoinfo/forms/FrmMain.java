@@ -54,6 +54,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import meteoinfo.classes.GenericFileFilter;
 import meteoinfo.classes.Options;
 import meteoinfo.classes.Plugin;
+import meteoinfo.classes.PluginCollection;
 import meteoinfo.classes.ProjectFile;
 import org.meteoinfo.data.mapdata.MapDataManage;
 import org.meteoinfo.global.FrmProperty;
@@ -114,6 +115,7 @@ public class FrmMain extends JFrame implements IApplication {
     private boolean _isLoading = false;
     private FrmMeteoData _frmMeteoData;
     //private String _currentDataFolder = "";
+    private PluginCollection _plugins = new PluginCollection();
     private ImageIcon _loadedPluginIcon;
     private ImageIcon _unloadedPluginIcon;
     // </editor-fold>
@@ -188,10 +190,11 @@ public class FrmMain extends JFrame implements IApplication {
         this.jMenuItem_Layers.setSelected(true);
         this.jButton_SelectElement.doClick();
 
-        //this._startupPath = GlobalUtil.getAppPath(FrmMainOld.class);
+        //this._startupPath = GlobalUtil.getAppPath(FrmMain.class);
         this._startupPath = System.getProperty("user.dir");
         String pluginPath = this._startupPath + File.separator + "plugins";
-        this._options.setPluginPath(pluginPath);
+        this._plugins.setPluginPath(pluginPath);
+        this._plugins.setPluginConfigFile(pluginPath + File.separator + "plugins.xml");
 
         loadForm();
     }
@@ -1071,17 +1074,23 @@ public class FrmMain extends JFrame implements IApplication {
             this._loadedPluginIcon = new ImageIcon(ImageIO.read(this.getClass().getResource("/meteoinfo/resources/plugin_green.png")));
             this._unloadedPluginIcon = new ImageIcon(ImageIO.read(this.getClass().getResource("/meteoinfo/resources/plugin_unsel.png")));
         } catch (IOException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         this.loadDefaultPojectFile();
         this.loadConfigureFile();
+        String pluginPath = this._startupPath + File.separator + "plugins" + File.separator + "plugins.xml";        
         try {
-            this.loadPlugins(this._options.getPlugins());
+            this._plugins.loadConfigFile(pluginPath);
+            this.loadPlugins(this._plugins);
         } catch (MalformedURLException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         _mapView = _mapDocument.getActiveMapFrame().getMapView();
         setMapView();
@@ -1308,6 +1317,14 @@ public class FrmMain extends JFrame implements IApplication {
         _options.setLegendFont(font);
         _mapDocument.paintGraphics();
     }
+    
+    /**
+     * Get plugins
+     * @return Plugins
+     */
+    public PluginCollection getPlugins(){
+        return _plugins;
+    }
 
 //    /**
 //     * Get current data folder
@@ -1336,7 +1353,7 @@ public class FrmMain extends JFrame implements IApplication {
 //        try {
 //            fn = directory.getCanonicalPath();
 //        } catch (IOException ex) {
-//            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        fn = fn + File.separator + "default.mip";
         String fn = this._startupPath + File.separator + "default.mip";
@@ -1349,7 +1366,7 @@ public class FrmMain extends JFrame implements IApplication {
 //        try {
 //            fn = directory.getCanonicalPath();
 //        } catch (IOException ex) {
-//            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
 //        }
         String fn = this._startupPath + File.separator + "config.xml";
         if (new File(fn).exists()) {
@@ -1357,11 +1374,11 @@ public class FrmMain extends JFrame implements IApplication {
                 this._options.loadConfigFile(fn);
                 this._mapDocument.setFont(this._options.getLegendFont());
             } catch (ParserConfigurationException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SAXException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -1371,7 +1388,7 @@ public class FrmMain extends JFrame implements IApplication {
         try {
             this._options.saveConfigFile(fn);
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -1380,11 +1397,11 @@ public class FrmMain extends JFrame implements IApplication {
             try {
                 _projectFile.loadProjFile(pFile);
             } catch (ParserConfigurationException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SAXException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.setTitle("MeteoInfo - " + new File(pFile).getName());
         }
@@ -1400,7 +1417,7 @@ public class FrmMain extends JFrame implements IApplication {
             URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{url});
             Class<?> clazz = urlClassLoader.loadClass(plugin.getClassName());
             IPlugin instance = (IPlugin) clazz.newInstance();
-            plugin.setName(instance.getName());
+            plugin.setPluginObject(instance);            
             
             return plugin;
         } catch (MalformedURLException ex) {
@@ -1429,14 +1446,13 @@ public class FrmMain extends JFrame implements IApplication {
         return plugins;
     }
 
-    public void loadPlugins() throws MalformedURLException, IOException {
-        List<Plugin> plugins = new ArrayList<Plugin>();
+    public void loadPlugins() throws MalformedURLException, IOException {        
         String pluginPath = this._startupPath + File.separator + "plugins";
         if (new File(pluginPath).isDirectory()) {
             List<String> fileNames = GlobalUtil.getFiles(pluginPath, ".jar");
             for (String fn : fileNames) {
                 final Plugin plugin = this.readPlugin(fn);
-                plugins.add(plugin);
+                _plugins.add(plugin);
                 URL url = new URL("file:" + plugin.getJarFileName());
                 final URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{url});
                 final JMenuItem pluginMI = new JMenuItem();
@@ -1465,19 +1481,18 @@ public class FrmMain extends JFrame implements IApplication {
                                 pluginMI.setIcon(FrmMain.this._unloadedPluginIcon);
                             }
                         } catch (ClassNotFoundException ex) {
-                            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (InstantiationException ex) {
-                            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IllegalAccessException ex) {
-                            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         FrmMain.this.setCursor(Cursor.getDefaultCursor());
                     }
                 });
                 this.jMenu_Plugin.add(pluginMI);
             }
-        }
-        this._options.setPlugins(plugins);
+        }        
     }
 
     public void loadPlugins(List<Plugin> plugins) throws MalformedURLException, IOException {
@@ -1519,11 +1534,11 @@ public class FrmMain extends JFrame implements IApplication {
                 pluginMI.setSelected(true);
                 pluginMI.setIcon(this._loadedPluginIcon);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InstantiationException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             pluginMI.setIcon(this._unloadedPluginIcon);
@@ -1551,11 +1566,11 @@ public class FrmMain extends JFrame implements IApplication {
                         pluginMI.setIcon(FrmMain.this._unloadedPluginIcon);
                     }
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InstantiationException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IllegalAccessException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 FrmMain.this.setCursor(Cursor.getDefaultCursor());
             }
@@ -1575,7 +1590,7 @@ public class FrmMain extends JFrame implements IApplication {
         try {
             url = new URL("file:" + plugin.getJarFileName());
         } catch (MalformedURLException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         final URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{url});
         try {
@@ -1589,11 +1604,11 @@ public class FrmMain extends JFrame implements IApplication {
             pluginMI.setSelected(true);
             pluginMI.setIcon(this._loadedPluginIcon);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setCursor(Cursor.getDefaultCursor());
     }
@@ -1705,7 +1720,7 @@ public class FrmMain extends JFrame implements IApplication {
         try {
             _projectFile.saveProjFile(aFile);
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -1728,7 +1743,7 @@ public class FrmMain extends JFrame implements IApplication {
             try {
                 _projectFile.saveProjFile(file.getAbsolutePath());
             } catch (ParserConfigurationException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.setTitle("MeteoInfo - " + file.getName());
         }
@@ -1938,8 +1953,9 @@ public class FrmMain extends JFrame implements IApplication {
             try {
                 _projectFile.saveProjFile(aFile);
                 this.saveConfigureFile();
+                _plugins.saveConfigFile();
             } catch (ParserConfigurationException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
             //this.dispose();
             System.exit(0);
@@ -1947,6 +1963,7 @@ public class FrmMain extends JFrame implements IApplication {
             //this.dispose();
             try {
                 this.saveConfigureFile();
+                _plugins.saveConfigFile();
             } catch (Exception e) {
             }
             System.exit(0);
@@ -2137,21 +2154,21 @@ public class FrmMain extends JFrame implements IApplication {
                 try {
                     _mapDocument.getActiveMapFrame().getMapView().exportToPicture(fileName);
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (PrintException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (this.jTabbedPane_Main.getSelectedIndex() == 1) {
                 try {
                     _mapDocument.getMapLayout().exportToPicture(fileName);
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (PrintException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -2302,9 +2319,9 @@ public class FrmMain extends JFrame implements IApplication {
                 //aLayer = ShapeFileManage.loadShapeFile(aFile.getAbsolutePath());
                 aLayer = MapDataManage.loadLayer(aFile.getAbsolutePath());
             } catch (IOException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (aLayer != null) {
                 this._mapDocument.getActiveMapFrame().addLayer(aLayer);
@@ -2386,13 +2403,13 @@ public class FrmMain extends JFrame implements IApplication {
             //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             //UIManager.setLookAndFeel("javax.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmMainOld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmMainOld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmMainOld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmMainOld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

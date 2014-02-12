@@ -170,7 +170,7 @@ public class Program {
     
     private static void registerFonts() {
         FontUtil.registerWeatherFont();
-        String fn = GlobalUtil.getAppPath(FrmMainOld.class);
+        String fn = GlobalUtil.getAppPath(FrmMain.class);
         //fn = fn.substring(0, fn.lastIndexOf("/"));
         String path = fn + File.separator + "font";
         File pathDir = new File(path);

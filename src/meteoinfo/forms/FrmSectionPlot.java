@@ -1024,11 +1024,11 @@ public class FrmSectionPlot extends javax.swing.JFrame {
             try {
                 this.layersLegend1.getMapLayout().exportToPicture(aFile.getAbsolutePath());
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (PrintException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(FrmMainOld.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButton_SavePictureActionPerformed

@@ -212,8 +212,9 @@ public class FrmClipping extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                FrmClipping dialog = new FrmClipping(new FrmMainOld(), true);
+                FrmClipping dialog = new FrmClipping(new FrmMain(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

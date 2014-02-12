@@ -2,7 +2,7 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Dialog.plain" GridFontSize="12" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="22" Width="606">
-      <Extents xMax="143.08630717938541" xMin="67.90202174204455" yMax="54.82042044690748" yMin="14.60520261629954"/>
+      <Extents xMax="144.29188689620986" xMin="66.69644202522016" yMax="55.465271304267304" yMin="13.960351758939684"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" SmoothingMode="false"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="Xinjiang.wmp" SetMaskLayer="false"/>
@@ -251,7 +251,7 @@
               <Legend ChartData="85.79,56.91,49.41" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="19" XShift="0" YShift="0"/>
             </Graphic>
             <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
+              <Shape Selected="false" ShapeType="Point" Visible="false">
                 <Points>
                   <Point X="118.97" Y="42.27"/>
                 </Points>
@@ -283,7 +283,7 @@
               <Legend ChartData="59.11,26.94,19.92" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="23" XShift="0" YShift="0"/>
             </Graphic>
           </ChartGraphics>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="true" MaxVisScale="0.0" MinVisScale="3.448000811655602E7"/>
+          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="3.448000811655602E7"/>
         </Layer>
       </GroupLayer>
       <Graphics/>
