@@ -5,50 +5,18 @@
 package meteoinfo.forms;
 
 import java.awt.BasicStroke;
-import org.meteoinfo.data.DataMath;
-import org.meteoinfo.data.GridData;
-import org.meteoinfo.data.meteodata.DataInfo;
-import org.meteoinfo.data.meteodata.DrawMeteoData;
-import org.meteoinfo.data.meteodata.DrawType2D;
-import org.meteoinfo.data.meteodata.MeteoDataInfo;
-import org.meteoinfo.data.meteodata.PlotDimension;
-import org.meteoinfo.data.StationData;
-import org.meteoinfo.data.meteodata.GridDataSetting;
-import org.meteoinfo.geoprocess.analysis.InterpolationMethods;
-import org.meteoinfo.geoprocess.analysis.InterpolationSetting;
-import org.meteoinfo.data.meteodata.MeteoDataDrawSet;
-import org.meteoinfo.data.meteodata.MeteoDataType;
-import org.meteoinfo.data.meteodata.StationInfoData;
-import org.meteoinfo.data.meteodata.StationModelData;
-import org.meteoinfo.data.meteodata.TrajDataInfo;
-import org.meteoinfo.data.meteodata.Variable;
-import org.meteoinfo.data.meteodata.netcdf.NetCDFDataInfo;
-import org.meteoinfo.drawing.PointStyle;
-import org.meteoinfo.global.Extent;
-import org.meteoinfo.layer.LayerTypes;
-import org.meteoinfo.layer.MapLayer;
-import org.meteoinfo.layer.RasterLayer;
-import org.meteoinfo.layer.VectorLayer;
-import org.meteoinfo.legend.FrmLegendSet;
-import org.meteoinfo.legend.LegendManage;
-import org.meteoinfo.legend.LegendScheme;
-import org.meteoinfo.legend.LegendType;
-import org.meteoinfo.legend.PointBreak;
-import org.meteoinfo.shape.ShapeTypes;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,19 +34,85 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
-import org.meteoinfo.legend.ColorBreak;
-import org.meteoinfo.legend.PolylineBreak;
 import meteoinfo.classes.GenericFileFilter;
+import org.meteoinfo.data.DataMath;
+import org.meteoinfo.data.GridData;
+import org.meteoinfo.data.StationData;
+import org.meteoinfo.data.meteodata.DataInfo;
+import org.meteoinfo.data.meteodata.DrawMeteoData;
+import org.meteoinfo.data.meteodata.DrawType2D;
+import static org.meteoinfo.data.meteodata.DrawType2D.Barb;
+import static org.meteoinfo.data.meteodata.DrawType2D.Contour;
+import static org.meteoinfo.data.meteodata.DrawType2D.Grid_Fill;
+import static org.meteoinfo.data.meteodata.DrawType2D.Grid_Point;
+import static org.meteoinfo.data.meteodata.DrawType2D.Raster;
+import static org.meteoinfo.data.meteodata.DrawType2D.Shaded;
+import static org.meteoinfo.data.meteodata.DrawType2D.Station_Info;
+import static org.meteoinfo.data.meteodata.DrawType2D.Station_Model;
+import static org.meteoinfo.data.meteodata.DrawType2D.Station_Point;
+import static org.meteoinfo.data.meteodata.DrawType2D.Streamline;
+import static org.meteoinfo.data.meteodata.DrawType2D.Traj_Line;
+import static org.meteoinfo.data.meteodata.DrawType2D.Traj_Point;
+import static org.meteoinfo.data.meteodata.DrawType2D.Traj_StartPoint;
+import static org.meteoinfo.data.meteodata.DrawType2D.Vector;
+import static org.meteoinfo.data.meteodata.DrawType2D.Weather_Symbol;
+import org.meteoinfo.data.meteodata.GridDataSetting;
+import org.meteoinfo.data.meteodata.MeteoDataDrawSet;
+import org.meteoinfo.data.meteodata.MeteoDataInfo;
+import org.meteoinfo.data.meteodata.MeteoDataType;
+import static org.meteoinfo.data.meteodata.MeteoDataType.ARL_Grid;
+import static org.meteoinfo.data.meteodata.MeteoDataType.ASCII_Grid;
+import static org.meteoinfo.data.meteodata.MeteoDataType.GRIB1;
+import static org.meteoinfo.data.meteodata.MeteoDataType.GRIB2;
+import static org.meteoinfo.data.meteodata.MeteoDataType.GrADS_Grid;
+import static org.meteoinfo.data.meteodata.MeteoDataType.GrADS_Station;
+import static org.meteoinfo.data.meteodata.MeteoDataType.HYSPLIT_Conc;
+import static org.meteoinfo.data.meteodata.MeteoDataType.HYSPLIT_Particle;
+import static org.meteoinfo.data.meteodata.MeteoDataType.HYSPLIT_Traj;
+import static org.meteoinfo.data.meteodata.MeteoDataType.ISH;
+import static org.meteoinfo.data.meteodata.MeteoDataType.LonLatStation;
+import static org.meteoinfo.data.meteodata.MeteoDataType.METAR;
+import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_1;
+import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_11;
+import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_13;
+import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_2;
+import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_3;
+import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_4;
+import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_7;
+import static org.meteoinfo.data.meteodata.MeteoDataType.NetCDF;
+import static org.meteoinfo.data.meteodata.MeteoDataType.Sufer_Grid;
+import org.meteoinfo.data.meteodata.PlotDimension;
+import org.meteoinfo.data.meteodata.StationInfoData;
+import org.meteoinfo.data.meteodata.StationModelData;
+import org.meteoinfo.data.meteodata.TrajDataInfo;
+import org.meteoinfo.data.meteodata.Variable;
+import org.meteoinfo.data.meteodata.grads.GrADSDataInfo;
 import org.meteoinfo.data.meteodata.micaps.MICAPS7DataInfo;
+import org.meteoinfo.data.meteodata.netcdf.NetCDFDataInfo;
+import org.meteoinfo.drawing.PointStyle;
+import org.meteoinfo.geoprocess.analysis.InterpolationMethods;
+import org.meteoinfo.geoprocess.analysis.InterpolationSetting;
+import org.meteoinfo.global.Extent;
 import org.meteoinfo.global.PointD;
 import org.meteoinfo.global.PointF;
 import org.meteoinfo.global.image.AnimatedGifEncoder;
-import org.meteoinfo.global.mathparser.MathParser;
-import org.meteoinfo.global.mathparser.ParseException;
+import org.meteoinfo.layer.LayerTypes;
+import org.meteoinfo.layer.MapLayer;
+import org.meteoinfo.layer.RasterLayer;
+import org.meteoinfo.layer.VectorLayer;
+import org.meteoinfo.legend.ColorBreak;
+import org.meteoinfo.legend.FrmLegendSet;
+import org.meteoinfo.legend.LegendManage;
+import org.meteoinfo.legend.LegendScheme;
+import org.meteoinfo.legend.LegendType;
+import org.meteoinfo.legend.PointBreak;
+import org.meteoinfo.legend.PolylineBreak;
+import org.meteoinfo.projection.ProjectionInfo;
+import org.meteoinfo.shape.ShapeTypes;
 
 /**
  *
- * @author User
+ * @author yaqiang
  */
 public class FrmMeteoData extends javax.swing.JDialog {
 
@@ -116,6 +150,10 @@ public class FrmMeteoData extends javax.swing.JDialog {
         super(parent, modal);
         _parent = (FrmMain) parent;
         initComponents();
+        
+        int height = this.jToolBar1.getHeight() + this.jComboBox_DrawType.getY() +
+                this.jComboBox_DrawType.getHeight() + 90;
+        this.setSize(500, height);
 
         this.jComboBox_Variable.setEditable(true);
 //        Graphics g = this.getGraphics();
@@ -126,13 +164,6 @@ public class FrmMeteoData extends javax.swing.JDialog {
     }
 
     private void initialize() {
-//            //Set position
-//            Lab_Time.Left = CB_Time.Left - Lab_Time.Width;
-//            Lab_Level.Left = CB_Level.Left - Lab_Level.Width;
-//            Lab_Var.Left = CB_Variable.Left - Lab_Var.Width;
-//            Lab_DrawType.Left = CB_DrawType.Left - Lab_DrawType.Width;
-//            LB_DataFiles.Height = B_RemoveAllData.Top - LB_DataFiles.Top - 5;
-
         this.setTitle("Meteo Data");
         this.jList_DataFiles.setModel(new DefaultListModel());
         this.jComboBox_Variable.removeAllItems();
@@ -147,22 +178,27 @@ public class FrmMeteoData extends javax.swing.JDialog {
         this.jButton_OpenData.setEnabled(true);
         this.jPanel_DataSet.setEnabled(false);
         this.jCheckBox_ColorVar.setVisible(false);
-
-        //Set control visible
-        //CHB_NewVariable.Visible = true;
-        //CHB_NewVariable.Checked = false;
-        //TB_NewVariable.Visible = false;
+        this.jCheckBox_Big_Endian.setVisible(false);
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel_DataSet = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox_Time = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox_Level = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox_DrawType = new javax.swing.JComboBox();
+        jCheckBox_ColorVar = new javax.swing.JCheckBox();
+        jLabel_Variable = new javax.swing.JLabel();
+        jComboBox_Variable = new javax.swing.JComboBox();
+        jCheckBox_Big_Endian = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
+        jButton_RemoveAllData = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList_DataFiles = new javax.swing.JList();
         jToolBar1 = new javax.swing.JToolBar();
         jButton_OpenData = new javax.swing.JButton();
         jButton_DataInfo = new javax.swing.JButton();
@@ -181,32 +217,174 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jSeparator4 = new javax.swing.JToolBar.Separator();
         jButton_SectionPlot = new javax.swing.JButton();
         jButton_1DPlot = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList_DataFiles = new javax.swing.JList();
-        jPanel_DataSet = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox_Time = new javax.swing.JComboBox();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox_Level = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox_DrawType = new javax.swing.JComboBox();
-        jCheckBox_ColorVar = new javax.swing.JCheckBox();
-        jLabel_Variable = new javax.swing.JLabel();
-        jComboBox_Variable = new javax.swing.JComboBox();
-        jButton_RemoveAllData = new javax.swing.JButton();
+        jSeparator5 = new javax.swing.JToolBar.Separator();
+        jSplitButton_Stat = new org.meteoinfo.global.ui.JSplitButton();
+        jPopupMenu_Stat = new javax.swing.JPopupMenu();
+        jMenuItem_ArrivalTime = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jToolBar1.setFloatable(false);
+        jSplitPane1.setBorder(null);
+        jSplitPane1.setDividerLocation(200);
+        jSplitPane1.setDividerSize(4);
+
+        jPanel_DataSet.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMeteoData"); // NOI18N
+        jLabel2.setText(bundle.getString("FrmMeteoData.jLabel2.text")); // NOI18N
+
+        jComboBox_Time.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        jComboBox_Time.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_TimeActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText(bundle.getString("FrmMeteoData.jLabel3.text")); // NOI18N
+
+        jComboBox_Level.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        jComboBox_Level.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_LevelActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText(bundle.getString("FrmMeteoData.jLabel4.text")); // NOI18N
+
+        jComboBox_DrawType.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        jComboBox_DrawType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_DrawTypeActionPerformed(evt);
+            }
+        });
+
+        jCheckBox_ColorVar.setText(bundle.getString("FrmMeteoData.jCheckBox_ColorVar.text")); // NOI18N
+
+        jLabel_Variable.setText(bundle.getString("FrmMeteoData.jLabel_Variable.text")); // NOI18N
+
+        jComboBox_Variable.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        jComboBox_Variable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_VariableActionPerformed(evt);
+            }
+        });
+
+        jCheckBox_Big_Endian.setText(bundle.getString("FrmMeteoData.jCheckBox_Big_Endian.text")); // NOI18N
+        jCheckBox_Big_Endian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_Big_EndianActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_DataSetLayout = new javax.swing.GroupLayout(jPanel_DataSet);
+        jPanel_DataSet.setLayout(jPanel_DataSetLayout);
+        jPanel_DataSetLayout.setHorizontalGroup(
+                jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_DataSetLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jLabel_Variable)
+                .addComponent(jLabel3)
+                .addComponent(jLabel2)
+                .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jComboBox_Level, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboBox_Time, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboBox_DrawType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboBox_Variable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel_DataSetLayout.createSequentialGroup()
+                .addComponent(jCheckBox_ColorVar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBox_Big_Endian)))
+                .addContainerGap()));
+        jPanel_DataSetLayout.setVerticalGroup(
+                jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_DataSetLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel_Variable)
+                .addComponent(jComboBox_Variable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel2)
+                .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel3)
+                .addComponent(jComboBox_Level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel4)
+                .addComponent(jComboBox_DrawType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jCheckBox_ColorVar)
+                .addComponent(jCheckBox_Big_Endian))
+                .addContainerGap()));
+
+        jSplitPane1.setRightComponent(jPanel_DataSet);
+
+        jButton_RemoveAllData.setText(bundle.getString("FrmMeteoData.jButton_RemoveAllData.text")); // NOI18N
+        jButton_RemoveAllData.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RemoveAllDataActionPerformed(evt);
+            }
+        });
+
+        jList_DataFiles.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+
+            @Override
+            public int getSize() {
+                return strings.length;
+            }
+
+            @Override
+            public Object getElementAt(int i) {
+                return strings[i];
+            }
+        });
+        jList_DataFiles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList_DataFiles.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList_DataFilesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jList_DataFiles);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane1)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jButton_RemoveAllData)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_RemoveAllData)
+                .addGap(10, 10, 10)));
+
+        jSplitPane1.setLeftComponent(jPanel1);
+
+        getContentPane().add(jSplitPane1, java.awt.BorderLayout.CENTER);
+
         jToolBar1.setRollover(true);
 
         jButton_OpenData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Folder_1_16x16x8.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMeteoData"); // NOI18N
         jButton_OpenData.setToolTipText(bundle.getString("FrmMeteoData.jButton_OpenData.toolTipText")); // NOI18N
         jButton_OpenData.setFocusable(false);
         jButton_OpenData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_OpenData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_OpenData.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton_OpenDataMouseClicked(evt);
             }
@@ -219,6 +397,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_DataInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_DataInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_DataInfo.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_DataInfoActionPerformed(evt);
             }
@@ -232,6 +411,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_Draw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Draw.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_Draw.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_DrawActionPerformed(evt);
             }
@@ -244,6 +424,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_ViewData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ViewData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_ViewData.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ViewDataActionPerformed(evt);
             }
@@ -256,6 +437,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_ClearDraw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ClearDraw.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_ClearDraw.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ClearDrawActionPerformed(evt);
             }
@@ -269,6 +451,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_PreTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_PreTime.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_PreTime.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_PreTimeActionPerformed(evt);
             }
@@ -281,6 +464,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_NexTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NexTime.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NexTime.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NexTimeActionPerformed(evt);
             }
@@ -293,6 +477,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_Animator.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Animator.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_Animator.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_AnimatorActionPerformed(evt);
             }
@@ -305,6 +490,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_CreateAnimatorFile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_CreateAnimatorFile.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_CreateAnimatorFile.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_CreateAnimatorFileActionPerformed(evt);
             }
@@ -318,6 +504,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_DrawSetting.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_DrawSetting.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_DrawSetting.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_DrawSettingActionPerformed(evt);
             }
@@ -330,6 +517,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_Setting.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Setting.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_Setting.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_SettingActionPerformed(evt);
             }
@@ -343,6 +531,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_SectionPlot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_SectionPlot.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_SectionPlot.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_SectionPlotActionPerformed(evt);
             }
@@ -355,149 +544,35 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_1DPlot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_1DPlot.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_1DPlot.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_1DPlotActionPerformed(evt);
             }
         });
         jToolBar1.add(jButton_1DPlot);
+        jToolBar1.add(jSeparator5);
 
-        jList_DataFiles.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList_DataFiles.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList_DataFilesMouseClicked(evt);
+        jSplitButton_Stat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Statictics.png"))); // NOI18N
+        jSplitButton_Stat.setText("  ");
+        jSplitButton_Stat.setToolTipText(bundle.getString("FrmMeteoData.jSplitButton_Stat.toolTipText"));
+        jSplitButton_Stat.setFocusable(false);
+        jMenuItem_ArrivalTime.setText(bundle.getString("FrmMeteoData.jMenuItem_ArrivalTime.text"));
+        jMenuItem_ArrivalTime.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jMenuTime_ArrivalTimeActionPerformed(e);
             }
         });
-        jScrollPane1.setViewportView(jList_DataFiles);
+        jPopupMenu_Stat.add(jMenuItem_ArrivalTime);
+        jSplitButton_Stat.setPopupMenu(jPopupMenu_Stat);
+        jToolBar1.add(jSplitButton_Stat);
 
-        jPanel_DataSet.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel2.setText(bundle.getString("FrmMeteoData.jLabel2.text")); // NOI18N
-
-        jComboBox_Time.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox_Time.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_TimeActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText(bundle.getString("FrmMeteoData.jLabel3.text")); // NOI18N
-
-        jComboBox_Level.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox_Level.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_LevelActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText(bundle.getString("FrmMeteoData.jLabel4.text")); // NOI18N
-
-        jComboBox_DrawType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox_DrawType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_DrawTypeActionPerformed(evt);
-            }
-        });
-
-        jCheckBox_ColorVar.setText(bundle.getString("FrmMeteoData.jCheckBox_ColorVar.text")); // NOI18N
-
-        jLabel_Variable.setText(bundle.getString("FrmMeteoData.jLabel_Variable.text")); // NOI18N
-
-        jComboBox_Variable.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox_Variable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_VariableActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel_DataSetLayout = new javax.swing.GroupLayout(jPanel_DataSet);
-        jPanel_DataSet.setLayout(jPanel_DataSetLayout);
-        jPanel_DataSetLayout.setHorizontalGroup(
-            jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel_Variable)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox_Level, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox_Time, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox_DrawType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                        .addComponent(jCheckBox_ColorVar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jComboBox_Variable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel_DataSetLayout.setVerticalGroup(
-            jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel_Variable)
-                    .addComponent(jComboBox_Variable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox_Level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox_DrawType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox_ColorVar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jButton_RemoveAllData.setText(bundle.getString("FrmMeteoData.jButton_RemoveAllData.text")); // NOI18N
-        jButton_RemoveAllData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_RemoveAllDataActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jButton_RemoveAllData))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_DataSet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton_RemoveAllData)
-                        .addGap(6, 6, 6))
-                    .addComponent(jPanel_DataSet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
+        getContentPane().add(jToolBar1, java.awt.BorderLayout.PAGE_START);
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void jButton_OpenDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_OpenDataMouseClicked
+    private void jButton_OpenDataMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         JPopupMenu menu_OpenData = new JPopupMenu();
         JMenuItem dataMI = new JMenuItem("Grid Data (NetCDF, GRIB, HDF...)");
@@ -597,11 +672,32 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
         });
         menu_OpenData.add(dataMI);
+        
+        JMenu mm5M = new JMenu("MM5 Data");
+        menu_OpenData.add(mm5M);
+        
+        dataMI = new JMenuItem("MM5 Output Data");
+        dataMI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onMM5DataClick(e);
+            }
+        });
+        mm5M.add(dataMI);
+
+        dataMI = new JMenuItem("MM5 Intermediate Data");
+        dataMI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onMM5IMDataClick(e);
+            }
+        });
+        mm5M.add(dataMI);
 
         menu_OpenData.show(this, evt.getX(), evt.getY());
-    }//GEN-LAST:event_jButton_OpenDataMouseClicked
+    }
 
-    private void jList_DataFilesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_DataFilesMouseClicked
+    private void jList_DataFilesMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         //JOptionPane.showMessageDialog(null, this.jList_DataFiles.getSelectedValue().toString(), "", JOptionPane.INFORMATION_MESSAGE);
         if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -624,9 +720,9 @@ public class FrmMeteoData extends javax.swing.JDialog {
             mnuLayer.add(removeLayerMI);
             mnuLayer.show(this, evt.getX(), evt.getY());
         }
-    }//GEN-LAST:event_jList_DataFilesMouseClicked
+    }
 
-    private void jComboBox_VariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_VariableActionPerformed
+    private void jComboBox_VariableActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         if (_isLoading) {
             return;
@@ -668,23 +764,23 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 }
             }
         }
-    }//GEN-LAST:event_jComboBox_VariableActionPerformed
+    }
 
-    private void jButton_DataInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DataInfoActionPerformed
+    private void jButton_DataInfoActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        FrmDataInfo frmDI = new FrmDataInfo(this, false);
+        FrmDataInfo frmDI = new FrmDataInfo();
         frmDI.setLocationRelativeTo(this);
         frmDI.setText(_meteoDataInfo.getInfoText());
         frmDI.setVisible(true);
-    }//GEN-LAST:event_jButton_DataInfoActionPerformed
+    }
 
-    private void jButton_DrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DrawActionPerformed
+    private void jButton_DrawActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         //String fieldName = this.jComboBox_Variable.getSelectedItem().toString();
         display();
-    }//GEN-LAST:event_jButton_DrawActionPerformed
+    }
 
-    private void jComboBox_DrawTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_DrawTypeActionPerformed
+    private void jComboBox_DrawTypeActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         if (this.jComboBox_DrawType.getItemCount() > 0) {
             _2DDrawType = DrawType2D.valueOf(this.jComboBox_DrawType.getSelectedItem().toString());
@@ -717,16 +813,16 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     break;
             }
         }
-    }//GEN-LAST:event_jComboBox_DrawTypeActionPerformed
+    }
 
-    private void jButton_ViewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ViewDataActionPerformed
+    private void jButton_ViewDataActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         if (_meteoDataInfo.isGridData()) {
             viewGridData();
         } else if (_meteoDataInfo.isStationData()) {
             viewStationData();
         }
-    }//GEN-LAST:event_jButton_ViewDataActionPerformed
+    }
 
     private void viewGridData() {
         if (_gridData == null) {
@@ -761,18 +857,18 @@ public class FrmMeteoData extends javax.swing.JDialog {
         FrmViewData frmData = new FrmViewData(colNames);
         frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
         frmData.setData(_stationData);
-        frmData.setLocationRelativeTo(this);
+        frmData.setLocationRelativeTo(this._parent);
         frmData.setVisible(true);
     }
 
-    private void jButton_ClearDrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ClearDrawActionPerformed
+    private void jButton_ClearDrawActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         //Remove last layer            
         _parent.getMapDocument().getActiveMapFrame().removeLayerByHandle(_lastAddedLayerHandle);
         //this.jButton_Draw.setEnabled(true);
-    }//GEN-LAST:event_jButton_ClearDrawActionPerformed
+    }
 
-    private void jButton_PreTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PreTimeActionPerformed
+    private void jButton_PreTimeActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         _useSameLegendScheme = true;
         _useSameGridInterSet = true;
@@ -839,9 +935,9 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         _parent.getMapDocument().getActiveMapFrame().getMapView().setLockViewUpdate(false);
         this.jButton_Draw.doClick();
-    }//GEN-LAST:event_jButton_PreTimeActionPerformed
+    }
 
-    private void jButton_NexTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_NexTimeActionPerformed
+    private void jButton_NexTimeActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         _useSameLegendScheme = true;
         _useSameGridInterSet = true;
@@ -909,9 +1005,9 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         _parent.getMapDocument().getActiveMapFrame().getMapView().setLockViewUpdate(false);
         this.jButton_Draw.doClick();
-    }//GEN-LAST:event_jButton_NexTimeActionPerformed
+    }
 
-    private void jButton_AnimatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnimatorActionPerformed
+    private void jButton_AnimatorActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         if (this._isRunning) {
             this._enableAnimation = false;
@@ -921,7 +1017,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             //this._isRunning = false;
             //this.jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/animation-1.png")));
         }
-    }//GEN-LAST:event_jButton_AnimatorActionPerformed
+    }
 
     private void run_Animation(final boolean isCreateFile) {
         File file;
@@ -1065,14 +1161,14 @@ public class FrmMeteoData extends javax.swing.JDialog {
         }
     }
 
-    private void jButton_CreateAnimatorFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CreateAnimatorFileActionPerformed
+    private void jButton_CreateAnimatorFileActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         run_Animation(true);
         this.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_jButton_CreateAnimatorFileActionPerformed
+    }
 
-    private void jButton_DrawSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DrawSettingActionPerformed
+    private void jButton_DrawSettingActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         switch (_meteoDataInfo.getDataType()) {
 //                case MICAPS_13:
@@ -1117,9 +1213,9 @@ public class FrmMeteoData extends javax.swing.JDialog {
 //                    }
                 break;
         }
-    }//GEN-LAST:event_jButton_DrawSettingActionPerformed
+    }
 
-    private void jButton_SettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SettingActionPerformed
+    private void jButton_SettingActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         if (_meteoDataInfo.isStationData()) {
             switch (_2DDrawType) {
@@ -1249,36 +1345,46 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     break;
             }
         }
-    }//GEN-LAST:event_jButton_SettingActionPerformed
+    }
 
-    private void jButton_SectionPlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SectionPlotActionPerformed
+    private void jButton_SectionPlotActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         FrmSectionPlot afrm = new FrmSectionPlot(_meteoDataInfo);
         afrm.setLocationRelativeTo(this._parent);
         afrm.setVisible(true);
-    }//GEN-LAST:event_jButton_SectionPlotActionPerformed
+    }
 
-    private void jButton_1DPlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_1DPlotActionPerformed
+    private void jButton_1DPlotActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         //JOptionPane.showMessageDialog(null, "Under developing!");
         FrmOneDim afrm = new FrmOneDim(_meteoDataInfo);
         afrm.setLocationRelativeTo(this._parent);
         afrm.setVisible(true);
-    }//GEN-LAST:event_jButton_1DPlotActionPerformed
+    }
 
-    private void jButton_RemoveAllDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RemoveAllDataActionPerformed
+    private void jButton_RemoveAllDataActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         removeAllMeteoData();
-    }//GEN-LAST:event_jButton_RemoveAllDataActionPerformed
+    }
 
-    private void jComboBox_TimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_TimeActionPerformed
+    private void jMenuTime_ArrivalTimeActionPerformed(ActionEvent evt) {
+        String threshold = JOptionPane.showInputDialog(this, "Threshold value:", 0.0);
+        if (threshold != null) {
+            double th = Double.parseDouble(threshold);
+            String varName = this.jComboBox_Variable.getEditor().getItem().toString();
+            GridData gData = this._meteoDataInfo.getArrivalTimeData(varName, th);
+            this.display(gData);
+        }
+    }
+
+    private void jComboBox_TimeActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         if (this.jComboBox_Time.getItemCount() > 0) {
             _meteoDataInfo.setTimeIndex(this.jComboBox_Time.getSelectedIndex());
         }
-    }//GEN-LAST:event_jComboBox_TimeActionPerformed
+    }
 
-    private void jComboBox_LevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LevelActionPerformed
+    private void jComboBox_LevelActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         //TSB_Draw.Enabled = true;
         this.jButton_Animator.setEnabled(false);
@@ -1286,7 +1392,18 @@ public class FrmMeteoData extends javax.swing.JDialog {
         this.jButton_NexTime.setEnabled(false);
         _useSameLegendScheme = false;
         _meteoDataInfo.setLevelIndex(this.jComboBox_Level.getSelectedIndex());
-    }//GEN-LAST:event_jComboBox_LevelActionPerformed
+    }
+
+    private void jCheckBox_Big_EndianActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        switch (_meteoDataInfo.getDataType()) {
+            case GrADS_Grid:
+            case GrADS_Station:
+                GrADSDataInfo aDataInfo = (GrADSDataInfo) _meteoDataInfo.getDataInfo();
+                aDataInfo.setBigEndian(this.jCheckBox_Big_Endian.isSelected());
+                break;
+        }
+    }
 
     private String getStartupPath() {
         return System.getProperty("user.dir");
@@ -1548,6 +1665,48 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
+    
+    private void onMM5DataClick(ActionEvent e){
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+        String path = this.getStartupPath();
+        File pathDir = new File(path);
+
+        JFileChooser aDlg = new JFileChooser();
+        aDlg.setCurrentDirectory(pathDir);
+        if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
+            File file = aDlg.getSelectedFile();
+            //this._parent.setCurrentDataFolder(file.getParent());
+            System.setProperty("user.dir", file.getParent());
+
+            MeteoDataInfo aDataInfo = new MeteoDataInfo();
+            aDataInfo.openMM5Data(file.getAbsolutePath());
+            addMeteoData(aDataInfo);
+        }
+
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    private void onMM5IMDataClick(ActionEvent e) {
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+        String path = this.getStartupPath();
+        File pathDir = new File(path);
+
+        JFileChooser aDlg = new JFileChooser();
+        aDlg.setCurrentDirectory(pathDir);
+        if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
+            File file = aDlg.getSelectedFile();
+            //this._parent.setCurrentDataFolder(file.getParent());
+            System.setProperty("user.dir", file.getParent());
+
+            MeteoDataInfo aDataInfo = new MeteoDataInfo();
+            aDataInfo.openMM5IMData(file.getAbsolutePath());
+            addMeteoData(aDataInfo);
+        }
+
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
     // </editor-fold>
     // <editor-fold desc="Get Set Methods">
     // </editor-fold>
@@ -1570,13 +1729,23 @@ public class FrmMeteoData extends javax.swing.JDialog {
     }
 
     private void updateParameters() {
+        int i;
+        DataInfo aDataInfo = _meteoDataInfo.getDataInfo();
+        switch (_meteoDataInfo.getDataType()) {
+            case GrADS_Grid:
+            case GrADS_Station:
+                this.jCheckBox_Big_Endian.setVisible(true);
+                this.jCheckBox_Big_Endian.setSelected(((GrADSDataInfo) aDataInfo).isBigEndian());
+                break;
+            default:
+                this.jCheckBox_Big_Endian.setVisible(false);
+                break;
+        }
         String dataType = _meteoDataInfo.getDataType().toString();
         if (_meteoDataInfo.getDataType() == MeteoDataType.NetCDF) {
             dataType = ((NetCDFDataInfo) _meteoDataInfo.getDataInfo()).getFileTypeId();
         }
         this.setTitle(this.getTitle().split("-")[0].trim() + " - " + dataType);
-        int i;
-        DataInfo aDataInfo = _meteoDataInfo.getDataInfo();
 
         for (Component aItem : this.jToolBar1.getComponents()) {
             aItem.setEnabled(true);
@@ -1649,8 +1818,9 @@ public class FrmMeteoData extends javax.swing.JDialog {
     }
 
     private void updateProjection() {
-        if (!_meteoDataInfo.getProjectionInfo().toProj4String().equals(
-                _parent.getMapDocument().getActiveMapFrame().getMapView().getProjection().getProjInfo().toProj4String())) {
+        ProjectionInfo dataProj = _meteoDataInfo.getProjectionInfo();
+        ProjectionInfo mapViewProj = _parent.getMapDocument().getActiveMapFrame().getMapView().getProjection().getProjInfo();
+        if (!dataProj.equals(mapViewProj)) {
             if (JOptionPane.showConfirmDialog(null, "Different projection! If project?", "Conform", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 _parent.getMapDocument().getActiveMapFrame().getMapView().projectLayers(_meteoDataInfo.getProjectionInfo());
             }
@@ -1725,7 +1895,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
         MapLayer aLayer = null;
         String fieldName = "";
         if (this.jComboBox_Variable.getSelectedItem() != null) {
-            fieldName = this.jComboBox_Variable.getSelectedItem().toString();
+            fieldName = this.jComboBox_Variable.getEditor().getItem().toString();
+            //fieldName = this.jComboBox_Variable.getSelectedItem().toString();
         }
 
         if (_meteoDataInfo.isGridData()) {
@@ -1760,9 +1931,47 @@ public class FrmMeteoData extends javax.swing.JDialog {
         return aLayer;
     }
 
+    private MapLayer display(GridData gData) {
+        _gridData = gData;
+
+        if (_gridData == null) {
+            return null;
+        }
+
+        if (_useSameLegendScheme) {
+            if (_legendScheme.getLegendType() == LegendType.GraduatedColor) {
+                double[] maxmin = new double[2];
+                boolean hasUndef = _gridData.getMaxMinValue(maxmin);
+                double minValue = maxmin[1];
+                double maxValue = maxmin[0];
+                if (Double.parseDouble(_legendScheme.getLegendBreaks().get(0).getStartValue().toString())
+                        < Double.parseDouble(_legendScheme.getLegendBreaks().get(0).getEndValue().toString())) {
+                    if (minValue < Double.parseDouble(_legendScheme.getLegendBreaks().get(0).getStartValue().toString())) {
+                        _legendScheme.getLegendBreaks().get(0).setStartValue(minValue);
+                    }
+                    if (maxValue > Double.parseDouble(_legendScheme.getLegendBreaks().get(_legendScheme.getBreakNum() - 1).getEndValue().toString())) {
+                        _legendScheme.getLegendBreaks().get(_legendScheme.getBreakNum() - 1).setEndValue(maxValue);
+                    }
+                } else {
+                    if (maxValue > Double.parseDouble(_legendScheme.getLegendBreaks().get(0).getEndValue().toString())) {
+                        _legendScheme.getLegendBreaks().get(0).setEndValue(maxValue);
+                    }
+                    if (minValue < Double.parseDouble(_legendScheme.getLegendBreaks().get(_legendScheme.getBreakNum() - 1).getStartValue().toString())) {
+                        _legendScheme.getLegendBreaks().get(_legendScheme.getBreakNum() - 1).setStartValue(minValue);
+                    }
+                }
+            }
+        } else {
+            createLegendScheme_Grid();
+        }
+
+        return drawMeteoMap_Grid(true, _legendScheme, "Data");
+    }
+
     private MapLayer drawGrid(String fieldName) {
         //this.jComboBox_Variable.actionPerformed(null);
-        String vName = this.jComboBox_Variable.getSelectedItem().toString();
+        //String vName = this.jComboBox_Variable.getSelectedItem().toString();
+        String vName = fieldName;
         _gridData = _meteoDataInfo.getGridData(vName);
 
         if (_gridData == null) {
@@ -1801,7 +2010,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
     private MapLayer drawStation(String fieldName) {
         //this.jComboBox_Variable.actionPerformed(null);
-        _stationData = _meteoDataInfo.getStationData(this.jComboBox_Variable.getSelectedItem().toString());
+        String vName = fieldName;
+        _stationData = _meteoDataInfo.getStationData(vName);
 
         Extent aExtent = _stationData.dataExtent;
 
@@ -2349,6 +2559,14 @@ public class FrmMeteoData extends javax.swing.JDialog {
             return null;
         }
 
+        //Un stag
+        if (udata.isXStagger()) {
+            udata = udata.unStagger_X();
+        }
+        if (vdata.isYStagger()) {
+            vdata = vdata.unStagger_Y();
+        }
+
         //Skip the grid data
         if (_skipY != 1 || _skipX != 1) {
             udata = udata.skip(_skipY, _skipX);
@@ -2443,7 +2661,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
         });
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton jButton_1DPlot;
     private javax.swing.JButton jButton_Animator;
     private javax.swing.JButton jButton_ClearDraw;
@@ -2458,6 +2676,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private javax.swing.JButton jButton_SectionPlot;
     private javax.swing.JButton jButton_Setting;
     private javax.swing.JButton jButton_ViewData;
+    private javax.swing.JCheckBox jCheckBox_Big_Endian;
     private javax.swing.JCheckBox jCheckBox_ColorVar;
     private javax.swing.JComboBox jComboBox_DrawType;
     private javax.swing.JComboBox jComboBox_Level;
@@ -2468,12 +2687,18 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel_Variable;
     private javax.swing.JList jList_DataFiles;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel_DataSet;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
+    private javax.swing.JToolBar.Separator jSeparator5;
+    private org.meteoinfo.global.ui.JSplitButton jSplitButton_Stat;
+    private javax.swing.JPopupMenu jPopupMenu_Stat;
+    private javax.swing.JMenuItem jMenuItem_ArrivalTime;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JToolBar jToolBar1;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration    
 }

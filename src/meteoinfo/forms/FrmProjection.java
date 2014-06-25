@@ -9,7 +9,7 @@ import org.meteoinfo.projection.ProjectionInfo;
 import org.meteoinfo.projection.ProjectionNames;
 import java.awt.Component;
 import java.awt.Cursor;
-import org.osgeo.proj4j.proj.Projection;
+import org.meteoinfo.projection.proj4j.proj.Projection;
 import static org.meteoinfo.projection.ProjectionNames.Mercator;
 
 /**
@@ -106,9 +106,7 @@ public class FrmProjection extends javax.swing.JDialog {
                             .addComponent(jLabel_CentralMeridian))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel_ParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_ParametersLayout.createSequentialGroup()
-                                .addComponent(jTextField_CentralMeridian, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jTextField_CentralMeridian, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                             .addComponent(jTextField_RefLat)
                             .addComponent(jTextField_StandPara1)))
                     .addGroup(jPanel_ParametersLayout.createSequentialGroup()
@@ -278,6 +276,8 @@ public class FrmProjection extends javax.swing.JDialog {
                 }
                 this.jLabel_CentralMeridian.setVisible(true);
                 this.jTextField_CentralMeridian.setVisible(true);
+                this.jLabel_StdPara1.setVisible(true);
+                this.jTextField_StandPara1.setVisible(true);
                 this.jLabel_ScaleFactor.setVisible(true);
                 this.jTextField_ScaleFactor.setVisible(true);
                 this.jLabel_FalseEasting.setVisible(true);
@@ -286,11 +286,16 @@ public class FrmProjection extends javax.swing.JDialog {
                 this.jTextField_FalseNorthing.setVisible(true);
                 if (aProjInfo.getProjectionName() == aPrjName) {
                     this.jTextField_CentralMeridian.setText(String.valueOf(aProj.getProjectionLongitudeDegrees()));
+                    this.jTextField_StandPara1.setText(String.valueOf(aProj.getTrueScaleLatitudeDegrees()));
                     this.jTextField_ScaleFactor.setText(String.valueOf(aProj.getScaleFactor()));
                     this.jTextField_FalseEasting.setText(String.valueOf(aProj.getFalseEasting()));
                     this.jTextField_FalseNorthing.setText(String.valueOf(aProj.getFalseNorthing()));
                 } else {
                     this.jTextField_CentralMeridian.setText("105");
+                    if (aPrjName == ProjectionNames.North_Polar_Stereographic_Azimuthal)
+                        this.jTextField_StandPara1.setText("90");
+                    else
+                        this.jTextField_StandPara1.setText("-90");
                     this.jTextField_ScaleFactor.setText("1.0");
                     this.jTextField_FalseEasting.setText("0");
                     this.jTextField_FalseNorthing.setText("0");
@@ -448,11 +453,13 @@ public class FrmProjection extends javax.swing.JDialog {
                 break;
             case North_Polar_Stereographic_Azimuthal:
                 toProjStr = "+proj=stere"
+                        + " +lat_ts=" + this.jTextField_StandPara1.getText()
                         + " +lat_0=90"
                         + " +lon_0=" + this.jTextField_CentralMeridian.getText();
                 break;
             case South_Polar_Stereographic_Azimuthal:
                 toProjStr = "+proj=stere"
+                        + " +lat_ts=" + this.jTextField_StandPara1.getText()
                         + " +lat_0=-90"
                         + " +lon_0=" + this.jTextField_CentralMeridian.getText();
                 break;

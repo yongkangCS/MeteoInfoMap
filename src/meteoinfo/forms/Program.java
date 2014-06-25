@@ -9,9 +9,9 @@ import groovy.lang.Script;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
-import java.awt.SplashScreen;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -19,6 +19,8 @@ import javax.swing.WindowConstants;
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.meteoinfo.global.FontUtil;
 import org.meteoinfo.global.GlobalUtil;
+import org.python.core.PyString;
+import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
 
 /**
@@ -31,73 +33,28 @@ public class Program {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        registerFonts();
-        if (args.length == 1) {
+        //registerFonts();
+        if (args.length >= 1) {
             if (args[0].equalsIgnoreCase("-e")) {
-                /* Set look and feel */
-                //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-                 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-                 */
-                try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-                    //UIManager.setLookAndFeel("javax.swing.plaf.windows.WindowsLookAndFeel");
-                } catch (ClassNotFoundException ex) {
-                    java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                } catch (InstantiationException ex) {
-                    java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                } catch (IllegalAccessException ex) {
-                    java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-                    java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                runTextEditor(args);
+            } else if (args[0].equalsIgnoreCase("-b")) {
+                if (args.length == 1) {
+                    System.exit(0);
+                } else {
+                    String fn = args[1];
+                    if (new File(fn).isFile()) {
+                        System.setProperty("java.awt.headless", "true");
+                        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                        System.out.println("Headless mode: " + ge.isHeadless());
+                        runScript(args, fn, 1);
+                    } else {
+                        System.exit(0);
+                    }
                 }
-                //</editor-fold>
-
-                /* Create and display the form */
-                java.awt.EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                        FrmTextEditor frmTE = new FrmTextEditor();
-                        //frmTE.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-                        frmTE.setLocationRelativeTo(null);
-                        frmTE.setVisible(true);
-                    }
-                });
             } else {
-                if (new File(args[0]).isFile()) {
-                    try {
-                        final SplashScreen splash = SplashScreen.getSplashScreen();
-                        if (splash != null) {
-                            splash.close();
-                        }
-                        
-                        String fn = args[0];
-                        String ext = GlobalUtil.getFileExtension(fn);
-                        if (ext.equals("groovy")) {
-                            System.out.println("Running Groovy script...");
-                            GroovyShell shell = new GroovyShell();
-                            //shell.setVariable("miapp", new FrmMainOld());
-                            Script script = shell.parse(new File(fn));
-                            script.run();
-                            System.exit(0);
-                        } else if (ext.equals("py")) {
-                            System.out.println("Running Jython script...");
-                            PythonInterpreter interp = new PythonInterpreter();
-                            //interp.set("miapp", new FrmMainOld());
-                            interp.execfile(fn);
-                            System.exit(0);
-                        }
-                    } catch (CompilationFailedException ex) {
-                        Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-                        Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                String fn = args[0];
+                if (new File(fn).isFile()) {
+                    runScript(args, fn, 0);
                 } else {
                     runApplication();
                 }
@@ -106,7 +63,85 @@ public class Program {
             runApplication();
         }
     }
-    
+
+    private static void runScript(String args[], String fn, int idx) {
+        try {
+            String ext = GlobalUtil.getFileExtension(fn);
+            if (ext.equals("groovy")) {
+                System.out.println("Running Groovy script...");
+                GroovyShell shell = new GroovyShell();
+                //shell.setVariable("miapp", new FrmMainOld());
+                Script script = shell.parse(new File(fn));
+                script.run();
+                System.exit(0);
+            } else if (ext.equals("py")) {
+                System.out.println("Running Jython script...");
+                PySystemState state = new PySystemState();
+                if (args.length > idx + 1) {
+                    //state.argv.clear ();
+                    //state.argv.append (new PyString (fn));  
+                    for (int i = idx + 1; i < args.length; i++) {
+                        state.argv.append(new PyString(args[i]));
+                    }
+                }
+
+                PythonInterpreter interp = new PythonInterpreter(null, state);
+                //interp.set("miapp", new FrmMainOld());
+                interp.execfile(fn);
+                System.exit(0);
+            }
+        } catch (CompilationFailedException ex) {
+            Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private static void runTextEditor(final String args[]) {
+        /* Set look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            //UIManager.setLookAndFeel("javax.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                FrmTextEditor frmTE = new FrmTextEditor();
+                frmTE.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                frmTE.setLocationRelativeTo(null);
+                frmTE.setVisible(true);
+                if (args.length > 1) {
+                    String fn = args[1];
+                    if (new File(fn).isFile()) {
+                        frmTE.openFiles(new File[]{new File(fn)});
+                    }
+                }
+            }
+        });
+    }
+
     private static void runApplication() {
         /* Set look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -136,6 +171,7 @@ public class Program {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
 //                new Thread() {
 //                    @Override
@@ -160,6 +196,8 @@ public class Program {
 //                    }
 //                }.start();
 
+                //Locale.setDefault(Locale.ENGLISH);
+                //registerFonts();
                 FrmMain frame = new FrmMain();
                 frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
@@ -167,7 +205,7 @@ public class Program {
             }
         });
     }
-    
+
     private static void registerFonts() {
         FontUtil.registerWeatherFont();
         String fn = GlobalUtil.getAppPath(FrmMain.class);

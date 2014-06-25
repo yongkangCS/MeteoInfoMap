@@ -434,7 +434,7 @@ public class FrmOneDim extends javax.swing.JFrame {
 
     private void jButton_DataInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DataInfoActionPerformed
         // TODO add your handling code here:
-        FrmDataInfo frmDI = new FrmDataInfo(this, false);
+        FrmDataInfo frmDI = new FrmDataInfo();
         frmDI.setLocationRelativeTo(this);
         frmDI.setText(_meteoDataInfo.getInfoText());
         frmDI.setVisible(true);

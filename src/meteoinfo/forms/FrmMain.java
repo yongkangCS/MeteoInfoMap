@@ -14,7 +14,6 @@
 package meteoinfo.forms;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -34,9 +33,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.help.CSH;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.imageio.ImageIO;
 import javax.print.PrintException;
 import javax.swing.ImageIcon;
@@ -82,7 +85,6 @@ import org.meteoinfo.legend.LayerNode;
 import org.meteoinfo.legend.LayersLegend;
 import org.meteoinfo.legend.MapFrame;
 import org.meteoinfo.legend.NodeTypes;
-import org.meteoinfo.legend.VectorBreak;
 import org.meteoinfo.map.MapView;
 import org.meteoinfo.map.MouseTools;
 import org.meteoinfo.plugin.IApplication;
@@ -91,12 +93,10 @@ import org.meteoinfo.projection.KnownCoordinateSystems;
 import org.meteoinfo.projection.ProjectionInfo;
 import org.meteoinfo.projection.ProjectionNames;
 import org.meteoinfo.projection.Reproject;
-import org.meteoinfo.shape.Graphic;
 import static org.meteoinfo.shape.ShapeTypes.CurveLine;
 import static org.meteoinfo.shape.ShapeTypes.CurvePolygon;
 import static org.meteoinfo.shape.ShapeTypes.Polygon;
 import static org.meteoinfo.shape.ShapeTypes.Polyline;
-import org.meteoinfo.shape.WindArraw;
 import org.xml.sax.SAXException;
 
 /**
@@ -105,7 +105,7 @@ import org.xml.sax.SAXException;
  */
 public class FrmMain extends JFrame implements IApplication {
     // <editor-fold desc="Variables">
-    
+
     private String _startupPath;
     private Options _options = new Options();
     private JButton _currentTool = null;
@@ -122,6 +122,7 @@ public class FrmMain extends JFrame implements IApplication {
     // <editor-fold desc="Constructor">
 
     public FrmMain() {
+        //Locale.setDefault(Locale.ENGLISH);
         initComponents();
 
         _mapDocument.addActiveMapFrameChangedListener(new IActiveMapFrameChangedListener() {
@@ -176,7 +177,8 @@ public class FrmMain extends JFrame implements IApplication {
         _projectFile = new ProjectFile(this);
         this._mapDocument.getActiveMapFrame().setMapView(_mapView);
         this._mapDocument.setMapLayout(_mapLayout);
-        this._mapDocument.setIsLayoutView(false);
+        //this._mapDocument.setIsLayoutView(false);
+        _mapLayout.setLockViewUpdate(true);
         this._options.setLegendFont(_mapDocument.getFont());
 
         BufferedImage image = null;
@@ -190,11 +192,28 @@ public class FrmMain extends JFrame implements IApplication {
         this.jMenuItem_Layers.setSelected(true);
         this.jButton_SelectElement.doClick();
 
-        //this._startupPath = GlobalUtil.getAppPath(FrmMain.class);
-        this._startupPath = System.getProperty("user.dir");
+        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                getInputArguments().toString().indexOf("jdwp") >= 0;
+        if (isDebug) {
+            this._startupPath = System.getProperty("user.dir");
+        } else {
+            this._startupPath = GlobalUtil.getAppPath(FrmMain.class);
+        }
         String pluginPath = this._startupPath + File.separator + "plugins";
         this._plugins.setPluginPath(pluginPath);
         this._plugins.setPluginConfigFile(pluginPath + File.separator + "plugins.xml");
+        
+        //For help document
+        //Create HelpSet and HelpBroker objects
+        //String hsfn = this._startupPath + File.separator + "Sample.hs";
+        //String hsfn = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/help/mi.hs";
+        //HelpSet hs = getHelpSet(hsfn);
+        HelpSet hs = getHelpSet("/org/meteoinfo/help/mi.hs");
+        HelpBroker hb = hs.createHelpBroker();
+        //Assign help to components
+        CSH.setHelpIDString(this.jMenuItem_Help, "top");
+        //Handle events
+        this.jMenuItem_Help.addActionListener(new CSH.DisplayHelpFromSource(hb));
 
         loadForm();
     }
@@ -215,7 +234,12 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_ZoomToExtent = new javax.swing.JButton();
         jButton_Identifer = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton_SelectFeatures = new javax.swing.JButton();
+        jSplitButton_SelectFeature = new org.meteoinfo.global.ui.JSplitButton();
+        jPopupMenu_SelectFeature = new javax.swing.JPopupMenu();
+        jMenuItem_SelByRectangle = new javax.swing.JMenuItem();
+        jMenuItem_SelByPolygon = new javax.swing.JMenuItem();
+        jMenuItem_SelByLasso = new javax.swing.JMenuItem();
+        jMenuItem_SelByCircle = new javax.swing.JMenuItem();
         jButton_Measurement = new javax.swing.JButton();
         jButton_LabelSet = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -286,6 +310,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Options = new javax.swing.JMenuItem();
         jSeparator17 = new javax.swing.JPopupMenu.Separator();
         jMenuItem_OutputMapData = new javax.swing.JMenuItem();
+        jMenuItem_AddXYData = new javax.swing.JMenuItem();
         jMenuItem_Clipping = new javax.swing.JMenuItem();
         jMenu_Plugin = new javax.swing.JMenu();
         jMenuItem_PluginManager = new javax.swing.JMenuItem();
@@ -314,7 +339,7 @@ public class FrmMain extends JFrame implements IApplication {
         jToolBar_Base.setName(""); // NOI18N
 
         jButton_AddLayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Add_1_16x16x8.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMain"); // NOI18N
+        final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMain"); // NOI18N
         jButton_AddLayer.setToolTipText(bundle.getString("FrmMain.jButton_AddLayer.toolTipText")); // NOI18N
         jButton_AddLayer.setFocusable(false);
         jButton_AddLayer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -448,17 +473,86 @@ public class FrmMain extends JFrame implements IApplication {
         jToolBar_Base.add(jButton_Identifer);
         jToolBar_Base.add(jSeparator2);
 
-        jButton_SelectFeatures.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_SelectFeatures.Image.png"))); // NOI18N
-        jButton_SelectFeatures.setToolTipText(bundle.getString("FrmMain.jButton_SelectFeatures.toolTipText")); // NOI18N
-        jButton_SelectFeatures.setFocusable(false);
-        jButton_SelectFeatures.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_SelectFeatures.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_SelectFeatures.addActionListener(new java.awt.event.ActionListener() {
+        //Split button
+        jSplitButton_SelectFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_rectangle.png")));
+        jSplitButton_SelectFeature.setText("  ");
+        jSplitButton_SelectFeature.setToolTipText(bundle.getString("FrmMain.jButton_SelectFeature.toolTipText_Rectangle"));
+        jSplitButton_SelectFeature.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_SelectFeaturesActionPerformed(evt);
+                String toolTipText = jSplitButton_SelectFeature.getToolTipText();
+                if (toolTipText.equals(bundle.getString("FrmMain.jButton_SelectFeature.toolTipText_Polygon"))) {
+                    jButton_SelByPolygonActionPerformed(evt);
+                } else if (toolTipText.equals(bundle.getString("FrmMain.jButton_SelectFeature.toolTipText_Lasso"))) {
+                    jButton_SelByLassoActionPerformed(evt);
+                } else if (toolTipText.equals(bundle.getString("FrmMain.jButton_SelectFeature.toolTipText_Circle"))) {
+                    jButton_SelByCircleActionPerformed(evt);
+                } else {
+                    jButton_SelByRectangleActionPerformed(evt);
+                }
+
+                setCurrentTool((JButton) evt.getSource());
             }
         });
-        jToolBar_Base.add(jButton_SelectFeatures);
+        jMenuItem_SelByRectangle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_rectangle.png")));
+        jMenuItem_SelByRectangle.setText(bundle.getString("FrmMain.jMenuItem_SelByRectangle.text"));
+        jMenuItem_SelByRectangle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jSplitButton_SelectFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_rectangle.png")));
+                jSplitButton_SelectFeature.setText("  ");
+                jSplitButton_SelectFeature.setToolTipText(bundle.getString("FrmMain.jButton_SelectFeature.toolTipText_Rectangle"));
+                jButton_SelByRectangleActionPerformed(e);
+                setCurrentTool(jSplitButton_SelectFeature);
+            }
+        });
+        jPopupMenu_SelectFeature.add(jMenuItem_SelByRectangle);
+        jMenuItem_SelByPolygon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_polygon.png")));
+        jMenuItem_SelByPolygon.setText(bundle.getString("FrmMain.jMenuItem_SelByPolygon.text"));
+        jMenuItem_SelByPolygon.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jSplitButton_SelectFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_polygon.png")));
+                jSplitButton_SelectFeature.setText("  ");
+                jSplitButton_SelectFeature.setToolTipText(bundle.getString("FrmMain.jButton_SelectFeature.toolTipText_Polygon"));
+                jButton_SelByPolygonActionPerformed(e);
+                setCurrentTool(jSplitButton_SelectFeature);
+            }
+        });
+        jPopupMenu_SelectFeature.add(jMenuItem_SelByPolygon);
+        jMenuItem_SelByLasso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_lasso.png")));
+        jMenuItem_SelByLasso.setText(bundle.getString("FrmMain.jMenuItem_SelByLasso.text"));
+        jMenuItem_SelByLasso.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jSplitButton_SelectFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_lasso.png")));
+                jSplitButton_SelectFeature.setText("  ");
+                jSplitButton_SelectFeature.setToolTipText(bundle.getString("FrmMain.jButton_SelectFeature.toolTipText_Lasso"));
+                jButton_SelByLassoActionPerformed(e);
+                setCurrentTool(jSplitButton_SelectFeature);
+            }
+        });
+        jPopupMenu_SelectFeature.add(jMenuItem_SelByLasso);
+        jMenuItem_SelByCircle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_circle.png")));
+        jMenuItem_SelByCircle.setText(bundle.getString("FrmMain.jMenuItem_SelByCircle.text"));
+        jMenuItem_SelByCircle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jSplitButton_SelectFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/select_circle.png")));
+                jSplitButton_SelectFeature.setText("  ");
+                jSplitButton_SelectFeature.setToolTipText(bundle.getString("FrmMain.jButton_SelectFeature.toolTipText_Circle"));
+                jButton_SelByCircleActionPerformed(e);
+                setCurrentTool(jSplitButton_SelectFeature);
+            }
+        });
+        jPopupMenu_SelectFeature.add(jMenuItem_SelByCircle);
+        jSplitButton_SelectFeature.setPopupMenu(jPopupMenu_SelectFeature);
+        //jSplitButton_SelectFeature.add(jPopupMenu_SelectFeature);
+        //jSplitButton_SelectFeature.setToolTipText(bundle.getString("FrmMain.jButton_SelectFeatures.toolTipText")); // NOI18N
+        //jSplitButton_SelectFeature.setFocusable(false);
+        //jSplitButton_SelectFeature.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        //jSplitButton_SelectFeature.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar_Base.add(jSplitButton_SelectFeature);
 
         jButton_Measurement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_Measurement.Image.png"))); // NOI18N
         jButton_Measurement.setToolTipText(bundle.getString("FrmMain.jButton_Measurement.toolTipText")); // NOI18N
@@ -1006,6 +1100,14 @@ public class FrmMain extends JFrame implements IApplication {
         });
         jMenu_Tools.add(jMenuItem_OutputMapData);
 
+        jMenuItem_AddXYData.setText(bundle.getString("FrmMain.jMenuItem_AddXYData.text")); // NOI18N
+        jMenuItem_AddXYData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AddXYDataActionPerformed(evt);
+            }
+        });
+        jMenu_Tools.add(jMenuItem_AddXYData);
+
         jMenuItem_Clipping.setText(bundle.getString("FrmMain.jMenuItem_Clipping.text")); // NOI18N
         jMenuItem_Clipping.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1079,7 +1181,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         this.loadDefaultPojectFile();
         this.loadConfigureFile();
-        String pluginPath = this._startupPath + File.separator + "plugins" + File.separator + "plugins.xml";        
+        String pluginPath = this._startupPath + File.separator + "plugins" + File.separator + "plugins.xml";
         try {
             this._plugins.loadConfigFile(pluginPath);
             this.loadPlugins(this._plugins);
@@ -1317,12 +1419,13 @@ public class FrmMain extends JFrame implements IApplication {
         _options.setLegendFont(font);
         _mapDocument.paintGraphics();
     }
-    
+
     /**
      * Get plugins
+     *
      * @return Plugins
      */
-    public PluginCollection getPlugins(){
+    public PluginCollection getPlugins() {
         return _plugins;
     }
 
@@ -1417,8 +1520,8 @@ public class FrmMain extends JFrame implements IApplication {
             URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{url});
             Class<?> clazz = urlClassLoader.loadClass(plugin.getClassName());
             IPlugin instance = (IPlugin) clazz.newInstance();
-            plugin.setPluginObject(instance);            
-            
+            plugin.setPluginObject(instance);
+
             return plugin;
         } catch (MalformedURLException ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1446,7 +1549,7 @@ public class FrmMain extends JFrame implements IApplication {
         return plugins;
     }
 
-    public void loadPlugins() throws MalformedURLException, IOException {        
+    public void loadPlugins() throws MalformedURLException, IOException {
         String pluginPath = this._startupPath + File.separator + "plugins";
         if (new File(pluginPath).isDirectory()) {
             List<String> fileNames = GlobalUtil.getFiles(pluginPath, ".jar");
@@ -1492,7 +1595,7 @@ public class FrmMain extends JFrame implements IApplication {
                 });
                 this.jMenu_Plugin.add(pluginMI);
             }
-        }        
+        }
     }
 
     public void loadPlugins(List<Plugin> plugins) throws MalformedURLException, IOException {
@@ -1514,6 +1617,22 @@ public class FrmMain extends JFrame implements IApplication {
         }
 
         return null;
+    }
+
+    /**
+     * Remove a plugin
+     *
+     * @param plugin The plugin
+     */
+    public void removePlugin(Plugin plugin) {
+        if (plugin.isLoad()) {
+            unloadPlugin(plugin);
+        }
+
+        JMenuItem aMI = this.findPluginMenuItem(plugin.getName());
+        if (aMI != null) {
+            this.jMenu_Plugin.remove(aMI);
+        }
     }
 
     public void addPlugin(final Plugin plugin) throws IOException {
@@ -1662,7 +1781,7 @@ public class FrmMain extends JFrame implements IApplication {
         int selIndex = this.jTabbedPane_Main.getSelectedIndex();
         switch (selIndex) {
             case 0:    //MapView
-                _mapDocument.setIsLayoutView(false);
+                //_mapDocument.setIsLayoutView(false);
 
                 this.jToolBar_Layout.setEnabled(false);
                 for (Component c : this.jToolBar_Layout.getComponents()) {
@@ -1676,11 +1795,12 @@ public class FrmMain extends JFrame implements IApplication {
                 this.jMenuItem_InsertScaleBar.setEnabled(false);
                 this.jMenuItem_InsertWindArrow.setEnabled(false);
 
-                _mapView.setIsLayoutMap(false);
+                //_mapView.setIsLayoutMap(false);
+                this._mapLayout.setLockViewUpdate(true);
                 _mapView.zoomToExtent(_mapView.getViewExtent());
                 break;
             case 1:    //MapLayout
-                _mapDocument.setIsLayoutView(true);
+                //_mapDocument.setIsLayoutView(true);
 
                 this.jToolBar_Layout.setEnabled(true);
                 for (Component c : this.jToolBar_Layout.getComponents()) {
@@ -1694,7 +1814,8 @@ public class FrmMain extends JFrame implements IApplication {
                 this.jMenuItem_InsertScaleBar.setEnabled(true);
                 this.jMenuItem_InsertWindArrow.setEnabled(true);
 
-                _mapDocument.getMapLayout().paintGraphics();
+                this._mapLayout.setLockViewUpdate(false);
+                this._mapLayout.paintGraphics();
                 break;
         }
     }
@@ -1752,13 +1873,15 @@ public class FrmMain extends JFrame implements IApplication {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {
         // TODO add your handling code here:
         //_mapView.setLockViewUpdate(true);
-        _mapDocument.setIsLayoutView(false);
-        _mapView.setIsLayoutMap(false);
+        //_mapDocument.setIsLayoutView(false);
+        //_mapView.setIsLayoutMap(false);
+        this._mapLayout.setLockViewUpdate(true);
         _mapView.zoomToExtent(_mapView.getViewExtent());
         //_mapView.setLockViewUpdate(false);
 
         //Open MeteoData form
         _frmMeteoData = new FrmMeteoData(this, false);
+        //_frmMeteoData.setSize(500, 280);
         _frmMeteoData.setLocation(this.getX() + 10, this.getY() + this.getHeight() - _frmMeteoData.getHeight() - 40);
         _frmMeteoData.setVisible(true);
     }
@@ -1867,16 +1990,8 @@ public class FrmMain extends JFrame implements IApplication {
     }
 
     private void jMenuItem_InsertWindArrowActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        WindArraw aWindArraw = new WindArraw();
-        aWindArraw.angle = 270;
-        VectorBreak aVB = new VectorBreak();
-        aVB.setColor(Color.black);
-        LayoutGraphic wag = new LayoutGraphic(new Graphic(aWindArraw, aVB), _mapDocument.getMapLayout(),
-                _mapDocument.getMapLayout().getActiveLayoutMap());
-        wag.setLeft(100);
-        wag.setTop(100);
-        _mapDocument.getMapLayout().addElement(wag);
+        // TODO add your handling code here:               
+        _mapDocument.getMapLayout().addWindArrow(100, 100);
         _mapDocument.getMapLayout().paintGraphics();
     }
 
@@ -1935,7 +2050,26 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jMenuItem_HelpActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Under developing!");
+        //JOptionPane.showMessageDialog(null, "Under developing!");        
+    }
+
+    /**
+     * find the helpset file and create a HelpSet object
+     */
+    private HelpSet getHelpSet(String helpsetfile) {
+        HelpSet hs = null;
+        ClassLoader cl = this.getClass().getClassLoader();
+
+        try {
+            //URL hsURL = HelpSet.findHelpSet(cl, helpsetfile);   
+            //URL hsURL = new URL("file:/" + helpsetfile);
+            URL hsURL = this.getClass().getResource(helpsetfile);
+            hs = new HelpSet(cl, hsURL);
+        } catch (Exception ee) {
+            System.out.println("HelpSet: " + ee.getMessage());
+            System.out.println("HelpSet: " + helpsetfile + " not found");
+        }
+        return hs;
     }
 
     private void jMenuItem_AboutActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2123,10 +2257,10 @@ public class FrmMain extends JFrame implements IApplication {
         JFileChooser aDlg = new JFileChooser();
         aDlg.setCurrentDirectory(pathDir);
         String[] fileExts = new String[]{"png"};
-        GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Png Image (*.png)");
-        aDlg.setFileFilter(mapFileFilter);
+        GenericFileFilter pngFileFilter = new GenericFileFilter(fileExts, "Png Image (*.png)");
+        aDlg.addChoosableFileFilter(pngFileFilter);
         fileExts = new String[]{"gif"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Gif Image (*.gif)");
+        GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Gif Image (*.gif)");
         aDlg.addChoosableFileFilter(mapFileFilter);
         fileExts = new String[]{"jpg"};
         mapFileFilter = new GenericFileFilter(fileExts, "Jpeg Image (*.jpg)");
@@ -2140,6 +2274,7 @@ public class FrmMain extends JFrame implements IApplication {
         fileExts = new String[]{"ps"};
         mapFileFilter = new GenericFileFilter(fileExts, "Postscript Image (*.ps)");
         aDlg.addChoosableFileFilter(mapFileFilter);
+        aDlg.setFileFilter(pngFileFilter);
         aDlg.setAcceptAllFileFilterUsed(false);
         if (JFileChooser.APPROVE_OPTION == aDlg.showSaveDialog(this)) {
             File aFile = aDlg.getSelectedFile();
@@ -2209,12 +2344,28 @@ public class FrmMain extends JFrame implements IApplication {
         setCurrentTool((JButton) evt.getSource());
     }
 
-    private void jButton_SelectFeaturesActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton_SelByRectangleActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        _mapView.setMouseTool(MouseTools.SelectFeatures);
-        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_SelectFeatures);
+        _mapView.setMouseTool(MouseTools.SelectFeatures_Rectangle);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_SelectFeatures_Rectangle);
+    }
 
-        setCurrentTool((JButton) evt.getSource());
+    private void jButton_SelByPolygonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        _mapView.setMouseTool(MouseTools.SelectFeatures_Polygon);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_SelectFeatures_Polygon);
+    }
+
+    private void jButton_SelByLassoActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        _mapView.setMouseTool(MouseTools.SelectFeatures_Lasso);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_SelectFeatures_Lasso);
+    }
+
+    private void jButton_SelByCircleActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        _mapView.setMouseTool(MouseTools.SelectFeatures_Circle);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_SelectFeatures_Circle);
     }
 
     private void jButton_IdentiferActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2307,17 +2458,23 @@ public class FrmMain extends JFrame implements IApplication {
         aDlg.setCurrentDirectory(pathDir);
         String[] fileExts = new String[]{"shp", "bil", "wmp", "bln", "bmp", "gif", "jpg", "tif", "png"};
         GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Supported Formats");
-        aDlg.setFileFilter(mapFileFilter);
-        fileExts = new String[]{"shp"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Shape File (*.shp)");
         aDlg.addChoosableFileFilter(mapFileFilter);
+        fileExts = new String[]{"shp"};
+        GenericFileFilter shpFileFilter = new GenericFileFilter(fileExts, "Shape File (*.shp)");
+        aDlg.addChoosableFileFilter(shpFileFilter);
+        aDlg.setFileFilter(mapFileFilter);
         if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
             File aFile = aDlg.getSelectedFile();
             System.setProperty("user.dir", aFile.getParent());
             MapLayer aLayer = null;
             try {
                 //aLayer = ShapeFileManage.loadShapeFile(aFile.getAbsolutePath());
-                aLayer = MapDataManage.loadLayer(aFile.getAbsolutePath());
+                String fn = aFile.getAbsolutePath();
+                aLayer = MapDataManage.loadLayer(fn);
+                String ext = GlobalUtil.getFileExtension(fn);
+                if (ext.equals("bil")) {
+                    aLayer.setProjInfo(this._mapDocument.getActiveMapFrame().getMapView().getProjection().getProjInfo());
+                }
             } catch (IOException ex) {
                 Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -2340,6 +2497,12 @@ public class FrmMain extends JFrame implements IApplication {
     private void jMenuItem_OutputMapDataActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         FrmOutputMapData frm = new FrmOutputMapData(this, false);
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }
+
+    private void jMenuItem_AddXYDataActionPerformed(java.awt.event.ActionEvent evt) {
+        FrmAddXYData frm = new FrmAddXYData(this, true);
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }
@@ -2425,7 +2588,6 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
     }
-    
     private org.meteoinfo.legend.LayersLegend _mapDocument;
     private org.meteoinfo.layout.MapLayout _mapLayout;
     private org.meteoinfo.map.MapView _mapView;
@@ -2454,11 +2616,16 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JButton jButton_RemoveDataLayers;
     private javax.swing.JButton jButton_SavePicture;
     private javax.swing.JButton jButton_SelectElement;
-    private javax.swing.JButton jButton_SelectFeatures;
     private javax.swing.JButton jButton_ZoomIn;
     private javax.swing.JButton jButton_ZoomOut;
     private javax.swing.JButton jButton_ZoomToExtent;
     private javax.swing.JButton jButton_ZoomToLayer;
+    private org.meteoinfo.global.ui.JSplitButton jSplitButton_SelectFeature;
+    private javax.swing.JPopupMenu jPopupMenu_SelectFeature;
+    private javax.swing.JMenuItem jMenuItem_SelByRectangle;
+    private javax.swing.JMenuItem jMenuItem_SelByPolygon;
+    private javax.swing.JMenuItem jMenuItem_SelByLasso;
+    private javax.swing.JMenuItem jMenuItem_SelByCircle;
     private javax.swing.JComboBox jComboBox_PageZoom;
     private javax.swing.JLabel jLabel_Coordinate;
     private javax.swing.JLabel jLabel_Status;
@@ -2482,6 +2649,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_Open;
     private javax.swing.JMenuItem jMenuItem_Options;
     private javax.swing.JMenuItem jMenuItem_OutputMapData;
+    private javax.swing.JMenuItem jMenuItem_AddXYData;
     private javax.swing.JMenuItem jMenuItem_PluginManager;
     private javax.swing.JMenuItem jMenuItem_Projection;
     private javax.swing.JMenuItem jMenuItem_Save;

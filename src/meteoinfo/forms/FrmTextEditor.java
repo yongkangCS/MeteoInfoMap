@@ -11,9 +11,13 @@ import groovy.ui.Console;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.MessageFormat;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,6 +29,7 @@ import meteoinfo.classes.JTextAreaWriter;
 import meteoinfo.classes.TextEditor;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.TextEditorPane;
+import org.meteoinfo.global.ui.ButtonTabComponent;
 import org.python.util.PythonInterpreter;
 
 /**
@@ -32,10 +37,10 @@ import org.python.util.PythonInterpreter;
  * @author User
  */
 public class FrmTextEditor extends javax.swing.JFrame {
-    
+
     private FrmMain _parent = null;
     private Font _font = new Font("Simsun", Font.PLAIN, 15);
-    private String _scriptLanguage = "Groovy";
+    private String _scriptLanguage = "Jython";
     private Dimension _splitPanelSize;
 
     /**
@@ -55,9 +60,11 @@ public class FrmTextEditor extends javax.swing.JFrame {
     public void setTextFont(Font font) {
         _font = font;
         for (Component tab : this.jTabbedPane1.getComponents()) {
-            ((TextEditor) tab).setTextFont(_font);
+            if (tab instanceof TextEditor) {
+                ((TextEditor) tab).setTextFont(_font);
+            }
         }
-        
+
         this.jTextArea_Output.setFont(_font);
     }
 
@@ -67,7 +74,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
      * @return Script language name
      */
     public String getScriptLanguage() {
-        return this._scriptLanguage;        
+        return this._scriptLanguage;
     }
 
     /**
@@ -77,14 +84,14 @@ public class FrmTextEditor extends javax.swing.JFrame {
      */
     public void setScriptLanguage(String value) {
         this._scriptLanguage = value;
-        if (_scriptLanguage.equals("Groovy")){
+        if (_scriptLanguage.equals("Groovy")) {
             this.setTitle("MeteoInfo Script - Groovy");
             this.jRadioButtonMenuItem_Groovy.setSelected(true);
-        this.jRadioButtonMenuItem_Jython.setSelected(false);
+            this.jRadioButtonMenuItem_Jython.setSelected(false);
         } else {
             this.setTitle("MeteoInfo Script - Jython");
             this.jRadioButtonMenuItem_Groovy.setSelected(false);
-        this.jRadioButtonMenuItem_Jython.setSelected(true);
+            this.jRadioButtonMenuItem_Jython.setSelected(true);
         }
     }
 
@@ -95,20 +102,23 @@ public class FrmTextEditor extends javax.swing.JFrame {
      */
     public FrmTextEditor() {
         initComponents();
-        
+
         DefaultCaret caret = (DefaultCaret) this.jTextArea_Output.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        
+
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         BufferedImage image = null;
         try {
             image = ImageIO.read(this.getClass().getResource("/meteoinfo/resources/snake.png"));
             this.setIconImage(image);
         } catch (Exception e) {
-        }        
+        }
         this.setScriptLanguage(_scriptLanguage);
         addNewTextEditor("New file");
         this._splitPanelSize = this.jSplitPane1.getBounds().getSize();
+        this.setSize(800, 600);
+        this.jSplitPane1.setDividerLocation(0.6);
+        //this.jSplitPane1.setDividerLocation(300);
     }
 
     /**
@@ -117,7 +127,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
      * @param parent Parent JFrame
      */
     public FrmTextEditor(JFrame parent) {
-        this();        
+        this();
         _parent = (FrmMain) parent;
         this.setScriptLanguage(_parent.getOptions().getScriptLanguage());
     }
@@ -169,7 +179,6 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
         jButton_NewFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_NewFile.Image.png"))); // NOI18N
@@ -258,6 +267,8 @@ public class FrmTextEditor extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_RunScript);
 
+        getContentPane().add(jToolBar1, java.awt.BorderLayout.NORTH);
+
         jSplitPane1.setDividerLocation(300);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -272,6 +283,8 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
         jSplitPane1.setRightComponent(jScrollPane1);
         jSplitPane1.setLeftComponent(jTabbedPane1);
+
+        getContentPane().add(jSplitPane1, java.awt.BorderLayout.CENTER);
 
         jMenu_File.setMnemonic('F');
         jMenu_File.setText("File");
@@ -418,21 +431,6 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)
-            .addComponent(jSplitPane1)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -440,7 +438,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
         // TODO add your handling code here:
         addNewTextEditor("New file");
     }//GEN-LAST:event_jButton_NewFileActionPerformed
-    
+
     private void jButton_OpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenFileActionPerformed
         // TODO add your handling code here:          
         if (this._scriptLanguage.equals("Groovy")) {
@@ -449,12 +447,12 @@ public class FrmTextEditor extends javax.swing.JFrame {
             this.doOpen_Jython();
         }
     }//GEN-LAST:event_jButton_OpenFileActionPerformed
-    
+
     private void jButton_CloseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CloseFileActionPerformed
         // TODO add your handling code here:
         this.closeFile();
     }//GEN-LAST:event_jButton_CloseFileActionPerformed
-    
+
     private void jButton_SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveFileActionPerformed
         // TODO add your handling code here:
         TextEditor textEditor = getActiveTextEditor();
@@ -462,19 +460,19 @@ public class FrmTextEditor extends javax.swing.JFrame {
             this.doSave(textEditor);
         }
     }//GEN-LAST:event_jButton_SaveFileActionPerformed
-    
+
     private void jButton_UndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UndoActionPerformed
         // TODO add your handling code here:
         TextEditor textEditor = getActiveTextEditor();
         textEditor.getTextArea().undoLastAction();
     }//GEN-LAST:event_jButton_UndoActionPerformed
-    
+
     private void jButton_RedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RedoActionPerformed
         // TODO add your handling code here:
         TextEditor textEditor = getActiveTextEditor();
         textEditor.getTextArea().redoLastAction();
     }//GEN-LAST:event_jButton_RedoActionPerformed
-    
+
     private void jButton_RunScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RunScriptActionPerformed
         if (this._scriptLanguage.equals("Groovy")) {
             runGroovyScript();
@@ -482,22 +480,22 @@ public class FrmTextEditor extends javax.swing.JFrame {
             runPythonScript();
         }
     }//GEN-LAST:event_jButton_RunScriptActionPerformed
-    
+
     private void jMenuItem_NewFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_NewFileActionPerformed
         // TODO add your handling code here:
         this.jButton_NewFile.doClick();
     }//GEN-LAST:event_jMenuItem_NewFileActionPerformed
-    
+
     private void jMenuItem_OpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_OpenFileActionPerformed
         // TODO add your handling code here:
         this.jButton_OpenFile.doClick();
     }//GEN-LAST:event_jMenuItem_OpenFileActionPerformed
-    
+
     private void jMenuItem_SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_SaveFileActionPerformed
         // TODO add your handling code here:
         this.jButton_SaveFile.doClick();
     }//GEN-LAST:event_jMenuItem_SaveFileActionPerformed
-    
+
     private void jMenuItem_SaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_SaveAsActionPerformed
         // TODO add your handling code here:
         TextEditor editor = this.getActiveTextEditor();
@@ -509,35 +507,35 @@ public class FrmTextEditor extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItem_SaveAsActionPerformed
-    
+
     private void jMenuItem_CloseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_CloseFileActionPerformed
         // TODO add your handling code here:
         this.jButton_CloseFile.doClick();
     }//GEN-LAST:event_jMenuItem_CloseFileActionPerformed
-    
+
     private void jMenuItem_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ExitActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jMenuItem_ExitActionPerformed
-    
+
     private void jMenuItem_CutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_CutActionPerformed
         // TODO add your handling code here:
         TextEditor textEditor = getActiveTextEditor();
         textEditor.getTextArea().cut();
     }//GEN-LAST:event_jMenuItem_CutActionPerformed
-    
+
     private void jMenuItem_CopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_CopyActionPerformed
         // TODO add your handling code here:
         TextEditor textEditor = getActiveTextEditor();
         textEditor.getTextArea().copy();
     }//GEN-LAST:event_jMenuItem_CopyActionPerformed
-    
+
     private void jMenuItem_PasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PasteActionPerformed
         // TODO add your handling code here:
         TextEditor textEditor = getActiveTextEditor();
         textEditor.getTextArea().paste();
     }//GEN-LAST:event_jMenuItem_PasteActionPerformed
-    
+
     private void jMenuItem_ConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ConsoleActionPerformed
         // TODO add your handling code here:
 //        FrmConsole frmConsole = new FrmConsole(this, false);
@@ -545,17 +543,17 @@ public class FrmTextEditor extends javax.swing.JFrame {
 //        frmConsole.InitializeConsole();
 //        frmConsole.setLocationRelativeTo(this);
 //        frmConsole.setVisible(true);
-        
+
         Console console = new Console();
         console.run();
     }//GEN-LAST:event_jMenuItem_ConsoleActionPerformed
-    
+
     private void jMenuItem_SetFontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_SetFontActionPerformed
         // TODO add your handling code here:
         TextEditor textEditor = getActiveTextEditor();
         Font tFont = JFontChooser.showDialog(this, null, textEditor.getTextArea().getFont());
         if (tFont != null) {
-            this.setTextFont(tFont);            
+            this.setTextFont(tFont);
             ((FrmMain) _parent).getOptions().setTextFont(tFont);
         }
     }//GEN-LAST:event_jMenuItem_SetFontActionPerformed
@@ -581,9 +579,9 @@ public class FrmTextEditor extends javax.swing.JFrame {
         this.jSplitPane1.setDividerLocation(this.jSplitPane1.getDividerLocation() + heightdelta);
         this._splitPanelSize = this.jSplitPane1.getBounds().getSize();
     }//GEN-LAST:event_jSplitPane1ComponentResized
-    
+
     private void runPythonScript() {
-        
+
         SwingWorker worker = new SwingWorker<String, String>() {
             @Override
             protected String doInBackground() throws Exception {
@@ -600,7 +598,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 //System.out.println("Out test!");
                 //System.err.println("Error test!");
                 interp.set("miapp", _parent);
-                
+
                 TextEditorPane textArea = getActiveTextArea();
                 //textArea.setEncoding(fn);
                 String code = textArea.getText();
@@ -609,15 +607,15 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
                 return "";
             }
         };
         worker.execute();
     }
-    
+
     private void runGroovyScript() {
-        
+
         SwingWorker worker = new SwingWorker<String, String>() {
             @Override
             protected String doInBackground() throws Exception {
@@ -628,12 +626,12 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 // Create an instance of the PythonInterpreter                                
                 //String[] roots = new String[]{"./src"};
                 //GroovyScriptEngine gse = new GroovyScriptEngine(roots);   
-                GroovyShell shell = new GroovyShell();                
+                GroovyShell shell = new GroovyShell();
                 System.setOut(printStream);
                 System.setErr(printStream);
                 shell.setVariable("miapp", _parent);
-                
-                TextEditorPane textArea = getActiveTextArea();                
+
+                TextEditorPane textArea = getActiveTextArea();
                 String code = textArea.getText();
                 try {
                     Script script = shell.parse(code);
@@ -641,15 +639,15 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
                 return "";
             }
         };
         worker.execute();
     }
-    
+
     private TextEditor addNewTextEditor(String title) {
-        TextEditor tab = new TextEditor(this.jTabbedPane1, title);        
+        TextEditor tab = new TextEditor(this.jTabbedPane1, title);
         this.jTabbedPane1.add(tab, title);
         this.jTabbedPane1.setSelectedComponent(tab);
         tab.setTextFont(_font);
@@ -661,10 +659,19 @@ public class FrmTextEditor extends javax.swing.JFrame {
         tab.getTextArea().discardAllEdits();
         tab.getTextArea().setDirty(false);
         tab.setTitle(title);
-        
+        ButtonTabComponent btc = new ButtonTabComponent(this.jTabbedPane1);
+        JButton button = btc.getTabButton();
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FrmTextEditor.this.closeFile();
+            }
+        });
+        this.jTabbedPane1.setTabComponentAt(this.jTabbedPane1.indexOfComponent(tab), btc);
+
         return tab;
     }
-    
+
     private void doOpen_Groovy() {
         // TODO add your handling code here:          
         JFileChooser aDlg = new JFileChooser();
@@ -685,7 +692,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
             this.openFiles(files);
         }
     }
-    
+
     private void doOpen_Jython() {
         // TODO add your handling code here:          
         JFileChooser aDlg = new JFileChooser();
@@ -706,8 +713,12 @@ public class FrmTextEditor extends javax.swing.JFrame {
             this.openFiles(files);
         }
     }
-    
-    private void openFiles(File[] files) {
+
+    /**
+     * Open script files
+     * @param files The files
+     */
+    public void openFiles(File[] files) {
         // Close default untitled document if it is still empty
         if (this.jTabbedPane1.getTabCount() == 1) {
             TextEditor textEditor = getActiveTextEditor();
@@ -722,7 +733,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
             editor.openFile(file);
         }
     }
-    
+
     private void closeFile() {
         TextEditor textEditor = getActiveTextEditor();
         if (textEditor != null) {
@@ -732,20 +743,22 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 if (fName.isEmpty()) {
                     fName = "New file";
                 }
-                int result = JOptionPane.showConfirmDialog(null, String.format("Save changes to {0}", fName), "Save?", JOptionPane.YES_NO_OPTION);
+                int result = JOptionPane.showConfirmDialog(null, MessageFormat.format("Save changes to \"{0}\"", fName), "Save?", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     if (!doSave(textEditor)) {
                         ifClose = false;
                     }
+                } else if (result == JOptionPane.CANCEL_OPTION) {
+                    ifClose = false;
                 }
             }
-            
+
             if (ifClose) {
                 removeTextEditor(textEditor);
             }
         }
     }
-    
+
     private boolean doSave(TextEditor editor) {
         if (editor.getFileName().isEmpty()) {
             if (this._scriptLanguage.equals("Groovy")) {
@@ -758,7 +771,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
             return true;
         }
     }
-    
+
     private boolean doSaveAs_Groovy(TextEditor editor) {
         JFileChooser aDlg = new JFileChooser();
         String[] fileExts = new String[]{"groovy"};
@@ -788,7 +801,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
         }
         return false;
     }
-    
+
     private boolean doSaveAs_Jython(TextEditor editor) {
         JFileChooser aDlg = new JFileChooser();
         String[] fileExts = new String[]{"py"};
@@ -816,11 +829,11 @@ public class FrmTextEditor extends javax.swing.JFrame {
         }
         return false;
     }
-    
+
     private void removeTextEditor(TextEditor editor) {
         this.jTabbedPane1.remove(editor);
     }
-    
+
     private TextEditorPane getActiveTextArea() {
         TextEditor textEditor = getActiveTextEditor();
         if (textEditor != null) {
@@ -829,7 +842,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     private TextEditor getActiveTextEditor() {
         if (this.jTabbedPane1.getTabCount() == 0) {
             return null;

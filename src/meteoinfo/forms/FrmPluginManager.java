@@ -33,7 +33,7 @@ public class FrmPluginManager extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        _parent = (FrmMain)parent;
+        _parent = (FrmMain) parent;
         initialize();
     }
 
@@ -176,31 +176,48 @@ public class FrmPluginManager extends javax.swing.JDialog {
 
     private void jButton_UpdateListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpdateListActionPerformed
         // TODO add your handling code here:
-//        List<String> jarPathList = new ArrayList<String>();
-//        for (Plugin plugin : _plugins) {
-//            jarPathList.add(plugin.getJarFileName());
-//        }
+        List<Plugin> plugins = new ArrayList<Plugin>();
 
-        _plugins.clear();
         String pluginPath = _parent.getStartupPath() + File.separator + "plugins";
         if (new File(pluginPath).isDirectory()) {
             List<String> fileNames = GlobalUtil.getFiles(pluginPath, ".jar");
-            //boolean isChanged = false;
             for (String fn : fileNames) {
-                //if (!jarPathList.contains(fn)) {
-                    Plugin plugin = _parent.readPlugin(fn);
+                Plugin plugin = _parent.readPlugin(fn);
+                if (plugin != null) {
+                    plugins.add(plugin);
+                }
+            }
+
+            List<String> pluginNames = new ArrayList<String>();
+            for (Plugin plugin : _plugins) {
+                pluginNames.add(plugin.getName());
+            }
+
+            List<String> newPluginNames = new ArrayList<String>();
+            for (Plugin plugin : plugins) {
+                newPluginNames.add(plugin.getName());
+            }
+
+            for (int i = 0; i < _plugins.size(); i++) {
+                if (!newPluginNames.contains(_plugins.get(i).getName())) {
+                    _parent.removePlugin(_plugins.get(i));
+                    _plugins.remove(i);
+                    i -= 1;
+                }
+            }
+
+            for (Plugin plugin : plugins) {
+                if (!pluginNames.contains(plugin.getName())) {
                     _plugins.add(plugin);
                     try {
                         _parent.addPlugin(plugin);
                     } catch (IOException ex) {
                         Logger.getLogger(FrmPluginManager.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    //isChanged = true;
-                //}
+                }
             }
-//            if (isChanged) {
-                this.updatePluginCheckList();
-//            }
+
+            this.updatePluginCheckList();
         }
     }//GEN-LAST:event_jButton_UpdateListActionPerformed
 

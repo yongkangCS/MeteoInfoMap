@@ -49,7 +49,7 @@ public class FrmOutputMapData extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        _parent = (FrmMain)parent;
+        _parent = (FrmMain) parent;
         initialize();
     }
 
@@ -259,7 +259,7 @@ public class FrmOutputMapData extends javax.swing.JDialog {
             if (!fileName.substring(fileName.length() - extent.length()).equals(extent)) {
                 fileName = fileName + "." + extent;
                 file = new File(fileName);
-            }            
+            }
 
             BufferedWriter sw = new BufferedWriter(new FileWriter(file));
             List<Integer> selIndexes = _currentLayer.getSelectedShapeIndexes();
@@ -299,16 +299,13 @@ public class FrmOutputMapData extends javax.swing.JDialog {
                     sw.newLine();
                     int shapeNum = 0;
                     PolylineShape aPLS;
-                    if (hasSelShape) {
-                        for (i = 0; i < _currentLayer.getShapeNum(); i++) {
-                            aPLS = (PolylineShape) _currentLayer.getShapes().get(i);
-                            if (aPLS.isSelected()) {
-                                shapeNum += aPLS.getPartNum();
-                            }
-                        }
-                    }
                     for (i = 0; i < _currentLayer.getShapeNum(); i++) {
                         aPLS = (PolylineShape) _currentLayer.getShapes().get(i);
+                        if (hasSelShape) {
+                            if (!aPLS.isSelected()) {
+                                continue;
+                            }
+                        }
                         shapeNum += aPLS.getPartNum();
                     }
                     sw.write(String.valueOf(shpNum));

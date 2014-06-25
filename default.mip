@@ -1,30 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
-    <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Dialog.plain" GridFontSize="12" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="22" Width="606">
-      <Extents xMax="144.29188689620986" xMin="66.69644202522016" yMax="55.465271304267304" yMin="13.960351758939684"/>
-      <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" SmoothingMode="false"/>
+    <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Dialog.plain" GridFontSize="12" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="368" Left="44" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="48" Width="634">
+      <Extents xMax="180.0" xMin="-180.0" yMax="83.62359619140625" yMin="-90.0"/>
+      <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff00ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash"/>
-      <MaskOut MaskLayer="Xinjiang.wmp" SetMaskLayer="false"/>
+      <MaskOut MaskLayer="china.shp" SetMaskLayer="true"/>
       <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees " RefCutLon="180.0" RefLon="0.0"/>
       <GroupLayer>
-        <Layer AvoidCollision="true" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
-          <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
-            <Breaks>
-              <Break BackColor="0xffffffff" Caption="" Color="0x7ffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff666666" OutlineSize="1.0" StartValue="0"/>
-            </Breaks>
-          </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
-          <Graphics/>
-          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
-            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-              <Breaks/>
-            </LegendScheme>
-          </ChartSet>
-          <ChartGraphics/>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
-        </Layer>
-        <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0"/>
@@ -40,259 +24,34 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
-        <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\Temp\Map\china.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="china.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="false">
-          <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
-            <Breaks>
-              <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0"/>
-            </Breaks>
-          </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
-          <Graphics/>
-          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
-            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-              <Breaks/>
-            </LegendScheme>
-          </ChartSet>
-          <ChartGraphics/>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
-        </Layer>
-        <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\Temp\Map\rivers.shp" Handle="4" IsMaskout="false" LayerDrawType="Map" LayerName="rivers.shp" LayerType="VectorLayer" ShapeType="Polyline" TransparencyPerc="0" Visible="false">
-          <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polyline" UNDEF="-9999.0">
-            <Breaks>
-              <Break Caption="" Color="0xff404040" DrawShape="true" DrawSymbol="false" EndValue="0" Size="1.0" StartValue="0" Style="Solid" SymbolColor="0xff404040" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
-            </Breaks>
-          </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
-          <Graphics/>
-          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
-            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-              <Breaks/>
-            </LegendScheme>
-          </ChartSet>
-          <ChartGraphics/>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
-        </Layer>
-        <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\KeyData\PMMUL\Analysis\stnew.shp" Handle="5" IsMaskout="false" LayerDrawType="Map" LayerName="stnew.shp" LayerType="VectorLayer" ShapeType="Point" TransparencyPerc="0" Visible="true">
-          <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Point" UNDEF="-9999.0">
-            <Breaks>
-              <Break Angle="0.0" Caption="" CharIndex="0" Color="0xff000000" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" Size="4.0" StartValue="0" Style="Circle"/>
-            </Breaks>
-          </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
-          <Graphics/>
-          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="PieChart" DrawCharts="true" FieldNames="PM10,PM2.5,PM1" MaxSize="50" MaxValue="322.21" MinSize="20" MinValue="28.14" Thickness="5" View3D="true" XShift="0" YShift="0">
-            <LegendScheme BreakNum="3" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-              <Breaks>
-                <Break BackColor="0xffffffff" Caption="PM10" Color="0xff43c742" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0"/>
-                <Break BackColor="0xffffffff" Caption="PM2.5" Color="0xffffcccc" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0"/>
-                <Break BackColor="0xffffffff" Caption="PM1" Color="0xffffcc33" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0"/>
-              </Breaks>
-            </LegendScheme>
-          </ChartSet>
-          <ChartGraphics>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="87.97" Y="47.12"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="12.97,8.3,6.87" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="0" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="109.2" Y="38.43"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="70.63,33.02,23.77" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="1" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="116.12" Y="43.95"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="29.76,13.78,9.25" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="2" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="115.8" Y="39.13"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="137.99,93.98,81.17" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="3" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="91.13" Y="29.67"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="32.63,12.98,8.84" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="4" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="104.04" Y="30.65"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="58.13,49.42,45.66" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="5" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="113.68" Y="34.78"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="149.93,94.6,77.68" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="6" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="108.97" Y="34.43"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="141.07,96.97,79.22" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="7" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="114.2" Y="29.63"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="40.37,33.02,30.12" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="8" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="110.3" Y="25.32"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="51.81,45.12,42.11" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="9" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="115.99" Y="29.57"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="54.8,43.69,37.64" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="10" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="108.35" Y="22.82"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="50.0,39.62,36.35" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="11" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="113.35" Y="23.0"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="60.48,46.2,41.66" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="12" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="111.71" Y="29.17"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="51.81,41.62,36.95" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="13" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="123.0" Y="41.05"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="106.79,66.89,56.63" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="14" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="123.41" Y="41.76"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="64.62,45.16,39.07" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="15" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="123.47" Y="41.19"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="80.04,55.04,45.49" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="16" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="123.95" Y="41.88"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="71.81,46.63,39.93" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="17" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="121.8" Y="31.5"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="29.55,24.3,21.14" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="18" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="124.33" Y="43.18"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="85.79,56.91,49.41" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="19" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="118.97" Y="42.27"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="116.6,54.01,40.44" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="20" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="124.33" Y="40.05"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="65.41,43.34,36.99" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="21" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="120.33" Y="36.07"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="67.81,47.95,41.08" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="22" XShift="0" YShift="0"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="111.97" Y="43.65"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="59.11,26.94,19.92" ChartType="PieChart" Color="0xffff0000" LegendType="ChartBreak" ShapeIndex="23" XShift="0" YShift="0"/>
-            </Graphic>
-          </ChartGraphics>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="3.448000811655602E7"/>
-        </Layer>
       </GroupLayer>
       <Graphics/>
     </MapFrame>
   </MapFrames>
-  <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="false">
+  <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="true">
     <LayoutElements>
-      <LayoutMap DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="22" Width="606"/>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="20" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="657" LegendLayer="bou2_4p.shp" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="131" Width="15"/>
+      <LayoutMap DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="All" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="368" Left="44" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="48" Width="634"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="30" LayerUpdateType="FirstExpandedLayer" LayoutMapIndex="0" Left="242" LegendLayer="" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="446" Width="330"/>
+      <LayoutGraphic ElementType="LayoutGraphic" Height="17" IsTitle="false" Left="280" Top="7" Width="250">
+        <Graphic>
+          <Shape Selected="false" ShapeType="Point" Visible="true">
+            <Points>
+              <Point X="405.0" Y="15.0"/>
+            </Points>
+          </Shape>
+          <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="Arial" FontSize="14" LegendType="LabelBreak" Text="Meteorological Data Information System" YShift="0.0"/>
+        </Graphic>
+      </LayoutGraphic>
+      <LayoutGraphic ElementType="LayoutGraphic" Height="20" IsTitle="false" Left="543" Top="452" Width="20">
+        <Graphic>
+          <Shape Selected="false" ShapeType="WindArraw" Visible="true">
+            <Points>
+              <Point X="543.0" Y="452.0"/>
+            </Points>
+          </Shape>
+          <Legend Color="0xff000000" LegendType="VectorBreak"/>
+        </Graphic>
+      </LayoutGraphic>
     </LayoutElements>
   </Layout>
 </MeteoInfo>

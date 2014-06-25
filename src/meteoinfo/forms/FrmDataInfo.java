@@ -13,27 +13,39 @@
  */
 package meteoinfo.forms;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import meteoinfo.classes.GenericFileFilter;
+
 /**
  *
  * @author Yaqiang Wang
  */
-public class FrmDataInfo extends javax.swing.JDialog {
-
-    /**
-     * Creates new form FrmDataInfo
-     */
-    public FrmDataInfo(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
+public class FrmDataInfo extends javax.swing.JFrame {
     
     /**
      * Creates new form FrmDataInfo
      */
-    public FrmDataInfo(java.awt.Dialog parent, boolean modal) {
-        super(parent, modal);
+    public FrmDataInfo() {
         initComponents();
+        
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(600, 400);
+        
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(this.getClass().getResource("/meteoinfo/resources/MeteoInfo_1_16x16x8.png"));
+            this.setIconImage(image);
+        } catch (Exception e) {
+        }        
     }
 
     /**
@@ -58,6 +70,11 @@ public class FrmDataInfo extends javax.swing.JDialog {
         jButton_Save.setFocusable(false);
         jButton_Save.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Save.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_SaveActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton_Save);
 
         getContentPane().add(jToolBar1, java.awt.BorderLayout.PAGE_START);
@@ -70,6 +87,38 @@ public class FrmDataInfo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveActionPerformed
+        // TODO add your handling code here:
+        JFileChooser aDlg = new JFileChooser();
+        String[] fileExts = new String[]{"txt"};
+        GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Text File (*.txt)");
+        aDlg.setFileFilter(mapFileFilter);
+        File dir = new File(System.getProperty("user.dir"));
+        if (dir.isDirectory()) {
+            aDlg.setCurrentDirectory(dir);
+        }
+        aDlg.setAcceptAllFileFilterUsed(false);
+        if (aDlg.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = aDlg.getSelectedFile();
+            System.setProperty("user.dir", file.getParent());
+            String extent = ((GenericFileFilter) aDlg.getFileFilter()).getFileExtent();
+            String fileName = file.getAbsolutePath();
+            if (!fileName.substring(fileName.length() - extent.length()).equals(extent)) {
+                fileName = fileName + "." + extent;
+                file = new File(fileName);
+            }  
+            
+            try {
+                BufferedWriter sw = new BufferedWriter(new FileWriter(file));
+                sw.write(this.jTextArea_Info.getText());
+                sw.flush();
+                sw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FrmDataInfo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton_SaveActionPerformed
 
     /**
      * Set text
@@ -111,14 +160,7 @@ public class FrmDataInfo extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmDataInfo dialog = new FrmDataInfo(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new FrmDataInfo().setVisible(true);
             }
         });
     }

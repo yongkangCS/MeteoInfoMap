@@ -733,7 +733,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
     private void jButton_DataInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DataInfoActionPerformed
         // TODO add your handling code here:
-        FrmDataInfo frmDI = new FrmDataInfo(this, false);
+        FrmDataInfo frmDI = new FrmDataInfo();
         frmDI.setLocationRelativeTo(this);
         frmDI.setText(_meteoDataInfo.getInfoText());
         frmDI.setVisible(true);
@@ -1043,7 +1043,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         //setMapLayerPanel();
         this.layersLegend1.getMapFrames().get(0).setLayoutBounds(new Rectangle(40, 36, 606, 420));
         this.layersLegend1.getMapFrames().get(0).getMapView().setGeoMap(false);
-        this.layersLegend1.getMapFrames().get(0).setIsFireMapViewUpdate(true);
+        //this.layersLegend1.getMapFrames().get(0).setIsFireMapViewUpdate(true);
         this.mapLayout1.setMapFrames(this.layersLegend1.getMapFrames());
         this.mapLayout1.addElement(new LayoutMap(this.mapLayout1.getMapFrames().get(0)));
         LayoutLegend legend = this.mapLayout1.addLegend(660, 100);

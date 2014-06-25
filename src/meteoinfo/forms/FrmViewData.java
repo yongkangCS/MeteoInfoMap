@@ -74,7 +74,8 @@ public class FrmViewData extends javax.swing.JFrame {
             String dFormat = "%1$." + String.valueOf(dNum) + "f";
 
             int yNum = sData.getStNum();
-            int xNum = sData.data.length + 1;
+            //int xNum = sData.data.length + 1;
+            int xNum = 4;
             Object[][] tData = new Object[yNum][xNum];
             for (int i = 0; i < xNum; i++) {
                 if (i == 0) {
@@ -83,11 +84,12 @@ public class FrmViewData extends javax.swing.JFrame {
                     }
                 } else if (i <= 2) {
                     for (int j = 0; j < yNum; j++) {
-                        tData[j][i] = String.format("%1$.2f", sData.data[i - 1][j]);
+                        //tData[j][i] = String.format("%1$.2f", sData.data[i - 1][j]);
+                        tData[j][i] = String.valueOf(sData.data[j][i - 1]);
                     }
                 } else {
                     for (int j = 0; j < yNum; j++) {
-                        tData[j][i] = String.format(dFormat, sData.data[i - 1][j]);
+                        tData[j][i] = String.format(dFormat, sData.data[j][i - 1]);
                     }
                 }
             }
