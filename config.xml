@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="config.xml" Type="configurefile">
-  <Path OpenPath="C:\Users\yaqiang\Pictures\Map"/>
+  <Path OpenPath="D:\GeoData\China\4M"/>
   <Font>
     <TextFont FontName="宋体" FontSize="15"/>
     <LegendFont FontName="宋体" FontSize="14"/>

@@ -61,7 +61,7 @@ import meteoinfo.classes.PluginCollection;
 import meteoinfo.classes.ProjectFile;
 import org.meteoinfo.data.mapdata.MapDataManage;
 import org.meteoinfo.global.FrmProperty;
-import org.meteoinfo.global.GlobalUtil;
+import org.meteoinfo.global.util.GlobalUtil;
 import org.meteoinfo.global.MIMath;
 import org.meteoinfo.global.PointF;
 import org.meteoinfo.global.event.ActiveMapFrameChangedEvent;

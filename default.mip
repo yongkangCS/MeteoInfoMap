@@ -2,11 +2,11 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Dialog.plain" GridFontSize="12" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="368" Left="44" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="48" Width="634">
-      <Extents xMax="180.0" xMin="-180.0" yMax="83.62359619140625" yMin="-90.0"/>
+      <Extents xMax="2.0037497210840166E7" xMin="-2.0037508342789244E7" yMax="1.8375854901481014E7" yMin="-8036333.344106909"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff00ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="china.shp" SetMaskLayer="true"/>
-      <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees " RefCutLon="180.0" RefLon="0.0"/>
+      <Projection IsLonLatMap="false" ProjStr="+proj=merc +lat_ts=0.0 +lon_0=0 +x_0=0.0 +y_0=0.0 " RefCutLon="180.0" RefLon="0.0"/>
       <GroupLayer>
         <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">

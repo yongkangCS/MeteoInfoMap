@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Plugins>
-  <Plugin Author="Yaqiang Wang" ClassName="plugin.Sample" Description="MeteoInfo Java plugin sample" IsLoad="true" JarPath="sample\PluginSample.jar" Name="Sample" Version="0.1"/>
-  <Plugin Author="Yaqiang Wang" ClassName="trajstat.Main" Description="Trajctory statictis plugin" IsLoad="true" JarPath="TrajStat\TrajStat.jar" Name="TrajStat" Version="0.1"/>
+  <Plugin Author="Yaqiang Wang" ClassName="plugin.Sample" Description="MeteoInfo Java plugin sample" IsLoad="false" JarPath="sample\PluginSample.jar" Name="Sample" Version="0.1"/>
+  <Plugin Author="Yaqiang Wang" ClassName="trajstat.Main" Description="Trajctory statictis plugin" IsLoad="false" JarPath="TrajStat\TrajStat.jar" Name="TrajStat" Version="0.1"/>
 </Plugins>

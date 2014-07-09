@@ -14,7 +14,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import meteoinfo.classes.Plugin;
 import meteoinfo.classes.PluginCollection;
-import org.meteoinfo.global.GlobalUtil;
+import org.meteoinfo.global.util.GlobalUtil;
 import org.meteoinfo.global.ui.CheckBoxListEntry;
 
 /**
