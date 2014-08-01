@@ -46,10 +46,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -202,7 +204,7 @@ public class FrmMain extends JFrame implements IApplication {
         String pluginPath = this._startupPath + File.separator + "plugins";
         this._plugins.setPluginPath(pluginPath);
         this._plugins.setPluginConfigFile(pluginPath + File.separator + "plugins.xml");
-        
+
         //For help document
         //Create HelpSet and HelpBroker objects
         //String hsfn = this._startupPath + File.separator + "Sample.hs";
@@ -270,7 +272,7 @@ public class FrmMain extends JFrame implements IApplication {
         jPanel_LayoutTab = new javax.swing.JPanel();
         _mapLayout = new org.meteoinfo.layout.MapLayout();
         _mapDocument = new org.meteoinfo.legend.LayersLegend();
-        jPanel5 = new javax.swing.JPanel();
+        jPanel_Status = new javax.swing.JPanel();
         jLabel_Status = new javax.swing.JLabel();
         jLabel_Coordinate = new javax.swing.JLabel();
         jMenuBar_Main = new javax.swing.JMenuBar();
@@ -312,6 +314,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_OutputMapData = new javax.swing.JMenuItem();
         jMenuItem_AddXYData = new javax.swing.JMenuItem();
         jMenuItem_Clipping = new javax.swing.JMenuItem();
+        jMenuItem_Animator = new javax.swing.JMenuItem();
         jMenu_Plugin = new javax.swing.JMenu();
         jMenuItem_PluginManager = new javax.swing.JMenuItem();
         jSeparator18 = new javax.swing.JPopupMenu.Separator();
@@ -319,6 +322,8 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_About = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
         jMenuItem_Help = new javax.swing.JMenuItem();
+        jProgressBar_Main = new javax.swing.JProgressBar();
+        jLabel_ProgressBar = new javax.swing.JLabel();
 
         //Window listener
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -867,24 +872,30 @@ public class FrmMain extends JFrame implements IApplication {
 
         //Status panel
         jLabel_Status.setText(bundle.getString("FrmMain.jLabel_Status.text")); // NOI18N
-
         jLabel_Coordinate.setText(bundle.getString("FrmMain.jLabel_Coordinate.text")); // NOI18N
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
+        jLabel_ProgressBar.setVisible(false);
+        jProgressBar_Main.setVisible(false);
+        javax.swing.GroupLayout jPanel_StatusLayout = new javax.swing.GroupLayout(jPanel_Status);
+        jPanel_Status.setLayout(jPanel_StatusLayout);
+        jPanel_StatusLayout.setHorizontalGroup(
+                jPanel_StatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_StatusLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel_Coordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jProgressBar_Main, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-        jPanel5Layout.setVerticalGroup(
-                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanel_StatusLayout.setVerticalGroup(
+                jPanel_StatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_StatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel_Coordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)));
+                .addComponent(jLabel_Coordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jProgressBar_Main, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         //Main menu bar
         jMenuBar_Main.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -1115,6 +1126,15 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
         jMenu_Tools.add(jMenuItem_Clipping);
+        
+        jMenuItem_Animator.setText(bundle.getString("FrmMain.jMenuItem_Animator.text")); // NOI18N
+        jMenuItem_Animator.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AnimatorActionPerformed(evt);
+            }
+        });
+        jMenu_Tools.add(jMenuItem_Animator);
 
         jMenuBar_Main.add(jMenu_Tools);
 
@@ -1144,6 +1164,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenu_Help.add(jSeparator12);
 
         jMenuItem_Help.setText(bundle.getString("FrmMain.jMenuItem_Help.text")); // NOI18N
+        jMenuItem_Help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/help.png")));
         jMenuItem_Help.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_HelpActionPerformed(evt);
@@ -1158,7 +1179,7 @@ public class FrmMain extends JFrame implements IApplication {
         //Add tool bar panel
         getContentPane().add(jPanel_MainToolBar, BorderLayout.NORTH);
         getContentPane().add(jPanel4, BorderLayout.CENTER);
-        getContentPane().add(jPanel5, BorderLayout.SOUTH);
+        getContentPane().add(jPanel_Status, BorderLayout.SOUTH);
         pack();
     }
 
@@ -1383,12 +1404,40 @@ public class FrmMain extends JFrame implements IApplication {
     }
 
     /**
+     * Get main progress bar
+     *
+     * @return The main progress bar
+     */
+    @Override
+    public JProgressBar getProgressBar() {
+        return this.jProgressBar_Main;
+    }
+
+    /**
+     * Get progress bar label
+     *
+     * @return The progress bar label
+     */
+    @Override
+    public JLabel getProgressBarLabel() {
+        return this.jLabel_ProgressBar;
+    }
+
+    /**
      * Get jTabbedPane_Main
      *
      * @return jTabbedPane_Main
      */
     public JTabbedPane getMainTab() {
         return this.jTabbedPane_Main;
+    }
+    
+    /**
+     * Get meteo data form
+     * @return The meteo data form
+     */
+    public FrmMeteoData getMeteoDataset() {
+        return this._frmMeteoData;
     }
 
     /**
@@ -1427,6 +1476,16 @@ public class FrmMain extends JFrame implements IApplication {
      */
     public PluginCollection getPlugins() {
         return _plugins;
+    }
+
+    /**
+     * Get current tool
+     *
+     * @return The current tool
+     */
+    @Override
+    public JButton getCurrentTool() {
+        return _currentTool;
     }
 
 //    /**
@@ -1749,7 +1808,8 @@ public class FrmMain extends JFrame implements IApplication {
     // </editor-fold>
     // <editor-fold desc="Menu">
 
-    private void setCurrentTool(JButton currentTool) {
+    @Override
+    public void setCurrentTool(JButton currentTool) {
         if (!(_currentTool == null)) {
             _currentTool.setSelected(false);
         }
@@ -2039,8 +2099,7 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jMenuItem_ClearSelectionActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        MapLayer aLayer = _mapDocument.getActiveMapFrame().getMapView().getLayerFromHandle(
-                _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer());
+        MapLayer aLayer = _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
         if (aLayer.getLayerType() == LayerTypes.VectorLayer) {
             ((VectorLayer) aLayer).clearSelectedShapes();
         }
@@ -2463,25 +2522,29 @@ public class FrmMain extends JFrame implements IApplication {
         GenericFileFilter shpFileFilter = new GenericFileFilter(fileExts, "Shape File (*.shp)");
         aDlg.addChoosableFileFilter(shpFileFilter);
         aDlg.setFileFilter(mapFileFilter);
+        aDlg.setMultiSelectionEnabled(true);
         if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
-            File aFile = aDlg.getSelectedFile();
-            System.setProperty("user.dir", aFile.getParent());
-            MapLayer aLayer = null;
-            try {
-                //aLayer = ShapeFileManage.loadShapeFile(aFile.getAbsolutePath());
-                String fn = aFile.getAbsolutePath();
-                aLayer = MapDataManage.loadLayer(fn);
-                String ext = GlobalUtil.getFileExtension(fn);
-                if (ext.equals("bil")) {
-                    aLayer.setProjInfo(this._mapDocument.getActiveMapFrame().getMapView().getProjection().getProjInfo());
+            File[] files = aDlg.getSelectedFiles();
+            System.setProperty("user.dir", files[0].getParent());
+
+            for (File aFile : files) {
+                MapLayer aLayer = null;
+                try {
+                    //aLayer = ShapeFileManage.loadShapeFile(aFile.getAbsolutePath());
+                    String fn = aFile.getAbsolutePath();
+                    aLayer = MapDataManage.loadLayer(fn);
+                    String ext = GlobalUtil.getFileExtension(fn);
+                    if (ext.equals("bil")) {
+                        aLayer.setProjInfo(this._mapDocument.getActiveMapFrame().getMapView().getProjection().getProjInfo());
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (aLayer != null) {
-                this._mapDocument.getActiveMapFrame().addLayer(aLayer);
+                if (aLayer != null) {
+                    this._mapDocument.getActiveMapFrame().addLayer(aLayer);
+                }
             }
         }
         this.setCursor(Cursor.getDefaultCursor());
@@ -2510,6 +2573,12 @@ public class FrmMain extends JFrame implements IApplication {
     private void jMenuItem_ClippingActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         FrmClipping frm = new FrmClipping(this, false);
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }
+    
+    private void jMenuItem_AnimatorActionPerformed(java.awt.event.ActionEvent evt) {
+        FrmGifAnimator frm = new FrmGifAnimator(this, false);
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }
@@ -2629,6 +2698,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JComboBox jComboBox_PageZoom;
     private javax.swing.JLabel jLabel_Coordinate;
     private javax.swing.JLabel jLabel_Status;
+    private javax.swing.JLabel jLabel_ProgressBar;
     private javax.swing.JMenuBar jMenuBar_Main;
     private javax.swing.JMenuItem jMenuItem_About;
     private javax.swing.JMenuItem jMenuItem_AttributeData;
@@ -2650,6 +2720,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_Options;
     private javax.swing.JMenuItem jMenuItem_OutputMapData;
     private javax.swing.JMenuItem jMenuItem_AddXYData;
+    private javax.swing.JMenuItem jMenuItem_Animator;
     private javax.swing.JMenuItem jMenuItem_PluginManager;
     private javax.swing.JMenuItem jMenuItem_Projection;
     private javax.swing.JMenuItem jMenuItem_Save;
@@ -2665,7 +2736,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenu jMenu_Tools;
     private javax.swing.JMenu jMenu_View;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel_Status;
     private javax.swing.JPanel jPanel_LayoutTab;
     private javax.swing.JPanel jPanel_MainToolBar;
     private javax.swing.JPanel jPanel_MapTab;
@@ -2688,4 +2759,5 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JToolBar jToolBar_Base;
     private javax.swing.JToolBar jToolBar_Graphic;
     private javax.swing.JToolBar jToolBar_Layout;
+    private javax.swing.JProgressBar jProgressBar_Main;
 }
