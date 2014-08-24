@@ -4,7 +4,10 @@
  */
 package meteoinfo.forms;
 
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,20 +15,37 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleEdge;
+import org.jfree.ui.RectangleInsets;
 import org.meteoinfo.data.GridData;
 import org.meteoinfo.data.meteodata.Dimension;
 import org.meteoinfo.data.meteodata.MeteoDataInfo;
 import org.meteoinfo.data.meteodata.PlotDimension;
+import org.meteoinfo.data.meteodata.TrajDataInfo;
 import org.meteoinfo.data.meteodata.Variable;
+import org.meteoinfo.data.meteodata.hysplit.HYSPLITTrajDataInfo;
 import org.meteoinfo.global.PointD;
+import org.meteoinfo.layer.VectorLayer;
+import org.meteoinfo.layout.LayoutChart;
+import org.meteoinfo.layout.MapLayout;
+import org.meteoinfo.shape.PointZ;
+import org.meteoinfo.shape.PolylineZShape;
 
 /**
  *
@@ -33,6 +53,7 @@ import org.meteoinfo.global.PointD;
  */
 public class FrmOneDim extends javax.swing.JFrame {
 
+    private FrmMain mainGUI;
     private MeteoDataInfo _meteoDataInfo = new MeteoDataInfo();
     private ChartPanel _chartPanel;
     private PlotDimension _plotDimension;
@@ -44,32 +65,29 @@ public class FrmOneDim extends javax.swing.JFrame {
     /**
      * Creates new form FrmOneDim
      */
-    public FrmOneDim(MeteoDataInfo aDataInfo) {
+    public FrmOneDim(FrmMain frmMain, MeteoDataInfo aDataInfo) {
         initComponents();
 
+        mainGUI = frmMain;
         this.jComboBox_Variable.setEditable(true);
-//        this.jTextField_NewVariable.setVisible(false);
-//        Graphics g = this.getGraphics();
-//        FontMetrics metrics = g.getFontMetrics(this.jLabel_Variable.getFont());
-//        this.jLabel_Variable.setSize(metrics.stringWidth(this.jLabel_Variable.getText()), metrics.getHeight());
-//        this.jLabel_Variable.setLocation(this.jComboBox_Variable.getX() - this.jLabel_Variable.getWidth() - 4, this.jLabel_Variable.getY());
-
-//        DefaultPieDataset dfp = new DefaultPieDataset();
-//        dfp.setValue("管理人员", 25);
-//        dfp.setValue("市场人员", 35);
-//        dfp.setValue("开发人员", 20);
-//        dfp.setValue("后勤人员", 5);
-//        dfp.setValue("财务人员", 15);
-//        //Create JFreeChart object
-//        JFreeChart a = ChartFactory.createPieChart("CityInfoPort公司组织架构图", dfp, true, true, true);
         _chartPanel = new ChartPanel(null);
         //_chartPanel.setFont(new Font("宋体", Font.PLAIN, 12));
         //((PiePlot) a.getPlot()).setLabelFont(new Font("宋体", Font.PLAIN, 12));
         this.jSplitPane1.setRightComponent(_chartPanel);
+        JPopupMenu popupMenu = this._chartPanel.getPopupMenu();
+        if (popupMenu != null) {
+            JMenuItem addToLayoutMI = new JMenuItem("Add to Layout");
+            addToLayoutMI.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    onAddToLayoutClick();
+                }
+            });
+            popupMenu.add(addToLayoutMI);
+        }
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _meteoDataInfo = aDataInfo;
-        //TB_NewVariable.Visible = false;
 
         BufferedImage image = null;
         try {
@@ -100,11 +118,11 @@ public class FrmOneDim extends javax.swing.JFrame {
         jButton_Animator = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel_DrawType = new javax.swing.JLabel();
         jComboBox_DrawType = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel_PlotDims = new javax.swing.JLabel();
         jComboBox_PlotDim = new javax.swing.JComboBox();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel_Dimensions = new javax.swing.JPanel();
         jCheckBox_Time = new javax.swing.JCheckBox();
         jComboBox_Time1 = new javax.swing.JComboBox();
         jCheckBox_Level = new javax.swing.JCheckBox();
@@ -223,7 +241,7 @@ public class FrmOneDim extends javax.swing.JFrame {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(250, 463));
 
-        jLabel3.setText("DrawType:");
+        jLabel_DrawType.setText("DrawType:");
 
         jComboBox_DrawType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_DrawType.addActionListener(new java.awt.event.ActionListener() {
@@ -232,7 +250,7 @@ public class FrmOneDim extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("PlotDims:");
+        jLabel_PlotDims.setText("PlotDims:");
 
         jComboBox_PlotDim.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_PlotDim.addActionListener(new java.awt.event.ActionListener() {
@@ -241,7 +259,7 @@ public class FrmOneDim extends javax.swing.JFrame {
             }
         });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Dimensions"));
+        jPanel_Dimensions.setBorder(javax.swing.BorderFactory.createTitledBorder("Dimensions"));
 
         jCheckBox_Time.setText("Time");
         jCheckBox_Time.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -287,59 +305,59 @@ public class FrmOneDim extends javax.swing.JFrame {
 
         jComboBox_Lon2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel_DimensionsLayout = new javax.swing.GroupLayout(jPanel_Dimensions);
+        jPanel_Dimensions.setLayout(jPanel_DimensionsLayout);
+        jPanel_DimensionsLayout.setHorizontalGroup(
+            jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_DimensionsLayout.createSequentialGroup()
+                .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_DimensionsLayout.createSequentialGroup()
                         .addComponent(jCheckBox_Lat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox_Lat2, 0, 146, Short.MAX_VALUE)
                             .addComponent(jComboBox_Lat1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(jPanel_DimensionsLayout.createSequentialGroup()
                         .addComponent(jCheckBox_Lon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox_Lon1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox_Lon2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_DimensionsLayout.createSequentialGroup()
+                        .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBox_Level)
                             .addComponent(jCheckBox_Time))
                         .addGap(6, 6, 6)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox_Time1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox_Time2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox_Level1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox_Level2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanel_DimensionsLayout.setVerticalGroup(
+            jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_DimensionsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox_Time)
                     .addComponent(jComboBox_Time1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox_Time2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox_Level)
                     .addComponent(jComboBox_Level1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox_Level2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox_Lat)
                     .addComponent(jComboBox_Lat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox_Lat2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox_Lon)
                     .addComponent(jComboBox_Lon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -364,16 +382,16 @@ public class FrmOneDim extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(jLabel_PlotDims)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_PlotDim, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Dimensions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(jLabel_DrawType)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_DrawType, 0, 172, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 12, Short.MAX_VALUE)
                         .addComponent(jLabel_Variable)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_Variable, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -388,14 +406,14 @@ public class FrmOneDim extends javax.swing.JFrame {
                     .addComponent(jLabel_Variable))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabel_DrawType)
                     .addComponent(jComboBox_DrawType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(jLabel_PlotDims)
                     .addComponent(jComboBox_PlotDim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_Dimensions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -409,7 +427,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
+            .addGap(0, 452, Short.MAX_VALUE)
         );
 
         jSplitPane1.setRightComponent(jPanel2);
@@ -426,7 +444,7 @@ public class FrmOneDim extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE))
         );
 
         pack();
@@ -449,56 +467,83 @@ public class FrmOneDim extends javax.swing.JFrame {
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-        _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
-
-        _meteoDataInfo.setDimensionSet(_plotDimension);
-
-        //Get data
-        _meteoDataInfo.setLonIndex(this.jComboBox_Lon1.getSelectedIndex());
-        _meteoDataInfo.setLatIndex(this.jComboBox_Lat1.getSelectedIndex());
-        _meteoDataInfo.setLevelIndex(this.jComboBox_Level1.getSelectedIndex());
-        _meteoDataInfo.setTimeIndex(this.jComboBox_Time1.getSelectedIndex());
         String varName = this.jComboBox_Variable.getSelectedItem().toString();
+        switch (this._meteoDataInfo.getDataType()) {
+            case HYSPLIT_Traj:
+                VectorLayer layer = ((TrajDataInfo) this._meteoDataInfo.getDataInfo()).createTrajLineLayer();
+                List<List<PointD>> points = new ArrayList<List<PointD>>();
+                List<String> serieNames = new ArrayList<String>();                
+                int i = 0;
+                for (PolylineZShape shape : (List<PolylineZShape>)layer.getShapes()){
+                    serieNames.add(layer.getCellValue("StartDate", i).toString());
+                    List<PointD> plist = new ArrayList<PointD>();
+                    for (int j = 0; j < shape.getPoints().size(); j++) {
+                        if (varName.equals("Pressure"))
+                            plist.add(new PointD(0 - j, ((PointZ)shape.getPoints().get(j)).Z));
+                        else
+                            plist.add(new PointD(0 - j, ((PointZ)shape.getPoints().get(j)).M));
+                    }
+                    points.add(plist);
+                    i += 1;
+                }
+                this.createChart(points, null, "Age Hour", serieNames, "Line");
+                break;
+            default:
+                _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
 
-        //this.jComboBox_Variable.actionPerformed(null);
-        GridData gData = _meteoDataInfo.getGridData(varName);        
+                _meteoDataInfo.setDimensionSet(_plotDimension);
 
-        if (gData == null) {
-            return;
-        }
+                //Get data
+                _meteoDataInfo.setLonIndex(this.jComboBox_Lon1.getSelectedIndex());
+                _meteoDataInfo.setLatIndex(this.jComboBox_Lat1.getSelectedIndex());
+                _meteoDataInfo.setLevelIndex(this.jComboBox_Level1.getSelectedIndex());
+                _meteoDataInfo.setTimeIndex(this.jComboBox_Time1.getSelectedIndex());                
 
-        _pointList = new ArrayList<PointD>();
-        PointD aP;
-        for (int i = 0; i < gData.getXNum(); i++) {
-            if (_plotDimension == PlotDimension.Level) {
-                aP = new PointD();
-                aP.X = gData.data[0][i];
-                aP.Y = gData.xArray[i];
-            } else {
-                aP = new PointD();
-                aP.X = gData.xArray[i];
-                aP.Y = gData.data[0][i];
-            }
-            _pointList.add(aP);
-        }
+                //this.jComboBox_Variable.actionPerformed(null);
+                GridData gData = _meteoDataInfo.getGridData(varName);
 
-        if (_pointList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No data!");
-            this.setCursor(Cursor.getDefaultCursor());
-            return;
-        }
+                if (gData == null) {
+                    return;
+                }
 
-        //Plot
-        this.createChart(_pointList, _graphType);
+                _pointList = new ArrayList<PointD>();
+                PointD aP;
+                for (i = 0; i < gData.getXNum(); i++) {
+                    if (_plotDimension == PlotDimension.Level) {
+                        aP = new PointD();
+                        aP.X = gData.data[0][i];
+                        aP.Y = gData.xArray[i];
+                    } else {
+                        aP = new PointD();
+                        aP.X = gData.xArray[i];
+                        aP.Y = gData.data[0][i];
+                    }
+                    _pointList.add(aP);
+                }
 
-        //Enable time controls            
-        if (!this.jCheckBox_Time.isSelected()) {
-            if (this.jComboBox_Time1.getItemCount() > 1) {
-                this.jButton_NexTime.setEnabled(true);
-                this.jButton_PreTime.setEnabled(true);
-                this.jButton_Animator.setEnabled(true);
+                if (_pointList.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No data!");
+                    this.setCursor(Cursor.getDefaultCursor());
+                    return;
+                }
 
-            }
+                //Plot
+                points = new ArrayList<List<PointD>>();
+                points.add(_pointList);
+                serieNames = new ArrayList<String>();
+                serieNames.add(varName);
+                String title = varName + "_" + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
+                this.createChart(points, title, "X", serieNames, _graphType);
+
+                //Enable time controls            
+                if (!this.jCheckBox_Time.isSelected()) {
+                    if (this.jComboBox_Time1.getItemCount() > 1) {
+                        this.jButton_NexTime.setEnabled(true);
+                        this.jButton_PreTime.setEnabled(true);
+                        this.jButton_Animator.setEnabled(true);
+                    }
+                }
+                break;
         }
 
         this.setCursor(Cursor.getDefaultCursor());
@@ -547,9 +592,10 @@ public class FrmOneDim extends javax.swing.JFrame {
         }
 
         Variable var = _meteoDataInfo.getDataInfo().getVariable(this.jComboBox_Variable.getSelectedItem().toString());
-        if (var == null)
+        if (var == null) {
             return;
-        
+        }
+
         _meteoDataInfo.setVariableIndex(this.jComboBox_Variable.getSelectedIndex());
         this.setVariableParas(var);
         updateEndDimSetS(this.jComboBox_Level1, this.jComboBox_Level2);
@@ -705,29 +751,71 @@ public class FrmOneDim extends javax.swing.JFrame {
         // TODO add your handling code here:
         this._isLoading = true;
 
-        //Set dimensions
-        this.jComboBox_Lat2.setVisible(false);
-        this.jComboBox_Level2.setVisible(false);
-        this.jComboBox_Lon2.setVisible(false);
-        this.jComboBox_Time2.setVisible(false);
-        this.jCheckBox_Time.setEnabled(false);
-        this.jCheckBox_Level.setEnabled(false);
-        this.jCheckBox_Lon.setEnabled(false);
-        this.jCheckBox_Lat.setEnabled(false);
+        switch (this._meteoDataInfo.getDataType()) {
+            case HYSPLIT_Traj:
+                this.jPanel_Dimensions.setVisible(false);
+                this.jComboBox_DrawType.setVisible(false);
+                this.jComboBox_Lat1.setVisible(false);
+                this.jComboBox_Lat2.setVisible(false);
+                this.jComboBox_Level1.setVisible(false);
+                this.jComboBox_Level2.setVisible(false);
+                this.jComboBox_Lon1.setVisible(false);
+                this.jComboBox_Lon2.setVisible(false);
+                this.jComboBox_PlotDim.setVisible(false);
+                this.jComboBox_Time1.setVisible(false);
+                this.jComboBox_Time2.setVisible(false);
+                this.jCheckBox_Lat.setVisible(false);
+                this.jCheckBox_Level.setVisible(false);
+                this.jCheckBox_Lon.setVisible(false);
+                this.jCheckBox_Time.setVisible(false);
+                this.jLabel_DrawType.setVisible(false);
+                this.jLabel_PlotDims.setVisible(false);
 
-        updateDimensions();
+                this.jComboBox_Variable.setEditable(false);
+                this.jComboBox_Variable.removeAllItems();
+                this.jComboBox_Variable.addItem("Altitude");
+                this.jComboBox_Variable.addItem("Pressure");
+//                HYSPLITTrajDataInfo trajDataInfo = (HYSPLITTrajDataInfo) this._meteoDataInfo.getDataInfo();
+//                if (trajDataInfo.varNames.get(0).size() > 0) {
+//                    for (String varName : trajDataInfo.varNames.get(0)) {
+//                        this.jComboBox_Variable.addItem(varName);
+//                    }
+//                }
+                this.jComboBox_Variable.setSelectedIndex(0);
+                break;
+            default:
+                //Set dimensions
+                this.jComboBox_Lat2.setVisible(false);
+                this.jComboBox_Level2.setVisible(false);
+                this.jComboBox_Lon2.setVisible(false);
+                this.jComboBox_Time2.setVisible(false);
+                this.jCheckBox_Time.setEnabled(false);
+                this.jCheckBox_Level.setEnabled(false);
+                this.jCheckBox_Lon.setEnabled(false);
+                this.jCheckBox_Lat.setEnabled(false);
 
-        //Set draw type
-        this.jComboBox_DrawType.removeAllItems();
-        this.jComboBox_DrawType.addItem("Line");
-        this.jComboBox_DrawType.addItem("Bar");
-        this.jComboBox_DrawType.setSelectedIndex(0);
+                updateDimensions();
+
+                //Set draw type
+                this.jComboBox_DrawType.removeAllItems();
+                this.jComboBox_DrawType.addItem("Line");
+                this.jComboBox_DrawType.addItem("Bar");
+                this.jComboBox_DrawType.setSelectedIndex(0);
+                break;
+        }
 
         _isLoading = false;
 
     }//GEN-LAST:event_formWindowOpened
 
-    private void setVariableParas(Variable var) {        
+    private void onAddToLayoutClick() {
+        MapLayout mapLayout = mainGUI.getMapDocument().getMapLayout();
+        LayoutChart chart = mapLayout.addChart(100, 100);
+        chart.setChart(this._chartPanel.getChart());
+        mapLayout.paintGraphics();
+    }
+
+    private void setVariableParas(Variable var) {
         int i;
         int levelIdx = this.jComboBox_Level1.getSelectedIndex();
 
@@ -851,28 +939,54 @@ public class FrmOneDim extends javax.swing.JFrame {
         }
     }
 
-    private void createChart(List<PointD> points, String chartType) {
-        String title = this.jComboBox_Variable.getSelectedItem().toString() + "_"
-                + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
+    private void createChart(List<List<PointD>> points, String title, String xLabel, List<String> serieNames, String chartType) {        
         String yName = this.jComboBox_Variable.getSelectedItem().toString();
 
         if (chartType.equals("Line")) {
-            XYSeries xySeries = new XYSeries(yName);
-            for (PointD p : points) {
-                xySeries.add(p.X, p.Y);
-            }
             XYSeriesCollection xyseriescollection = new XYSeriesCollection();
-            xyseriescollection.addSeries(xySeries);
-            JFreeChart jfreechart = ChartFactory.createXYLineChart(title, "X", yName,
+            int i = 0;
+            for (List<PointD> plist : points) {
+                XYSeries xySeries = new XYSeries(serieNames.get(i));
+                for (PointD p : plist) {
+                    xySeries.add(p.X, p.Y);
+                }
+                xyseriescollection.addSeries(xySeries);
+                i += 1;
+            }
+            JFreeChart chart = ChartFactory.createXYLineChart(title, xLabel, yName,
                     xyseriescollection, PlotOrientation.VERTICAL, true, true, false);
-            this._chartPanel.setChart(jfreechart);
+            XYPlot plot = chart.getXYPlot();
+            plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
+            plot.setDomainPannable(true);
+            plot.setRangePannable(true);
+            plot.setBackgroundPaint(null);
+            plot.setRangeGridlinePaint(Color.gray);
+            LegendTitle legend = (LegendTitle) chart.getSubtitle(0);
+            legend.setPosition(RectangleEdge.TOP);
+            NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+            yAxis.setAutoRangeIncludesZero(false);
+            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+            XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+            renderer.setBaseShapesVisible(true);
+            renderer.setBaseShapesFilled(false);            
+            this._chartPanel.setChart(chart);
             this._chartPanel.repaint();
         } else if (chartType.equals("Bar")) {
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-            for (PointD p : points) {
-                dataset.addValue(p.Y, yName, String.valueOf(p.X));
+            int i = 0;
+            for (List<PointD> plist : points) {
+                String sName = serieNames.get(i);
+                for (PointD p : plist) {
+                    dataset.addValue(p.Y, sName, String.valueOf(p.X));
+                }
+                i += 1;
             }
-            JFreeChart chart = ChartFactory.createBarChart(title, "X", yName, dataset, PlotOrientation.VERTICAL, true, true, true);
+            JFreeChart chart = ChartFactory.createBarChart(title, xLabel, yName, dataset, PlotOrientation.VERTICAL, true, true, true);
+            CategoryPlot plot = chart.getCategoryPlot();
+            plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
+            NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+            yAxis.setAutoRangeIncludesZero(false);
+            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
             this._chartPanel.setChart(chart);
             this._chartPanel.repaint();
         }
@@ -908,7 +1022,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmOneDim(null).setVisible(true);
+                new FrmOneDim(null, null).setVisible(true);
             }
         });
     }
@@ -935,12 +1049,12 @@ public class FrmOneDim extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox_Time1;
     private javax.swing.JComboBox jComboBox_Time2;
     private javax.swing.JComboBox jComboBox_Variable;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel_DrawType;
+    private javax.swing.JLabel jLabel_PlotDims;
     private javax.swing.JLabel jLabel_Variable;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel_Dimensions;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JSplitPane jSplitPane1;

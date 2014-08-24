@@ -196,11 +196,11 @@ public class Program {
 //                    }
 //                }.start();
 
-                //Locale.setDefault(Locale.ENGLISH);
+                Locale.setDefault(Locale.ENGLISH);
                 //registerFonts();
                 FrmMain frame = new FrmMain();
                 frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-                frame.setLocationRelativeTo(null);
+                //frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
         });

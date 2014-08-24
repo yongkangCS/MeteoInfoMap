@@ -13,7 +13,9 @@
  */
 package meteoinfo.classes;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +49,10 @@ public class Options {
     private String _fileName;
     private Font _textFont = new Font("Simsun", Font.PLAIN, 15);
     private Font _legendFont;
-    private String _scriptLanguage = "Groovy";    
+    private String _scriptLanguage = "Groovy"; 
+    private boolean showStartMeteoDataDlg = true;
+    private Point mainFormLocation = new Point(0, 0);
+    private Dimension mainFormSize = new Dimension(1000, 650);
     // </editor-fold>
     // <editor-fold desc="Constructor">
     
@@ -115,6 +120,54 @@ public class Options {
     public void setScriptLanguage(String value) {
         this._scriptLanguage = value;
     }
+    
+    /**
+     * Get if show start meteo data dialog
+     * @return Boolean
+     */
+    public boolean isShowStartMeteoDataDlg(){
+        return this.showStartMeteoDataDlg;
+    }
+    
+    /**
+     * Set if show start meteo data dialog
+     * @param value Boolean
+     */
+    public void setShowStartMeteoDataDlg(boolean value){
+        this.showStartMeteoDataDlg = value;
+    }
+    
+    /**
+     * Get main form location
+     * @return Main form location
+     */
+    public Point getMainFormLocation(){
+        return this.mainFormLocation;
+    }
+    
+    /**
+     * Set main form location
+     * @param value Main form location
+     */
+    public void setMainFormLocation(Point value){
+        this.mainFormLocation = value;
+    }
+    
+    /**
+     * Get main form size
+     * @return Main form size
+     */
+    public Dimension getMainFormSize(){
+        return this.mainFormSize;
+    }
+    
+    /**
+     * Set main form size
+     * @param value Main form size
+     */
+    public void setMainFormSize(Dimension value){
+        this.mainFormSize = value;
+    }
 
     // </editor-fold>
     // <editor-fold desc="Methods">
@@ -172,6 +225,21 @@ public class Options {
         slAttr.setValue(this._scriptLanguage);
         scriptlang.setAttributeNode(slAttr);
         root.appendChild(scriptlang);
+        
+        //Start up form setting
+        Element startForm = doc.createElement("Startup");
+        Attr meteoDlgAttr = doc.createAttribute("ShowMeteoDataDlg");
+        Attr mfLocationAttr = doc.createAttribute("MainFormLocation");
+        Attr mfSizeAttr = doc.createAttribute("MainFormSize");
+        meteoDlgAttr.setValue(String.valueOf(this.showStartMeteoDataDlg));
+        mfLocationAttr.setValue(String.valueOf(this.mainFormLocation.x) + "," +
+                String.valueOf(this.mainFormLocation.y));
+        mfSizeAttr.setValue(String.valueOf(this.mainFormSize.width) + "," +
+                String.valueOf(this.mainFormSize.height));
+        startForm.setAttributeNode(meteoDlgAttr);
+        startForm.setAttributeNode(mfLocationAttr);
+        startForm.setAttributeNode(mfSizeAttr);
+        root.appendChild(startForm);
                 
         try {
             TransformerFactory tf = TransformerFactory.newInstance();
@@ -225,7 +293,17 @@ public class Options {
             
             //Script language
             Node scriptlang = root.getElementsByTagName("ScriptLanguage").item(0);
-            this._scriptLanguage = scriptlang.getAttributes().getNamedItem("Language").getNodeValue();                        
+            this._scriptLanguage = scriptlang.getAttributes().getNamedItem("Language").getNodeValue();   
+            
+            //Start up form setting
+            Node startForm = root.getElementsByTagName("Startup").item(0);
+            this.showStartMeteoDataDlg = Boolean.parseBoolean(startForm.getAttributes().getNamedItem("ShowMeteoDataDlg").getNodeValue());
+            String loc = startForm.getAttributes().getNamedItem("MainFormLocation").getNodeValue();
+            this.mainFormLocation.x = Integer.parseInt(loc.split(",")[0]);
+            this.mainFormLocation.y = Integer.parseInt(loc.split(",")[1]);            
+            String size = startForm.getAttributes().getNamedItem("MainFormSize").getNodeValue();
+            this.mainFormSize.width = Integer.parseInt(size.split(",")[0]);
+            this.mainFormSize.height = Integer.parseInt(size.split(",")[1]);
         } catch (Exception e) {
         }
     }

@@ -218,7 +218,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jButton_SectionPlot = new javax.swing.JButton();
         jButton_1DPlot = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
-        jSplitButton_Stat = new org.meteoinfo.global.ui.JSplitButton();
+        jSplitButton_Stat = new org.meteoinfo.ui.JSplitButton();
         jPopupMenu_Stat = new javax.swing.JPopupMenu();
         jMenuItem_ArrivalTime = new javax.swing.JMenuItem();
 
@@ -718,7 +718,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 }
             });
             mnuLayer.add(removeLayerMI);
-            mnuLayer.show(this, evt.getX(), evt.getY());
+            mnuLayer.show(this.jList_DataFiles, evt.getX(), evt.getY());
         }
     }
 
@@ -1356,8 +1356,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
     private void jButton_1DPlotActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        //JOptionPane.showMessageDialog(null, "Under developing!");
-        FrmOneDim afrm = new FrmOneDim(_meteoDataInfo);
+        FrmOneDim afrm = new FrmOneDim(this._parent, _meteoDataInfo);
         afrm.setLocationRelativeTo(this._parent);
         afrm.setVisible(true);
     }
@@ -1747,6 +1746,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         }
         this.setTitle(this.getTitle().split("-")[0].trim() + " - " + dataType);
 
+        this.jPanel_DataSet.setEnabled(true);
         for (Component aItem : this.jToolBar1.getComponents()) {
             aItem.setEnabled(true);
         }
@@ -1754,8 +1754,12 @@ public class FrmMeteoData extends javax.swing.JDialog {
         this.jButton_Animator.setEnabled(false);
         this.jButton_PreTime.setEnabled(false);
         this.jButton_NexTime.setEnabled(false);
-        this.jButton_Setting.setEnabled(true);
-        this.jPanel_DataSet.setEnabled(true);
+        this.jButton_Setting.setEnabled(true); 
+        switch (_meteoDataInfo.getDataType()) {
+            case HYSPLIT_Traj:
+                this.jButton_SectionPlot.setEnabled(false);
+                break;
+        }               
 
         //Projection
         updateProjection();
@@ -2695,7 +2699,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
-    private org.meteoinfo.global.ui.JSplitButton jSplitButton_Stat;
+    private org.meteoinfo.ui.JSplitButton jSplitButton_Stat;
     private javax.swing.JPopupMenu jPopupMenu_Stat;
     private javax.swing.JMenuItem jMenuItem_ArrivalTime;
     private javax.swing.JSplitPane jSplitPane1;

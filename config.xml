@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="config.xml" Type="configurefile">
-  <Path OpenPath="D:\MyProgram\Distribution\CSharp\TrajStat\TrajStat\Sample"/>
+  <Path OpenPath="D:\MyProgram\java\MeteoInfoDev\MeteoInfo\plugins\TrajStat\legend"/>
   <Font>
-    <TextFont FontName="宋体" FontSize="15"/>
-    <LegendFont FontName="宋体" FontSize="14"/>
+    <TextFont FontName="SimSun" FontSize="15"/>
+    <LegendFont FontName="SimSun" FontSize="14"/>
   </Font>
   <ScriptLanguage Language="Jython"/>
+  <Startup MainFormLocation="144,53" MainFormSize="1000,650" ShowMeteoDataDlg="false"/>
 </MeteoInfo>

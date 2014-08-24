@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.VectorLayer;
 import meteoinfo.classes.GenericFileFilter;
@@ -553,9 +554,7 @@ public class FrmOutputMapData extends javax.swing.JDialog {
             aDlg.setCurrentDirectory(dir);
         }
         aDlg.setAcceptAllFileFilterUsed(false);
-        if (aDlg.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
+        if (aDlg.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {            
             File file = aDlg.getSelectedFile();
             System.setProperty("user.dir", file.getParent());
             String extent = ((GenericFileFilter) aDlg.getFileFilter()).getFileExtent();
@@ -564,37 +563,59 @@ public class FrmOutputMapData extends javax.swing.JDialog {
                 fileName = fileName + "." + extent;
             }
 
-            //Create a VectorLayer with selected shapes
-            int i, j;
-            VectorLayer aLayer = new VectorLayer(_currentLayer.getShapeType());
-            for (i = 0; i < _currentLayer.getFieldNumber(); i++) {
-                aLayer.editAddField(_currentLayer.getField(i).getColumnName(), _currentLayer.getField(i).getDataType());
-            }
-            boolean hasSelShape = _currentLayer.hasSelectedShapes();
+            this.saveShapeFile(fileName);                            
+        }
+    }
 
-            for (i = 0; i < _currentLayer.getShapeNum(); i++) {
-                Shape aPS = _currentLayer.getShapes().get(i);
-                if (hasSelShape) {
-                    if (!aPS.isSelected()) {
-                        continue;
-                    }
+    private void saveShapeFile(final String fileName) {
+        SwingWorker worker = new SwingWorker<String, String>() {
+            @Override
+            protected String doInBackground() throws Exception {
+                FrmOutputMapData.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                FrmOutputMapData.this.jProgressBar1.setVisible(true);
+                FrmOutputMapData.this.jProgressBar1.setValue(0);
+                
+                //Create a VectorLayer with selected shapes
+                int i, j;
+                VectorLayer aLayer = new VectorLayer(_currentLayer.getShapeType());
+                for (i = 0; i < _currentLayer.getFieldNumber(); i++) {
+                    aLayer.editAddField(_currentLayer.getField(i).getColumnName(), _currentLayer.getField(i).getDataType());
                 }
-                int sNum = aLayer.getShapeNum();
-                try {
-                    if (aLayer.editInsertShape(aPS, sNum)) {
-                        for (j = 0; j < aLayer.getFieldNumber(); j++) {
-                            aLayer.editCellValue(j, sNum, _currentLayer.getCellValue(j, i));
+                boolean hasSelShape = _currentLayer.hasSelectedShapes();
+
+                for (i = 0; i < _currentLayer.getShapeNum(); i++) {
+                    Shape aPS = _currentLayer.getShapes().get(i);
+                    if (hasSelShape) {
+                        if (!aPS.isSelected()) {
+                            continue;
                         }
                     }
-                } catch (Exception ex) {
-                    Logger.getLogger(FrmOutputMapData.class.getName()).log(Level.SEVERE, null, ex);
+                    int sNum = aLayer.getShapeNum();
+                    try {
+                        if (aLayer.editInsertShape(aPS, sNum)) {
+                            for (j = 0; j < aLayer.getFieldNumber(); j++) {
+                                aLayer.editCellValue(j, sNum, _currentLayer.getCellValue(j, i));
+                            }
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(FrmOutputMapData.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    FrmOutputMapData.this.jProgressBar1.setValue((int)((double)i / _currentLayer.getShapeNum() * 100));
                 }
-
                 aLayer.setProjInfo(_currentLayer.getProjInfo());
                 aLayer.saveFile(fileName);
-                this.setCursor(Cursor.getDefaultCursor());
+                    
+                return "";
             }
-        }
+            
+            @Override
+            protected void done() {
+                FrmOutputMapData.this.setCursor(Cursor.getDefaultCursor());
+                FrmOutputMapData.this.jProgressBar1.setVisible(false);
+            }
+        };
+        
+        worker.execute();
     }
 
     private void saveBLNMapFile() {

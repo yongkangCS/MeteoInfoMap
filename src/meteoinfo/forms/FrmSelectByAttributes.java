@@ -384,7 +384,7 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
         Collections.sort(valueList);
 
         this.jList_UniqueValues.setEnabled(true);
-        DefaultListModel listModel = new DefaultListModel();
+        DefaultListModel listModel = new DefaultListModel();        
         if (isNumeric) {
             for (String vStr : valueList) {
                 listModel.addElement(vStr);

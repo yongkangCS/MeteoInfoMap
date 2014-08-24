@@ -19,19 +19,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.meteoinfo.data.mapdata.Field;
 import org.meteoinfo.global.GenericFileFilter;
-import org.meteoinfo.data.mapdata.MapDataManage;
 import org.meteoinfo.global.MIMath;
 import org.meteoinfo.global.PointD;
-import org.meteoinfo.global.table.DataColumn;
 import org.meteoinfo.global.table.DataTypes;
+import org.meteoinfo.global.util.GlobalUtil;
 import org.meteoinfo.layer.LayerDrawType;
-import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.legend.LegendManage;
 import org.meteoinfo.shape.PointShape;
 import org.meteoinfo.shape.ShapeTypes;
-import ucar.ma2.DataType;
 
 /**
  *
@@ -40,6 +38,8 @@ import ucar.ma2.DataType;
 public class FrmAddXYData extends javax.swing.JDialog {
 
     private FrmMain _parent;
+    private String separator = null;
+    private List<Field> fields = new ArrayList<Field>();
 
     /**
      * Creates new form FrmAddXYData
@@ -50,6 +50,8 @@ public class FrmAddXYData extends javax.swing.JDialog {
         this.jPanel_SelFields.setEnabled(false);
 
         _parent = (FrmMain) parent;
+        this.jComboBox_LonField.removeAllItems();
+        this.jComboBox_LatField.removeAllItems();
     }
 
     /**
@@ -71,7 +73,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jComboBox_LatField = new javax.swing.JComboBox();
         jButton_AddData = new javax.swing.JButton();
-        jButton_Cancel = new javax.swing.JButton();
+        jButton_Close = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -83,7 +85,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
         jTextArea1.setColumns(20);
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(4);
-        jTextArea1.setText("This tool will create a station layer from a comma-delimited text file. The file must contain column titles as the first row.");
+        jTextArea1.setText("This tool will create a station layer from a ASCII file with comma, simicolon or space separator. The file must contain column titles as the first row.");
         jTextArea1.setWrapStyleWord(true);
         jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setViewportView(jTextArea1);
@@ -115,7 +117,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
                     .addGroup(jPanel_SelFieldsLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox_LonField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jComboBox_LonField, 0, 248, Short.MAX_VALUE))
                     .addGroup(jPanel_SelFieldsLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -143,10 +145,10 @@ public class FrmAddXYData extends javax.swing.JDialog {
             }
         });
 
-        jButton_Cancel.setText("Cancel");
-        jButton_Cancel.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Close.setText("Close");
+        jButton_Close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_CancelActionPerformed(evt);
+                jButton_CloseActionPerformed(evt);
             }
         });
 
@@ -165,11 +167,11 @@ public class FrmAddXYData extends javax.swing.JDialog {
                         .addComponent(jTextField_InputFile)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton_AddData)
                 .addGap(67, 67, 67)
-                .addComponent(jButton_Cancel)
-                .addGap(72, 72, 72))
+                .addComponent(jButton_Close)
+                .addGap(75, 75, 75))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,13 +182,13 @@ public class FrmAddXYData extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_InputFile)
                     .addComponent(jTextField_InputFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel_SelFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_AddData)
-                    .addComponent(jButton_Cancel))
-                .addContainerGap())
+                    .addComponent(jButton_Close))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -202,7 +204,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
         aDlg.setCurrentDirectory(pathDir);
         String[] fileExts = new String[]{"csv", "txt"};
         GenericFileFilter allFileFilter = new GenericFileFilter(fileExts, "Supported Formats");
-        aDlg.addChoosableFileFilter(allFileFilter);        
+        aDlg.addChoosableFileFilter(allFileFilter);
         fileExts = new String[]{"csv"};
         GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "CSV File (*.csv)");
         aDlg.addChoosableFileFilter(mapFileFilter);
@@ -216,12 +218,36 @@ public class FrmAddXYData extends javax.swing.JDialog {
             this.jTextField_InputFile.setText(aFile.getAbsolutePath());
             try {
                 BufferedReader sr = new BufferedReader(new FileReader(aFile));
-                String title = sr.readLine();
-                String[] titleArray = title.split(",");
-                if (titleArray.length <= 1) {
+                String title = sr.readLine().trim();
+                //Determine separator
+                separator = GlobalUtil.getSeparator(title);
+                String[] titleArray = GlobalUtil.split(title, separator);
+                if (titleArray.length <= 2) {
                     JOptionPane.showMessageDialog(null, "File Format Error!");
                     sr.close();
                 } else {
+                    //Get fields
+                    String aLine = sr.readLine().trim();    //Second line
+                    String[] dataArray = GlobalUtil.split(aLine, separator);
+                    if (dataArray.length != titleArray.length) {
+                        JOptionPane.showMessageDialog(null, "File Format Error!");
+                        sr.close();
+                        return;
+                    }
+                    String fieldName;
+                    DataTypes dataType;
+                    for (int i = 0; i < dataArray.length; i++) {
+                        fieldName = titleArray[i];
+                        if (MIMath.isNumeric(dataArray[i])) {
+                            dataType = DataTypes.Double;
+                        } else {
+                            dataType = DataTypes.String;
+                        }
+                        fields.add(new Field(fieldName, dataType));
+                    }
+
+                    sr.close();
+
                     this.jPanel_SelFields.setEnabled(true);
                     this.jComboBox_LonField.removeAllItems();
                     this.jComboBox_LatField.removeAllItems();
@@ -229,7 +255,6 @@ public class FrmAddXYData extends javax.swing.JDialog {
                         this.jComboBox_LonField.addItem(titleArray[i]);
                         this.jComboBox_LatField.addItem(titleArray[i]);
                     }
-                    sr.close();
                 }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(FrmAddXYData.class.getName()).log(Level.SEVERE, null, ex);
@@ -265,7 +290,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
                 if (!fileName.substring(fileName.length() - extent.length()).equals(extent)) {
                     fileName = fileName + "." + extent;
                 }
-                
+
                 //New layer
                 VectorLayer aLayer = new VectorLayer(ShapeTypes.Point);
                 aLayer.setLayerDrawType(LayerDrawType.Map);
@@ -273,6 +298,10 @@ public class FrmAddXYData extends javax.swing.JDialog {
                 aLayer.setFileName(fileName);
                 aLayer.setLegendScheme(LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Point, Color.black, 5));
                 aLayer.setVisible(true);
+                for (Field field : fields){
+                    aLayer.editAddField(field);
+                }
+                
                 int lonIdx = this.jComboBox_LonField.getSelectedIndex();
                 int latIdx = this.jComboBox_LatField.getSelectedIndex();
                 double lon, lat;
@@ -280,40 +309,11 @@ public class FrmAddXYData extends javax.swing.JDialog {
                 sr = new BufferedReader(new InputStreamReader(new FileInputStream(inFile), "gbk"));
                 //sr = new BufferedReader(new FileReader(new File(inFile)));
                 String[] dataArray;
-                String aLine = sr.readLine();    //First line - title
-                //Get field list
-                List<String> fieldList;
-                dataArray = aLine.split(",");
-                if (dataArray.length < 3) {
-                    JOptionPane.showMessageDialog(null, "The data should have at least three fields!");
-                    return;
-                }
-                fieldList = new ArrayList<String>(dataArray.length);
-                fieldList.addAll(Arrays.asList(dataArray));
-                //Judge field type
-                List<String> varList = new ArrayList<String>();
-                aLine = sr.readLine();    //First data line
-                dataArray = aLine.split(",");
-                for (int i = 3; i < dataArray.length; i++) {
-                    if (MIMath.isNumeric(dataArray[i])) {
-                        varList.add(fieldList.get(i));
-                    }
-                }
-                //Add fields
-                for (int i = 0; i < fieldList.size(); i++) {
-                    DataColumn aDC = new DataColumn();
-                    aDC.setColumnName(fieldList.get(i));
-                    if (varList.contains(fieldList.get(i))) {
-                        aDC.setDataType(DataTypes.Double);
-                    } else {
-                        aDC.setDataType(DataTypes.String);
-                    }
-                    aLayer.editAddField(aDC);
-                }
-                //Read data
-                //aLine = sr.ReadLine();
+                sr.readLine();    //First line - title                
+                String aLine = sr.readLine();    //First data line                
                 while (aLine != null) {
-                    dataArray = aLine.split(",");
+                    aLine = aLine.trim();
+                    dataArray = GlobalUtil.split(aLine, separator);
                     if (dataArray.length < 2) {
                         aLine = sr.readLine();
                         continue;
@@ -331,19 +331,23 @@ public class FrmAddXYData extends javax.swing.JDialog {
                     int shapeNum = aLayer.getShapeNum();
                     if (aLayer.editInsertShape(aPS, shapeNum)) {
                         //Edit record value
-                        for (int j = 0; j < fieldList.size(); j++) {
-                            if (varList.contains(fieldList.get(j))) {
-                                aLayer.editCellValue(fieldList.get(j), shapeNum, Double.parseDouble(dataArray[j]));
-                            } else {
-                                aLayer.editCellValue(fieldList.get(j), shapeNum, dataArray[j]);
+                        for (int j = 0; j < aLayer.getFieldNumber(); j++) {
+                            Field field = aLayer.getField(j);
+                            switch (field.getDataType()) {
+                                case Double:
+                                    aLayer.editCellValue(j, shapeNum, Double.parseDouble(dataArray[j]));
+                                    break;
+                                case String:
+                                    aLayer.editCellValue(j, shapeNum, dataArray[j]);
+                                    break;
                             }
                         }
                     }
 
                     aLine = sr.readLine();
                 }
-                
-                aLayer.saveFile();
+
+                aLayer.saveFile(fileName);
                 this._parent.getMapDocument().getActiveMapFrame().addLayer(aLayer);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(FrmAddXYData.class.getName()).log(Level.SEVERE, null, ex);
@@ -361,10 +365,10 @@ public class FrmAddXYData extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton_AddDataActionPerformed
 
-    private void jButton_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CancelActionPerformed
+    private void jButton_CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CloseActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton_CancelActionPerformed
+    }//GEN-LAST:event_jButton_CloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -409,7 +413,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_AddData;
-    private javax.swing.JButton jButton_Cancel;
+    private javax.swing.JButton jButton_Close;
     private javax.swing.JButton jButton_InputFile;
     private javax.swing.JComboBox jComboBox_LatField;
     private javax.swing.JComboBox jComboBox_LonField;

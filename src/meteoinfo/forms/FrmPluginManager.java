@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 import meteoinfo.classes.Plugin;
 import meteoinfo.classes.PluginCollection;
 import org.meteoinfo.global.util.GlobalUtil;
-import org.meteoinfo.global.ui.CheckBoxListEntry;
+import org.meteoinfo.ui.CheckBoxListEntry;
 
 /**
  *
@@ -61,7 +61,7 @@ public class FrmPluginManager extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        checkBoxList_Plugin = new org.meteoinfo.global.ui.CheckBoxList();
+        checkBoxList_Plugin = new org.meteoinfo.ui.JCheckBoxList();
         jButton_UpdateList = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -263,7 +263,7 @@ public class FrmPluginManager extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.meteoinfo.global.ui.CheckBoxList checkBoxList_Plugin;
+    private org.meteoinfo.ui.JCheckBoxList checkBoxList_Plugin;
     private javax.swing.JButton jButton_UpdateList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

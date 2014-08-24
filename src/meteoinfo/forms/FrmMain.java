@@ -74,7 +74,7 @@ import org.meteoinfo.global.event.IElementSelectedListener;
 import org.meteoinfo.global.event.IGraphicSelectedListener;
 import org.meteoinfo.global.event.IZoomChangedListener;
 import org.meteoinfo.global.event.ZoomChangedEvent;
-import org.meteoinfo.global.ui.WrappingLayout;
+import org.meteoinfo.ui.WrappingLayout;
 import org.meteoinfo.layer.FrmLabelSet;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
@@ -190,7 +190,6 @@ public class FrmMain extends JFrame implements IApplication {
         }
         this.setIconImage(image);
         this.setTitle("MeteoInfo");
-        this.setSize(1000, 650);
         this.jMenuItem_Layers.setSelected(true);
         this.jButton_SelectElement.doClick();
 
@@ -236,7 +235,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_ZoomToExtent = new javax.swing.JButton();
         jButton_Identifer = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jSplitButton_SelectFeature = new org.meteoinfo.global.ui.JSplitButton();
+        jSplitButton_SelectFeature = new org.meteoinfo.ui.JSplitButton();
         jPopupMenu_SelectFeature = new javax.swing.JPopupMenu();
         jMenuItem_SelByRectangle = new javax.swing.JMenuItem();
         jMenuItem_SelByPolygon = new javax.swing.JMenuItem();
@@ -1126,7 +1125,7 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
         jMenu_Tools.add(jMenuItem_Clipping);
-        
+
         jMenuItem_Animator.setText(bundle.getString("FrmMain.jMenuItem_Animator.text")); // NOI18N
         jMenuItem_Animator.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -1202,6 +1201,9 @@ public class FrmMain extends JFrame implements IApplication {
 
         this.loadDefaultPojectFile();
         this.loadConfigureFile();
+        this.setLocation(this._options.getMainFormLocation());
+        //this.setSize(this._options.getMainFormSize());
+        this.setSize(1000, 650);
         String pluginPath = this._startupPath + File.separator + "plugins" + File.separator + "plugins.xml";
         try {
             this._plugins.loadConfigFile(pluginPath);
@@ -1431,9 +1433,10 @@ public class FrmMain extends JFrame implements IApplication {
     public JTabbedPane getMainTab() {
         return this.jTabbedPane_Main;
     }
-    
+
     /**
      * Get meteo data form
+     *
      * @return The meteo data form
      */
     public FrmMeteoData getMeteoDataset() {
@@ -1548,6 +1551,12 @@ public class FrmMain extends JFrame implements IApplication {
     public final void saveConfigureFile() {
         String fn = this._options.getFileName();
         try {
+            if (this._frmMeteoData == null)
+                this._options.setShowStartMeteoDataDlg(false);
+            else
+                this._options.setShowStartMeteoDataDlg(this._frmMeteoData.isVisible());
+            this._options.setMainFormLocation(this.getLocation());
+            this._options.setMainFormSize(this.getSize());
             this._options.saveConfigFile(fn);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -1940,10 +1949,12 @@ public class FrmMain extends JFrame implements IApplication {
         //_mapView.setLockViewUpdate(false);
 
         //Open MeteoData form
-        _frmMeteoData = new FrmMeteoData(this, false);
-        //_frmMeteoData.setSize(500, 280);
-        _frmMeteoData.setLocation(this.getX() + 10, this.getY() + this.getHeight() - _frmMeteoData.getHeight() - 40);
-        _frmMeteoData.setVisible(true);
+        if (this._options.isShowStartMeteoDataDlg()) {
+            _frmMeteoData = new FrmMeteoData(this, false);
+            //_frmMeteoData.setSize(500, 280);
+            _frmMeteoData.setLocation(this.getX() + 10, this.getY() + this.getHeight() - _frmMeteoData.getHeight() - 40);
+            _frmMeteoData.setVisible(true);
+        }
     }
 
     private void jMenuItem_LayersActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2502,6 +2513,7 @@ public class FrmMain extends JFrame implements IApplication {
         // TODO add your handling code here:
         if (_frmMeteoData == null) {
             _frmMeteoData = new FrmMeteoData(this, false);
+            _frmMeteoData.setLocation(this.getX() + 10, this.getY() + this.getHeight() - _frmMeteoData.getHeight() - 40);
         }
         _frmMeteoData.setVisible(true);
     }
@@ -2513,7 +2525,7 @@ public class FrmMain extends JFrame implements IApplication {
         File pathDir = new File(path);
 
         JFileChooser aDlg = new JFileChooser();
-        aDlg.setAcceptAllFileFilterUsed(false);
+        //aDlg.setAcceptAllFileFilterUsed(false);
         aDlg.setCurrentDirectory(pathDir);
         String[] fileExts = new String[]{"shp", "bil", "wmp", "bln", "bmp", "gif", "jpg", "tif", "png"};
         GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Supported Formats");
@@ -2576,7 +2588,7 @@ public class FrmMain extends JFrame implements IApplication {
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }
-    
+
     private void jMenuItem_AnimatorActionPerformed(java.awt.event.ActionEvent evt) {
         FrmGifAnimator frm = new FrmGifAnimator(this, false);
         frm.setLocationRelativeTo(this);
@@ -2689,7 +2701,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JButton jButton_ZoomOut;
     private javax.swing.JButton jButton_ZoomToExtent;
     private javax.swing.JButton jButton_ZoomToLayer;
-    private org.meteoinfo.global.ui.JSplitButton jSplitButton_SelectFeature;
+    private org.meteoinfo.ui.JSplitButton jSplitButton_SelectFeature;
     private javax.swing.JPopupMenu jPopupMenu_SelectFeature;
     private javax.swing.JMenuItem jMenuItem_SelByRectangle;
     private javax.swing.JMenuItem jMenuItem_SelByPolygon;

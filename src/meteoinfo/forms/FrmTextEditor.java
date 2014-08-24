@@ -29,7 +29,7 @@ import meteoinfo.classes.JTextAreaWriter;
 import meteoinfo.classes.TextEditor;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.TextEditorPane;
-import org.meteoinfo.global.ui.ButtonTabComponent;
+import org.meteoinfo.ui.ButtonTabComponent;
 import org.python.util.PythonInterpreter;
 
 /**
