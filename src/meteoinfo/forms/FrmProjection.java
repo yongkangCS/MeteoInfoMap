@@ -67,7 +67,8 @@ public class FrmProjection extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("Projection:");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmProjection"); // NOI18N
+        jLabel1.setText(bundle.getString("FrmProjection.jLabel1.text")); // NOI18N
 
         jComboBox_Projection.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_Projection.addActionListener(new java.awt.event.ActionListener() {
@@ -76,21 +77,21 @@ public class FrmProjection extends javax.swing.JDialog {
             }
         });
 
-        jPanel_Parameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Parameters"));
+        jPanel_Parameters.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FrmProjection.jPanel_Parameters.border.title"))); // NOI18N
 
-        jLabel_CentralMeridian.setText("Central Meridian:");
+        jLabel_CentralMeridian.setText(bundle.getString("FrmProjection.jLabel_CentralMeridian.text")); // NOI18N
 
-        jLabel_RefLat.setText("Reference Latitude:");
+        jLabel_RefLat.setText(bundle.getString("FrmProjection.jLabel_RefLat.text")); // NOI18N
 
-        jLabel_StdPara1.setText("Standard Parallel 1:");
+        jLabel_StdPara1.setText(bundle.getString("FrmProjection.jLabel_StdPara1.text")); // NOI18N
 
-        jLabel_StdPara2.setText("Standard Paralle 2:");
+        jLabel_StdPara2.setText(bundle.getString("FrmProjection.jLabel_StdPara2.text")); // NOI18N
 
-        jLabel_FalseEasting.setText("False Easting:");
+        jLabel_FalseEasting.setText(bundle.getString("FrmProjection.jLabel_FalseEasting.text")); // NOI18N
 
-        jLabel_FalseNorthing.setText("False Northing:");
+        jLabel_FalseNorthing.setText(bundle.getString("FrmProjection.jLabel_FalseNorthing.text")); // NOI18N
 
-        jLabel_ScaleFactor.setText("Scale Factor:");
+        jLabel_ScaleFactor.setText(bundle.getString("FrmProjection.jLabel_ScaleFactor.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel_ParametersLayout = new javax.swing.GroupLayout(jPanel_Parameters);
         jPanel_Parameters.setLayout(jPanel_ParametersLayout);
@@ -157,14 +158,14 @@ public class FrmProjection extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton_Apply.setText("Apply");
+        jButton_Apply.setText(bundle.getString("FrmProjection.jButton_Apply.text")); // NOI18N
         jButton_Apply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ApplyActionPerformed(evt);
             }
         });
 
-        jButton_Close.setText("Close");
+        jButton_Close.setText(bundle.getString("FrmProjection.jButton_Close.text")); // NOI18N
         jButton_Close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_CloseActionPerformed(evt);
@@ -235,7 +236,8 @@ public class FrmProjection extends javax.swing.JDialog {
         ProjectionInfo aProjInfo = _parent.getMapDocument().getActiveMapFrame().getMapView().getProjection().getProjInfo();
         Projection aProj = aProjInfo.getCoordinateReferenceSystem().getProjection();
 
-        this.jLabel_RefLat.setText("Reference Latitude:");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmProjection");
+        this.jLabel_RefLat.setText(bundle.getString("FrmProjection.jLabel_RefLat.text"));
         switch (aPrjName) {
             case LongLat:
                 this.jPanel_Parameters.setEnabled(false);
@@ -347,7 +349,7 @@ public class FrmProjection extends javax.swing.JDialog {
                 }
                 this.jLabel_CentralMeridian.setVisible(true);
                 this.jTextField_CentralMeridian.setVisible(true);
-                this.jLabel_RefLat.setText("Height of Orbit:");
+                this.jLabel_RefLat.setText(bundle.getString("FrmProjection.jLabel_RefLat_1.text"));
                 this.jLabel_RefLat.setVisible(true);
                 this.jTextField_RefLat.setVisible(true);
                 if (aProjInfo.getProjectionName() == aPrjName) {

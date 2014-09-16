@@ -15,6 +15,7 @@ import org.meteoinfo.global.table.DataRow;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.VectorLayer;
+import org.meteoinfo.shape.Shape;
 
 /**
  *
@@ -83,6 +84,7 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jComboBox_Layer = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
@@ -105,10 +107,12 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
         jButton_GetValues = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTextField_QueryString = new javax.swing.JTextField();
-        jButton1_Select = new javax.swing.JButton();
-        jButton1_Clear = new javax.swing.JButton();
+        jButton_Select = new javax.swing.JButton();
+        jButton_Clear = new javax.swing.JButton();
+        jCheckBox_OnlySelVisible = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Select By Attribute");
 
         jLabel1.setText("Layer:");
 
@@ -165,7 +169,9 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
             }
         });
 
+        jButton_And.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton_And.setText("And");
+        jButton_And.setPreferredSize(new java.awt.Dimension(53, 27));
         jButton_And.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_AndActionPerformed(evt);
@@ -186,7 +192,9 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
             }
         });
 
+        jButton_Or.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton_Or.setText("Or");
+        jButton_Or.setPreferredSize(new java.awt.Dimension(53, 27));
         jButton_Or.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_OrActionPerformed(evt);
@@ -207,7 +215,9 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
             }
         });
 
+        jButton_Not.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton_Not.setText("Not");
+        jButton_Not.setPreferredSize(new java.awt.Dimension(53, 27));
         jButton_Not.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NotActionPerformed(evt);
@@ -223,24 +233,32 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
 
         jLabel5.setText("Select query string:");
 
-        jButton1_Select.setText("Select");
-        jButton1_Select.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Select.setText("Select");
+        jButton_Select.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1_SelectActionPerformed(evt);
+                jButton_SelectActionPerformed(evt);
             }
         });
 
-        jButton1_Clear.setText("Clear");
-        jButton1_Clear.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Clear.setText("Clear");
+        jButton_Clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1_ClearActionPerformed(evt);
+                jButton_ClearActionPerformed(evt);
             }
         });
+
+        jCheckBox_OnlySelVisible.setText("Only selection visible");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(116, Short.MAX_VALUE)
+                .addComponent(jButton_Select)
+                .addGap(74, 74, 74)
+                .addComponent(jButton_Clear)
+                .addGap(108, 108, 108))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,38 +266,38 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
                         .addComponent(jTextField_QueryString)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton_EQ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton_GT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton_LT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jButton_LT))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jButton_NE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jButton_GE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton_LE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(jButton_LE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jButton_Or, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton_And, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton_Not)))
+                                            .addComponent(jButton_Not, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton_And, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jButton_GetValues))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(13, 13, 13)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox_Method, 0, 292, Short.MAX_VALUE)
-                                    .addComponent(jComboBox_Layer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jComboBox_Layer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBox_Method, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -287,14 +305,10 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
                         .addComponent(jLabel4)
                         .addGap(21, 21, 21))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCheckBox_OnlySelVisible)
+                            .addComponent(jLabel5))
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jButton1_Select)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1_Clear)
-                .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,34 +326,39 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_QueryString, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBox_OnlySelVisible)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton_Select)
+                            .addComponent(jButton_Clear)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_EQ)
                             .addComponent(jButton_NE)
-                            .addComponent(jButton_And))
+                            .addComponent(jButton_And, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_GT)
                             .addComponent(jButton_GE)
-                            .addComponent(jButton_Or))
+                            .addComponent(jButton_Or, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_LT)
                             .addComponent(jButton_LE)
-                            .addComponent(jButton_Not))
+                            .addComponent(jButton_Not, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton_GetValues))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_QueryString, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1_Select)
-                    .addComponent(jButton1_Clear))
+                        .addComponent(jButton_GetValues)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -384,7 +403,7 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
         Collections.sort(valueList);
 
         this.jList_UniqueValues.setEnabled(true);
-        DefaultListModel listModel = new DefaultListModel();        
+        DefaultListModel listModel = new DefaultListModel();
         if (isNumeric) {
             for (String vStr : valueList) {
                 listModel.addElement(vStr);
@@ -432,17 +451,17 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
 
     private void jButton_AndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AndActionPerformed
         // TODO add your handling code here:
-        this.jTextField_QueryString.setText(this.jTextField_QueryString.getText() + " And ");
+        this.jTextField_QueryString.setText(this.jTextField_QueryString.getText() + " and ");
     }//GEN-LAST:event_jButton_AndActionPerformed
 
     private void jButton_OrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OrActionPerformed
         // TODO add your handling code here:
-        this.jTextField_QueryString.setText(this.jTextField_QueryString.getText() + " Or ");
+        this.jTextField_QueryString.setText(this.jTextField_QueryString.getText() + " or ");
     }//GEN-LAST:event_jButton_OrActionPerformed
 
     private void jButton_NotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_NotActionPerformed
         // TODO add your handling code here:
-        this.jTextField_QueryString.setText(this.jTextField_QueryString.getText() + " Not ");
+        this.jTextField_QueryString.setText(this.jTextField_QueryString.getText() + " not ");
     }//GEN-LAST:event_jButton_NotActionPerformed
 
     private void jList_FieldsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_FieldsMouseClicked
@@ -459,10 +478,11 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jList_UniqueValuesMouseClicked
 
-    private void jButton1_SelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_SelectActionPerformed
+    private void jButton_SelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SelectActionPerformed
         // TODO add your handling code here:
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         String expression = this.jTextField_QueryString.getText();
+        boolean onlySelVisible = this.jCheckBox_OnlySelVisible.isSelected();
         List<DataRow> rows = this._selectLayer.getAttributeTable().getTable().select(expression);
         List<Integer> rowIdxs = new ArrayList<Integer>();
         for (DataRow row : rows) {
@@ -505,14 +525,26 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
                 break;
         }
 
+        if (onlySelVisible) {
+            for (Shape shape : _selectLayer.getShapes()) {
+                shape.setVisible(shape.isSelected());
+            }
+        }
+
         this._frmMain.getMapDocument().getActiveMapFrame().getMapView().paintLayers();
         this.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_jButton1_SelectActionPerformed
+    }//GEN-LAST:event_jButton_SelectActionPerformed
 
-    private void jButton1_ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_ClearActionPerformed
+    private void jButton_ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ClearActionPerformed
         // TODO add your handling code here:
-        this.jTextField_QueryString.setText("");
-    }//GEN-LAST:event_jButton1_ClearActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));        
+        this._selectLayer.clearSelectedShapes();
+        for (Shape shape : _selectLayer.getShapes()) {
+            shape.setVisible(true);
+        }
+        this._frmMain.getMapDocument().getActiveMapFrame().getMapView().paintLayers();
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_jButton_ClearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -556,9 +588,9 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1_Clear;
-    private javax.swing.JButton jButton1_Select;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton_And;
+    private javax.swing.JButton jButton_Clear;
     private javax.swing.JButton jButton_EQ;
     private javax.swing.JButton jButton_GE;
     private javax.swing.JButton jButton_GT;
@@ -568,6 +600,8 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
     private javax.swing.JButton jButton_NE;
     private javax.swing.JButton jButton_Not;
     private javax.swing.JButton jButton_Or;
+    private javax.swing.JButton jButton_Select;
+    private javax.swing.JCheckBox jCheckBox_OnlySelVisible;
     private javax.swing.JComboBox jComboBox_Layer;
     private javax.swing.JComboBox jComboBox_Method;
     private javax.swing.JLabel jLabel1;

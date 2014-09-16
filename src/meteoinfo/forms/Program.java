@@ -39,6 +39,7 @@ public class Program {
                 runTextEditor(args);
             } else if (args[0].equalsIgnoreCase("-b")) {
                 if (args.length == 1) {
+                    System.out.println("Script file name is needed!");
                     System.exit(0);
                 } else {
                     String fn = args[1];
@@ -48,6 +49,7 @@ public class Program {
                         System.out.println("Headless mode: " + ge.isHeadless());
                         runScript(args, fn, 1);
                     } else {
+                        System.out.println("The script file does not exist!");
                         System.exit(0);
                     }
                 }
@@ -56,7 +58,8 @@ public class Program {
                 if (new File(fn).isFile()) {
                     runScript(args, fn, 0);
                 } else {
-                    runApplication();
+                    System.out.println("The script file does not exist!");
+                    System.exit(0);
                 }
             }
         } else {
@@ -196,7 +199,11 @@ public class Program {
 //                    }
 //                }.start();
 
-                Locale.setDefault(Locale.ENGLISH);
+                boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                        getInputArguments().toString().indexOf("jdwp") >= 0;
+                if (isDebug) {
+                    //Locale.setDefault(Locale.ENGLISH);
+                }
                 //registerFonts();
                 FrmMain frame = new FrmMain();
                 frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

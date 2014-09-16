@@ -22,6 +22,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
@@ -33,7 +34,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,6 +95,7 @@ import org.meteoinfo.projection.KnownCoordinateSystems;
 import org.meteoinfo.projection.ProjectionInfo;
 import org.meteoinfo.projection.ProjectionNames;
 import org.meteoinfo.projection.Reproject;
+import org.meteoinfo.shape.Shape;
 import static org.meteoinfo.shape.ShapeTypes.CurveLine;
 import static org.meteoinfo.shape.ShapeTypes.CurvePolygon;
 import static org.meteoinfo.shape.ShapeTypes.Polygon;
@@ -900,6 +901,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuBar_Main.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
 
         jMenu_Project.setText(bundle.getString("FrmMain.jMenu_Project.text")); // NOI18N
+        jMenu_Project.setMnemonic(KeyEvent.VK_P);
 
         jMenuItem_Open.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem_Open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Folder_1_16x16x8.png"))); // NOI18N
@@ -932,6 +934,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuBar_Main.add(jMenu_Project);
 
         jMenu_View.setText(bundle.getString("FrmMain.jMenu_View.text")); // NOI18N
+        jMenu_View.setMnemonic(KeyEvent.VK_V);
 
         jMenuItem_Layers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Layers.png"))); // NOI18N
         jMenuItem_Layers.setText(bundle.getString("FrmMain.jMenuItem_Layers.text")); // NOI18N
@@ -989,6 +992,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuBar_Main.add(jMenu_View);
 
         jMenu_Insert.setText(bundle.getString("FrmMain.jMenu_Insert.text")); // NOI18N
+        jMenu_Insert.setMnemonic(KeyEvent.VK_V);
 
         jMenuItem_InsertMapFrame.setText(bundle.getString("FrmMain.jMenuItem_InsertMapFrame.text")); // NOI18N
         jMenuItem_InsertMapFrame.addActionListener(new java.awt.event.ActionListener() {
@@ -1053,6 +1057,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuBar_Main.add(jMenu_Insert);
 
         jMenu_Selection.setText(bundle.getString("FrmMain.jMenu_Selection.text")); // NOI18N
+        jMenu_Selection.setMnemonic(KeyEvent.VK_S);
 
         jMenuItem_SelByAttr.setText(bundle.getString("FrmMain.jMenuItem_SelByAttr.text")); // NOI18N
         jMenuItem_SelByAttr.addActionListener(new java.awt.event.ActionListener() {
@@ -1082,6 +1087,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuBar_Main.add(jMenu_Selection);
 
         jMenu_Tools.setText(bundle.getString("FrmMain.jMenu_Tools.text")); // NOI18N
+        jMenu_Tools.setMnemonic(KeyEvent.VK_T);
 
         jMenuItem_Script.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/snake.png"))); // NOI18N
         jMenuItem_Script.setText(bundle.getString("FrmMain.jMenuItem_Script.text")); // NOI18N
@@ -1138,6 +1144,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuBar_Main.add(jMenu_Tools);
 
         jMenu_Plugin.setText(bundle.getString("FrmMain.jMenu_Plugin.text")); // NOI18N
+        jMenu_Plugin.setMnemonic(KeyEvent.VK_L);
 
         jMenuItem_PluginManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/plugin_edit_green.png"))); // NOI18N
         jMenuItem_PluginManager.setText(bundle.getString("FrmMain.jMenuItem_PluginManager.text")); // NOI18N
@@ -1152,6 +1159,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuBar_Main.add(jMenu_Plugin);
 
         jMenu_Help.setText(bundle.getString("FrmMain.jMenu_Help.text")); // NOI18N
+        jMenu_Help.setMnemonic(KeyEvent.VK_H);
 
         jMenuItem_About.setText(bundle.getString("FrmMain.jMenuItem_About.text")); // NOI18N
         jMenuItem_About.addActionListener(new java.awt.event.ActionListener() {
@@ -1202,8 +1210,13 @@ public class FrmMain extends JFrame implements IApplication {
         this.loadDefaultPojectFile();
         this.loadConfigureFile();
         this.setLocation(this._options.getMainFormLocation());
-        //this.setSize(this._options.getMainFormSize());
-        this.setSize(1000, 650);
+        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                getInputArguments().toString().indexOf("jdwp") >= 0;
+        if (isDebug) {
+            this.setSize(1000, 650);
+        } else {
+            this.setSize(this._options.getMainFormSize());
+        }
         String pluginPath = this._startupPath + File.separator + "plugins" + File.separator + "plugins.xml";
         try {
             this._plugins.loadConfigFile(pluginPath);
@@ -1551,10 +1564,11 @@ public class FrmMain extends JFrame implements IApplication {
     public final void saveConfigureFile() {
         String fn = this._options.getFileName();
         try {
-            if (this._frmMeteoData == null)
+            if (this._frmMeteoData == null) {
                 this._options.setShowStartMeteoDataDlg(false);
-            else
+            } else {
                 this._options.setShowStartMeteoDataDlg(this._frmMeteoData.isVisible());
+            }
             this._options.setMainFormLocation(this.getLocation());
             this._options.setMainFormSize(this.getSize());
             this._options.saveConfigFile(fn);
@@ -2113,6 +2127,9 @@ public class FrmMain extends JFrame implements IApplication {
         MapLayer aLayer = _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
         if (aLayer.getLayerType() == LayerTypes.VectorLayer) {
             ((VectorLayer) aLayer).clearSelectedShapes();
+            for (Shape shape : ((VectorLayer) aLayer).getShapes()) {
+                shape.setVisible(true);
+            }
         }
 
         _mapDocument.getActiveMapFrame().getMapView().paintLayers();
