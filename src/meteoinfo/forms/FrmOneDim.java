@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
@@ -22,6 +23,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -470,10 +472,20 @@ public class FrmOneDim extends javax.swing.JFrame {
             case HYSPLIT_Traj:
                 VectorLayer layer = ((TrajDataInfo) this._meteoDataInfo.getDataInfo()).createTrajLineLayer();
                 List<List<PointD>> points = new ArrayList<List<PointD>>();
-                List<String> serieNames = new ArrayList<String>();                
+                List<String> serieNames = new ArrayList<String>();     
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
                 int i = 0;
+                boolean useId = false;
+                boolean yInverse = varName.equals("Pressure");
                 for (PolylineZShape shape : (List<PolylineZShape>)layer.getShapes()){
-                    serieNames.add(layer.getCellValue("StartDate", i).toString());
+                    String name = format.format((Date)layer.getCellValue("StartDate", i));
+                    if (!serieNames.contains(name))
+                        serieNames.add(name);
+                    else {
+                        name = name + "_" + String.valueOf(i + 1);
+                        serieNames.add(name);
+                        useId = true;                        
+                    }
                     List<PointD> plist = new ArrayList<PointD>();
                     for (int j = 0; j < shape.getPoints().size(); j++) {
                         if (varName.equals("Pressure"))
@@ -484,7 +496,9 @@ public class FrmOneDim extends javax.swing.JFrame {
                     points.add(plist);
                     i += 1;
                 }
-                this.createChart(points, null, "Age Hour", serieNames, "Line");
+                if (useId)
+                    serieNames.set(0, serieNames.get(0) + "_1");
+                this.createChart(points, null, "Age Hour", serieNames, "Line", yInverse, true);
                 break;
             default:
                 _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
@@ -531,7 +545,7 @@ public class FrmOneDim extends javax.swing.JFrame {
                 serieNames = new ArrayList<String>();
                 serieNames.add(varName);
                 String title = varName + "_" + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
-                this.createChart(points, title, "X", serieNames, _graphType);
+                this.createChart(points, title, "X", serieNames, _graphType, false, false);
 
                 //Enable time controls            
                 if (!this.jCheckBox_Time.isSelected()) {
@@ -937,7 +951,8 @@ public class FrmOneDim extends javax.swing.JFrame {
         }
     }
 
-    private void createChart(List<List<PointD>> points, String title, String xLabel, List<String> serieNames, String chartType) {        
+    private void createChart(List<List<PointD>> points, String title, String xLabel, List<String> serieNames, String chartType, 
+            boolean yInverse, boolean xInverse) {        
         String yName = this.jComboBox_Variable.getSelectedItem().toString();
 
         if (chartType.equals("Line")) {
@@ -964,6 +979,9 @@ public class FrmOneDim extends javax.swing.JFrame {
             NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
             yAxis.setAutoRangeIncludesZero(false);
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+            yAxis.setInverted(yInverse);
+            ValueAxis xAxis = plot.getDomainAxis();
+            xAxis.setInverted(xInverse);
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
             renderer.setBaseShapesVisible(true);
             renderer.setBaseShapesFilled(false);            
@@ -985,6 +1003,7 @@ public class FrmOneDim extends javax.swing.JFrame {
             NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
             yAxis.setAutoRangeIncludesZero(false);
             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+            yAxis.setInverted(yInverse);
             this._chartPanel.setChart(chart);
             this._chartPanel.repaint();
         }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="config.xml" Type="configurefile">
-  <Path OpenPath="D:\Temp\nc"/>
+  <Path OpenPath="D:\KeyData\PMMUL\Analysis\Figure"/>
   <Font>
     <TextFont FontName="宋体" FontSize="15"/>
     <LegendFont FontName="宋体" FontSize="14"/>
   </Font>
   <ScriptLanguage Language="Jython"/>
-  <Startup MainFormLocation="94,77" MainFormSize="1000,650" ShowMeteoDataDlg="true"/>
+  <Startup MainFormLocation="94,16" MainFormSize="1000,712" ShowMeteoDataDlg="false"/>
 </MeteoInfo>

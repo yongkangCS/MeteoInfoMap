@@ -13,7 +13,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +42,8 @@ public class FrmAddXYData extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmAddXYData
+     * @param parent
+     * @param modal
      */
     public FrmAddXYData(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
