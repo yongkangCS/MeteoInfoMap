@@ -778,7 +778,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         }
 
         if (!_useSameLegendScheme) {
-            MapLayer aLayer = this.mapLayout1.getActiveMapFrame().getMapView().getLayerFromHandle(_lastAddedLayerHandle);
+            MapLayer aLayer = this.mapLayout1.getActiveMapFrame().getMapView().getLayerByHandle(_lastAddedLayerHandle);
             if (aLayer != null) {
                 VectorLayer sLayer = (VectorLayer) aLayer;
                 if (sLayer.getExtent().maxX > sLayer.getExtent().minX && sLayer.getExtent().maxY
@@ -854,7 +854,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
     private void jButton_DrawSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DrawSettingActionPerformed
         // TODO add your handling code here:
-        MapLayer aLayer = this.layersLegend1.getActiveMapFrame().getMapView().getLayerFromHandle(_lastAddedLayerHandle);
+        MapLayer aLayer = this.layersLegend1.getActiveMapFrame().getMapView().getLayerByHandle(_lastAddedLayerHandle);
         FrmLegendSet aFrmLS = new FrmLegendSet(this, true);
         aFrmLS.setLegendScheme(_legendScheme);
         String fieldName = this.jComboBox_Variable.getSelectedItem().toString();
@@ -931,7 +931,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         if (this.layersLegend1.getSelectedNode().getNodeType() == NodeTypes.LayerNode) {
             LayerNode aLN = (LayerNode) this.layersLegend1.getSelectedNode();
-            MapLayer aMLayer = aLN.getMapFrame().getMapView().getLayerFromHandle(aLN.getLayerHandle());
+            MapLayer aMLayer = aLN.getMapFrame().getMapView().getLayerByHandle(aLN.getLayerHandle());
             if (aMLayer.getLayerType() == LayerTypes.VectorLayer) {
                 VectorLayer aLayer = (VectorLayer) aMLayer;
                 if (aLayer.getShapeNum() > 0) {

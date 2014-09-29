@@ -74,6 +74,7 @@ import org.meteoinfo.global.event.IElementSelectedListener;
 import org.meteoinfo.global.event.IGraphicSelectedListener;
 import org.meteoinfo.global.event.IZoomChangedListener;
 import org.meteoinfo.global.event.ZoomChangedEvent;
+import org.meteoinfo.help.Help;
 import org.meteoinfo.ui.WrappingLayout;
 import org.meteoinfo.layer.FrmLabelSet;
 import org.meteoinfo.layer.LayerTypes;
@@ -195,7 +196,7 @@ public class FrmMain extends JFrame implements IApplication {
         this.jButton_SelectElement.doClick();
 
         boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
-                getInputArguments().toString().indexOf("jdwp") >= 0;
+                getInputArguments().toString().contains("jdwp");
         if (isDebug) {
             this._startupPath = System.getProperty("user.dir");
         } else {
@@ -205,17 +206,13 @@ public class FrmMain extends JFrame implements IApplication {
         this._plugins.setPluginPath(pluginPath);
         this._plugins.setPluginConfigFile(pluginPath + File.separator + "plugins.xml");
 
-        //For help document
-        //Create HelpSet and HelpBroker objects
-        //String hsfn = this._startupPath + File.separator + "Sample.hs";
-        //String hsfn = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/help/mi.hs";
-        //HelpSet hs = getHelpSet(hsfn);
-        HelpSet hs = getHelpSet("/org/meteoinfo/help/mi.hs");
-        HelpBroker hb = hs.createHelpBroker();
-        //Assign help to components
-        CSH.setHelpIDString(this.jMenuItem_Help, "top");
-        //Handle events
-        this.jMenuItem_Help.addActionListener(new CSH.DisplayHelpFromSource(hb));
+//        //Help
+//        HelpSet hs = getHelpSet("/org/meteoinfo/help/mi.hs");
+//        HelpBroker hb = hs.createHelpBroker();
+//        //Assign help to components
+//        CSH.setHelpIDString(this.jMenuItem_Help, "top");
+//        //Handle events
+//        this.jMenuItem_Help.addActionListener(new CSH.DisplayHelpFromSource(hb));
 
         loadForm();
     }
@@ -343,7 +340,7 @@ public class FrmMain extends JFrame implements IApplication {
         jToolBar_Base.setRollover(true);
         jToolBar_Base.setName(""); // NOI18N
 
-        jButton_AddLayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Add_1_16x16x8.png"))); // NOI18N
+        jButton_AddLayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Add_Layer.png"))); // NOI18N
         final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMain"); // NOI18N
         jButton_AddLayer.setToolTipText(bundle.getString("FrmMain.jButton_AddLayer.toolTipText")); // NOI18N
         jButton_AddLayer.setFocusable(false);
@@ -381,7 +378,7 @@ public class FrmMain extends JFrame implements IApplication {
         jToolBar_Base.add(jButton_RemoveDataLayers);
         jToolBar_Base.add(jSeparator1);
 
-        jButton_SelectElement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Arrow_1_16x16x8.png"))); // NOI18N
+        jButton_SelectElement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Arrow.png"))); // NOI18N
         jButton_SelectElement.setToolTipText(bundle.getString("FrmMain.jButton_SelectElement.toolTipText")); // NOI18N
         jButton_SelectElement.setFocusable(false);
         jButton_SelectElement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -584,7 +581,7 @@ public class FrmMain extends JFrame implements IApplication {
         jToolBar_Base.add(jButton_LabelSet);
         jToolBar_Base.add(jSeparator3);
 
-        jButton_SavePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/image_1.png"))); // NOI18N
+        jButton_SavePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Save_Image.png"))); // NOI18N
         jButton_SavePicture.setToolTipText(bundle.getString("FrmMain.jButton_SavePicture.toolTipText")); // NOI18N
         jButton_SavePicture.setFocusable(false);
         jButton_SavePicture.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1993,7 +1990,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         if (_mapDocument.getSelectedNode().getNodeType() == NodeTypes.LayerNode) {
             LayerNode aLN = (LayerNode) _mapDocument.getSelectedNode();
-            MapLayer aLayer = aLN.getMapFrame().getMapView().getLayerFromHandle(aLN.getLayerHandle());
+            MapLayer aLayer = aLN.getMapFrame().getMapView().getLayerByHandle(aLN.getLayerHandle());
             if (aLayer.getLayerType() == LayerTypes.VectorLayer) {
                 if (((VectorLayer) aLayer).getShapeNum() > 0) {
                     FrmAttriData aFrmData = new FrmAttriData(this, false);
@@ -2137,7 +2134,12 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jMenuItem_HelpActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        //JOptionPane.showMessageDialog(null, "Under developing!");        
+        Help help = new Help();
+        help.setTitle("TrajStat - Help");
+        help.setIconImage("/meteoinfo/resources/MeteoInfo_1_16x16x8.png");
+        help.setSize(800, 700);
+        help.setLocationRelativeTo(this);
+        help.setVisible(true);   
     }
 
     /**
@@ -2352,12 +2354,12 @@ public class FrmMain extends JFrame implements IApplication {
         fileExts = new String[]{"jpg"};
         mapFileFilter = new GenericFileFilter(fileExts, "Jpeg Image (*.jpg)");
         aDlg.addChoosableFileFilter(mapFileFilter);
-        fileExts = new String[]{"bmp"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Bitmap Image (*.bmp)");
-        aDlg.addChoosableFileFilter(mapFileFilter);
-        fileExts = new String[]{"tif"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Tiff Image (*.tif)");
-        aDlg.addChoosableFileFilter(mapFileFilter);
+//        fileExts = new String[]{"bmp"};
+//        mapFileFilter = new GenericFileFilter(fileExts, "Bitmap Image (*.bmp)");
+//        aDlg.addChoosableFileFilter(mapFileFilter);
+//        fileExts = new String[]{"tif"};
+//        mapFileFilter = new GenericFileFilter(fileExts, "Tiff Image (*.tif)");
+//        aDlg.addChoosableFileFilter(mapFileFilter);
         fileExts = new String[]{"ps"};
         mapFileFilter = new GenericFileFilter(fileExts, "Postscript Image (*.ps)");
         aDlg.addChoosableFileFilter(mapFileFilter);
@@ -2404,7 +2406,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         if (_mapDocument.getSelectedNode().getNodeType() == NodeTypes.LayerNode) {
             LayerNode aLN = (LayerNode) _mapDocument.getSelectedNode();
-            MapLayer aMLayer = aLN.getMapFrame().getMapView().getLayerFromHandle(aLN.getLayerHandle());
+            MapLayer aMLayer = aLN.getMapFrame().getMapView().getLayerByHandle(aLN.getLayerHandle());
             if (aMLayer.getLayerType() == LayerTypes.VectorLayer) {
                 VectorLayer aLayer = (VectorLayer) aMLayer;
                 if (aLayer.getShapeNum() > 0) {
@@ -2544,7 +2546,8 @@ public class FrmMain extends JFrame implements IApplication {
         JFileChooser aDlg = new JFileChooser();
         //aDlg.setAcceptAllFileFilterUsed(false);
         aDlg.setCurrentDirectory(pathDir);
-        String[] fileExts = new String[]{"shp", "bil", "wmp", "bln", "bmp", "gif", "jpg", "tif", "png"};
+        //String[] fileExts = new String[]{"shp", "bil", "wmp", "bln", "bmp", "gif", "jpg", "tif", "png"};
+        String[] fileExts = new String[]{"shp", "bil", "wmp", "bln", "gif", "jpg", "png", "tif"};
         GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Supported Formats");
         aDlg.addChoosableFileFilter(mapFileFilter);
         fileExts = new String[]{"shp"};

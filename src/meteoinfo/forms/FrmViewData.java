@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import org.meteoinfo.data.GridData;
 import org.meteoinfo.data.StationData;
 import org.meteoinfo.global.MIMath;
-import org.meteoinfo.global.table.RowHeaderTable;
+import org.meteoinfo.table.RowHeaderTable;
 import org.meteoinfo.projection.ProjectionInfo;
 
 /**

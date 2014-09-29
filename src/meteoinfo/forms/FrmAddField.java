@@ -4,7 +4,7 @@
  */
 package meteoinfo.forms;
 
-import org.meteoinfo.global.table.DataTypes;
+import org.meteoinfo.table.DataTypes;
 
 /**
  *

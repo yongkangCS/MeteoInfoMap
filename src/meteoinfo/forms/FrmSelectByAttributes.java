@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 import org.meteoinfo.global.MIMath;
-import org.meteoinfo.global.table.DataRow;
+import org.meteoinfo.table.DataRow;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.VectorLayer;

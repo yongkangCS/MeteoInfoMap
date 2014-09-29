@@ -1190,7 +1190,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 //                    }
 //                    break;
             default:
-                MapLayer mLayer = _parent.getMapDocument().getActiveMapFrame().getMapView().getLayerFromHandle(_lastAddedLayerHandle);
+                MapLayer mLayer = _parent.getMapDocument().getActiveMapFrame().getMapView().getLayerByHandle(_lastAddedLayerHandle);
                 FrmLegendSet aFrmLS = new FrmLegendSet(this, true);
                 aFrmLS.setLegendScheme(_legendScheme);
                 String fieldName = this.jComboBox_Variable.getSelectedItem().toString();
@@ -1430,7 +1430,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         JFileChooser aDlg = new JFileChooser();
         aDlg.setCurrentDirectory(pathDir);
-        aDlg.setAcceptAllFileFilterUsed(false);
+        //aDlg.setAcceptAllFileFilterUsed(false);
         String[] fileExts = new String[]{"ctl"};
         GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "GrADS Data (*.ctl)");
         aDlg.setFileFilter(mapFileFilter);

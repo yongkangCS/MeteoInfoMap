@@ -6,7 +6,12 @@ package meteoinfo.forms;
 
 import com.l2fprod.common.swing.JFontChooser;
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import meteoinfo.classes.Options;
 
 /**
@@ -15,12 +20,14 @@ import meteoinfo.classes.Options;
  */
 public class FrmOptions extends javax.swing.JDialog {
 
-    private FrmMain _parent;
+    private final FrmMain _parent;
     private Font _legendFont;
     private Font _textFont;
     
     /**
      * Creates new form FrmOptions
+     * @param parent
+     * @param modal
      */
     public FrmOptions(JFrame parent, boolean modal) {
         super(parent, modal);
@@ -37,6 +44,14 @@ public class FrmOptions extends javax.swing.JDialog {
         } else {
             this.jRadioButton_Jython.setSelected(true);
         }
+        
+        //Look and feel
+        this.jComboBox_LookAndFeel.removeAllItems();
+        UIManager.LookAndFeelInfo[] lnfs = UIManager.getInstalledLookAndFeels();
+        for (UIManager.LookAndFeelInfo lnf : lnfs) {
+            this.jComboBox_LookAndFeel.addItem(lnf.getName());
+        }
+        this.jComboBox_LookAndFeel.setSelectedItem(UIManager.getLookAndFeel().getName());
     }
 
     /**
@@ -54,6 +69,8 @@ public class FrmOptions extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jRadioButton_Groovy = new javax.swing.JRadioButton();
         jRadioButton_Jython = new javax.swing.JRadioButton();
+        jLabel_LookAndFeel = new javax.swing.JLabel();
+        jComboBox_LookAndFeel = new javax.swing.JComboBox();
         jPanel_Font = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel_LegendFont = new javax.swing.JLabel();
@@ -93,7 +110,7 @@ public class FrmOptions extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jRadioButton_Groovy)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                 .addComponent(jRadioButton_Jython)
                 .addGap(50, 50, 50))
         );
@@ -107,6 +124,10 @@ public class FrmOptions extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel_LookAndFeel.setText("LookAndFeel:");
+
+        jComboBox_LookAndFeel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel_GeneralLayout = new javax.swing.GroupLayout(jPanel_General);
         jPanel_General.setLayout(jPanel_GeneralLayout);
         jPanel_GeneralLayout.setHorizontalGroup(
@@ -115,13 +136,23 @@ public class FrmOptions extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_GeneralLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel_LookAndFeel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox_LookAndFeel, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
         jPanel_GeneralLayout.setVerticalGroup(
             jPanel_GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_GeneralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel_GeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox_LookAndFeel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_LookAndFeel))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jTabbedPane_Option.addTab("General", jPanel_General);
@@ -243,16 +274,54 @@ public class FrmOptions extends javax.swing.JDialog {
 
     private void jButton_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OKActionPerformed
         // TODO add your handling code here:
+        //Font
         if (_legendFont != null)
             _parent.setLegendFont(_legendFont);
         if (_textFont != null)
             _parent.getOptions().setTextFont(_textFont);
         
+        //Script language
         if (this.jRadioButton_Groovy.isSelected()){
             _parent.getOptions().setScriptLanguage("Groovy");
         } else {
             _parent.getOptions().setScriptLanguage("Jython");
         }
+        
+        //Look and feel
+        String laf = this.jComboBox_LookAndFeel.getSelectedItem().toString();
+        String lafName = UIManager.getLookAndFeel().getClass().getName();
+        if (laf.equals("CDE/Motif")){
+            lafName = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";            
+        } else if (laf.equals("Metal")){
+            lafName = "javax.swing.plaf.metal.MetalLookAndFeel";                
+        } else if (laf.equals("Windows")){
+            lafName = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";                
+        }  else if (laf.equals("Windows Classic")){
+            lafName = "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";                
+        } else if (laf.equals("Nimbus")){
+            lafName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";                
+        } else if (laf.equals("Mac")){
+            lafName = "com.sun.java.swing.plaf.mac.MacLookAndFeel";  
+        } else if (laf.equals("GTK")){
+            lafName = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";  
+        }
+        
+        try {
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                UIManager.setLookAndFeel(lafName);
+                SwingUtilities.updateComponentTreeUI(this);
+                SwingUtilities.updateComponentTreeUI(this._parent);
+                SwingUtilities.updateComponentTreeUI(this._parent.getMeteoDataset());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(FrmOptions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(FrmOptions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(FrmOptions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(FrmOptions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         this.dispose();
     }//GEN-LAST:event_jButton_OKActionPerformed
 
@@ -317,9 +386,11 @@ public class FrmOptions extends javax.swing.JDialog {
     private javax.swing.JButton jButton_LegendFont;
     private javax.swing.JButton jButton_OK;
     private javax.swing.JButton jButton_TextFont;
+    private javax.swing.JComboBox jComboBox_LookAndFeel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_LegendFont;
+    private javax.swing.JLabel jLabel_LookAndFeel;
     private javax.swing.JLabel jLabel_TextFont;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel_Font;

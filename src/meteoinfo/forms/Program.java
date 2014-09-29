@@ -159,6 +159,14 @@ public class Program {
 //                }
 //            }
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            
+            //WebLookAndFeel.install();
+            //UIManager.setLookAndFeel("com.alee.laf.WebLookAndFeel");
+            
+            //com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green", "INSERT YOUR LICENSE KEY HERE", "my company");
+            //UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
+            //UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
             //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             //UIManager.setLookAndFeel("javax.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException ex) {
@@ -170,6 +178,14 @@ public class Program {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmTextEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+
+//        System.setProperty("Quaqua.tabLayoutPolicy", "wrap");
+//        try {
+//            JFrame.setDefaultLookAndFeelDecorated(true);
+//            JDialog.setDefaultLookAndFeelDecorated(true);
+//            UIManager.setLookAndFeel("ch.randelshofer.quaqua.QuaquaLookAndFeel");
+//        } catch (Exception e) {
+//        }
         //</editor-fold>
 
         /* Create and display the form */
@@ -200,7 +216,7 @@ public class Program {
 //                }.start();
 
                 boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
-                        getInputArguments().toString().indexOf("jdwp") >= 0;
+                        getInputArguments().toString().contains("jdwp");
                 if (isDebug) {
                     //Locale.setDefault(Locale.ENGLISH);
                 }
