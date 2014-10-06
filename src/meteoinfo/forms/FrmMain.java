@@ -37,8 +37,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.help.CSH;
-import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.imageio.ImageIO;
 import javax.print.PrintException;
@@ -52,9 +50,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
 import javax.xml.parsers.ParserConfigurationException;
 import meteoinfo.classes.GenericFileFilter;
 import meteoinfo.classes.Options;
@@ -62,6 +65,7 @@ import meteoinfo.classes.Plugin;
 import meteoinfo.classes.PluginCollection;
 import meteoinfo.classes.ProjectFile;
 import org.meteoinfo.data.mapdata.MapDataManage;
+import org.meteoinfo.global.Extent;
 import org.meteoinfo.global.FrmProperty;
 import org.meteoinfo.global.util.GlobalUtil;
 import org.meteoinfo.global.MIMath;
@@ -72,7 +76,13 @@ import org.meteoinfo.global.event.GraphicSelectedEvent;
 import org.meteoinfo.global.event.IActiveMapFrameChangedListener;
 import org.meteoinfo.global.event.IElementSelectedListener;
 import org.meteoinfo.global.event.IGraphicSelectedListener;
+import org.meteoinfo.global.event.INodeSelectedListener;
+import org.meteoinfo.global.event.IShapeSelectedListener;
+import org.meteoinfo.global.event.IUndoEditListener;
 import org.meteoinfo.global.event.IZoomChangedListener;
+import org.meteoinfo.global.event.NodeSelectedEvent;
+import org.meteoinfo.global.event.ShapeSelectedEvent;
+import org.meteoinfo.global.event.UndoEditEvent;
 import org.meteoinfo.global.event.ZoomChangedEvent;
 import org.meteoinfo.help.Help;
 import org.meteoinfo.ui.WrappingLayout;
@@ -83,12 +93,19 @@ import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.layout.ElementType;
 import org.meteoinfo.layout.FrmPageSet;
 import org.meteoinfo.layout.LayoutGraphic;
+import org.meteoinfo.layout.LayoutLegend;
+import org.meteoinfo.layout.LayoutNorthArrow;
+import org.meteoinfo.layout.LayoutScaleBar;
+import org.meteoinfo.layout.MapLayoutUndoRedo;
 import org.meteoinfo.layout.MouseMode;
+import org.meteoinfo.legend.ItemNode;
 import org.meteoinfo.legend.LayerNode;
 import org.meteoinfo.legend.LayersLegend;
 import org.meteoinfo.legend.MapFrame;
 import org.meteoinfo.legend.NodeTypes;
+import org.meteoinfo.map.FeatureUndoableEdit;
 import org.meteoinfo.map.MapView;
+import org.meteoinfo.map.MapViewUndoRedo;
 import org.meteoinfo.map.MouseTools;
 import org.meteoinfo.plugin.IApplication;
 import org.meteoinfo.plugin.IPlugin;
@@ -97,10 +114,12 @@ import org.meteoinfo.projection.ProjectionInfo;
 import org.meteoinfo.projection.ProjectionNames;
 import org.meteoinfo.projection.Reproject;
 import org.meteoinfo.shape.Shape;
+import org.meteoinfo.shape.ShapeTypes;
 import static org.meteoinfo.shape.ShapeTypes.CurveLine;
 import static org.meteoinfo.shape.ShapeTypes.CurvePolygon;
 import static org.meteoinfo.shape.ShapeTypes.Polygon;
 import static org.meteoinfo.shape.ShapeTypes.Polyline;
+import org.meteoinfo.table.DataTypes;
 import org.xml.sax.SAXException;
 
 /**
@@ -122,6 +141,9 @@ public class FrmMain extends JFrame implements IApplication {
     private PluginCollection _plugins = new PluginCollection();
     private ImageIcon _loadedPluginIcon;
     private ImageIcon _unloadedPluginIcon;
+    private final UndoManager undoManager = new UndoManager();
+    private UndoManager zoomUndoManager = new UndoManager();
+    private UndoManager currentUndoManager;
     // </editor-fold>
     // <editor-fold desc="Constructor">
 
@@ -129,6 +151,7 @@ public class FrmMain extends JFrame implements IApplication {
         //Locale.setDefault(Locale.ENGLISH);
         initComponents();
 
+        currentUndoManager = undoManager;
         _mapDocument.addActiveMapFrameChangedListener(new IActiveMapFrameChangedListener() {
             @Override
             public void activeMapFrameChangedEvent(ActiveMapFrameChangedEvent event) {
@@ -136,6 +159,49 @@ public class FrmMain extends JFrame implements IApplication {
                 setMapView();
                 if (jTabbedPane_Main.getSelectedIndex() == 0) {
                     _mapView.paintLayers();
+                }
+            }
+        });
+        _mapDocument.addNodeSelectedListener(new INodeSelectedListener() {
+            @Override
+            public void nodeSelectedEvent(NodeSelectedEvent event) {
+                ItemNode selNode = _mapDocument.getSelectedNode();
+                switch (selNode.getNodeType()) {
+                    case LayerNode:
+                        MapLayer layer = ((LayerNode) selNode).getMapLayer();
+                        if (layer.getLayerType() == LayerTypes.VectorLayer) {
+                            if (!((VectorLayer) layer).isProjected()) {
+                                jToolBar_Edit.setEnabled(true);
+                                jButton_EditStartOrEnd.setEnabled(true);
+                                jButton_EditStartOrEnd.setSelected(((LayerNode) selNode).isEditing());
+                                if (jButton_EditStartOrEnd.isSelected()) {
+                                    currentUndoManager = ((VectorLayer) layer).getUndoManager();
+                                    refreshUndoRedo();
+                                    jButton_EditNewFeature.setEnabled(true);
+                                    if (((VectorLayer) layer).hasSelectedShapes()) {
+                                        jButton_EditRemoveFeature.setEnabled(true);
+                                        jButton_EditFeatureVertices.setEnabled(true);
+                                    }
+                                }
+                            } else {
+                                jToolBar_Edit.setEnabled(false);
+                                for (Component c : jToolBar_Edit.getComponents()) {
+                                    c.setEnabled(false);
+                                }
+                            }
+                        } else {
+                            jToolBar_Edit.setEnabled(false);
+                            for (Component c : jToolBar_Edit.getComponents()) {
+                                c.setEnabled(false);
+                            }
+                        }
+                        break;
+                    default:
+                        jToolBar_Edit.setEnabled(false);
+                        for (Component c : jToolBar_Edit.getComponents()) {
+                            c.setEnabled(false);
+                        }
+                        break;
                 }
             }
         });
@@ -171,6 +237,13 @@ public class FrmMain extends JFrame implements IApplication {
             @Override
             public void mouseMoved(MouseEvent e) {
                 layout_MouseMoved(e);
+            }
+        });
+        _mapLayout.addUndoEditListener(new IUndoEditListener() {
+            @Override
+            public void undoEditEvent(UndoEditEvent event, UndoableEdit undoEdit) {
+                undoManager.addEdit(undoEdit);
+                refreshUndoRedo();
             }
         });
 
@@ -213,7 +286,6 @@ public class FrmMain extends JFrame implements IApplication {
 //        CSH.setHelpIDString(this.jMenuItem_Help, "top");
 //        //Handle events
 //        this.jMenuItem_Help.addActionListener(new CSH.DisplayHelpFromSource(hb));
-
         loadForm();
     }
 
@@ -231,6 +303,8 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_FullExtent = new javax.swing.JButton();
         jButton_ZoomToLayer = new javax.swing.JButton();
         jButton_ZoomToExtent = new javax.swing.JButton();
+        jButton_ZoomUndo = new javax.swing.JButton();
+        jButton_ZoomRedo = new javax.swing.JButton();
         jButton_Identifer = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         jSplitButton_SelectFeature = new org.meteoinfo.ui.JSplitButton();
@@ -261,6 +335,15 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_PageZoomOut = new javax.swing.JButton();
         jButton_FitToScreen = new javax.swing.JButton();
         jComboBox_PageZoom = new javax.swing.JComboBox();
+        jToolBar_Edit = new javax.swing.JToolBar();
+        jButton_EditStartOrEnd = new javax.swing.JButton();
+        jButton_EditSave = new javax.swing.JButton();
+        jSeparator19 = new javax.swing.JToolBar.Separator();
+        jButton_EditTool = new javax.swing.JButton();
+        //jSeparator20 = new javax.swing.JToolBar.Separator();
+        jButton_EditNewFeature = new javax.swing.JButton();
+        jButton_EditRemoveFeature = new javax.swing.JButton();
+        jButton_EditFeatureVertices = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jTabbedPane_Main = new javax.swing.JTabbedPane();
@@ -277,6 +360,10 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Open = new javax.swing.JMenuItem();
         jMenuItem_Save = new javax.swing.JMenuItem();
         jMenuItem_SaveAs = new javax.swing.JMenuItem();
+        jMenu_Edit = new javax.swing.JMenu();
+        jMenuItem_Undo = new javax.swing.JMenuItem();
+        jMenuItem_Redo = new javax.swing.JMenuItem();
+        jMenuItem_NewLayer = new javax.swing.JMenuItem();
         jMenu_View = new javax.swing.JMenu();
         jMenuItem_Layers = new javax.swing.JMenuItem();
         jMenuItem_AttributeData = new javax.swing.JMenuItem();
@@ -456,11 +543,41 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_ZoomToExtent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ZoomToExtent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_ZoomToExtent.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ZoomToExtentActionPerformed(evt);
             }
         });
         jToolBar_Base.add(jButton_ZoomToExtent);
+
+        jButton_ZoomUndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_PreTime.Image.png"))); // NOI18N
+        jButton_ZoomUndo.setToolTipText(bundle.getString("FrmMain.jButton_ZoomUndo.toolTipText")); // NOI18N
+        jButton_ZoomUndo.setFocusable(false);
+        jButton_ZoomUndo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_ZoomUndo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_ZoomUndo.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ZoomUndoActionPerformed(evt);
+            }
+        });
+        jButton_ZoomUndo.setEnabled(false);
+        jToolBar_Base.add(jButton_ZoomUndo);
+
+        jButton_ZoomRedo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_NextTime.Image.png"))); // NOI18N
+        jButton_ZoomRedo.setToolTipText(bundle.getString("FrmMain.jButton_ZoomRedo.toolTipText")); // NOI18N
+        jButton_ZoomRedo.setFocusable(false);
+        jButton_ZoomRedo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_ZoomRedo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_ZoomRedo.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ZoomRedoActionPerformed(evt);
+            }
+        });
+        jButton_ZoomRedo.setEnabled(false);
+        jToolBar_Base.add(jButton_ZoomRedo);
+        jToolBar_Base.add(new JSeparator());
 
         jButton_Identifer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/information.png"))); // NOI18N
         jButton_Identifer.setToolTipText(bundle.getString("FrmMain.jButton_Identifer.toolTipText")); // NOI18N
@@ -468,6 +585,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_Identifer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Identifer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_Identifer.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_IdentiferActionPerformed(evt);
             }
@@ -574,6 +692,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_LabelSet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_LabelSet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_LabelSet.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_LabelSetActionPerformed(evt);
             }
@@ -587,6 +706,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_SavePicture.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_SavePicture.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_SavePicture.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_SavePictureActionPerformed(evt);
             }
@@ -604,6 +724,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewLabel.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewLabelActionPerformed(evt);
             }
@@ -616,6 +737,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewPoint.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewPoint.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewPoint.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewPointActionPerformed(evt);
             }
@@ -628,6 +750,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewPolyline.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewPolyline.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewPolyline.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewPolylineActionPerformed(evt);
             }
@@ -640,6 +763,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewFreehand.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewFreehand.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewFreehand.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewFreehandActionPerformed(evt);
             }
@@ -652,6 +776,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewCurve.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewCurve.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewCurve.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewCurveActionPerformed(evt);
             }
@@ -664,6 +789,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewPolygon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewPolygon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewPolygon.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewPolygonActionPerformed(evt);
             }
@@ -676,6 +802,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewCurvePolygon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewCurvePolygon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewCurvePolygon.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewCurvePolygonActionPerformed(evt);
             }
@@ -688,6 +815,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewRectangle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewRectangle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewRectangle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewRectangleActionPerformed(evt);
             }
@@ -700,6 +828,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewCircle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewCircle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewCircle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewCircleActionPerformed(evt);
             }
@@ -712,6 +841,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_NewEllipse.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NewEllipse.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_NewEllipse.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewEllipseActionPerformed(evt);
             }
@@ -724,6 +854,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_EditVertices.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_EditVertices.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_EditVertices.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_EditVerticesActionPerformed(evt);
             }
@@ -741,6 +872,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_PageSet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_PageSet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_PageSet.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_PageSetActionPerformed(evt);
             }
@@ -753,6 +885,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_PageZoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_PageZoomIn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_PageZoomIn.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_PageZoomInActionPerformed(evt);
             }
@@ -762,6 +895,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_PageZoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_PageZoomOut.Image.png"))); // NOI18N
         jButton_PageZoomOut.setToolTipText(bundle.getString("FrmMain.jButton_PageZoomOut.toolTipText")); // NOI18N
         jButton_PageZoomOut.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_PageZoomOutActionPerformed(evt);
             }
@@ -774,6 +908,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_FitToScreen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_FitToScreen.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_FitToScreen.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_FitToScreenActionPerformed(evt);
             }
@@ -785,17 +920,107 @@ public class FrmMain extends JFrame implements IApplication {
         jComboBox_PageZoom.setMinimumSize(new java.awt.Dimension(60, 24));
         jComboBox_PageZoom.setPreferredSize(new java.awt.Dimension(80, 24));
         jComboBox_PageZoom.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_PageZoomActionPerformed(evt);
             }
         });
         jToolBar_Layout.add(jComboBox_PageZoom);
 
+        //Edit tool bar
+        jToolBar_Edit.setFloatable(true);
+        jToolBar_Edit.setRollover(true);
+
+        jButton_EditStartOrEnd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/edit_16.png"))); // NOI18N
+        jButton_EditStartOrEnd.setToolTipText(bundle.getString("FrmMain.jButton_EditStartOrEnd.toolTipText")); // NOI18N
+        jButton_EditStartOrEnd.setFocusable(false);
+        jButton_EditStartOrEnd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_EditStartOrEnd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_EditStartOrEnd.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EditStartOrEndActionPerformed(evt);
+            }
+        });
+        jToolBar_Edit.add(jButton_EditStartOrEnd);
+
+        jButton_EditSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/save_16.png"))); // NOI18N
+        jButton_EditSave.setToolTipText(bundle.getString("FrmMain.jButton_EditSave.toolTipText")); // NOI18N
+        jButton_EditSave.setFocusable(false);
+        jButton_EditSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_EditSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_EditSave.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EditSaveActionPerformed(evt);
+            }
+        });
+        jButton_EditSave.setEnabled(false);
+        jToolBar_Edit.add(jButton_EditSave);
+        jToolBar_Edit.add(new javax.swing.JToolBar.Separator());
+
+        jButton_EditTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/location_arrow.png"))); // NOI18N
+        jButton_EditTool.setToolTipText(bundle.getString("FrmMain.jButton_EditTool.toolTipText")); // NOI18N
+        jButton_EditTool.setFocusable(false);
+        jButton_EditTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_EditTool.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_EditTool.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EditToolActionPerformed(evt);
+            }
+        });
+        jButton_EditTool.setEnabled(false);
+        jToolBar_Edit.add(jButton_EditTool);
+
+        jButton_EditNewFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/new_document_16.png"))); // NOI18N
+        jButton_EditNewFeature.setToolTipText(bundle.getString("FrmMain.jButton_EditNewFeature.toolTipText")); // NOI18N
+        jButton_EditNewFeature.setFocusable(false);
+        jButton_EditNewFeature.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_EditNewFeature.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_EditNewFeature.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EditNewFeatureActionPerformed(evt);
+            }
+        });
+        jButton_EditNewFeature.setEnabled(false);
+        jToolBar_Edit.add(jButton_EditNewFeature);
+
+        jButton_EditRemoveFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_RemoveDataLayes.Image.png"))); // NOI18N
+        jButton_EditRemoveFeature.setToolTipText(bundle.getString("FrmMain.jButton_EditRemoveFeature.toolTipText")); // NOI18N
+        jButton_EditRemoveFeature.setFocusable(false);
+        jButton_EditRemoveFeature.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_EditRemoveFeature.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_EditRemoveFeature.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EditRemoveFeatureActionPerformed(evt);
+            }
+        });
+        jButton_EditRemoveFeature.setEnabled(false);
+        jToolBar_Edit.add(jButton_EditRemoveFeature);
+
+        jButton_EditFeatureVertices.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_EditVertices.Image.png"))); // NOI18N
+        jButton_EditFeatureVertices.setToolTipText(bundle.getString("FrmMain.jButton_EditFeatureVertices.toolTipText")); // NOI18N
+        jButton_EditFeatureVertices.setFocusable(false);
+        jButton_EditFeatureVertices.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_EditFeatureVertices.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_EditFeatureVertices.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EditFeatureVerticesActionPerformed(evt);
+            }
+        });
+        jButton_EditFeatureVertices.setEnabled(false);
+        jToolBar_Edit.add(jButton_EditFeatureVertices);
+
         //Add tool bars in the panel
         jPanel_MainToolBar.setLayout(new WrappingLayout(WrappingLayout.LEFT, 1, 1));
         jPanel_MainToolBar.add(jToolBar_Base);
         jPanel_MainToolBar.add(jToolBar_Graphic);
         jPanel_MainToolBar.add(jToolBar_Layout);
+        jPanel_MainToolBar.add(jToolBar_Edit);
 
         //Split panel
         jSplitPane1.setBackground(new java.awt.Color(255, 255, 255));
@@ -877,26 +1102,27 @@ public class FrmMain extends JFrame implements IApplication {
         jPanel_StatusLayout.setHorizontalGroup(
                 jPanel_StatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel_StatusLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel_Coordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jProgressBar_Main, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                        .addContainerGap()
+                        .addComponent(jLabel_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel_Coordinate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jProgressBar_Main, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel_ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel_StatusLayout.setVerticalGroup(
                 jPanel_StatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_StatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel_Coordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jProgressBar_Main, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel_ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)));
+                        .addComponent(jLabel_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_Coordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jProgressBar_Main, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         //Main menu bar
         jMenuBar_Main.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
 
+        //Project menu
         jMenu_Project.setText(bundle.getString("FrmMain.jMenu_Project.text")); // NOI18N
         jMenu_Project.setMnemonic(KeyEvent.VK_P);
 
@@ -930,6 +1156,47 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuBar_Main.add(jMenu_Project);
 
+        //Edit menu
+        jMenu_Edit.setText(bundle.getString("FrmMain.jMenu_Edit.text")); // NOI18N
+        jMenu_Edit.setMnemonic(KeyEvent.VK_E);
+
+        jMenuItem_Undo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_Undo.Image.png"))); // NOI18N
+        jMenuItem_Undo.setText(bundle.getString("FrmMain.jMenuItem_Undo.text")); // NOI18N
+        jMenuItem_Undo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_Undo.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_UndoActionPerformed(evt);
+            }
+        });
+        jMenuItem_Undo.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_Undo);
+
+        jMenuItem_Redo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_Redo.Image.png"))); // NOI18N
+        jMenuItem_Redo.setText(bundle.getString("FrmMain.jMenuItem_Redo.text")); // NOI18N
+        jMenuItem_Redo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_Redo.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_RedoActionPerformed(evt);
+            }
+        });
+        jMenuItem_Redo.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_Redo);
+        jMenu_Edit.add(new javax.swing.JPopupMenu.Separator());
+
+        jMenuItem_NewLayer.setText(bundle.getString("FrmMain.jMenuItem_NewLayer.text")); // NOI18N        
+        jMenuItem_NewLayer.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_NewLayerActionPerformed(evt);
+            }
+        });
+        jMenu_Edit.add(jMenuItem_NewLayer);
+
+        jMenuBar_Main.add(jMenu_Edit);
+
+        //View menu
         jMenu_View.setText(bundle.getString("FrmMain.jMenu_View.text")); // NOI18N
         jMenu_View.setMnemonic(KeyEvent.VK_V);
 
@@ -1208,7 +1475,7 @@ public class FrmMain extends JFrame implements IApplication {
         this.loadConfigureFile();
         this.setLocation(this._options.getMainFormLocation());
         boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
-                getInputArguments().toString().indexOf("jdwp") >= 0;
+                getInputArguments().toString().contains("jdwp");
         if (isDebug) {
             this.setSize(1000, 650);
         } else {
@@ -1283,6 +1550,41 @@ public class FrmMain extends JFrame implements IApplication {
                 }
             }
         });
+        _mapView.addShapeSelectedListener(new IShapeSelectedListener() {
+            @Override
+            public void shapeSelectedEvent(ShapeSelectedEvent event) {
+                MapLayer selLayer = _mapView.getSelectedLayer();
+                if (selLayer != null) {
+                    if (selLayer.getLayerType() == LayerTypes.VectorLayer) {
+                        if (((VectorLayer) selLayer).isEditing()) {
+                            if (((VectorLayer) selLayer).hasSelectedShapes()) {
+                                jButton_EditRemoveFeature.setEnabled(true);
+                                jButton_EditFeatureVertices.setEnabled(true);
+
+                            } else {
+                                jButton_EditRemoveFeature.setEnabled(false);
+                                jButton_EditFeatureVertices.setEnabled(false);
+                            }
+                            jButton_EditFeatureVertices.setSelected(false);
+                        }
+                    }
+                }
+            }
+        });
+        _mapView.addUndoEditListener(new IUndoEditListener() {
+            @Override
+            public void undoEditEvent(UndoEditEvent event, UndoableEdit undoEdit) {
+                if (undoEdit.getClass().equals(MapViewUndoRedo.ZoomEdit.class)) {
+                    zoomUndoManager.addEdit(undoEdit);
+                    refreshZoomUndoRedo();
+                } else if (undoEdit instanceof FeatureUndoableEdit) {
+                    refreshUndoRedo();
+                } else {
+                    undoManager.addEdit(undoEdit);
+                    refreshUndoRedo();
+                }
+            }
+        });
 
         _mapView.setFocusable(true);
         _mapView.requestFocusInWindow();
@@ -1293,6 +1595,19 @@ public class FrmMain extends JFrame implements IApplication {
 //            _mapView.MouseMove += new MouseEventHandler(this.MapView_MouseMove);
 //            _mapView.MouseDown += new MouseEventHandler(this.MapView_MouseDown);
 //            _mapView.GraphicSeleted += new EventHandler(this.MapView_GraphicSelected);
+    }
+
+    private void refreshUndoRedo() {
+        this.jMenuItem_Undo.setEnabled(currentUndoManager.canUndo());
+        this.jMenuItem_Redo.setEnabled(currentUndoManager.canRedo());
+        if (this.jButton_EditStartOrEnd.isSelected()) {
+            this.jButton_EditSave.setEnabled(currentUndoManager.canUndo());
+        }
+    }
+
+    private void refreshZoomUndoRedo() {
+        this.jButton_ZoomUndo.setEnabled(zoomUndoManager.canUndo());
+        this.jButton_ZoomRedo.setEnabled(zoomUndoManager.canRedo());
     }
     // </editor-fold>
     // <editor-fold desc="Events">
@@ -1836,19 +2151,6 @@ public class FrmMain extends JFrame implements IApplication {
         _currentTool = currentTool;
         _currentTool.setSelected(true);
         jLabel_Status.setText(_currentTool.getToolTipText());
-
-        if (!"jButton_EditVertices".equals(_currentTool.getName())) {
-            //this.jButton_EditVertices.setEnabled(false);
-            if (_isEditingVertices) {
-                if (this.jTabbedPane_Main.getSelectedIndex() == 0) {
-                    _mapView.paintLayers();
-                } else {
-                    _mapDocument.getMapLayout().paintGraphics();
-                }
-
-                _isEditingVertices = false;
-            }
-        }
     }
 
     private void _mapViewComponentResized(java.awt.event.ComponentEvent evt) {
@@ -1950,6 +2252,41 @@ public class FrmMain extends JFrame implements IApplication {
         }
     }
 
+    private void jMenuItem_UndoActionPerformed(ActionEvent evt) {
+        try {
+            currentUndoManager.undo();
+        } catch (CannotUndoException cre) {
+        }
+        this.refreshUndoRedo();
+    }
+
+    private void jMenuItem_RedoActionPerformed(ActionEvent evt) {
+        try {
+            currentUndoManager.redo();
+        } catch (CannotRedoException cre) {
+        }
+        this.refreshUndoRedo();
+    }
+
+    private void jMenuItem_NewLayerActionPerformed(ActionEvent evt) {
+        Object[] options = {"Point Layer", "Polyline Layer", "Polygon Layer"};
+        String option = (String) JOptionPane.showInputDialog(this, "Select Layer Type:",
+                "Select", JOptionPane.PLAIN_MESSAGE, null, options, "Point Layer");
+        if (option != null) {
+            ShapeTypes type = ShapeTypes.Point;
+            if (option.equals("Polyline Layer")) {
+                type = ShapeTypes.Polyline;
+            } else if (option.equals("Polygon Layer")) {
+                type = ShapeTypes.Polygon;
+            }
+            VectorLayer layer = new VectorLayer(type);
+            layer.setLayerName("New " + option);
+            layer.editAddField("ID", DataTypes.Integer);
+            this._mapDocument.getActiveMapFrame().addLayer(layer);
+            this._mapDocument.paintGraphics();
+        }
+    }
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {
         // TODO add your handling code here:
         //_mapView.setLockViewUpdate(true);
@@ -1958,6 +2295,7 @@ public class FrmMain extends JFrame implements IApplication {
         this._mapLayout.setLockViewUpdate(true);
         _mapView.zoomToExtent(_mapView.getViewExtent());
         //_mapView.setLockViewUpdate(false);
+        this.zoomUndoManager = new UndoManager();
 
         //Open MeteoData form
         if (this._options.isShowStartMeteoDataDlg()) {
@@ -2043,38 +2381,56 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jMenuItem_InsertTitleActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        _mapDocument.getMapLayout().addText("Map Title", _mapDocument.getMapLayout().getWidth() / 2, 20, 12);
+        LayoutGraphic text = _mapDocument.getMapLayout().addText("Map Title", _mapDocument.getMapLayout().getWidth() / 2, 20, 12);
         _mapDocument.getMapLayout().paintGraphics();
+        UndoableEdit edit = (new MapLayoutUndoRedo()).new AddElementEdit(_mapDocument.getMapLayout(), text);
+        undoManager.addEdit(edit);
+        this.refreshUndoRedo();
     }
 
     private void jMenuItem_InsertTextActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        _mapDocument.getMapLayout().addText("Text", _mapDocument.getMapLayout().getWidth() / 2, 200);
+        LayoutGraphic text = _mapDocument.getMapLayout().addText("Text", _mapDocument.getMapLayout().getWidth() / 2, 200);
         _mapDocument.getMapLayout().paintGraphics();
+        UndoableEdit edit = (new MapLayoutUndoRedo()).new AddElementEdit(_mapDocument.getMapLayout(), text);
+        undoManager.addEdit(edit);
+        this.refreshUndoRedo();
     }
 
     private void jMenuItem_InsertLegendActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        _mapDocument.getMapLayout().addLegend(100, 100);
+        LayoutLegend legend = _mapDocument.getMapLayout().addLegend(100, 100);
         _mapDocument.getMapLayout().paintGraphics();
+        UndoableEdit edit = (new MapLayoutUndoRedo()).new AddElementEdit(_mapDocument.getMapLayout(), legend);
+        undoManager.addEdit(edit);
+        this.refreshUndoRedo();
     }
 
     private void jMenuItem_InsertScaleBarActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        _mapDocument.getMapLayout().addScaleBar(100, 100);
+        LayoutScaleBar sb = _mapDocument.getMapLayout().addScaleBar(100, 100);
         _mapDocument.getMapLayout().paintGraphics();
+        UndoableEdit edit = (new MapLayoutUndoRedo()).new AddElementEdit(_mapDocument.getMapLayout(), sb);
+        undoManager.addEdit(edit);
+        this.refreshUndoRedo();
     }
 
     private void jMenuItem_InsertNorthArrowActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        _mapDocument.getMapLayout().addNorthArrow(200, 100);
+        LayoutNorthArrow na = _mapDocument.getMapLayout().addNorthArrow(200, 100);
         _mapDocument.getMapLayout().paintGraphics();
+        UndoableEdit edit = (new MapLayoutUndoRedo()).new AddElementEdit(_mapDocument.getMapLayout(), na);
+        undoManager.addEdit(edit);
+        this.refreshUndoRedo();
     }
 
     private void jMenuItem_InsertWindArrowActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:               
-        _mapDocument.getMapLayout().addWindArrow(100, 100);
+        LayoutGraphic wa = _mapDocument.getMapLayout().addWindArrow(100, 100);
         _mapDocument.getMapLayout().paintGraphics();
+        UndoableEdit edit = (new MapLayoutUndoRedo()).new AddElementEdit(_mapDocument.getMapLayout(), wa);
+        undoManager.addEdit(edit);
+        this.refreshUndoRedo();
     }
 
     private void jMenuItem_ScriptActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2139,7 +2495,7 @@ public class FrmMain extends JFrame implements IApplication {
         help.setIconImage("/meteoinfo/resources/MeteoInfo_1_16x16x8.png");
         help.setSize(800, 700);
         help.setLocationRelativeTo(this);
-        help.setVisible(true);   
+        help.setVisible(true);
     }
 
     /**
@@ -2246,12 +2602,17 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jButton_EditVerticesActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        _mapView.setMouseTool(MouseTools.EditVertices);
-        _mapDocument.getMapLayout().setMouseMode(MouseMode.EditVertices);
+        jButton_EditVertices.setSelected(!jButton_EditVertices.isSelected());
+        if (jButton_EditVertices.isSelected()) {
+            _mapView.setMouseTool(MouseTools.EditVertices);
+            _mapDocument.getMapLayout().setMouseMode(MouseMode.EditVertices);
+            _isEditingVertices = true;
+        } else {
+            this.jButton_SelectElement.doClick();
+            _isEditingVertices = false;
+        }
 
-        setCurrentTool((JButton) evt.getSource());
-
-        _isEditingVertices = true;
+        //setCurrentTool((JButton) evt.getSource());
         if (this.jTabbedPane_Main.getSelectedIndex() == 0) {
             _mapView.paintLayers();
         } else {
@@ -2481,14 +2842,38 @@ public class FrmMain extends JFrame implements IApplication {
             MapFrame aMF = _mapDocument.getCurrentMapFrame();
             MapLayer aLayer = ((LayerNode) _mapDocument.getSelectedNode()).getMapLayer();
             if (aLayer != null) {
+                Extent oldExtent = (Extent) aMF.getMapView().getViewExtent().clone();
                 aMF.getMapView().zoomToExtent(aLayer.getExtent());
+                UndoableEdit edit = (new MapViewUndoRedo()).new ZoomEdit(aMF.getMapView(), oldExtent, (Extent) aMF.getMapView().getViewExtent().clone());
+                zoomUndoManager.addEdit(edit);
+                this.refreshZoomUndoRedo();
             }
         }
     }
 
     private void jButton_FullExtentActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        Extent oldExtent = (Extent) _mapView.getViewExtent().clone();
         _mapView.zoomToExtent(_mapView.getExtent());
+        UndoableEdit edit = (new MapViewUndoRedo()).new ZoomEdit(_mapView, oldExtent, (Extent) _mapView.getViewExtent().clone());
+        zoomUndoManager.addEdit(edit);
+        this.refreshZoomUndoRedo();
+    }
+
+    private void jButton_ZoomUndoActionPerformed(ActionEvent evt) {
+        try {
+            zoomUndoManager.undo();
+        } catch (CannotUndoException cre) {
+        }
+        this.refreshZoomUndoRedo();
+    }
+
+    private void jButton_ZoomRedoActionPerformed(ActionEvent evt) {
+        try {
+            zoomUndoManager.redo();
+        } catch (CannotRedoException cre) {
+        }
+        this.refreshZoomUndoRedo();
     }
 
     private void jButton_PanActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2580,6 +2965,133 @@ public class FrmMain extends JFrame implements IApplication {
             }
         }
         this.setCursor(Cursor.getDefaultCursor());
+    }
+
+    private void jButton_EditStartOrEndActionPerformed(ActionEvent evt) {
+        ItemNode selNode = this._mapDocument.getSelectedNode();
+        if (selNode.getNodeType() != NodeTypes.LayerNode) {
+            return;
+        }
+
+        LayerNode selLayerNode = (LayerNode) selNode;
+        MapLayer selMapLayer = selLayerNode.getMapLayer();
+        if (selMapLayer == null) {
+            return;
+        }
+
+        if (selMapLayer.getLayerType() == LayerTypes.VectorLayer) {
+            VectorLayer layer = (VectorLayer) selMapLayer;
+            if (selLayerNode.isEditing()) {
+                if (currentUndoManager.canUndo()) {
+                    int result = JOptionPane.showConfirmDialog(this, "If save edit?", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION);
+                    if (result != JOptionPane.CANCEL_OPTION) {
+                        selLayerNode.setEditing(false);
+                        this.jButton_EditStartOrEnd.setSelected(false);
+                        this.jButton_EditTool.setEnabled(false);
+                        this.jButton_EditSave.setEnabled(false);
+                        this.jButton_EditNewFeature.setEnabled(false);
+                        this.jButton_EditRemoveFeature.setEnabled(false);
+                        this.jButton_EditFeatureVertices.setEnabled(false);
+                        if (result == JOptionPane.YES_OPTION) {
+                            layer.saveFile();
+                        } else if (result == JOptionPane.NO_OPTION) {
+                            while (currentUndoManager.canUndo()) {
+                                currentUndoManager.undo();
+                            }
+                        }
+                        currentUndoManager.end();
+                        currentUndoManager = undoManager;
+                        this.refreshUndoRedo();
+                    }
+                } else {
+                    selLayerNode.setEditing(false);
+                    this.jButton_EditStartOrEnd.setSelected(false);
+                    this.jButton_EditTool.setEnabled(false);
+                    this.jButton_EditSave.setEnabled(false);
+                    this.jButton_EditNewFeature.setEnabled(false);
+                    this.jButton_EditRemoveFeature.setEnabled(false);
+                    this.jButton_EditFeatureVertices.setEnabled(false);
+                    currentUndoManager = undoManager;
+                    this.refreshUndoRedo();
+                }
+            } else {
+                selLayerNode.setEditing(true);
+                this.jButton_EditTool.setEnabled(true);
+                this.jButton_EditNewFeature.setEnabled(true);
+                if (layer.hasSelectedShapes()) {
+                    this.jButton_EditRemoveFeature.setEnabled(true);
+                    this.jButton_EditFeatureVertices.setEnabled(true);
+                }
+                this.jButton_EditStartOrEnd.setSelected(true);
+                currentUndoManager = layer.getUndoManager();
+                this.refreshUndoRedo();
+                this.jButton_EditTool.doClick();
+            }
+            this._mapDocument.paintGraphics();
+        }
+    }
+
+    private void jButton_EditSaveActionPerformed(ActionEvent evt) {
+        VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
+        layer.saveFile();
+    }
+
+    private void jButton_EditToolActionPerformed(ActionEvent evt) {
+        _mapView.setMouseTool(MouseTools.Edit_Tool);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_Tool);
+
+        setCurrentTool((JButton) evt.getSource());
+    }
+
+    private void jButton_EditNewFeatureActionPerformed(ActionEvent evt) {
+        // TODO add your handling code here:
+        _mapView.setMouseTool(MouseTools.Edit_NewFeature);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_NewFeature);
+
+        setCurrentTool((JButton) evt.getSource());
+    }
+
+    private void jButton_EditRemoveFeatureActionPerformed(ActionEvent evt) {
+        VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
+        List<Shape> selShapes = layer.getSelectedShapes();
+
+        UndoableEdit edit = (new MapViewUndoRedo()).new RemoveFeaturesEdit(_mapView, layer, selShapes);
+        currentUndoManager.addEdit(edit);
+        this.refreshUndoRedo();
+
+        for (Shape shape : selShapes) {
+            layer.editRemoveShape(shape);
+        }
+        this.jButton_EditRemoveFeature.setEnabled(false);
+        _mapView.paintLayers();
+    }
+
+    private void jButton_EditFeatureVerticesActionPerformed(ActionEvent evt) {
+        VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
+        List<Shape> selShapes = layer.getSelectedShapes();
+        if (selShapes.size() != 1) {
+            JOptionPane.showMessageDialog(this, "Select one editable feature to edit.", "Edit Vertices", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        jButton_EditFeatureVertices.setSelected(!jButton_EditFeatureVertices.isSelected());
+        if (jButton_EditFeatureVertices.isSelected()) {
+            layer.setEditingShape(layer.getSelectedShapes().get(0));
+            _mapView.setMouseTool(MouseTools.Edit_FeatureVertices);
+            _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_FeatureVertices);
+        } else {
+            layer.clearEditingShape();
+            _mapView.setMouseTool(MouseTools.Edit_Tool);
+            _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_Tool);
+        }
+
+        //setCurrentTool((JButton) evt.getSource());        
+        //_isEditingVertices = true;
+        if (this.jTabbedPane_Main.getSelectedIndex() == 0) {
+            _mapView.paintLayers();
+        } else {
+            _mapDocument.getMapLayout().paintGraphics();
+        }
     }
 
     private void jMenuItem_OptionsActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2721,6 +3233,14 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JButton jButton_ZoomOut;
     private javax.swing.JButton jButton_ZoomToExtent;
     private javax.swing.JButton jButton_ZoomToLayer;
+    private javax.swing.JButton jButton_ZoomUndo;
+    private javax.swing.JButton jButton_ZoomRedo;
+    private javax.swing.JButton jButton_EditStartOrEnd;
+    private javax.swing.JButton jButton_EditSave;
+    private javax.swing.JButton jButton_EditTool;
+    private javax.swing.JButton jButton_EditNewFeature;
+    private javax.swing.JButton jButton_EditRemoveFeature;
+    private javax.swing.JButton jButton_EditFeatureVertices;
     private org.meteoinfo.ui.JSplitButton jSplitButton_SelectFeature;
     private javax.swing.JPopupMenu jPopupMenu_SelectFeature;
     private javax.swing.JMenuItem jMenuItem_SelByRectangle;
@@ -2760,6 +3280,9 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_Script;
     private javax.swing.JMenuItem jMenuItem_SelByAttr;
     private javax.swing.JMenuItem jMenuItem_SelByLocation;
+    private javax.swing.JMenuItem jMenuItem_Undo;
+    private javax.swing.JMenuItem jMenuItem_Redo;
+    private javax.swing.JMenuItem jMenuItem_NewLayer;
     private javax.swing.JMenu jMenu_Help;
     private javax.swing.JMenu jMenu_Insert;
     private javax.swing.JMenu jMenu_Plugin;
@@ -2767,6 +3290,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenu jMenu_Selection;
     private javax.swing.JMenu jMenu_Tools;
     private javax.swing.JMenu jMenu_View;
+    private javax.swing.JMenu jMenu_Edit;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel_Status;
     private javax.swing.JPanel jPanel_LayoutTab;
@@ -2781,6 +3305,8 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator19;
+    private javax.swing.JToolBar.Separator jSeparator20;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JPopupMenu.Separator jSeparator7;
@@ -2791,5 +3317,6 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JToolBar jToolBar_Base;
     private javax.swing.JToolBar jToolBar_Graphic;
     private javax.swing.JToolBar jToolBar_Layout;
+    private javax.swing.JToolBar jToolBar_Edit;
     private javax.swing.JProgressBar jProgressBar_Main;
 }

@@ -6,9 +6,13 @@ package meteoinfo.forms;
 
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
+import java.awt.SplashScreen;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -221,6 +225,7 @@ public class Program {
                     //Locale.setDefault(Locale.ENGLISH);
                 }
                 //registerFonts();
+                org.meteoinfo.global.util.FontUtil.registerWeatherFont();
                 FrmMain frame = new FrmMain();
                 frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 //frame.setLocationRelativeTo(null);

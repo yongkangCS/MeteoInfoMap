@@ -13,7 +13,6 @@
  */
 package meteoinfo.classes;
 
-import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -97,6 +96,7 @@ public class PluginCollection extends ArrayList<Plugin> {
      * Save plugin configure file
      *
      * @param fileName File name
+     * @throws javax.xml.parsers.ParserConfigurationException
      */
     public void saveConfigFile(String fileName) throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -154,6 +154,9 @@ public class PluginCollection extends ArrayList<Plugin> {
      * Load plugin configure file
      *
      * @param fileName File name
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
     public void loadConfigFile(String fileName) throws ParserConfigurationException, SAXException, IOException { 
         if (!new File(fileName).exists())
