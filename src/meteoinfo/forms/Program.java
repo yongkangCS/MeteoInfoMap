@@ -57,7 +57,10 @@ public class Program {
                         System.exit(0);
                     }
                 }
-            } else {
+            } else if (args[0].equalsIgnoreCase("-eng")){
+                runApplication(true);
+            }
+            else {
                 String fn = args[0];
                 if (new File(fn).isFile()) {
                     runScript(args, fn, 0);
@@ -149,7 +152,11 @@ public class Program {
         });
     }
 
-    private static void runApplication() {
+    private static void runApplication(){
+        runApplication(false);
+    }
+    
+    private static void runApplication(final boolean isEng) {
         /* Set look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -219,10 +226,14 @@ public class Program {
 //                    }
 //                }.start();
 
-                boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
-                        getInputArguments().toString().contains("jdwp");
-                if (isDebug) {
-                    //Locale.setDefault(Locale.ENGLISH);
+//                boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+//                        getInputArguments().toString().contains("jdwp");
+//                if (isDebug) {
+//                    Locale.setDefault(Locale.ENGLISH);
+//                }
+                
+                if (isEng){
+                    Locale.setDefault(Locale.ENGLISH);
                 }
                 //registerFonts();
                 org.meteoinfo.global.util.FontUtil.registerWeatherFont();

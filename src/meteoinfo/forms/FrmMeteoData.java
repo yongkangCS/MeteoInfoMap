@@ -2167,7 +2167,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 _legendScheme = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Point, Color.blue, 12);
                 break;
             case Station_Info:
-                _legendScheme = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Point, Color.red, 6);
+                _legendScheme = LegendManage.createSingleSymbolLegendScheme(ShapeTypes.Point, Color.red, 8);
                 break;
         }
 

@@ -498,7 +498,7 @@ public class FrmOneDim extends javax.swing.JFrame {
                 }
                 if (useId)
                     serieNames.set(0, serieNames.get(0) + "_1");
-                this.createChart(points, null, "Age Hour", serieNames, "Line", yInverse, true);
+                this.createChart(points, null, "Age Hour", varName, serieNames, "Line", PlotOrientation.VERTICAL, yInverse, true);
                 break;
             default:
                 _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
@@ -521,15 +521,18 @@ public class FrmOneDim extends javax.swing.JFrame {
                 _pointList = new ArrayList<PointD>();
                 PointD aP;
                 for (i = 0; i < gData.getXNum(); i++) {
-                    if (_plotDimension == PlotDimension.Level) {
-                        aP = new PointD();
-                        aP.X = gData.data[0][i];
-                        aP.Y = gData.xArray[i];
-                    } else {
-                        aP = new PointD();
-                        aP.X = gData.xArray[i];
-                        aP.Y = gData.data[0][i];
-                    }
+                    aP = new PointD();
+                    aP.X = gData.xArray[i];
+                    aP.Y = gData.data[0][i];
+//                    if (_plotDimension == PlotDimension.Level) {
+//                        aP = new PointD();
+//                        aP.X = gData.data[0][i];
+//                        aP.Y = gData.xArray[i];
+//                    } else {
+//                        aP = new PointD();
+//                        aP.X = gData.xArray[i];
+//                        aP.Y = gData.data[0][i];
+//                    }
                     _pointList.add(aP);
                 }
 
@@ -545,7 +548,11 @@ public class FrmOneDim extends javax.swing.JFrame {
                 serieNames = new ArrayList<String>();
                 serieNames.add(varName);
                 String title = varName + "_" + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
-                this.createChart(points, title, "X", serieNames, _graphType, false, false);
+                PlotOrientation po = PlotOrientation.VERTICAL;
+                if (_plotDimension == PlotDimension.Level)
+                    po = PlotOrientation.HORIZONTAL;
+                String xLabel = _plotDimension.toString();
+                this.createChart(points, title, xLabel, varName, serieNames, _graphType, po, false, false);
 
                 //Enable time controls            
                 if (!this.jCheckBox_Time.isSelected()) {
@@ -951,10 +958,8 @@ public class FrmOneDim extends javax.swing.JFrame {
         }
     }
 
-    private void createChart(List<List<PointD>> points, String title, String xLabel, List<String> serieNames, String chartType, 
-            boolean yInverse, boolean xInverse) {        
-        String yName = this.jComboBox_Variable.getSelectedItem().toString();
-
+    private void createChart(List<List<PointD>> points, String title, String xLabel, String yLabel, List<String> serieNames, String chartType, 
+            PlotOrientation po, boolean yInverse, boolean xInverse) {                
         if (chartType.equals("Line")) {
             XYSeriesCollection xyseriescollection = new XYSeriesCollection();
             int i = 0;
@@ -966,9 +971,10 @@ public class FrmOneDim extends javax.swing.JFrame {
                 xyseriescollection.addSeries(xySeries);
                 i += 1;
             }
-            JFreeChart chart = ChartFactory.createXYLineChart(title, xLabel, yName,
+            JFreeChart chart = ChartFactory.createXYLineChart(title, xLabel, yLabel,
                     xyseriescollection, PlotOrientation.VERTICAL, true, true, false);
             XYPlot plot = chart.getXYPlot();
+            plot.setOrientation(po);
             plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
             plot.setDomainPannable(true);
             plot.setRangePannable(true);
@@ -997,8 +1003,9 @@ public class FrmOneDim extends javax.swing.JFrame {
                 }
                 i += 1;
             }
-            JFreeChart chart = ChartFactory.createBarChart(title, xLabel, yName, dataset, PlotOrientation.VERTICAL, true, true, true);
+            JFreeChart chart = ChartFactory.createBarChart(title, xLabel, yLabel, dataset, PlotOrientation.VERTICAL, true, true, true);
             CategoryPlot plot = chart.getCategoryPlot();
+            plot.setOrientation(po);
             plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
             NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
             yAxis.setAutoRangeIncludesZero(false);
