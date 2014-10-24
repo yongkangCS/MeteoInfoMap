@@ -2960,6 +2960,13 @@ public class FrmMain extends JFrame implements IApplication {
                     Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if (aLayer != null) {
+                    ProjectionInfo dataProj = aLayer.getProjInfo();
+                    ProjectionInfo mapViewProj = _mapDocument.getActiveMapFrame().getMapView().getProjection().getProjInfo();
+                    if (!dataProj.equals(mapViewProj)) {
+                        if (JOptionPane.showConfirmDialog(null, "Different projection! If project map view?", "Conform", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            _mapDocument.getActiveMapFrame().getMapView().projectLayers(dataProj);
+                        }
+                    }
                     this._mapDocument.getActiveMapFrame().addLayer(aLayer);
                 }
             }
