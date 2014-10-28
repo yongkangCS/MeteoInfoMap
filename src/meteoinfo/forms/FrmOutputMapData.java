@@ -508,6 +508,7 @@ public class FrmOutputMapData extends javax.swing.JDialog {
                 //Get GrADS data info
                 String dFile = fileName.replace(".ctl", ".dat");
                 GrADSDataInfo aDataInfo = new GrADSDataInfo();
+                aDataInfo.setFileName(fileName);
                 aDataInfo.TITLE = "Mask data";
                 aDataInfo.DSET = dFile;
                 aDataInfo.DTYPE = "GRIDDED";
@@ -539,6 +540,8 @@ public class FrmOutputMapData extends javax.swing.JDialog {
                 aDataInfo.createDataFile(dFile);
                 aDataInfo.writeGridData(gridData);
                 aDataInfo.closeDataFile();
+                this.jProgressBar1.setValue(0);
+                this.jProgressBar1.setVisible(false);
                 this.setCursor(Cursor.getDefaultCursor());
             }
         }
