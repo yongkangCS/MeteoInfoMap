@@ -1217,7 +1217,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
     private void jButton_SettingActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        if (_meteoDataInfo.isStationData()) {
+        if (_meteoDataInfo.isStationData() || _meteoDataInfo.isSWATHData()) {
             switch (_2DDrawType) {
                 case Contour:
                 case Shaded:
@@ -1791,9 +1791,9 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     this.jComboBox_DrawType.addItem(DrawType2D.Shaded.toString());
                     break;
             }
-        } else if (_meteoDataInfo.isSWATHData()) {
-            this.jComboBox_DrawType.addItem(DrawType2D.Station_Point.toString());
+        } else if (_meteoDataInfo.isSWATHData()) {            
             this.jComboBox_DrawType.addItem(DrawType2D.Raster.toString());
+            this.jComboBox_DrawType.addItem(DrawType2D.Station_Point.toString());
         } else {
             this.jComboBox_DrawType.addItem(DrawType2D.Traj_Line.toString());
             this.jComboBox_DrawType.addItem(DrawType2D.Traj_Point.toString());
@@ -1807,8 +1807,14 @@ public class FrmMeteoData extends javax.swing.JDialog {
         this.jComboBox_Variable.removeAllItems();
         for (i = 0; i < aDataInfo.getVariables().size(); i++) {
             Variable var = aDataInfo.getVariables().get(i);
-            if (var.isPlottable()) {
-                this.jComboBox_Variable.addItem(var.getName());
+            if (_meteoDataInfo.isSWATHData()){
+                Variable lonvar = _meteoDataInfo.getDataInfo().getVariable("longitude");
+                if (var.dimensionSizeEquals(lonvar))
+                    this.jComboBox_Variable.addItem(var.getName());
+            } else {
+                if (var.isPlottable()) {
+                    this.jComboBox_Variable.addItem(var.getName());
+                }
             }
         }
         _isLoading = false;
@@ -2023,10 +2029,15 @@ public class FrmMeteoData extends javax.swing.JDialog {
             if (!_useSameGridInterSet) {
                 GridDataSetting aGDP = this._interpolationSetting.getGridDataSetting();
                 aGDP.dataExtent = aExtent;
-                _interpolationSetting.setGridDataSetting(aGDP);
+                //_interpolationSetting.setGridDataSetting(aGDP);
                 _interpolationSetting.setRadius((float) ((aGDP.dataExtent.maxX
                         - aGDP.dataExtent.minX) / aGDP.xNum * 2));
                 _useSameGridInterSet = true;
+                if (_meteoDataInfo.isSWATHData()){
+                    _interpolationSetting.setInterpolationMethod(InterpolationMethods.AssignPointToGrid);
+                    aGDP.xNum = 1000;
+                    aGDP.yNum = 1000;
+                }
             }
         }
 
