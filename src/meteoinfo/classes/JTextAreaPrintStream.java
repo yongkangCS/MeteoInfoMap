@@ -17,6 +17,7 @@ public class JTextAreaPrintStream extends PrintStream{
     
     /**
      *
+     * @param out Output stream
      * @param textArea
      */
     public JTextAreaPrintStream(OutputStream out, JTextArea textArea){    

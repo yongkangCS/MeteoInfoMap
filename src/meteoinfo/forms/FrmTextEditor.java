@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.PrintStream;
 import java.text.MessageFormat;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -97,8 +98,6 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmTextEditor
-     *
-     * @param parent Parent JFrame
      */
     public FrmTextEditor() {
         initComponents();
@@ -583,6 +582,9 @@ public class FrmTextEditor extends javax.swing.JFrame {
     private void runPythonScript() {
 
         SwingWorker worker = new SwingWorker<String, String>() {
+            PrintStream oout = System.out;
+            PrintStream oerr = System.err;
+            
             @Override
             protected String doInBackground() throws Exception {
                 JTextAreaWriter writer = new JTextAreaWriter(jTextArea_Output);
@@ -610,6 +612,12 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
                 return "";
             }
+            
+            @Override
+            protected void done() {
+                System.setOut(oout);
+                System.setErr(oerr);
+            }
         };
         worker.execute();
     }
@@ -617,6 +625,9 @@ public class FrmTextEditor extends javax.swing.JFrame {
     private void runGroovyScript() {
 
         SwingWorker worker = new SwingWorker<String, String>() {
+            PrintStream oout = System.out;
+            PrintStream oerr = System.err;
+            
             @Override
             protected String doInBackground() throws Exception {
                 //JTextAreaWriter writer = new JTextAreaWriter(jTextArea_Output);
@@ -637,17 +648,22 @@ public class FrmTextEditor extends javax.swing.JFrame {
                     Script script = shell.parse(code);
                     script.run();
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
                 return "";
+            }
+            
+            @Override
+            protected void done() {
+                System.setOut(oout);
+                System.setErr(oerr);
             }
         };
         worker.execute();
     }
 
     private TextEditor addNewTextEditor(String title) {
-        TextEditor tab = new TextEditor(this.jTabbedPane1, title);
+        final TextEditor tab = new TextEditor(this.jTabbedPane1, title);
         this.jTabbedPane1.add(tab, title);
         this.jTabbedPane1.setSelectedComponent(tab);
         tab.setTextFont(_font);
@@ -664,7 +680,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrmTextEditor.this.closeFile();
+                FrmTextEditor.this.closeFile(tab);
             }
         });
         this.jTabbedPane1.setTabComponentAt(this.jTabbedPane1.indexOfComponent(tab), btc);
@@ -733,9 +749,13 @@ public class FrmTextEditor extends javax.swing.JFrame {
             editor.openFile(file);
         }
     }
+    
+    private void closeFile(){
+        closeFile(this.getActiveTextEditor());
+    }
 
-    private void closeFile() {
-        TextEditor textEditor = getActiveTextEditor();
+    private void closeFile(TextEditor textEditor) {
+        //TextEditor textEditor = getActiveTextEditor();
         if (textEditor != null) {
             boolean ifClose = true;
             if (textEditor.getTextArea().isDirty()) {
@@ -841,6 +861,11 @@ public class FrmTextEditor extends javax.swing.JFrame {
         } else {
             return null;
         }
+    }
+    
+    private TextEditor getTextEditor(ButtonTabComponent btc){
+        int idx = this.jTabbedPane1.indexOfTabComponent(btc);
+        return (TextEditor) this.jTabbedPane1.getComponentAt(idx);
     }
 
     private TextEditor getActiveTextEditor() {

@@ -16,7 +16,7 @@ public class JTextAreaWriter extends Writer {
     private final JTextArea _jta;
     private final int _maxBuffSize;
     private final StringBuffer _stringBuffer = new StringBuffer();
-    private int _maxLength = 10000;
+    private final int _maxLength = 10000;
 
     public JTextAreaWriter(JTextArea ta) {
         this(ta, -1);
@@ -43,6 +43,7 @@ public class JTextAreaWriter extends Writer {
 
     /**
      * returns the written string
+     * @return 
      */
     @Override
     public synchronized String toString() {

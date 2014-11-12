@@ -145,6 +145,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmMeteoData
+     * @param parent
+     * @param modal
      */
     public FrmMeteoData(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

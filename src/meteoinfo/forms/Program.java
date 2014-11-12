@@ -231,12 +231,20 @@ public class Program {
                 if (isEng){
                     Locale.setDefault(Locale.ENGLISH);
                 }
+                
+                StackWindow sw = new StackWindow("Show Exception Stack", 600, 400);                
+                Thread.UncaughtExceptionHandler handler = sw;
+                Thread.setDefaultUncaughtExceptionHandler(handler);    
+                System.setOut(sw.printStream);
+                System.setErr(sw.printStream);
+                
                 //registerFonts();
                 org.meteoinfo.global.util.FontUtil.registerWeatherFont();
                 FrmMain frame = new FrmMain();
                 frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 //frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
+                sw.setLocationRelativeTo(frame);
             }
         });
     }
