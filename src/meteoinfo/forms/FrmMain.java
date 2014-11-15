@@ -2491,7 +2491,7 @@ public class FrmMain extends JFrame implements IApplication {
     private void jMenuItem_HelpActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         Help help = new Help();
-        help.setTitle("TrajStat - Help");
+        help.setTitle("MeteoInfo - Help");
         help.setIconImage("/meteoinfo/resources/MeteoInfo_1_16x16x8.png");
         help.setSize(800, 700);
         help.setLocationRelativeTo(this);
