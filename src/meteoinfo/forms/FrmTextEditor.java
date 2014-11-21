@@ -115,9 +115,10 @@ public class FrmTextEditor extends javax.swing.JFrame {
         this.setScriptLanguage(_scriptLanguage);
         addNewTextEditor("New file");
         this._splitPanelSize = this.jSplitPane1.getBounds().getSize();
-        this.setSize(800, 600);
-        this.jSplitPane1.setDividerLocation(0.6);
-        //this.jSplitPane1.setDividerLocation(300);
+        this.setSize(600, 600);
+        //this.jSplitPane1.setDividerLocation(0.6);
+        this.jSplitPane1.setDividerLocation(5);
+        //this.jScrollPane1.invalidate();
     }
 
     /**
