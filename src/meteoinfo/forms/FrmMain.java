@@ -96,6 +96,7 @@ import org.meteoinfo.layout.LayoutGraphic;
 import org.meteoinfo.layout.LayoutLegend;
 import org.meteoinfo.layout.LayoutNorthArrow;
 import org.meteoinfo.layout.LayoutScaleBar;
+import org.meteoinfo.layout.MapLayout;
 import org.meteoinfo.layout.MapLayoutUndoRedo;
 import org.meteoinfo.layout.MouseMode;
 import org.meteoinfo.legend.ItemNode;
@@ -392,6 +393,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_ClearSelection = new javax.swing.JMenuItem();
         jMenu_Tools = new javax.swing.JMenu();
         jMenuItem_Script = new javax.swing.JMenuItem();
+        jMenuItem_ScriptConsole = new javax.swing.JMenuItem();
         jSeparator16 = new javax.swing.JPopupMenu.Separator();
         jMenuItem_Options = new javax.swing.JMenuItem();
         jSeparator17 = new javax.swing.JPopupMenu.Separator();
@@ -1361,6 +1363,16 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
         jMenu_Tools.add(jMenuItem_Script);
+        
+        jMenuItem_ScriptConsole.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/console.png"))); // NOI18N
+        jMenuItem_ScriptConsole.setText(bundle.getString("FrmMain.jMenuItem_ScriptConsole.text")); // NOI18N
+        jMenuItem_ScriptConsole.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ScriptConsoleActionPerformed(evt);
+            }
+        });
+        jMenu_Tools.add(jMenuItem_ScriptConsole);
         jMenu_Tools.add(jSeparator16);
 
         jMenuItem_Options.setText(bundle.getString("FrmMain.jMenuItem_Options.text")); // NOI18N
@@ -1698,6 +1710,14 @@ public class FrmMain extends JFrame implements IApplication {
     @Override
     public MapView getMapView() {
         return this._mapDocument.getActiveMapFrame().getMapView();
+    }
+    
+    /**
+     * Get map layout
+     * @return Map layout
+     */
+    public MapLayout getMapLyout(){
+        return this._mapLayout;
     }
 
     /**
@@ -2298,12 +2318,16 @@ public class FrmMain extends JFrame implements IApplication {
         this.zoomUndoManager = new UndoManager();
 
         //Open MeteoData form
-        if (this._options.isShowStartMeteoDataDlg()) {
-            _frmMeteoData = new FrmMeteoData(this, false);
-            //_frmMeteoData.setSize(500, 280);
-            _frmMeteoData.setLocation(this.getX() + 10, this.getY() + this.getHeight() - _frmMeteoData.getHeight() - 40);
-            _frmMeteoData.setVisible(true);
-        }
+        _frmMeteoData = new FrmMeteoData(this, false);
+        //_frmMeteoData.setSize(500, 280);
+        _frmMeteoData.setLocation(this.getX() + 10, this.getY() + this.getHeight() - _frmMeteoData.getHeight() - 40);
+        _frmMeteoData.setVisible(this._options.isShowStartMeteoDataDlg());
+//        if (this._options.isShowStartMeteoDataDlg()) {
+//            _frmMeteoData = new FrmMeteoData(this, false);
+//            //_frmMeteoData.setSize(500, 280);
+//            _frmMeteoData.setLocation(this.getX() + 10, this.getY() + this.getHeight() - _frmMeteoData.getHeight() - 40);
+//            _frmMeteoData.setVisible(this._options.isShowStartMeteoDataDlg());
+//        }
     }
 
     private void jMenuItem_LayersActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2459,6 +2483,14 @@ public class FrmMain extends JFrame implements IApplication {
         frmTE.setTextFont(this._options.getTextFont());
         frmTE.setLocationRelativeTo(this);
         frmTE.setVisible(true);
+    }
+    
+    private void jMenuItem_ScriptConsoleActionPerformed(java.awt.event.ActionEvent evt){
+        FrmConsole frmConsole = new FrmConsole(this, false);
+        frmConsole.setTitle("Jython Console");        
+        frmConsole.setLocationRelativeTo(this);
+        frmConsole.setVisible(true);
+        frmConsole.InitializeConsole();
     }
 
     private void jMenuItem_SelByAttrActionPerformed(java.awt.event.ActionEvent evt) {
@@ -3164,6 +3196,18 @@ public class FrmMain extends JFrame implements IApplication {
         _mapView.zoomToExtent(_mapView.getViewExtent());
     }
     // </editor-fold>
+    // <editor-fold desc="Others">
+    /**
+     * Refresh map document and map view / map layout
+     */
+    public void refresh(){
+        this._mapDocument.paintGraphics();
+        if (this.jTabbedPane_Main.getSelectedIndex() == 0)
+            this._mapView.paintLayers();
+        else
+            this._mapLayout.paintGraphics();
+    }
+    // </editor-fold>
     // </editor-fold>
 
     /**
@@ -3285,6 +3329,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_Save;
     private javax.swing.JMenuItem jMenuItem_SaveAs;
     private javax.swing.JMenuItem jMenuItem_Script;
+    private javax.swing.JMenuItem jMenuItem_ScriptConsole;
     private javax.swing.JMenuItem jMenuItem_SelByAttr;
     private javax.swing.JMenuItem jMenuItem_SelByLocation;
     private javax.swing.JMenuItem jMenuItem_Undo;

@@ -7,7 +7,6 @@ package meteoinfo.forms;
 import com.l2fprod.common.swing.JFontChooser;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
-import groovy.ui.Console;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,6 +27,7 @@ import meteoinfo.classes.GenericFileFilter;
 import meteoinfo.classes.JTextAreaPrintStream;
 import meteoinfo.classes.JTextAreaWriter;
 import meteoinfo.classes.TextEditor;
+import meteoinfo.classes.UPythonInterpreter;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.TextEditorPane;
 import org.meteoinfo.ui.ButtonTabComponent;
@@ -168,8 +168,6 @@ public class FrmTextEditor extends javax.swing.JFrame {
         jMenuItem_Cut = new javax.swing.JMenuItem();
         jMenuItem_Copy = new javax.swing.JMenuItem();
         jMenuItem_Paste = new javax.swing.JMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem_Console = new javax.swing.JMenuItem();
         jMenu_Options = new javax.swing.JMenu();
         jMenuItem_SetFont = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
@@ -380,15 +378,6 @@ public class FrmTextEditor extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem_Paste);
-        jMenu2.add(jSeparator4);
-
-        jMenuItem_Console.setText("Console");
-        jMenuItem_Console.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_ConsoleActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem_Console);
 
         jMenuBar1.add(jMenu2);
 
@@ -536,18 +525,6 @@ public class FrmTextEditor extends javax.swing.JFrame {
         textEditor.getTextArea().paste();
     }//GEN-LAST:event_jMenuItem_PasteActionPerformed
 
-    private void jMenuItem_ConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ConsoleActionPerformed
-        // TODO add your handling code here:
-//        FrmConsole frmConsole = new FrmConsole(this, false);
-//        frmConsole.setTitle("Jython Console");
-//        frmConsole.InitializeConsole();
-//        frmConsole.setLocationRelativeTo(this);
-//        frmConsole.setVisible(true);
-
-        Console console = new Console();
-        console.run();
-    }//GEN-LAST:event_jMenuItem_ConsoleActionPerformed
-
     private void jMenuItem_SetFontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_SetFontActionPerformed
         // TODO add your handling code here:
         TextEditor textEditor = getActiveTextEditor();
@@ -593,7 +570,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 jTextArea_Output.setText("");
 
                 // Create an instance of the PythonInterpreter                
-                PythonInterpreter interp = new PythonInterpreter();
+                UPythonInterpreter interp = new UPythonInterpreter();
                 interp.setOut(writer);
                 interp.setErr(writer);
                 System.setOut(printStream);
@@ -922,7 +899,6 @@ public class FrmTextEditor extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem_CloseFile;
-    private javax.swing.JMenuItem jMenuItem_Console;
     private javax.swing.JMenuItem jMenuItem_Copy;
     private javax.swing.JMenuItem jMenuItem_Cut;
     private javax.swing.JMenuItem jMenuItem_Exit;
@@ -941,7 +917,6 @@ public class FrmTextEditor extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane1;

@@ -145,6 +145,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmMeteoData
+     *
      * @param parent
      * @param modal
      */
@@ -152,9 +153,9 @@ public class FrmMeteoData extends javax.swing.JDialog {
         super(parent, modal);
         _parent = (FrmMain) parent;
         initComponents();
-        
-        int height = this.jToolBar1.getHeight() + this.jComboBox_DrawType.getY() +
-                this.jComboBox_DrawType.getHeight() + 90;
+
+        int height = this.jToolBar1.getHeight() + this.jComboBox_DrawType.getY()
+                + this.jComboBox_DrawType.getHeight() + 90;
         this.setSize(500, height);
 
         this.jComboBox_Variable.setEditable(true);
@@ -283,47 +284,47 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jPanel_DataSetLayout.setHorizontalGroup(
                 jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(jLabel_Variable)
-                .addComponent(jLabel3)
-                .addComponent(jLabel2)
-                .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jComboBox_Level, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox_Time, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox_DrawType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox_Variable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                .addComponent(jCheckBox_ColorVar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox_Big_Endian)))
-                .addContainerGap()));
+                        .addContainerGap()
+                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel_Variable)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jComboBox_Level, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox_Time, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox_DrawType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox_Variable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel_DataSetLayout.createSequentialGroup()
+                                        .addComponent(jCheckBox_ColorVar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jCheckBox_Big_Endian)))
+                        .addContainerGap()));
         jPanel_DataSetLayout.setVerticalGroup(
                 jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel_Variable)
-                .addComponent(jComboBox_Variable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel2)
-                .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel3)
-                .addComponent(jComboBox_Level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel4)
-                .addComponent(jComboBox_DrawType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jCheckBox_ColorVar)
-                .addComponent(jCheckBox_Big_Endian))
-                .addContainerGap()));
+                        .addContainerGap()
+                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel_Variable)
+                                .addComponent(jComboBox_Variable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jComboBox_Level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(jComboBox_DrawType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jCheckBox_ColorVar)
+                                .addComponent(jCheckBox_Big_Endian))
+                        .addContainerGap()));
 
         jSplitPane1.setRightComponent(jPanel_DataSet);
 
@@ -363,16 +364,16 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jButton_RemoveAllData)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                        .addGap(38, 38, 38)
+                        .addComponent(jButton_RemoveAllData)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_RemoveAllData)
-                .addGap(10, 10, 10)));
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton_RemoveAllData)
+                        .addGap(10, 10, 10)));
 
         jSplitPane1.setLeftComponent(jPanel1);
 
@@ -674,10 +675,10 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
         });
         menu_OpenData.add(dataMI);
-        
+
         JMenu mm5M = new JMenu("MM5 Data");
         menu_OpenData.add(mm5M);
-        
+
         dataMI = new JMenuItem("MM5 Output Data");
         dataMI.addActionListener(new ActionListener() {
             @Override
@@ -790,7 +791,6 @@ public class FrmMeteoData extends javax.swing.JDialog {
             _useSameLegendScheme = false;
 
             //_useSameGridInterSet = false;
-
             this.jButton_Animator.setEnabled(false);
             this.jButton_CreateAnimatorFile.setEnabled(false);
             this.jButton_PreTime.setEnabled(false);
@@ -1426,6 +1426,188 @@ public class FrmMeteoData extends javax.swing.JDialog {
 //        return path;
     }
 
+    /**
+     * Open GrADS data file
+     *
+     * @param fileName GrADS data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openGrADSData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openGrADSData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open ARL data file
+     *
+     * @param fileName ARL data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openARLData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openARLData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open ASCII grid data file
+     *
+     * @param fileName ASCII grid data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openASCIIGridData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openASCIIGridData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open Surfer grid data file
+     *
+     * @param fileName Surfer grid data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openSurferGridData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openSurferGridData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open HYSPLIT concentration data file
+     *
+     * @param fileName HYSPLIT concentration data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openHYSPLITConcData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openHYSPLITConcData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open HYSPLIT particle data file
+     *
+     * @param fileName HYSPLIT particle data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openHYSPITPartData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openHYSPLITPartData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open HYSPLIT trajectory data file
+     *
+     * @param fileName HYSPLIT trajectory data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openHYSPLITTrajData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openHYSPLITTrajData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open HYSPLIT trajectory data files
+     *
+     * @param fileNames HYSPLIT trajectory data file names
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openHYSPLITTrajData(String[] fileNames) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openHYSPLITTrajData(fileNames);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open NetCDF, GRIB, HDF... data file
+     *
+     * @param fileName NetCDF, GRIB, HDF... data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openNetCDFData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openNetCDFData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open Lon/Lat station data file
+     *
+     * @param fileName Lon/Lat station data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openLonLatData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openLonLatData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open MICAPS data file
+     *
+     * @param fileName MICAPS data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openMICAPSData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openMICAPSData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open MM5 output data file
+     *
+     * @param fileName MM5 output data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openMM5Data(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openMM5Data(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+    
+    /**
+     * Open MM5 intermedia data file
+     *
+     * @param fileName MM5 intermedia data file name
+     * @return MeteoDataInfo
+     */
+    public MeteoDataInfo openMM5IMData(String fileName) {
+        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+        aDataInfo.openMM5IMData(fileName);
+        addMeteoData(aDataInfo);
+
+        return aDataInfo;
+    }
+
     private void onGrADSDataClick(ActionEvent e) {
         String path = this.getStartupPath();
         File pathDir = new File(path);
@@ -1666,8 +1848,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
-    
-    private void onMM5DataClick(ActionEvent e){
+
+    private void onMM5DataClick(ActionEvent e) {
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
         String path = this.getStartupPath();
@@ -1756,12 +1938,12 @@ public class FrmMeteoData extends javax.swing.JDialog {
         this.jButton_Animator.setEnabled(false);
         this.jButton_PreTime.setEnabled(false);
         this.jButton_NexTime.setEnabled(false);
-        this.jButton_Setting.setEnabled(true); 
+        this.jButton_Setting.setEnabled(true);
         switch (_meteoDataInfo.getDataType()) {
             case HYSPLIT_Traj:
                 this.jButton_SectionPlot.setEnabled(false);
                 break;
-        }               
+        }
 
         //Projection
         updateProjection();
@@ -1793,7 +1975,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     this.jComboBox_DrawType.addItem(DrawType2D.Shaded.toString());
                     break;
             }
-        } else if (_meteoDataInfo.isSWATHData()) {            
+        } else if (_meteoDataInfo.isSWATHData()) {
             this.jComboBox_DrawType.addItem(DrawType2D.Raster.toString());
             this.jComboBox_DrawType.addItem(DrawType2D.Station_Point.toString());
         } else {
@@ -1809,10 +1991,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
         this.jComboBox_Variable.removeAllItems();
         for (i = 0; i < aDataInfo.getVariables().size(); i++) {
             Variable var = aDataInfo.getVariables().get(i);
-            if (_meteoDataInfo.isSWATHData()){
+            if (_meteoDataInfo.isSWATHData()) {
                 Variable lonvar = _meteoDataInfo.getDataInfo().getVariable("longitude");
-                if (var.dimensionSizeEquals(lonvar))
+                if (var.dimensionSizeEquals(lonvar)) {
                     this.jComboBox_Variable.addItem(var.getName());
+                }
             } else {
                 if (var.isPlottable()) {
                     this.jComboBox_Variable.addItem(var.getName());
@@ -2035,7 +2218,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 _interpolationSetting.setRadius((float) ((aGDP.dataExtent.maxX
                         - aGDP.dataExtent.minX) / aGDP.xNum * 2));
                 _useSameGridInterSet = true;
-                if (_meteoDataInfo.isSWATHData()){
+                if (_meteoDataInfo.isSWATHData()) {
                     _interpolationSetting.setInterpolationMethod(InterpolationMethods.AssignPointToGrid);
                     aGDP.xNum = 1000;
                     aGDP.yNum = 1000;
@@ -2252,7 +2435,6 @@ public class FrmMeteoData extends javax.swing.JDialog {
 //                        break;
 //                }
 //            }
-
         //Extent to global if the data is global
         if (_gridData.isGlobal()) {
             _gridData.extendToGlobal();

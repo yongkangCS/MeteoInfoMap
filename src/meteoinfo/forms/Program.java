@@ -53,10 +53,9 @@ public class Program {
                         System.exit(0);
                     }
                 }
-            } else if (args[0].equalsIgnoreCase("-eng")){
+            } else if (args[0].equalsIgnoreCase("-eng")) {
                 runApplication(true);
-            }
-            else {
+            } else {
                 String fn = args[0];
                 if (new File(fn).isFile()) {
                     runScript(args, fn, 0);
@@ -148,10 +147,10 @@ public class Program {
         });
     }
 
-    private static void runApplication(){
+    private static void runApplication() {
         runApplication(false);
     }
-    
+
     private static void runApplication(final boolean isEng) {
         /* Set look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -166,10 +165,9 @@ public class Program {
 //                }
 //            }
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            
+
             //WebLookAndFeel.install();
             //UIManager.setLookAndFeel("com.alee.laf.WebLookAndFeel");
-            
             //com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green", "INSERT YOUR LICENSE KEY HERE", "my company");
             //UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
             //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
@@ -222,29 +220,33 @@ public class Program {
 //                    }
 //                }.start();
 
-//                boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
-//                        getInputArguments().toString().contains("jdwp");
+                boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                        getInputArguments().toString().contains("jdwp");
 //                if (isDebug) {
 //                    Locale.setDefault(Locale.ENGLISH);
 //                }
-                
-                if (isEng){
+
+                if (isEng) {
                     Locale.setDefault(Locale.ENGLISH);
                 }
-                
-                StackWindow sw = new StackWindow("Show Exception Stack", 600, 400);                
-                Thread.UncaughtExceptionHandler handler = sw;
-                Thread.setDefaultUncaughtExceptionHandler(handler);    
-                System.setOut(sw.printStream);
-                System.setErr(sw.printStream);
-                
+
+                StackWindow sw = null;
+                if (!isDebug) {
+                    sw = new StackWindow("Show Exception Stack", 600, 400);
+                    Thread.UncaughtExceptionHandler handler = sw;
+                    Thread.setDefaultUncaughtExceptionHandler(handler);
+                    System.setOut(sw.printStream);
+                    System.setErr(sw.printStream);
+                }
+
                 //registerFonts();
                 org.meteoinfo.global.util.FontUtil.registerWeatherFont();
                 FrmMain frame = new FrmMain();
                 frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 //frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
-                sw.setLocationRelativeTo(frame);
+                if (sw != null)
+                    sw.setLocationRelativeTo(frame);
             }
         });
     }

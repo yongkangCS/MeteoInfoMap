@@ -68,7 +68,7 @@
           <Legend Color="0xff000000" LegendType="VectorBreak"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="231" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="648" LegendLayer="" LegendStyle="Normal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="104" Width="64"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="52" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="648" LegendLayer="bou2_4p.shp" LegendStyle="Normal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="104" Width="81"/>
     </LayoutElements>
   </Layout>
 </MeteoInfo>
