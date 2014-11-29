@@ -1963,6 +1963,11 @@ public class FrmMain extends JFrame implements IApplication {
         return plugins;
     }
 
+    /**
+     * Load plugins
+     * @throws MalformedURLException
+     * @throws IOException 
+     */
     public void loadPlugins() throws MalformedURLException, IOException {
         String pluginPath = this._startupPath + File.separator + "plugins";
         if (new File(pluginPath).isDirectory()) {

@@ -13,9 +13,11 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.text.MessageFormat;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -30,7 +32,9 @@ import meteoinfo.classes.TextEditor;
 import meteoinfo.classes.UPythonInterpreter;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.TextEditorPane;
+import org.meteoinfo.global.util.GlobalUtil;
 import org.meteoinfo.ui.ButtonTabComponent;
+import org.python.core.Py;
 import org.python.util.PythonInterpreter;
 
 /**
@@ -129,7 +133,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
     public FrmTextEditor(JFrame parent) {
         this();
         _parent = (FrmMain) parent;
-        this.setScriptLanguage(_parent.getOptions().getScriptLanguage());
+        this.setScriptLanguage(_parent.getOptions().getScriptLanguage());        
     }
 
     /**
@@ -562,14 +566,15 @@ public class FrmTextEditor extends javax.swing.JFrame {
         SwingWorker worker = new SwingWorker<String, String>() {
             PrintStream oout = System.out;
             PrintStream oerr = System.err;
-            
+
             @Override
             protected String doInBackground() throws Exception {
                 JTextAreaWriter writer = new JTextAreaWriter(jTextArea_Output);
                 JTextAreaPrintStream printStream = new JTextAreaPrintStream(System.out, jTextArea_Output);
                 jTextArea_Output.setText("");
 
-                // Create an instance of the PythonInterpreter                
+                // Create an instance of the PythonInterpreter        
+                //Py.getSystemState().setdefaultencoding("utf-8");
                 UPythonInterpreter interp = new UPythonInterpreter();
                 interp.setOut(writer);
                 interp.setErr(writer);
@@ -577,20 +582,30 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 System.setErr(printStream);
                 //System.out.println("Out test!");
                 //System.err.println("Error test!");
+                String pluginPath = _parent.getStartupPath() + File.separator + "plugins";
+                List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
                 interp.set("miapp", _parent);
+                interp.exec("import sys");
+                for (String jarfn : jarfns) {
+                    interp.exec("sys.path.append('" + jarfn + "')");
+                }
 
                 TextEditorPane textArea = getActiveTextArea();
                 //textArea.setEncoding(fn);
                 String code = textArea.getText();
+                if (code.contains("coding=utf-8")){
+                    code = code.replace("coding=utf-8", "coding = utf-8");
+                }
                 try {
                     interp.exec(code);
+                    //interp.execfile(new ByteArrayInputStream(code.getBytes()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 return "";
             }
-            
+
             @Override
             protected void done() {
                 System.setOut(oout);
@@ -605,7 +620,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
         SwingWorker worker = new SwingWorker<String, String>() {
             PrintStream oout = System.out;
             PrintStream oerr = System.err;
-            
+
             @Override
             protected String doInBackground() throws Exception {
                 //JTextAreaWriter writer = new JTextAreaWriter(jTextArea_Output);
@@ -630,7 +645,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
                 return "";
             }
-            
+
             @Override
             protected void done() {
                 System.setOut(oout);
@@ -710,6 +725,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
     /**
      * Open script files
+     *
      * @param files The files
      */
     public void openFiles(File[] files) {
@@ -727,8 +743,8 @@ public class FrmTextEditor extends javax.swing.JFrame {
             editor.openFile(file);
         }
     }
-    
-    private void closeFile(){
+
+    private void closeFile() {
         closeFile(this.getActiveTextEditor());
     }
 
@@ -840,8 +856,8 @@ public class FrmTextEditor extends javax.swing.JFrame {
             return null;
         }
     }
-    
-    private TextEditor getTextEditor(ButtonTabComponent btc){
+
+    private TextEditor getTextEditor(ButtonTabComponent btc) {
         int idx = this.jTabbedPane1.indexOfTabComponent(btc);
         return (TextEditor) this.jTabbedPane1.getComponentAt(idx);
     }

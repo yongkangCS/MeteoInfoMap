@@ -9,16 +9,22 @@ import groovy.lang.Script;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import meteoinfo.classes.UPythonInterpreter;
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.meteoinfo.global.util.FontUtil;
 import org.meteoinfo.global.util.GlobalUtil;
+import org.python.core.Py;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
@@ -81,17 +87,24 @@ public class Program {
                 System.exit(0);
             } else if (ext.equals("py")) {
                 System.out.println("Running Jython script...");
+                //PySystemState state = Py.getSystemState();
+                //Py.getSystemState().setdefaultencoding("utf-8");
                 PySystemState state = new PySystemState();
-                if (args.length > idx + 1) {
-                    //state.argv.clear ();
-                    //state.argv.append (new PyString (fn));  
+                //state.setdefaultencoding("utf-8");
+                if (args.length > idx + 1) {  
                     for (int i = idx + 1; i < args.length; i++) {
                         state.argv.append(new PyString(args[i]));
                     }
                 }
 
                 PythonInterpreter interp = new PythonInterpreter(null, state);
+                String pluginPath = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "plugins";
+                List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
                 //interp.set("miapp", new FrmMainOld());
+                interp.exec("import sys");
+                for (String jarfn : jarfns) {
+                    interp.exec("sys.path.append('" + jarfn + "')");
+                }
                 interp.execfile(fn);
                 System.exit(0);
             }

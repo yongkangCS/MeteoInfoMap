@@ -7,8 +7,13 @@ package meteoinfo.forms;
 import bsh.util.JConsole;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
+import java.util.List;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import meteoinfo.classes.PythonInteractiveInterpreter;
+import org.meteoinfo.global.util.GlobalUtil;
+import org.python.core.Py;
 
 /**
  *
@@ -35,13 +40,23 @@ public class FrmConsole extends javax.swing.JDialog {
      * Initialize console
      */
     public void InitializeConsole(){
-        JConsole console = new JConsole();        
+        JConsole console = new JConsole();
+        console.setLocale(Locale.getDefault());
+        System.out.println(console.getFont());
         console.setPreferredSize(new Dimension(600, 400));
         console.println(new ImageIcon(this.getClass().getResource("/meteoinfo/resources/jython_small_c.png")));
         this.getContentPane().add(console, BorderLayout.CENTER);
+        
+        String pluginPath = this.frmMain.getStartupPath() + File.separator + "plugins";
+        List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
+        
+        Py.getSystemState().setdefaultencoding("utf-8");
         PythonInteractiveInterpreter interp = new PythonInteractiveInterpreter(console);  
         interp.set("miapp", frmMain);
-        interp.exec("import sys");    
+        interp.exec("import sys"); 
+        for (String jarfn : jarfns)
+            interp.exec("sys.path.append('" + jarfn + "')");
+        
         new Thread(interp).start();       
     }
 
