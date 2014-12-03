@@ -2758,8 +2758,17 @@ public class FrmMain extends JFrame implements IApplication {
 //        fileExts = new String[]{"tif"};
 //        mapFileFilter = new GenericFileFilter(fileExts, "Tiff Image (*.tif)");
 //        aDlg.addChoosableFileFilter(mapFileFilter);
+        fileExts = new String[]{"eps"};
+        mapFileFilter = new GenericFileFilter(fileExts, "EPS file (*.eps)");
+        aDlg.addChoosableFileFilter(mapFileFilter);
+        fileExts = new String[]{"pdf"};
+        mapFileFilter = new GenericFileFilter(fileExts, "PDF file (*.pdf)");
+        aDlg.addChoosableFileFilter(mapFileFilter);
+        fileExts = new String[]{"emf"};
+        mapFileFilter = new GenericFileFilter(fileExts, "EMF file (*.emf)");
+        aDlg.addChoosableFileFilter(mapFileFilter);
         fileExts = new String[]{"ps"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Postscript Image (*.ps)");
+        mapFileFilter = new GenericFileFilter(fileExts, "Postscript file (*.ps)");
         aDlg.addChoosableFileFilter(mapFileFilter);
         aDlg.setFileFilter(pngFileFilter);
         aDlg.setAcceptAllFileFilterUsed(false);

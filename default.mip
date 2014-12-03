@@ -46,8 +46,8 @@
   </MapFrames>
   <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="true">
     <LayoutElements>
-      <LayoutMap DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="380" Left="44" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="36" Width="592"/>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="30" LayerUpdateType="FirstExpandedLayer" LayoutMapIndex="0" Left="242" LegendLayer="" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="446" Width="210"/>
+      <LayoutMap DrawBackColor="false" DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="380" Left="44" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="36" Width="592"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="30" LayerUpdateType="FirstExpandedLayer" LayoutMapIndex="0" Left="242" LegendLayer="" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="446" Width="210"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="17" IsTitle="false" Left="237" Top="9" Width="250">
         <Graphic>
           <Shape Selected="false" ShapeType="Point" Visible="true">
@@ -68,7 +68,8 @@
           <Legend Color="0xff000000" LegendType="VectorBreak"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="52" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="648" LegendLayer="bou2_4p.shp" LegendStyle="Normal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="104" Width="81"/>
+      <LayoutLegend BackColor="0xffffffff" ColumnNumber="1" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="52" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="648" LegendLayer="bou2_4p.shp" LegendStyle="Normal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="104" Width="81"/>
+      <LayoutNorthArrow Angle="0.0" BackColor="0xffffffff" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutNorthArraw" ForeColor="0xff000000" Height="41" LayoutMapIndex="0" Left="579" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="42" Width="38"/>
     </LayoutElements>
   </Layout>
 </MeteoInfo>
