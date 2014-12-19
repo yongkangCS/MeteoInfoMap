@@ -25,6 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.text.DefaultCaret;
+import meteoinfo.classes.EncodingUtil;
 import meteoinfo.classes.GenericFileFilter;
 import meteoinfo.classes.JTextAreaPrintStream;
 import meteoinfo.classes.JTextAreaWriter;
@@ -575,7 +576,8 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
                 // Create an instance of the PythonInterpreter        
                 //Py.getSystemState().setdefaultencoding("utf-8");
-                UPythonInterpreter interp = new UPythonInterpreter();
+                //UPythonInterpreter interp = new UPythonInterpreter();
+                PythonInterpreter interp = new PythonInterpreter();
                 interp.setOut(writer);
                 interp.setErr(writer);
                 System.setOut(printStream);
@@ -592,16 +594,22 @@ public class FrmTextEditor extends javax.swing.JFrame {
 
                 TextEditorPane textArea = getActiveTextArea();
                 //textArea.setEncoding(fn);
-                String code = textArea.getText();
-                if (code.contains("coding=utf-8")){
-                    code = code.replace("coding=utf-8", "coding = utf-8");
+                String code = textArea.getText();                
+//                if (code.contains("coding=utf-8")){
+//                    code = code.replace("coding=utf-8", "coding = utf-8");
+//                }
+                String encoding = EncodingUtil.findEncoding(code);
+                if (encoding != null){
+                    interp.execfile(new ByteArrayInputStream(code.getBytes(encoding)));
+                } else {
+                    interp.execfile(new ByteArrayInputStream(code.getBytes()));
                 }
-                try {
-                    interp.exec(code);
-                    //interp.execfile(new ByteArrayInputStream(code.getBytes()));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    //interp.exec(code);
+//                    interp.execfile(new ByteArrayInputStream(code.getBytes()));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
                 return "";
             }

@@ -45,6 +45,8 @@ public class FrmOutputMapData extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmOutputMapData
+     * @param parent
+     * @param modal
      */
     public FrmOutputMapData(JFrame parent, boolean modal) {
         super(parent, modal);

@@ -4,14 +4,12 @@
  */
 package meteoinfo.forms;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
@@ -19,33 +17,31 @@ import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.title.LegendTitle;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
+import org.meteoinfo.chart.Chart;
+import org.meteoinfo.chart.plot.ChartPlotMethod;
+import org.meteoinfo.chart.plot.PlotOrientation;
+import org.meteoinfo.chart.plot.XYPlot;
 import org.meteoinfo.data.GridData;
+import org.meteoinfo.data.XYArrayDataset;
+import org.meteoinfo.data.XYDataset;
+import org.meteoinfo.data.XYListDataset;
 import org.meteoinfo.data.meteodata.Dimension;
 import org.meteoinfo.data.meteodata.MeteoDataInfo;
 import org.meteoinfo.data.meteodata.PlotDimension;
-import org.meteoinfo.data.meteodata.TrajDataInfo;
 import org.meteoinfo.data.meteodata.Variable;
+import org.meteoinfo.data.meteodata.hysplit.HYSPLITTrajDataInfo;
 import org.meteoinfo.global.PointD;
-import org.meteoinfo.layer.VectorLayer;
+import org.meteoinfo.layer.LayerDrawType;
+import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layout.LayoutChart;
 import org.meteoinfo.layout.MapLayout;
-import org.meteoinfo.shape.PointZ;
-import org.meteoinfo.shape.PolylineZShape;
+import org.meteoinfo.legend.ColorBreak;
+import org.meteoinfo.legend.LegendManage;
+import org.meteoinfo.legend.LegendScheme;
+import org.meteoinfo.legend.PointBreak;
+import org.meteoinfo.legend.PolygonBreak;
+import org.meteoinfo.legend.PolylineBreak;
+import org.meteoinfo.shape.ShapeTypes;
 
 /**
  *
@@ -55,7 +51,7 @@ public class FrmOneDim extends javax.swing.JFrame {
 
     private FrmMain mainGUI;
     private MeteoDataInfo _meteoDataInfo = new MeteoDataInfo();
-    private ChartPanel _chartPanel;
+    private org.meteoinfo.chart.ChartPanel _chartPanel;
     private PlotDimension _plotDimension;
     private String _graphType;
     private List<PointD> _pointList = new ArrayList<PointD>();
@@ -64,15 +60,17 @@ public class FrmOneDim extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmOneDim
+     *
+     * @param frmMain FrmMain
+     * @param aDataInfo The data info
      */
     public FrmOneDim(FrmMain frmMain, MeteoDataInfo aDataInfo) {
         initComponents();
 
         mainGUI = frmMain;
         this.jComboBox_Variable.setEditable(true);
-        _chartPanel = new ChartPanel(null);
-        //_chartPanel.setFont(new Font("宋体", Font.PLAIN, 12));
-        //((PiePlot) a.getPlot()).setLabelFont(new Font("宋体", Font.PLAIN, 12));
+        //_chartPanel = new ChartPanel(null);
+        _chartPanel = new org.meteoinfo.chart.ChartPanel(null);
         this.jSplitPane1.setRightComponent(_chartPanel);
         JPopupMenu popupMenu = this._chartPanel.getPopupMenu();
         if (popupMenu != null) {
@@ -391,10 +389,10 @@ public class FrmOneDim extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_DrawType, 0, 172, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 12, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)
                         .addComponent(jLabel_Variable)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox_Variable, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBox_Variable, 0, 171, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -414,22 +412,12 @@ public class FrmOneDim extends javax.swing.JFrame {
                     .addComponent(jComboBox_PlotDim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel_Dimensions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 452, Short.MAX_VALUE)
-        );
-
+        jPanel2.setLayout(new java.awt.BorderLayout());
         jSplitPane1.setRightComponent(jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -468,37 +456,35 @@ public class FrmOneDim extends javax.swing.JFrame {
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
         String varName = this.jComboBox_Variable.getSelectedItem().toString();
+        ChartPlotMethod method = (ChartPlotMethod) this.jComboBox_DrawType.getSelectedItem();
         switch (this._meteoDataInfo.getDataType()) {
             case HYSPLIT_Traj:
-                VectorLayer layer = ((TrajDataInfo) this._meteoDataInfo.getDataInfo()).createTrajLineLayer();
-                List<List<PointD>> points = new ArrayList<List<PointD>>();
-                List<String> serieNames = new ArrayList<String>();     
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
-                int i = 0;
-                boolean useId = false;
-                boolean yInverse = varName.equals("Pressure");
-                for (PolylineZShape shape : (List<PolylineZShape>)layer.getShapes()){
-                    String name = format.format((Date)layer.getCellValue("StartDate", i));
-                    if (!serieNames.contains(name))
-                        serieNames.add(name);
-                    else {
-                        name = name + "_" + String.valueOf(i + 1);
-                        serieNames.add(name);
-                        useId = true;                        
-                    }
-                    List<PointD> plist = new ArrayList<PointD>();
-                    for (int j = 0; j < shape.getPoints().size(); j++) {
-                        if (varName.equals("Pressure"))
-                            plist.add(new PointD(0 - j, ((PointZ)shape.getPoints().get(j)).Z));
-                        else
-                            plist.add(new PointD(0 - j, ((PointZ)shape.getPoints().get(j)).M));
-                    }
-                    points.add(plist);
-                    i += 1;
+                int varIdx = 11;
+                String yLabel = "Meters AGL";
+                if (varName.equals("Pressure")){
+                    varIdx = 12;
+                    yLabel = "hPa";
                 }
-                if (useId)
-                    serieNames.set(0, serieNames.get(0) + "_1");
-                this.createChart(points, null, "Age Hour", varName, serieNames, "Line", PlotOrientation.VERTICAL, yInverse, true);
+                XYListDataset ldataset = ((HYSPLITTrajDataInfo) this._meteoDataInfo.getDataInfo()).getXYDataset(varIdx);
+                LegendScheme ls = null;
+                MapLayer layer = this.mainGUI.getMeteoDataset().getLastAddLayer();
+                if (layer != null){
+                    if (layer.getLayerDrawType() == LayerDrawType.TrajLine){
+                        ls = layer.getLegendScheme();
+                    }
+                }
+                if (ls == null){
+                    ls = LegendManage.createUniqValueLegendScheme(ldataset.getSeriesCount(), ShapeTypes.Polyline);
+                    for (ColorBreak cb : ls.getLegendBreaks()) {
+                        PolylineBreak plb = (PolylineBreak)cb;
+                        plb.setDrawSymbol(true);
+                        plb.setSymbolInterval(6);         
+                        plb.setSize(2);                    
+                    }
+                }
+                boolean yInverse = varName.equals("Pressure");
+                this.createChart(ldataset, ls.getLegendBreaks(), null, "Time", yLabel, method, 
+                        PlotOrientation.VERTICAL, yInverse, false, true, false);
                 break;
             default:
                 _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
@@ -509,7 +495,7 @@ public class FrmOneDim extends javax.swing.JFrame {
                 _meteoDataInfo.setLonIndex(this.jComboBox_Lon1.getSelectedIndex());
                 _meteoDataInfo.setLatIndex(this.jComboBox_Lat1.getSelectedIndex());
                 _meteoDataInfo.setLevelIndex(this.jComboBox_Level1.getSelectedIndex());
-                _meteoDataInfo.setTimeIndex(this.jComboBox_Time1.getSelectedIndex());                
+                _meteoDataInfo.setTimeIndex(this.jComboBox_Time1.getSelectedIndex());
 
                 //this.jComboBox_Variable.actionPerformed(null);
                 GridData gData = _meteoDataInfo.getGridData(varName);
@@ -518,41 +504,31 @@ public class FrmOneDim extends javax.swing.JFrame {
                     return;
                 }
 
-                _pointList = new ArrayList<PointD>();
-                PointD aP;
-                for (i = 0; i < gData.getXNum(); i++) {
-                    aP = new PointD();
-                    aP.X = gData.xArray[i];
-                    aP.Y = gData.data[0][i];
-//                    if (_plotDimension == PlotDimension.Level) {
-//                        aP = new PointD();
-//                        aP.X = gData.data[0][i];
-//                        aP.Y = gData.xArray[i];
-//                    } else {
-//                        aP = new PointD();
-//                        aP.X = gData.xArray[i];
-//                        aP.Y = gData.data[0][i];
-//                    }
-                    _pointList.add(aP);
-                }
-
-                if (_pointList.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No data!");
-                    this.setCursor(Cursor.getDefaultCursor());
-                    return;
-                }
-
                 //Plot
-                points = new ArrayList<List<PointD>>();
-                points.add(_pointList);
-                serieNames = new ArrayList<String>();
+                List<String> serieNames = new ArrayList<String>();
                 serieNames.add(varName);
+                int seriesCount = 1;
+                int itemCount = gData.getXNum();
+                XYArrayDataset dataset = new XYArrayDataset(seriesCount, itemCount);
+                dataset.setSeriesKeys(serieNames);
+                dataset.setMissingValue(gData.missingValue);
+                int i;
+                for (i = 0; i < gData.getXNum(); i++) {
+                    dataset.setX(0, i, gData.xArray[i]);
+                    dataset.setY(0, i, gData.data[0][i]);
+                }
+
                 String title = varName + "_" + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
                 PlotOrientation po = PlotOrientation.VERTICAL;
-                if (_plotDimension == PlotDimension.Level)
+                if (_plotDimension == PlotDimension.Level) {
                     po = PlotOrientation.HORIZONTAL;
+                }
                 String xLabel = _plotDimension.toString();
-                this.createChart(points, title, xLabel, varName, serieNames, _graphType, po, false, false);
+                boolean isTime = false;
+                if (_plotDimension == PlotDimension.Time) {
+                    isTime = true;
+                }
+                this.createChart(dataset, null, title, xLabel, varName, method, po, false, false, isTime, true);
 
                 //Enable time controls            
                 if (!this.jCheckBox_Time.isSelected()) {
@@ -773,7 +749,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         switch (this._meteoDataInfo.getDataType()) {
             case HYSPLIT_Traj:
                 this.jPanel_Dimensions.setVisible(false);
-                this.jComboBox_DrawType.setVisible(false);
+                //this.jComboBox_DrawType.setVisible(false);
                 this.jComboBox_Lat1.setVisible(false);
                 this.jComboBox_Lat2.setVisible(false);
                 this.jComboBox_Level1.setVisible(false);
@@ -787,7 +763,7 @@ public class FrmOneDim extends javax.swing.JFrame {
                 this.jCheckBox_Level.setVisible(false);
                 this.jCheckBox_Lon.setVisible(false);
                 this.jCheckBox_Time.setVisible(false);
-                this.jLabel_DrawType.setVisible(false);
+                //this.jLabel_DrawType.setVisible(false);
                 this.jLabel_PlotDims.setVisible(false);
 
                 this.jComboBox_Variable.setEditable(false);
@@ -814,14 +790,15 @@ public class FrmOneDim extends javax.swing.JFrame {
                 this.jCheckBox_Lat.setEnabled(false);
 
                 updateDimensions();
-
-                //Set draw type
-                this.jComboBox_DrawType.removeAllItems();
-                this.jComboBox_DrawType.addItem("Line");
-                this.jComboBox_DrawType.addItem("Bar");
-                this.jComboBox_DrawType.setSelectedIndex(0);
                 break;
         }
+
+        //Set draw type
+        this.jComboBox_DrawType.removeAllItems();
+        for (ChartPlotMethod method : ChartPlotMethod.values()) {
+            this.jComboBox_DrawType.addItem(method);
+        }
+        this.jComboBox_DrawType.setSelectedItem(ChartPlotMethod.LINE_POINT);
 
         _isLoading = false;
 
@@ -958,64 +935,104 @@ public class FrmOneDim extends javax.swing.JFrame {
         }
     }
 
-    private void createChart(List<List<PointD>> points, String title, String xLabel, String yLabel, List<String> serieNames, String chartType, 
-            PlotOrientation po, boolean yInverse, boolean xInverse) {                
-        if (chartType.equals("Line")) {
-            XYSeriesCollection xyseriescollection = new XYSeriesCollection();
-            int i = 0;
-            for (List<PointD> plist : points) {
-                XYSeries xySeries = new XYSeries(serieNames.get(i));
-                for (PointD p : plist) {
-                    xySeries.add(p.X, p.Y);
-                }
-                xyseriescollection.addSeries(xySeries);
-                i += 1;
-            }
-            JFreeChart chart = ChartFactory.createXYLineChart(title, xLabel, yLabel,
-                    xyseriescollection, PlotOrientation.VERTICAL, true, true, false);
-            XYPlot plot = chart.getXYPlot();
-            plot.setOrientation(po);
-            plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
-            plot.setDomainPannable(true);
-            plot.setRangePannable(true);
-            plot.setBackgroundPaint(null);
-            plot.setRangeGridlinePaint(Color.gray);
-            LegendTitle legend = (LegendTitle) chart.getSubtitle(0);
-            legend.setPosition(RectangleEdge.TOP);
-            NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
-            yAxis.setAutoRangeIncludesZero(false);
-            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setInverted(yInverse);
-            ValueAxis xAxis = plot.getDomainAxis();
-            xAxis.setInverted(xInverse);
-            XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
-            renderer.setBaseShapesVisible(true);
-            renderer.setBaseShapesFilled(false);            
-            this._chartPanel.setChart(chart);
-            this._chartPanel.repaint();
-        } else if (chartType.equals("Bar")) {
-            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-            int i = 0;
-            for (List<PointD> plist : points) {
-                String sName = serieNames.get(i);
-                for (PointD p : plist) {
-                    dataset.addValue(p.Y, sName, String.valueOf(p.X));
-                }
-                i += 1;
-            }
-            JFreeChart chart = ChartFactory.createBarChart(title, xLabel, yLabel, dataset, PlotOrientation.VERTICAL, true, true, true);
-            CategoryPlot plot = chart.getCategoryPlot();
-            plot.setOrientation(po);
-            plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
-            NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
-            yAxis.setAutoRangeIncludesZero(false);
-            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            yAxis.setInverted(yInverse);
-            this._chartPanel.setChart(chart);
-            this._chartPanel.repaint();
+    private void createChart(XYDataset dataset, List<ColorBreak> legendBreaks, String title, String xLabel, String yLabel,
+            ChartPlotMethod method, PlotOrientation orientation, boolean yInverse, boolean xInverse, boolean isTime,
+            boolean drawLegend) {
+        XYPlot plot = new XYPlot(isTime, orientation, dataset);
+        plot.setChartPlotMethod(method);
+        plot.getXAxis().setInverse(xInverse);
+        plot.getYAxis().setInverse(yInverse);
+        if (orientation == PlotOrientation.VERTICAL) {
+            plot.getXAxis().setLabel(xLabel);
+            plot.getYAxis().setLabel(yLabel);
+        } else {
+            plot.getXAxis().setLabel(yLabel);
+            plot.getYAxis().setLabel(xLabel);
         }
+        if (legendBreaks != null){
+            for (int i = 0; i < dataset.getSeriesCount(); i++){
+                String caption = dataset.getSeriesKey(i);
+                PolylineBreak plb = (PolylineBreak)legendBreaks.get(i);
+                plb.setCaption(caption);
+                plot.setPolylineBreak(i, plb);
+                
+                PointBreak pb = new PointBreak();
+                pb.setColor(plb.getSymbolColor());
+                pb.setSize(plb.getSymbolSize());
+                pb.setStyle(plb.getSymbolStyle());
+                pb.setCaption(caption);
+                plot.setPointBreak(i, pb);
+                
+                PolygonBreak pgb = new PolygonBreak();
+                pgb.setColor(plb.getColor());
+                pgb.setCaption(caption);
+                plot.setPolygonBreak(i, pgb);
+            }
+        }
+        
+        Chart chart = new Chart(title, plot);
+        chart.setDrawLegend(drawLegend);
+        this._chartPanel.setChart(chart);
+        this._chartPanel.paintGraphics();
     }
 
+//    private void createChart_backup(List<List<PointD>> points, String title, String xLabel, String yLabel, List<String> serieNames, String chartType, 
+//            PlotOrientation po, boolean yInverse, boolean xInverse) {                
+//        if (chartType.equals("Line")) {
+//            XYSeriesCollection xyseriescollection = new XYSeriesCollection();
+//            int i = 0;
+//            for (List<PointD> plist : points) {
+//                XYSeries xySeries = new XYSeries(serieNames.get(i));
+//                for (PointD p : plist) {
+//                    xySeries.add(p.X, p.Y);
+//                }
+//                xyseriescollection.addSeries(xySeries);
+//                i += 1;
+//            }
+//            JFreeChart chart = ChartFactory.createXYLineChart(title, xLabel, yLabel,
+//                    xyseriescollection, PlotOrientation.VERTICAL, true, true, false);
+//            XYPlot plot = chart.getXYPlot();
+//            plot.setOrientation(po);
+//            plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
+//            plot.setDomainPannable(true);
+//            plot.setRangePannable(true);
+//            plot.setBackgroundPaint(null);
+//            plot.setRangeGridlinePaint(Color.gray);
+//            LegendTitle legend = (LegendTitle) chart.getSubtitle(0);
+//            legend.setPosition(RectangleEdge.TOP);
+//            NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+//            yAxis.setAutoRangeIncludesZero(false);
+//            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+//            yAxis.setInverted(yInverse);
+//            ValueAxis xAxis = plot.getDomainAxis();
+//            xAxis.setInverted(xInverse);
+//            XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+//            renderer.setBaseShapesVisible(true);
+//            renderer.setBaseShapesFilled(false);            
+//            this._chartPanel.setChart(chart);
+//            this._chartPanel.repaint();
+//        } else if (chartType.equals("Bar")) {
+//            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//            int i = 0;
+//            for (List<PointD> plist : points) {
+//                String sName = serieNames.get(i);
+//                for (PointD p : plist) {
+//                    dataset.addValue(p.Y, sName, String.valueOf(p.X));
+//                }
+//                i += 1;
+//            }
+//            JFreeChart chart = ChartFactory.createBarChart(title, xLabel, yLabel, dataset, PlotOrientation.VERTICAL, true, true, true);
+//            CategoryPlot plot = chart.getCategoryPlot();
+//            plot.setOrientation(po);
+//            plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
+//            NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+//            yAxis.setAutoRangeIncludesZero(false);
+//            yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+//            yAxis.setInverted(yInverse);
+//            this._chartPanel.setChart(chart);
+//            this._chartPanel.repaint();
+//        }
+//    }
     /**
      * @param args the command line arguments
      */

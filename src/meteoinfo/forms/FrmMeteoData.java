@@ -106,7 +106,6 @@ import org.meteoinfo.legend.LegendManage;
 import org.meteoinfo.legend.LegendScheme;
 import org.meteoinfo.legend.LegendType;
 import org.meteoinfo.legend.PointBreak;
-import org.meteoinfo.legend.PolylineBreak;
 import org.meteoinfo.projection.ProjectionInfo;
 import org.meteoinfo.shape.ShapeTypes;
 
@@ -1892,6 +1891,18 @@ public class FrmMeteoData extends javax.swing.JDialog {
     }
     // </editor-fold>
     // <editor-fold desc="Get Set Methods">
+    /**
+     * Get last add layer
+     * @return Last added layer
+     */
+    public MapLayer getLastAddLayer(){
+        MapLayer layer = null;
+        if (this._lastAddedLayerHandle >= 0){
+            layer = this._parent.getMapView().getLayerByHandle(this._lastAddedLayerHandle);
+        }
+        
+        return layer;
+    }
     // </editor-fold>
     // <editor-fold desc="Methods">
     // <editor-fold desc="MeteoDataInfo">
@@ -2252,11 +2263,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
         switch (_2DDrawType) {
             case Traj_Line:
                 aLayer = ((TrajDataInfo) aDataInfo).createTrajLineLayer();
-                PolylineBreak aPLB;
-                for (int i = 0; i < aLayer.getLegendScheme().getBreakNum(); i++) {
-                    aPLB = (PolylineBreak) aLayer.getLegendScheme().getLegendBreaks().get(i);
-                    aPLB.setSize(2);
-                }
+//                PolylineBreak aPLB;
+//                for (int i = 0; i < aLayer.getLegendScheme().getBreakNum(); i++) {
+//                    aPLB = (PolylineBreak) aLayer.getLegendScheme().getLegendBreaks().get(i);
+//                    aPLB.setSize(2);
+//                }
                 _lastAddedLayerHandle = _parent.getMapDocument().getActiveMapFrame().insertPolylineLayer(aLayer);
                 break;
             case Traj_StartPoint:

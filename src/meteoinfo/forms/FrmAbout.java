@@ -69,7 +69,7 @@ public class FrmAbout extends javax.swing.JDialog {
 
         jLabel6.setText("Yaqiang Wang");
 
-        jLabel7.setText("1.1.8");
+        jLabel7.setText("1.1.9");
 
         jLabel8.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
         jLabel8.setText("Email:");

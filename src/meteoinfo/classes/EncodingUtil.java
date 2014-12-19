@@ -5,6 +5,9 @@
  */
 package meteoinfo.classes;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,5 +28,26 @@ public class EncodingUtil {
             return groupStr;
         }
         return null;
+    }
+
+    public static String findEncoding(BufferedReader br)
+            throws IOException {
+        String encoding = null;
+        for (int i = 0; i < 2; i++) {
+            String strLine = br.readLine();
+            if (strLine == null) {
+                break;
+            }
+            String result = matchEncoding(strLine);
+            if (result != null) {
+                encoding = result;
+                break;
+            }
+        }
+        return encoding;
+    }
+    
+    public static String findEncoding(String text) throws IOException{
+        return findEncoding(new BufferedReader(new StringReader(text)));
     }
 }

@@ -64,6 +64,7 @@ import meteoinfo.classes.Options;
 import meteoinfo.classes.Plugin;
 import meteoinfo.classes.PluginCollection;
 import meteoinfo.classes.ProjectFile;
+import org.meteoinfo.data.mapdata.FrmAttriData;
 import org.meteoinfo.data.mapdata.MapDataManage;
 import org.meteoinfo.global.Extent;
 import org.meteoinfo.global.FrmProperty;
@@ -2360,7 +2361,7 @@ public class FrmMain extends JFrame implements IApplication {
             MapLayer aLayer = aLN.getMapFrame().getMapView().getLayerByHandle(aLN.getLayerHandle());
             if (aLayer.getLayerType() == LayerTypes.VectorLayer) {
                 if (((VectorLayer) aLayer).getShapeNum() > 0) {
-                    FrmAttriData aFrmData = new FrmAttriData(this, false);
+                    FrmAttriData aFrmData = new FrmAttriData();
                     aFrmData.setLayer((VectorLayer) aLayer);
                     aFrmData.setLocationRelativeTo(this);
                     aFrmData.setVisible(true);
