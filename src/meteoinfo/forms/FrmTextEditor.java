@@ -600,9 +600,17 @@ public class FrmTextEditor extends javax.swing.JFrame {
 //                }
                 String encoding = EncodingUtil.findEncoding(code);
                 if (encoding != null){
-                    interp.execfile(new ByteArrayInputStream(code.getBytes(encoding)));
+                    try {
+                        interp.execfile(new ByteArrayInputStream(code.getBytes(encoding)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    interp.execfile(new ByteArrayInputStream(code.getBytes()));
+                    try {
+                        interp.execfile(new ByteArrayInputStream(code.getBytes()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 //                try {
 //                    //interp.exec(code);
