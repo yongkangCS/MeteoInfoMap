@@ -7,9 +7,11 @@ package meteoinfo.forms;
 import bsh.util.JConsole;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import meteoinfo.classes.PythonInteractiveInterpreter;
 import org.meteoinfo.global.util.GlobalUtil;
@@ -19,21 +21,27 @@ import org.python.core.Py;
  *
  * @author yaqiang
  */
-public class FrmConsole extends javax.swing.JDialog {
+public class FrmConsole extends javax.swing.JFrame {
     
     private FrmMain frmMain = null;
     
     /**
      * Creates new form FrmConsole
      * @param parent
-     * @param modal
      */
-    public FrmConsole(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public FrmConsole(java.awt.Frame parent) {
+        super();
         initComponents();   
         this.setSize(600, 400);
         
         frmMain = (FrmMain)parent;
+        
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(this.getClass().getResource("/meteoinfo/resources/MeteoInfo_1_16x16x8.png"));
+        } catch (Exception e) {
+        }
+        this.setIconImage(image);
     }
     
     /**
@@ -47,13 +55,25 @@ public class FrmConsole extends javax.swing.JDialog {
         console.println(new ImageIcon(this.getClass().getResource("/meteoinfo/resources/jython_small_c.png")));
         this.getContentPane().add(console, BorderLayout.CENTER);
         
+        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                        getInputArguments().toString().contains("jdwp");
         String pluginPath = this.frmMain.getStartupPath() + File.separator + "plugins";
         List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
         
         Py.getSystemState().setdefaultencoding("utf-8");
         PythonInteractiveInterpreter interp = new PythonInteractiveInterpreter(console);  
-        interp.set("miapp", frmMain);
+        String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "script";
+        if (isDebug)
+            path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/script";
+        
+        //MeteoInfoScript mis = new MeteoInfoScript(path);
         interp.exec("import sys"); 
+        //interp.set("mis", mis);
+        interp.exec("sys.path.append('" + path + "')");
+        interp.exec("import miscript");
+        interp.exec("from miscript import MeteoInfoScript");
+        interp.exec("mis = MeteoInfoScript()");
+        interp.set("miapp", frmMain);        
         for (String jarfn : jarfns)
             interp.exec("sys.path.append('" + jarfn + "')");
         
@@ -103,8 +123,9 @@ public class FrmConsole extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                FrmConsole dialog = new FrmConsole(new javax.swing.JFrame(), true);
+                FrmConsole dialog = new FrmConsole(new javax.swing.JFrame());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

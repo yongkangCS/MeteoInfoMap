@@ -20,7 +20,7 @@ import javax.swing.JPopupMenu;
 import org.meteoinfo.chart.Chart;
 import org.meteoinfo.chart.plot.ChartPlotMethod;
 import org.meteoinfo.chart.plot.PlotOrientation;
-import org.meteoinfo.chart.plot.XYPlot;
+import org.meteoinfo.chart.plot.XY1DPlot;
 import org.meteoinfo.data.GridData;
 import org.meteoinfo.data.XYArrayDataset;
 import org.meteoinfo.data.XYDataset;
@@ -938,10 +938,17 @@ public class FrmOneDim extends javax.swing.JFrame {
     private void createChart(XYDataset dataset, List<ColorBreak> legendBreaks, String title, String xLabel, String yLabel,
             ChartPlotMethod method, PlotOrientation orientation, boolean yInverse, boolean xInverse, boolean isTime,
             boolean drawLegend) {
-        XYPlot plot = new XYPlot(isTime, orientation, dataset);
+        XY1DPlot plot = new XY1DPlot(isTime, orientation, dataset);
         plot.setChartPlotMethod(method);
+        plot.setDrawTopRightAxis(false);
+        plot.getGridLine().setDrawXLine(true);
+        plot.getGridLine().setDrawYLine(true);
         plot.getXAxis().setInverse(xInverse);
         plot.getYAxis().setInverse(yInverse);
+        plot.getXAxis().setInsideTick(false);
+        plot.getYAxis().setInsideTick(false);
+        plot.getXAxis().setDrawLabel(true);
+        plot.getYAxis().setDrawLabel(true);
         if (orientation == PlotOrientation.VERTICAL) {
             plot.getXAxis().setLabel(xLabel);
             plot.getYAxis().setLabel(yLabel);

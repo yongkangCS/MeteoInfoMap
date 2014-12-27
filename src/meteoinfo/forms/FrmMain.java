@@ -108,6 +108,7 @@ import org.meteoinfo.legend.NodeTypes;
 import org.meteoinfo.map.FeatureUndoableEdit;
 import org.meteoinfo.map.MapView;
 import org.meteoinfo.map.MapViewUndoRedo;
+import org.meteoinfo.map.MaskOut;
 import org.meteoinfo.map.MouseTools;
 import org.meteoinfo.plugin.IApplication;
 import org.meteoinfo.plugin.IPlugin;
@@ -2389,7 +2390,9 @@ public class FrmMain extends JFrame implements IApplication {
     private void jMenuItem_MaskOutActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         FrmProperty pFrm = new FrmProperty(this, true, false);
-        pFrm.setObject(this._mapView.getMaskOut().new MaskOutBean());
+        MaskOut maskout = this._mapView.getMaskOut();
+        maskout.setMapView(_mapView);
+        pFrm.setObject(maskout.new MaskOutBean());
         pFrm.setLocationRelativeTo(this);
         pFrm.setVisible(true);
     }
@@ -2492,7 +2495,7 @@ public class FrmMain extends JFrame implements IApplication {
     }
     
     private void jMenuItem_ScriptConsoleActionPerformed(java.awt.event.ActionEvent evt){
-        FrmConsole frmConsole = new FrmConsole(this, false);
+        FrmConsole frmConsole = new FrmConsole(this);
         frmConsole.setTitle("Jython Console");        
         frmConsole.setLocationRelativeTo(this);
         frmConsole.setVisible(true);

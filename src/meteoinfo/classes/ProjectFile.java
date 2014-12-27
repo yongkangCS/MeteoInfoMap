@@ -94,6 +94,7 @@ public class ProjectFile {
      * Save project file
      *
      * @param aFile File name
+     * @throws javax.xml.parsers.ParserConfigurationException
      */
     public void saveProjFile(String aFile) throws ParserConfigurationException {
         _fileName = aFile;
@@ -150,6 +151,9 @@ public class ProjectFile {
      * Load project file
      *
      * @param aFile
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
     public void loadProjFile(String aFile) throws ParserConfigurationException, SAXException, IOException {
         _fileName = aFile;

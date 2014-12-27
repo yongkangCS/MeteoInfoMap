@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -176,6 +177,7 @@ public class Options {
      * Save configure file
      *
      * @param fileName File name
+     * @throws javax.xml.parsers.ParserConfigurationException
      */
     public void saveConfigFile(String fileName) throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -245,11 +247,17 @@ public class Options {
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
             DOMSource source = new DOMSource(doc);
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            PrintWriter pw = new PrintWriter(new FileOutputStream(fileName));
-            StreamResult result = new StreamResult(pw);
+            Properties properties = transformer.getOutputProperties();
+            properties.setProperty(OutputKeys.ENCODING, "UTF-8");
+            properties.setProperty(OutputKeys.INDENT, "yes");
+            properties.setProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+//            transformer.setOutputProperties(properties);
+//            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+//            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+//            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+//            PrintWriter pw = new PrintWriter(new FileOutputStream(fileName));
+            FileOutputStream out = new FileOutputStream(fileName);
+            StreamResult result = new StreamResult(out);
             transformer.transform(source, result);
         } catch (TransformerException mye) {
         } catch (IOException exp) {
@@ -260,6 +268,9 @@ public class Options {
      * Load configure file
      *
      * @param fileName File name
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
     public void loadConfigFile(String fileName) throws ParserConfigurationException, SAXException, IOException {
         _fileName = fileName;

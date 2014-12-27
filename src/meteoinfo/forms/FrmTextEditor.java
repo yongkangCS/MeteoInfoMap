@@ -30,12 +30,11 @@ import meteoinfo.classes.GenericFileFilter;
 import meteoinfo.classes.JTextAreaPrintStream;
 import meteoinfo.classes.JTextAreaWriter;
 import meteoinfo.classes.TextEditor;
-import meteoinfo.classes.UPythonInterpreter;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.TextEditorPane;
 import org.meteoinfo.global.util.GlobalUtil;
+import org.meteoinfo.script.MeteoInfoScript;
 import org.meteoinfo.ui.ButtonTabComponent;
-import org.python.core.Py;
 import org.python.util.PythonInterpreter;
 
 /**
@@ -584,10 +583,23 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 System.setErr(printStream);
                 //System.out.println("Out test!");
                 //System.err.println("Error test!");
+                
+                boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                        getInputArguments().toString().contains("jdwp");
                 String pluginPath = _parent.getStartupPath() + File.separator + "plugins";
                 List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
-                interp.set("miapp", _parent);
+                String path = _parent.getStartupPath() + File.separator + "script";
+                //MeteoInfoScript mis = new MeteoInfoScript(path);
+                if (isDebug)
+                    path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/script";
+                
                 interp.exec("import sys");
+                //interp.set("mis", mis);
+                interp.exec("sys.path.append('" + path + "')");
+                interp.exec("import miscript");
+                interp.exec("from miscript import MeteoInfoScript");
+                interp.exec("mis = MeteoInfoScript()");
+                interp.set("miapp", _parent);                
                 for (String jarfn : jarfns) {
                     interp.exec("sys.path.append('" + jarfn + "')");
                 }

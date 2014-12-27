@@ -16,7 +16,7 @@ public class JTextAreaWriter extends Writer {
     private final JTextArea _jta;
     private final int _maxBuffSize;
     private final StringBuffer _stringBuffer = new StringBuffer();
-    private final int _maxLength = 10000;
+    private final int _maxLength = 1000;
 
     public JTextAreaWriter(JTextArea ta) {
         this(ta, -1);
@@ -83,7 +83,7 @@ public class JTextAreaWriter extends Writer {
 //        }
 
         String line = new String(cbuf, off, len);
-        if (_jta.getText().length() > _maxLength) {
+        if (_jta.getLineCount() > _maxLength) {
             _jta.setText("");
         }
         _jta.append(line);

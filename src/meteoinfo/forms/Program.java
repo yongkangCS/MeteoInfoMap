@@ -20,8 +20,13 @@ import javax.swing.WindowConstants;
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.meteoinfo.global.util.FontUtil;
 import org.meteoinfo.global.util.GlobalUtil;
+import org.meteoinfo.script.MeteoInfoData;
+import org.meteoinfo.script.MeteoInfoMap;
+import org.meteoinfo.script.MeteoInfoPlot;
+import org.meteoinfo.script.MeteoInfoScript;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
+import org.python.util.InteractiveConsole;
 import org.python.util.PythonInterpreter;
 
 /**
@@ -38,6 +43,8 @@ public class Program {
         if (args.length >= 1) {
             if (args[0].equalsIgnoreCase("-e")) {
                 runTextEditor(args);
+            } else if (args[0].equalsIgnoreCase("-i")){
+                runInteractive();
             } else if (args[0].equalsIgnoreCase("-b")) {
                 if (args.length == 1) {
                     System.out.println("Script file name is needed!");
@@ -95,7 +102,13 @@ public class Program {
                 PythonInterpreter interp = new PythonInterpreter(null, state);
                 String pluginPath = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "plugins";
                 List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
-                //interp.set("miapp", new FrmMainOld());
+                String path = GlobalUtil.getAppPath(FrmMain.class);
+                MeteoInfoData mid = new MeteoInfoData();
+                MeteoInfoMap mim = new MeteoInfoMap(path);
+                MeteoInfoPlot mip = new MeteoInfoPlot();
+                interp.set("mid", mid);
+                interp.set("mim", mim);
+                interp.set("mip", mip);
                 interp.exec("import sys");
                 for (String jarfn : jarfns) {
                     interp.exec("sys.path.append('" + jarfn + "')");
@@ -108,6 +121,23 @@ public class Program {
         } catch (IOException ex) {
             Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private static void runInteractive(){
+//        PlotForm plotForm = new PlotForm();
+//        plotForm.setSize(800, 600);
+//        plotForm.setVisible(true);
+//        MeteoInfoScript mis = new MeteoInfoScript(plotForm);
+        String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "script";
+        //MeteoInfoScript mis = new MeteoInfoScript(path);
+        InteractiveConsole console = new InteractiveConsole();
+        //console.set("mis", mis);
+        console.exec("import sys");
+        console.exec("sys.path.append('" + path + "')");
+        console.exec("import miscript");
+        console.exec("from miscript import MeteoInfoScript");
+        console.exec("mis = MeteoInfoScript()");
+        console.interact();
     }
 
     private static void runTextEditor(final String args[]) {
