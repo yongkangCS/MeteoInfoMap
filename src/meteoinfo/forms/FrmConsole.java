@@ -62,17 +62,19 @@ public class FrmConsole extends javax.swing.JFrame {
         
         Py.getSystemState().setdefaultencoding("utf-8");
         PythonInteractiveInterpreter interp = new PythonInteractiveInterpreter(console);  
-        String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "script";
+        String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "pylib";
         if (isDebug)
-            path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/script";
+            path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/pylib";
         
         //MeteoInfoScript mis = new MeteoInfoScript(path);
         interp.exec("import sys"); 
         //interp.set("mis", mis);
         interp.exec("sys.path.append('" + path + "')");
-        interp.exec("import miscript");
-        interp.exec("from miscript import MeteoInfoScript");
-        interp.exec("mis = MeteoInfoScript()");
+        interp.exec("import mipylib");
+        interp.exec("import mipylib.miscript as mis");
+        //interp.exec("import miscript");
+        //interp.exec("from miscript import MeteoInfoScript");
+        //interp.exec("mis = MeteoInfoScript()");
         interp.set("miapp", frmMain);        
         for (String jarfn : jarfns)
             interp.exec("sys.path.append('" + jarfn + "')");

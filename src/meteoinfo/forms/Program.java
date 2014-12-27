@@ -128,15 +128,17 @@ public class Program {
 //        plotForm.setSize(800, 600);
 //        plotForm.setVisible(true);
 //        MeteoInfoScript mis = new MeteoInfoScript(plotForm);
-        String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "script";
+        String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "pylib";
         //MeteoInfoScript mis = new MeteoInfoScript(path);
         InteractiveConsole console = new InteractiveConsole();
         //console.set("mis", mis);
         console.exec("import sys");
         console.exec("sys.path.append('" + path + "')");
-        console.exec("import miscript");
-        console.exec("from miscript import MeteoInfoScript");
-        console.exec("mis = MeteoInfoScript()");
+        console.exec("import mipylib");
+        console.exec("import mipylib.miscript as mis");
+        //console.exec("import miscript");
+        //console.exec("from miscript import MeteoInfoScript");
+        //console.exec("mis = MeteoInfoScript()");
         console.interact();
     }
 

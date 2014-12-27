@@ -588,17 +588,17 @@ public class FrmTextEditor extends javax.swing.JFrame {
                         getInputArguments().toString().contains("jdwp");
                 String pluginPath = _parent.getStartupPath() + File.separator + "plugins";
                 List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
-                String path = _parent.getStartupPath() + File.separator + "script";
+                String path = _parent.getStartupPath() + File.separator + "pylib";
                 //MeteoInfoScript mis = new MeteoInfoScript(path);
                 if (isDebug)
-                    path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/script";
+                    path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/pylib";
                 
                 interp.exec("import sys");
                 //interp.set("mis", mis);
                 interp.exec("sys.path.append('" + path + "')");
-                interp.exec("import miscript");
-                interp.exec("from miscript import MeteoInfoScript");
-                interp.exec("mis = MeteoInfoScript()");
+                interp.exec("import mipylib");
+                interp.exec("import mipylib.miscript as mis");
+                //interp.exec("mis = MeteoInfoScript()");
                 interp.set("miapp", _parent);                
                 for (String jarfn : jarfns) {
                     interp.exec("sys.path.append('" + jarfn + "')");
