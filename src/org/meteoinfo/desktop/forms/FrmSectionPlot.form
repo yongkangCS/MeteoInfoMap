@@ -3,6 +3,7 @@
 <Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Section Plot"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -58,7 +59,7 @@
         <Component class="javax.swing.JButton" name="jButton_DataInfo">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/information.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/information.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_DataInfo.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -76,7 +77,7 @@
         <Component class="javax.swing.JButton" name="jButton_Draw">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_Draw.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/MeteoInfo_1_16x16x8.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_Draw.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -92,7 +93,7 @@
         <Component class="javax.swing.JButton" name="jButton_ViewData">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_ViewData.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_ViewData.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_ViewData.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -108,7 +109,7 @@
         <Component class="javax.swing.JButton" name="jButton_ClearDraw">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_ClearDrawing.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_ClearDrawing.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_ClearDraw.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -126,7 +127,7 @@
         <Component class="javax.swing.JButton" name="jButton_PreTime">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_PreTime.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_PreTime.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_PreTime.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -142,7 +143,7 @@
         <Component class="javax.swing.JButton" name="jButton_NexTime">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_NextTime.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_NextTime.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_NexTime.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -158,7 +159,7 @@
         <Component class="javax.swing.JButton" name="jButton_Animator">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/animation-1.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/animation-1.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_Animator.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -174,7 +175,7 @@
         <Component class="javax.swing.JButton" name="jButton_CreateAnimatorFile">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/Animation-2.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/Animation-2.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_CreateAnimatorFile.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -192,7 +193,7 @@
         <Component class="javax.swing.JButton" name="jButton_DrawSetting">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_DrawSetting.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_DrawSetting.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMeteoData.properties" key="FrmMeteoData.jButton_DrawSetting.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -210,7 +211,7 @@
         <Component class="javax.swing.JButton" name="jButton_SelectElement">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/Arrow_1_16x16x8.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/Arrow.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_SelectElement.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -226,7 +227,7 @@
         <Component class="javax.swing.JButton" name="jButton_ZoomIn">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_ZoomIn.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_ZoomIn.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_ZoomIn.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -242,7 +243,7 @@
         <Component class="javax.swing.JButton" name="jButton_ZoomOut">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_ZoomOut.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_ZoomOut.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_ZoomOut.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -258,7 +259,7 @@
         <Component class="javax.swing.JButton" name="jButton_Pan">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_Pan.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_Pan.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_Pan.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -274,7 +275,7 @@
         <Component class="javax.swing.JButton" name="jButton_FullExtent">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_FullExent.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_FullExent.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_FullExtent.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -290,7 +291,7 @@
         <Component class="javax.swing.JButton" name="jButton_ZoomToLayer">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_ZoomToLayer.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_ZoomToLayer.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_ZoomToLayer.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -306,7 +307,7 @@
         <Component class="javax.swing.JButton" name="jButton_Identifer">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/information.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/information.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_Identifer.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -324,7 +325,7 @@
         <Component class="javax.swing.JButton" name="jButton_LabelSet">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_LabelSet.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_LabelSet.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_LabelSet.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -342,7 +343,7 @@
         <Component class="javax.swing.JButton" name="jButton_PageSet">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/page_portrait.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/page_portrait.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_PageSet.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -358,7 +359,7 @@
         <Component class="javax.swing.JButton" name="jButton_PageZoomIn">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_PageZoomIn.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_PageZoomIn.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_PageZoomIn.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -374,7 +375,7 @@
         <Component class="javax.swing.JButton" name="jButton_PageZoomOut">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/TSB_PageZoomOut.Image.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/TSB_PageZoomOut.Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_PageZoomOut.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -390,7 +391,7 @@
         <Component class="javax.swing.JButton" name="jButton_FitToScreen">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/ZoomFullMap.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/ZoomFullMap.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_FitToScreen.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -430,7 +431,7 @@
         <Component class="javax.swing.JButton" name="jButton_SavePicture">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/meteoinfo/resources/Disk_1_16x16x8.png"/>
+              <Image iconType="3" name="/org/meteoinfo/desktop/resources/Save_Image.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="meteoinfo/bundle/Bundle_FrmMain.properties" key="FrmMain.jButton_SavePicture.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>

@@ -39,13 +39,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import org.meteoinfo.layer.FrmLabelSet;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.layout.FrmPageSet;
 import org.meteoinfo.layout.LayoutLegend;
-import org.meteoinfo.layout.LayoutMap;
 import org.meteoinfo.layout.LegendStyles;
 import org.meteoinfo.layout.MouseMode;
 import org.meteoinfo.legend.FrmLegendSet;
@@ -57,6 +57,7 @@ import org.meteoinfo.legend.MapFrame;
 import org.meteoinfo.legend.NodeTypes;
 import org.meteoinfo.legend.PointBreak;
 import org.meteoinfo.desktop.config.GenericFileFilter;
+import org.meteoinfo.global.image.AnimatedGifEncoder;
 import org.meteoinfo.shape.ShapeTypes;
 
 /**
@@ -83,15 +84,20 @@ public class FrmSectionPlot extends javax.swing.JFrame {
     private Color[] _colors;
     private int _strmDensity = 4;
     private boolean _isSamePlotDim = false;
+    private boolean _enableAnimation = true;
+    private boolean _isRunning = false;
     // </editor-fold>
 
     /**
      * Creates new form FrmSectionPlot
+     *
      * @param aDataInfo
      */
     public FrmSectionPlot(MeteoDataInfo aDataInfo) {
         initComponents();
 
+        this.layersLegend1.setMapLayout(mapLayout1);
+        this.mapLayout1.getActiveMapFrame().setLayoutBounds(new Rectangle(40, 36, 606, 420));
         this.mapLayout1.getActiveMapFrame().getMapView().setGeoMap(false);
         this.jComboBox_Variable.setEditable(true);
 //        this.jTextField_NewVariable.setVisible(false);
@@ -102,7 +108,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _meteoDataInfo = aDataInfo;
-        //TB_NewVariable.Visible = false;
+        //TB_NewVariable.Visible = false;                
 
         BufferedImage image = null;
         try {
@@ -186,6 +192,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jLabel_Status = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Section Plot");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -209,7 +216,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_DataInfo);
         jToolBar1.add(jSeparator1);
 
-        jButton_Draw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_Draw.Image.png"))); // NOI18N
+        jButton_Draw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/MeteoInfo_1_16x16x8.png"))); // NOI18N
         jButton_Draw.setToolTipText(bundle.getString("FrmMeteoData.jButton_Draw.toolTipText")); // NOI18N
         jButton_Draw.setFocusable(false);
         jButton_Draw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -467,7 +474,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jComboBox_PageZoom);
         jToolBar1.add(jSeparator7);
 
-        jButton_SavePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Disk_1_16x16x8.png"))); // NOI18N
+        jButton_SavePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Save_Image.png"))); // NOI18N
         jButton_SavePicture.setToolTipText(bundle1.getString("FrmMain.jButton_SavePicture.toolTipText")); // NOI18N
         jButton_SavePicture.setFocusable(false);
         jButton_SavePicture.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -751,8 +758,11 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
         _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
-
         _meteoDataInfo.setDimensionSet(_plotDimension);
+        _meteoDataInfo.setTimeIndex(this.jComboBox_Time1.getSelectedIndex());
+        _meteoDataInfo.setLevelIndex(this.jComboBox_Lat1.getSelectedIndex());
+        _meteoDataInfo.setLatIndex(this.jComboBox_Lat1.getSelectedIndex());
+        _meteoDataInfo.setLonIndex(this.jComboBox_Lon1.getSelectedIndex());
 
         //Get X/Y
         //GetXYCoords();
@@ -804,15 +814,77 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jButton_DrawActionPerformed
 
+    private void display() {
+        _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
+        _meteoDataInfo.setDimensionSet(_plotDimension);
+        _meteoDataInfo.setTimeIndex(this.jComboBox_Time1.getSelectedIndex());
+        _meteoDataInfo.setLevelIndex(this.jComboBox_Lat1.getSelectedIndex());
+        _meteoDataInfo.setLatIndex(this.jComboBox_Lat1.getSelectedIndex());
+        _meteoDataInfo.setLonIndex(this.jComboBox_Lon1.getSelectedIndex());
+
+        //Get X/Y
+        //GetXYCoords();
+        getXYGridStrs();
+        this.mapLayout1.getActiveMapFrame().getMapView().setXGridStrs(new ArrayList<String>(_XGridStrs));
+        this.mapLayout1.getActiveMapFrame().getMapView().setYGridStrs(new ArrayList<String>(_YGridStrs));
+
+        //Draw 2D figure
+        switch (_meteoDataInfo.getDataType()) {
+            case GrADS_Grid:
+            //case MeteoDataType.MICAPS_4:                    
+            case HYSPLIT_Conc:
+            case ARL_Grid:
+            case NetCDF:
+            case GRIB1:
+            case GRIB2:
+                getGridData();
+                drawGrid();
+                break;
+            case GrADS_Station:
+                _gridData = ((GrADSDataInfo) _meteoDataInfo.getDataInfo()).getGridData_Station(
+                        this.jComboBox_Variable.getSelectedIndex(), this.jList_Stations.getSelectedValues()[0].toString());
+                drawGrid();
+                break;
+        }
+
+        if (!_useSameLegendScheme) {
+            MapLayer aLayer = this.mapLayout1.getActiveMapFrame().getMapView().getLayerByHandle(_lastAddedLayerHandle);
+            if (aLayer != null) {
+                VectorLayer sLayer = (VectorLayer) aLayer;
+                if (sLayer.getExtent().maxX > sLayer.getExtent().minX && sLayer.getExtent().maxY
+                        > sLayer.getExtent().minY) {
+                    zoomToExtent(sLayer.getExtent());
+                }
+            }
+        }
+    }
+
     private void jButton_ViewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ViewDataActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Under developing!");
+        if (_gridData == null) {
+            return;
+        }
+
+        if (_gridData.data == null) {
+            return;
+        }
+
+        if (_gridData.data.length == 0) {
+            return;
+        }
+        
+        FrmViewData frmData = new FrmViewData();
+        //frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
+        frmData.setGridData(_gridData);
+        frmData.setLocationRelativeTo(this);
+        frmData.setVisible(true);
     }//GEN-LAST:event_jButton_ViewDataActionPerformed
 
     private void jButton_ClearDrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ClearDrawActionPerformed
         // TODO add your handling code here:
         //Remove last layer
-        this.layersLegend1.getActiveMapFrame().removeLayerByHandle(_lastAddedLayerHandle);
+        //this.layersLegend1.getActiveMapFrame().removeLayerByHandle(_lastAddedLayerHandle);
+        this.layersLegend1.getActiveMapFrame().removeAllLayers();
         //this.jButton_Draw.setEnabled(true);
     }//GEN-LAST:event_jButton_ClearDrawActionPerformed
 
@@ -846,12 +918,93 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
     private void jButton_AnimatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnimatorActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Under developing!");
+        if (this._isRunning) {
+            this._enableAnimation = false;
+        } else {
+            run_Animation(false);
+        }
     }//GEN-LAST:event_jButton_AnimatorActionPerformed
+
+    private void run_Animation(final boolean isCreateFile) {
+        File file;
+        final AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+        if (isCreateFile) {
+            JFileChooser aDlg = new JFileChooser();
+            String[] fileExts = new String[]{"gif"};
+            GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Gif File (*.gif)");
+            aDlg.setFileFilter(mapFileFilter);
+            File dir = new File(System.getProperty("user.dir"));
+            if (dir.isDirectory()) {
+                aDlg.setCurrentDirectory(dir);
+            }
+            aDlg.setAcceptAllFileFilterUsed(false);
+            if (aDlg.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                file = aDlg.getSelectedFile();
+                System.setProperty("user.dir", file.getParent());
+                String extent = ((GenericFileFilter) aDlg.getFileFilter()).getFileExtent();
+                String fileName = file.getAbsolutePath();
+                if (!fileName.substring(fileName.length() - extent.length()).equals(extent)) {
+                    fileName = fileName + "." + extent;
+                }
+                encoder.setRepeat(0);
+                encoder.setDelay(1000);
+                encoder.start(fileName);
+            }
+        }
+
+        switch (_meteoDataInfo.getDataType()) {
+            default:
+                if (this.jComboBox_Time1.getItemCount() > 1) {
+                    SwingWorker worker = new SwingWorker<String, String>() {
+                        @Override
+                        protected String doInBackground() throws Exception {
+                            jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/stop.png")));
+                            _isRunning = true;
+                            _useSameLegendScheme = true;
+                            for (int i = 0; i < jComboBox_Time1.getItemCount(); i++) {
+                                if (!_enableAnimation) {
+                                    _enableAnimation = true;
+                                    _isRunning = false;
+                                    jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/animation-1.png")));
+                                    return "";
+                                }
+
+                                jComboBox_Time1.setSelectedIndex(i);
+                                FrmSectionPlot.this.layersLegend1.getActiveMapFrame().getMapView().setLockViewUpdate(true);
+                                //Remove last layer
+                                FrmSectionPlot.this.layersLegend1.getActiveMapFrame().removeLayerByHandle(_lastAddedLayerHandle);
+                                FrmSectionPlot.this.layersLegend1.getActiveMapFrame().getMapView().setLockViewUpdate(false);
+                                display();
+
+                                if (isCreateFile) {
+                                    encoder.addFrame(FrmSectionPlot.this.layersLegend1.getActiveMapFrame().getMapView().getViewImage());
+                                } else {
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(FrmMeteoData.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }
+
+                            _enableAnimation = true;
+                            _isRunning = false;
+                            jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/animation-1.png")));
+                            encoder.finish();
+                            return "";
+                        }
+                    };
+                    worker.execute();
+                }
+                break;
+        }
+    }
 
     private void jButton_CreateAnimatorFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CreateAnimatorFileActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Under developing!");
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        run_Animation(true);
+        this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jButton_CreateAnimatorFileActionPerformed
 
     private void jButton_DrawSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DrawSettingActionPerformed
@@ -998,33 +1151,50 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
     private void jButton_SavePictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SavePictureActionPerformed
         // TODO add your handling code here:
+        String path = System.getProperty("user.dir");
+        File pathDir = new File(path);
         JFileChooser aDlg = new JFileChooser();
-        //        //aDlg.setCurrentDirectory(new File("D:\\GeoData\\WORLD"));
-        //        String[] fileExts = {"eps", "png", "gif", "jpg", "bmp", "tif"};
-        //        GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Supported Formats");
-        //        aDlg.setFileFilter(mapFileFilter);
-        String[] fileExts = new String[]{"ps"};
-        GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Postscript Image (*.ps)");
-        aDlg.addChoosableFileFilter(mapFileFilter);
-        fileExts = new String[]{"png"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Png Image (*.png)");
-        aDlg.addChoosableFileFilter(mapFileFilter);
+        aDlg.setCurrentDirectory(pathDir);
+        String[] fileExts = new String[]{"png"};
+        GenericFileFilter pngFileFilter = new GenericFileFilter(fileExts, "Png Image (*.png)");
+        aDlg.addChoosableFileFilter(pngFileFilter);
         fileExts = new String[]{"gif"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Gif Image (*.gif)");
+        GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Gif Image (*.gif)");
         aDlg.addChoosableFileFilter(mapFileFilter);
         fileExts = new String[]{"jpg"};
         mapFileFilter = new GenericFileFilter(fileExts, "Jpeg Image (*.jpg)");
         aDlg.addChoosableFileFilter(mapFileFilter);
-        fileExts = new String[]{"bmp"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Bitmap Image (*.bmp)");
+//        fileExts = new String[]{"bmp"};
+//        mapFileFilter = new GenericFileFilter(fileExts, "Bitmap Image (*.bmp)");
+//        aDlg.addChoosableFileFilter(mapFileFilter);
+//        fileExts = new String[]{"tif"};
+//        mapFileFilter = new GenericFileFilter(fileExts, "Tiff Image (*.tif)");
+//        aDlg.addChoosableFileFilter(mapFileFilter);
+        fileExts = new String[]{"eps"};
+        mapFileFilter = new GenericFileFilter(fileExts, "EPS file (*.eps)");
         aDlg.addChoosableFileFilter(mapFileFilter);
-        fileExts = new String[]{"tif"};
-        mapFileFilter = new GenericFileFilter(fileExts, "Tiff Image (*.tif)");
+        fileExts = new String[]{"pdf"};
+        mapFileFilter = new GenericFileFilter(fileExts, "PDF file (*.pdf)");
         aDlg.addChoosableFileFilter(mapFileFilter);
+        fileExts = new String[]{"emf"};
+        mapFileFilter = new GenericFileFilter(fileExts, "EMF file (*.emf)");
+        aDlg.addChoosableFileFilter(mapFileFilter);
+        fileExts = new String[]{"ps"};
+        mapFileFilter = new GenericFileFilter(fileExts, "Postscript file (*.ps)");
+        aDlg.addChoosableFileFilter(mapFileFilter);
+        aDlg.setFileFilter(pngFileFilter);
+        aDlg.setAcceptAllFileFilterUsed(false);
         if (JFileChooser.APPROVE_OPTION == aDlg.showSaveDialog(this)) {
             File aFile = aDlg.getSelectedFile();
+            System.setProperty("user.dir", aFile.getParent());
+            String extent = ((GenericFileFilter) aDlg.getFileFilter()).getFileExtent();
+            String fileName = aFile.getAbsolutePath();
+            if (!fileName.substring(fileName.length() - extent.length()).equals(extent)) {
+                fileName = fileName + "." + extent;
+            }
+
             try {
-                this.layersLegend1.getMapLayout().exportToPicture(aFile.getAbsolutePath());
+                this.layersLegend1.getMapLayout().exportToPicture(fileName);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             } catch (PrintException ex) {
@@ -1043,14 +1213,14 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         //Set 2D panel
         //setMapLayerPanel();
-        this.layersLegend1.getMapFrames().get(0).setLayoutBounds(new Rectangle(40, 36, 606, 420));
-        this.layersLegend1.getMapFrames().get(0).getMapView().setGeoMap(false);
+        //this.layersLegend1.getMapFrames().get(0).setLayoutBounds(new Rectangle(40, 36, 606, 420));
+        //this.layersLegend1.getMapFrames().get(0).getMapView().setGeoMap(false);
         //this.layersLegend1.getMapFrames().get(0).setIsFireMapViewUpdate(true);
-        this.mapLayout1.setMapFrames(this.layersLegend1.getMapFrames());
-        this.mapLayout1.addElement(new LayoutMap(this.mapLayout1.getMapFrames().get(0)));
+        //this.mapLayout1.setMapFrames(this.layersLegend1.getMapFrames());
+        //this.mapLayout1.addElement(new LayoutMap(this.mapLayout1.getMapFrames().get(0)));
         LayoutLegend legend = this.mapLayout1.addLegend(660, 100);
         legend.setLegendStyle(LegendStyles.Bar_Vertical);
-        this.mapLayout1.addText("MeteoInfo: Meteorological Data Infomation System", 320, 20);
+        this.mapLayout1.addText("MeteoInfo: Meteorological Data Infomation System", 320, 20, "Arial", 16);
         this.mapLayout1.paintGraphics();
 
         //Set layout zoom combobox
@@ -1063,7 +1233,6 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         //Set map title
         //m_Title = Resources.GlobalResource.ResourceManager.GetString("SectionPlot_Title");
-
         //Set current tool
         this.jButton_SelectElement.doClick();
 
@@ -1125,9 +1294,10 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         _useSameLegendScheme = false;
         //m_UseSameGridInterSet = false;
         Variable var = _meteoDataInfo.getDataInfo().getVariable(this.jComboBox_Variable.getSelectedItem().toString());
-        if (var == null)
+        if (var == null) {
             return;
-        
+        }
+
         _meteoDataInfo.setVariableIndex(this.jComboBox_Variable.getSelectedIndex());
         this.setVariableParas(var);
         updateEndDimSetS(this.jComboBox_Level1, this.jComboBox_Level2);
@@ -1216,7 +1386,6 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         _useSameLegendScheme = false;
 
         //m_UseSameGridInterSet = false;
-
         this.jButton_Animator.setEnabled(false);
         this.jButton_PreTime.setEnabled(false);
         this.jButton_NexTime.setEnabled(false);
@@ -1314,7 +1483,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox_LonStateChanged
 
     // <editor-fold desc="Methods">
-    private void setVariableParas(Variable var) {        
+    private void setVariableParas(Variable var) {
         int i;
         int levelIdx = this.jComboBox_Level1.getSelectedIndex();
 
@@ -1488,6 +1657,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         switch (_2DDrawType) {
             case Contour:
                 aLayer = DrawMeteoData.createContourLayer(_gridData, aLS, LName, fieldName, true);
+                aLayer.addLabelsContourDynamic(this.layersLegend1.getActiveMapFrame().getMapView().getViewExtent());
                 break;
             case Shaded:
                 aLayer = DrawMeteoData.createShadedLayer(_gridData, aLS, LName, fieldName, true);

@@ -55,7 +55,7 @@ public class FrmAbout extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/logo.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/logo.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
         jLabel2.setText("MeteoInfo - Java Edition");
@@ -71,7 +71,7 @@ public class FrmAbout extends javax.swing.JDialog {
 
         jLabel6.setText("Yaqiang Wang");
 
-        jLabel7.setText("1.1.9R1");
+        jLabel7.setText("1.1.9R2");
 
         jLabel8.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
         jLabel8.setText("Email:");

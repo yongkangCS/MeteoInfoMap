@@ -41,46 +41,10 @@ import org.meteoinfo.data.StationData;
 import org.meteoinfo.data.meteodata.DataInfo;
 import org.meteoinfo.data.meteodata.DrawMeteoData;
 import org.meteoinfo.data.meteodata.DrawType2D;
-import static org.meteoinfo.data.meteodata.DrawType2D.Barb;
-import static org.meteoinfo.data.meteodata.DrawType2D.Contour;
-import static org.meteoinfo.data.meteodata.DrawType2D.Grid_Fill;
-import static org.meteoinfo.data.meteodata.DrawType2D.Grid_Point;
-import static org.meteoinfo.data.meteodata.DrawType2D.Raster;
-import static org.meteoinfo.data.meteodata.DrawType2D.Shaded;
-import static org.meteoinfo.data.meteodata.DrawType2D.Station_Info;
-import static org.meteoinfo.data.meteodata.DrawType2D.Station_Model;
-import static org.meteoinfo.data.meteodata.DrawType2D.Station_Point;
-import static org.meteoinfo.data.meteodata.DrawType2D.Streamline;
-import static org.meteoinfo.data.meteodata.DrawType2D.Traj_Line;
-import static org.meteoinfo.data.meteodata.DrawType2D.Traj_Point;
-import static org.meteoinfo.data.meteodata.DrawType2D.Traj_StartPoint;
-import static org.meteoinfo.data.meteodata.DrawType2D.Vector;
-import static org.meteoinfo.data.meteodata.DrawType2D.Weather_Symbol;
 import org.meteoinfo.data.meteodata.GridDataSetting;
 import org.meteoinfo.data.meteodata.MeteoDataDrawSet;
 import org.meteoinfo.data.meteodata.MeteoDataInfo;
 import org.meteoinfo.data.meteodata.MeteoDataType;
-import static org.meteoinfo.data.meteodata.MeteoDataType.ARL_Grid;
-import static org.meteoinfo.data.meteodata.MeteoDataType.ASCII_Grid;
-import static org.meteoinfo.data.meteodata.MeteoDataType.GRIB1;
-import static org.meteoinfo.data.meteodata.MeteoDataType.GRIB2;
-import static org.meteoinfo.data.meteodata.MeteoDataType.GrADS_Grid;
-import static org.meteoinfo.data.meteodata.MeteoDataType.GrADS_Station;
-import static org.meteoinfo.data.meteodata.MeteoDataType.HYSPLIT_Conc;
-import static org.meteoinfo.data.meteodata.MeteoDataType.HYSPLIT_Particle;
-import static org.meteoinfo.data.meteodata.MeteoDataType.HYSPLIT_Traj;
-import static org.meteoinfo.data.meteodata.MeteoDataType.ISH;
-import static org.meteoinfo.data.meteodata.MeteoDataType.LonLatStation;
-import static org.meteoinfo.data.meteodata.MeteoDataType.METAR;
-import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_1;
-import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_11;
-import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_13;
-import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_2;
-import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_3;
-import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_4;
-import static org.meteoinfo.data.meteodata.MeteoDataType.MICAPS_7;
-import static org.meteoinfo.data.meteodata.MeteoDataType.NetCDF;
-import static org.meteoinfo.data.meteodata.MeteoDataType.Sufer_Grid;
 import org.meteoinfo.data.meteodata.PlotDimension;
 import org.meteoinfo.data.meteodata.StationInfoData;
 import org.meteoinfo.data.meteodata.StationModelData;
@@ -840,7 +804,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         FrmViewData frmData = new FrmViewData();
         frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
-        frmData.setData(_gridData);
+        frmData.setGridData(_gridData);
         frmData.setLocationRelativeTo(this);
         frmData.setVisible(true);
     }
@@ -857,7 +821,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         String[] colNames = new String[]{"Stid", "Longitude", "Latitude", this.jComboBox_Variable.getSelectedItem().toString()};
         FrmViewData frmData = new FrmViewData(colNames);
         frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
-        frmData.setData(_stationData);
+        frmData.setStationData(_stationData);
         frmData.setLocationRelativeTo(this._parent);
         frmData.setVisible(true);
     }
@@ -1191,7 +1155,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 //                    }
 //                    break;
             default:
-                MapLayer mLayer = _parent.getMapDocument().getActiveMapFrame().getMapView().getLayerByHandle(_lastAddedLayerHandle);
+                //MapLayer mLayer = _parent.getMapDocument().getActiveMapFrame().getMapView().getLayerByHandle(_lastAddedLayerHandle);
                 FrmLegendSet aFrmLS = new FrmLegendSet(this, true);
                 aFrmLS.setLegendScheme(_legendScheme);
                 String fieldName = this.jComboBox_Variable.getSelectedItem().toString();
@@ -2382,27 +2346,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
     }
 
     public MapLayer drawMeteoMap(boolean isNew, LegendScheme aLS, String fieldName) {
-        switch (_meteoDataInfo.getDataType()) {
-            case GrADS_Grid:
-            case HYSPLIT_Conc:
-            case MICAPS_4:
-            case ARL_Grid:
-            case NetCDF:
-            case MICAPS_11:
-            case ASCII_Grid:
-            case Sufer_Grid:
-            case GRIB1:
-            case GRIB2:
+        if (_meteoDataInfo.isGridData()) {
                 return drawMeteoMap_Grid(isNew, aLS, fieldName);
-            case GrADS_Station:
-            case MICAPS_1:
-            case MICAPS_3:
-            case ISH:
-            case LonLatStation:
-            case METAR:
-            case HYSPLIT_Particle:
+        } else if (_meteoDataInfo.isStationData() || _meteoDataInfo.isSWATHData()){
                 return drawMeteoMap_Station(isNew, aLS, fieldName);
-            default:
+        } else {
                 return null;
         }
     }

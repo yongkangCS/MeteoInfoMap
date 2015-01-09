@@ -8,21 +8,25 @@ import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingWorker;
 import org.meteoinfo.chart.Chart;
 import org.meteoinfo.chart.plot.ChartPlotMethod;
 import org.meteoinfo.chart.plot.PlotOrientation;
 import org.meteoinfo.chart.plot.XY1DPlot;
 import org.meteoinfo.data.GridData;
-import org.meteoinfo.data.XYArrayDataset;
 import org.meteoinfo.data.XYDataset;
 import org.meteoinfo.data.XYListDataset;
 import org.meteoinfo.data.meteodata.Dimension;
@@ -30,7 +34,9 @@ import org.meteoinfo.data.meteodata.MeteoDataInfo;
 import org.meteoinfo.data.meteodata.PlotDimension;
 import org.meteoinfo.data.meteodata.Variable;
 import org.meteoinfo.data.meteodata.hysplit.HYSPLITTrajDataInfo;
+import org.meteoinfo.desktop.config.GenericFileFilter;
 import org.meteoinfo.global.PointD;
+import org.meteoinfo.global.image.AnimatedGifEncoder;
 import org.meteoinfo.layer.LayerDrawType;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layout.LayoutChart;
@@ -56,7 +62,9 @@ public class FrmOneDim extends javax.swing.JFrame {
     private String _graphType;
     private List<PointD> _pointList = new ArrayList<PointD>();
     private boolean _isLoading = false;
-    private boolean _isSamePlotDim = false;
+    private boolean isSamePlotDim = false;
+    private boolean _enableAnimation = true;
+    private boolean _isRunning = false;
 
     /**
      * Creates new form FrmOneDim
@@ -138,6 +146,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("One Dimension Chart");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -147,7 +156,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton_DataInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/information.png"))); // NOI18N
+        jButton_DataInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/information.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMeteoData"); // NOI18N
         jButton_DataInfo.setToolTipText(bundle.getString("FrmMeteoData.jButton_DataInfo.toolTipText")); // NOI18N
         jButton_DataInfo.setFocusable(false);
@@ -161,7 +170,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         jToolBar1.add(jButton_DataInfo);
         jToolBar1.add(jSeparator1);
 
-        jButton_Draw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_Draw.Image.png"))); // NOI18N
+        jButton_Draw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_Draw.Image.png"))); // NOI18N
         jButton_Draw.setToolTipText(bundle.getString("FrmMeteoData.jButton_Draw.toolTipText")); // NOI18N
         jButton_Draw.setFocusable(false);
         jButton_Draw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -173,7 +182,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_Draw);
 
-        jButton_ViewData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ViewData.Image.png"))); // NOI18N
+        jButton_ViewData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_ViewData.Image.png"))); // NOI18N
         jButton_ViewData.setToolTipText(bundle.getString("FrmMeteoData.jButton_ViewData.toolTipText")); // NOI18N
         jButton_ViewData.setFocusable(false);
         jButton_ViewData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -185,7 +194,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_ViewData);
 
-        jButton_ClearDraw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ClearDrawing.Image.png"))); // NOI18N
+        jButton_ClearDraw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_ClearDrawing.Image.png"))); // NOI18N
         jButton_ClearDraw.setToolTipText(bundle.getString("FrmMeteoData.jButton_ClearDraw.toolTipText")); // NOI18N
         jButton_ClearDraw.setFocusable(false);
         jButton_ClearDraw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -198,7 +207,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         jToolBar1.add(jButton_ClearDraw);
         jToolBar1.add(jSeparator2);
 
-        jButton_PreTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_PreTime.Image.png"))); // NOI18N
+        jButton_PreTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_PreTime.Image.png"))); // NOI18N
         jButton_PreTime.setToolTipText(bundle.getString("FrmMeteoData.jButton_PreTime.toolTipText")); // NOI18N
         jButton_PreTime.setFocusable(false);
         jButton_PreTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -210,7 +219,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_PreTime);
 
-        jButton_NexTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_NextTime.Image.png"))); // NOI18N
+        jButton_NexTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_NextTime.Image.png"))); // NOI18N
         jButton_NexTime.setToolTipText(bundle.getString("FrmMeteoData.jButton_NexTime.toolTipText")); // NOI18N
         jButton_NexTime.setFocusable(false);
         jButton_NexTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -222,7 +231,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_NexTime);
 
-        jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/animation-1.png"))); // NOI18N
+        jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/animation-1.png"))); // NOI18N
         jButton_Animator.setToolTipText(bundle.getString("FrmMeteoData.jButton_Animator.toolTipText")); // NOI18N
         jButton_Animator.setFocusable(false);
         jButton_Animator.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -488,8 +497,30 @@ public class FrmOneDim extends javax.swing.JFrame {
                 break;
             default:
                 _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
-
                 _meteoDataInfo.setDimensionSet(_plotDimension);
+                String seriesKey = varName;
+                switch (_plotDimension) {
+                    case Level:
+                        seriesKey = seriesKey + "_" + this.jComboBox_Lon1.getSelectedItem().toString()
+                                + "_" + this.jComboBox_Lat1.getSelectedItem().toString() + "_"
+                                + this.jComboBox_Time1.getSelectedItem().toString();
+                        break;
+                    case Time:
+                        seriesKey = seriesKey + "_" + this.jComboBox_Level1.getSelectedItem().toString()
+                                + "_" + this.jComboBox_Lon1.getSelectedItem().toString()
+                                + "_" + this.jComboBox_Lat1.getSelectedItem().toString();
+                        break;
+                    case Lon:
+                        seriesKey = seriesKey + "_" + this.jComboBox_Level1.getSelectedItem().toString()
+                                + "_" + this.jComboBox_Lat1.getSelectedItem().toString() + "_"
+                                + this.jComboBox_Time1.getSelectedItem().toString();
+                        break;
+                    case Lat:
+                        seriesKey = seriesKey + "_" + this.jComboBox_Level1.getSelectedItem().toString()
+                                + "_" + this.jComboBox_Lon1.getSelectedItem().toString() + "_"
+                                + this.jComboBox_Time1.getSelectedItem().toString();
+                        break;
+                }
 
                 //Get data
                 _meteoDataInfo.setLonIndex(this.jComboBox_Lon1.getSelectedIndex());
@@ -504,38 +535,73 @@ public class FrmOneDim extends javax.swing.JFrame {
                     return;
                 }
 
-                //Plot
-                List<String> serieNames = new ArrayList<String>();
-                serieNames.add(varName);
-                int seriesCount = 1;
+                //Plot       
                 int itemCount = gData.getXNum();
-                XYArrayDataset dataset = new XYArrayDataset(seriesCount, itemCount);
-                dataset.setSeriesKeys(serieNames);
-                dataset.setMissingValue(gData.missingValue);
-                int i;
-                for (i = 0; i < gData.getXNum(); i++) {
-                    dataset.setX(0, i, gData.xArray[i]);
-                    dataset.setY(0, i, gData.data[0][i]);
+                double[] xvs = new double[itemCount];
+                double[] yvs = new double[itemCount];
+                for (int i = 0; i < itemCount; i++) {
+                    xvs[i] = gData.xArray[i];
+                    yvs[i] = gData.data[0][i];
                 }
+                if (this.isSamePlotDim && this._chartPanel.getChart() != null) {
+                    XY1DPlot plot = (XY1DPlot) this._chartPanel.getChart().getPlot();
+                    plot.addSeries(seriesKey, xvs, yvs);
+                    int idx = plot.getDataset().getSeriesCount() - 1;
+                    ColorBreak cb = plot.getLegendBreak(idx);
+                    PolylineBreak plb = new PolylineBreak();
+                    plb.setCaption(seriesKey);
+                    plb.setColor(cb.getColor());
+                    plb.setSymbolColor(cb.getColor());
+                    switch (method) {
+                        case LINE:
+                            plb.setDrawSymbol(false);
+                            plot.setLegendBreak(idx, plb);
+                            break;
+                        case LINE_POINT:
+                            plb.setDrawSymbol(true);
+                            plot.setLegendBreak(idx, plb);
+                            break;
+                        case POINT:
+                            PointBreak pb = new PointBreak();
+                            pb.setColor(cb.getColor());
+                            pb.setSize(plb.getSymbolSize());
+                            pb.setStyle(plb.getSymbolStyle());
+                            pb.setCaption(seriesKey);
+                            plot.setLegendBreak(idx, pb);
+                            break;
+                        case BAR:
+                            PolygonBreak pgb = new PolygonBreak();
+                            pgb.setColor(cb.getColor());
+                            pgb.setCaption(seriesKey);
+                            plot.setLegendBreak(idx, pgb);
+                            break;
+                    }
+                    this._chartPanel.paintGraphics();
+                } else {
+                    XYListDataset dataset = new XYListDataset();
+                    dataset.addSeries(seriesKey, xvs, yvs);
+                    dataset.setMissingValue(gData.missingValue);
 
-                String title = varName + "_" + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
-                PlotOrientation po = PlotOrientation.VERTICAL;
-                if (_plotDimension == PlotDimension.Level) {
-                    po = PlotOrientation.HORIZONTAL;
-                }
-                String xLabel = _plotDimension.toString();
-                boolean isTime = false;
-                if (_plotDimension == PlotDimension.Time) {
-                    isTime = true;
-                }
-                ls = LegendManage.createUniqValueLegendScheme(dataset.getSeriesCount(), ShapeTypes.Polyline);
-                for (ColorBreak cb : ls.getLegendBreaks()) {
-                    PolylineBreak plb = (PolylineBreak) cb;
-                    plb.setDrawSymbol(true);
-                }
+                    String title = varName + "_" + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
+                    PlotOrientation po = PlotOrientation.VERTICAL;
+                    yInverse = false;
+                    if (_plotDimension == PlotDimension.Level) {
+                        po = PlotOrientation.HORIZONTAL;
+                        yInverse = true;
+                    }
+                    String xLabel = _plotDimension.toString();
+                    boolean isTime = false;
+                    if (_plotDimension == PlotDimension.Time) {
+                        isTime = true;
+                    }
+                    ls = LegendManage.createUniqValueLegendScheme(dataset.getSeriesCount(), ShapeTypes.Polyline);
+                    for (ColorBreak cb : ls.getLegendBreaks()) {
+                        PolylineBreak plb = (PolylineBreak) cb;
+                        plb.setDrawSymbol(true);
+                    }
 
-                this.createChart(dataset, ls.getLegendBreaks(), title, xLabel, varName, method, po, false, false, isTime, true);
-
+                    this.createChart(dataset, ls.getLegendBreaks(), title, xLabel, varName, method, po, yInverse, false, isTime, true);
+                }
                 //Enable time controls            
                 if (!this.jCheckBox_Time.isSelected()) {
                     if (this.jComboBox_Time1.getItemCount() > 1) {
@@ -546,17 +612,105 @@ public class FrmOneDim extends javax.swing.JFrame {
                 }
                 break;
         }
-
+        this.isSamePlotDim = true;
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jButton_DrawActionPerformed
 
+    private void display() {
+        String varName = this.jComboBox_Variable.getSelectedItem().toString();
+        ChartPlotMethod method = (ChartPlotMethod) this.jComboBox_DrawType.getSelectedItem();
+        _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
+        _meteoDataInfo.setDimensionSet(_plotDimension);
+        String seriesKey = varName;
+        switch (_plotDimension) {
+            case Level:
+                seriesKey = seriesKey + "_" + this.jComboBox_Lon1.getSelectedItem().toString()
+                        + "_" + this.jComboBox_Lat1.getSelectedItem().toString() + "_"
+                        + this.jComboBox_Time1.getSelectedItem().toString();
+                break;
+            case Time:
+                seriesKey = seriesKey + "_" + this.jComboBox_Level1.getSelectedItem().toString()
+                        + "_" + this.jComboBox_Lon1.getSelectedItem().toString()
+                        + "_" + this.jComboBox_Lat1.getSelectedItem().toString();
+                break;
+            case Lon:
+                seriesKey = seriesKey + "_" + this.jComboBox_Level1.getSelectedItem().toString()
+                        + "_" + this.jComboBox_Lat1.getSelectedItem().toString() + "_"
+                        + this.jComboBox_Time1.getSelectedItem().toString();
+                break;
+            case Lat:
+                seriesKey = seriesKey + "_" + this.jComboBox_Level1.getSelectedItem().toString()
+                        + "_" + this.jComboBox_Lon1.getSelectedItem().toString() + "_"
+                        + this.jComboBox_Time1.getSelectedItem().toString();
+                break;
+        }
+
+        //Get data
+        _meteoDataInfo.setLonIndex(this.jComboBox_Lon1.getSelectedIndex());
+        _meteoDataInfo.setLatIndex(this.jComboBox_Lat1.getSelectedIndex());
+        _meteoDataInfo.setLevelIndex(this.jComboBox_Level1.getSelectedIndex());
+        _meteoDataInfo.setTimeIndex(this.jComboBox_Time1.getSelectedIndex());
+
+        //this.jComboBox_Variable.actionPerformed(null);
+        GridData gData = _meteoDataInfo.getGridData(varName);
+
+        if (gData == null) {
+            return;
+        }
+
+        //Plot       
+        int itemCount = gData.getXNum();
+        double[] xvs = new double[itemCount];
+        double[] yvs = new double[itemCount];
+        for (int i = 0; i < itemCount; i++) {
+            xvs[i] = gData.xArray[i];
+            yvs[i] = gData.data[0][i];
+        }
+        XYListDataset dataset = new XYListDataset();
+        dataset.addSeries(seriesKey, xvs, yvs);
+        dataset.setMissingValue(gData.missingValue);
+
+        String title = varName + "_" + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
+        PlotOrientation po = PlotOrientation.VERTICAL;
+        boolean yInverse = false;
+        if (_plotDimension == PlotDimension.Level) {
+            po = PlotOrientation.HORIZONTAL;
+            yInverse = true;
+        }
+        String xLabel = _plotDimension.toString();
+        boolean isTime = false;
+        if (_plotDimension == PlotDimension.Time) {
+            isTime = true;
+        }
+        LegendScheme ls = LegendManage.createUniqValueLegendScheme(dataset.getSeriesCount(), ShapeTypes.Polyline);
+        for (ColorBreak cb : ls.getLegendBreaks()) {
+            PolylineBreak plb = (PolylineBreak) cb;
+            plb.setDrawSymbol(true);
+        }
+
+        this.createChart(dataset, ls.getLegendBreaks(), title, xLabel, varName, method, po, yInverse, false, isTime, true);
+    }
+
     private void jButton_ViewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ViewDataActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Under developing!");
+        if (this._chartPanel.getChart() == null) {
+            return;
+        }
+        
+        XYListDataset dataset = (XYListDataset)this._chartPanel.getChart().getPlot().getDataset();
+       
+        FrmViewData frmData = new FrmViewData();
+        frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
+        frmData.setXYData(dataset);
+        frmData.setLocationRelativeTo(this);
+        frmData.setVisible(true);
     }//GEN-LAST:event_jButton_ViewDataActionPerformed
 
     private void jButton_ClearDrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ClearDrawActionPerformed
         // TODO add your handling code here:
+        this.isSamePlotDim = false;
+        this._chartPanel.setChart(null);
+        this._chartPanel.paintGraphics();
     }//GEN-LAST:event_jButton_ClearDrawActionPerformed
 
     private void jButton_PreTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PreTimeActionPerformed
@@ -566,7 +720,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         } else {
             this.jComboBox_Time1.setSelectedIndex(this.jComboBox_Time1.getItemCount() - 1);
         }
-
+        this.isSamePlotDim = false;
         this.jButton_Draw.doClick();
     }//GEN-LAST:event_jButton_PreTimeActionPerformed
 
@@ -577,14 +731,91 @@ public class FrmOneDim extends javax.swing.JFrame {
         } else {
             this.jComboBox_Time1.setSelectedIndex(0);
         }
-
+        this.isSamePlotDim = false;
         this.jButton_Draw.doClick();
     }//GEN-LAST:event_jButton_NexTimeActionPerformed
 
     private void jButton_AnimatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnimatorActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Under developing!");
+        if (this._isRunning) {
+            this._enableAnimation = false;
+        } else {
+            run_Animation(false);
+            //this._enableAnimation = true;
+            //this._isRunning = false;
+            //this.jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/animation-1.png")));
+        }
     }//GEN-LAST:event_jButton_AnimatorActionPerformed
+
+    private void run_Animation(final boolean isCreateFile) {
+        File file;
+        final AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+        if (isCreateFile) {
+            JFileChooser aDlg = new JFileChooser();
+            String[] fileExts = new String[]{"gif"};
+            GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Gif File (*.gif)");
+            aDlg.setFileFilter(mapFileFilter);
+            File dir = new File(System.getProperty("user.dir"));
+            if (dir.isDirectory()) {
+                aDlg.setCurrentDirectory(dir);
+            }
+            aDlg.setAcceptAllFileFilterUsed(false);
+            if (aDlg.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                file = aDlg.getSelectedFile();
+                System.setProperty("user.dir", file.getParent());
+                String extent = ((GenericFileFilter) aDlg.getFileFilter()).getFileExtent();
+                String fileName = file.getAbsolutePath();
+                if (!fileName.substring(fileName.length() - extent.length()).equals(extent)) {
+                    fileName = fileName + "." + extent;
+                }
+                encoder.setRepeat(0);
+                encoder.setDelay(1000);
+                encoder.start(fileName);
+            }
+        }
+
+        switch (_meteoDataInfo.getDataType()) {
+            default:
+                if (this.jComboBox_Time1.getItemCount() > 1) {
+                    SwingWorker worker = new SwingWorker<String, String>() {
+                        @Override
+                        protected String doInBackground() throws Exception {
+                            jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/stop.png")));
+                            _isRunning = true;
+                            for (int i = 0; i < jComboBox_Time1.getItemCount(); i++) {
+                                if (!_enableAnimation) {
+                                    _enableAnimation = true;
+                                    _isRunning = false;
+                                    jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/animation-1.png")));
+                                    return "";
+                                }
+
+                                jComboBox_Time1.setSelectedIndex(i);
+                                display();
+
+                                if (isCreateFile) {
+                                    encoder.addFrame(FrmOneDim.this._chartPanel.getViewImage());
+                                } else {
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(FrmMeteoData.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }
+
+                            _enableAnimation = true;
+                            _isRunning = false;
+                            jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/animation-1.png")));
+                            encoder.finish();
+                            return "";
+                        }
+                    };
+                    worker.execute();
+                }
+                break;
+        }
+    }
 
     private void jComboBox_VariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_VariableActionPerformed
         // TODO add your handling code here:
@@ -629,10 +860,10 @@ public class FrmOneDim extends javax.swing.JFrame {
         }
         _isLoading = false;
         if (!"".equals(pdStr) && dimItems.contains(pdStr)) {
-            _isSamePlotDim = true;
+            isSamePlotDim = true;
             this.jComboBox_PlotDim.setSelectedItem(pdStr);
         } else {
-            _isSamePlotDim = false;
+            isSamePlotDim = false;
             if (this.jComboBox_PlotDim.getItemCount() > 0) {
                 this.jComboBox_PlotDim.setSelectedIndex(0);
             }
@@ -661,6 +892,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         _plotDimension = PlotDimension.valueOf(this.jComboBox_PlotDim.getSelectedItem().toString());
         _meteoDataInfo.setDimensionSet(_plotDimension);
         setDimensions();
+        this.isSamePlotDim = false;
 
         this.jButton_Draw.setEnabled(true);
         this.jButton_Animator.setEnabled(false);
@@ -999,6 +1231,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         }
 
         Chart chart = new Chart(plot);
+        //chart.setAntiAlias(true);
         //chart.setDrawLegend(drawLegend);
         this._chartPanel.setChart(chart);
         this._chartPanel.paintGraphics();

@@ -83,6 +83,8 @@ public class TextEditor extends JPanel {
         _textArea.setAntiAliasingEnabled(true);
         //_textArea.setEncoding("GB2312");
         _textArea.setEncoding("utf-8");
+        _textArea.setTabSize(4);
+        _textArea.setTabsEmulated(true);
         
         RTextScrollPane sp = new RTextScrollPane(_textArea);
         sp.setFoldIndicatorEnabled(true);

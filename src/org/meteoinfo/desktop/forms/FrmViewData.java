@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.meteoinfo.data.GridData;
 import org.meteoinfo.data.StationData;
+import org.meteoinfo.data.XYListDataset;
 import org.meteoinfo.global.MIMath;
 import org.meteoinfo.table.RowHeaderTable;
 import org.meteoinfo.projection.ProjectionInfo;
@@ -28,81 +29,116 @@ public class FrmViewData extends javax.swing.JFrame {
     private String[] _colNames;
 
     public void setMissingValue(double value) {
-        _missingValue = value;        
+        _missingValue = value;
     }
 
-    public void setData(Object value) {
+    public void setGridData(GridData value) {
         _data = value;
-        if (_data.getClass() == GridData.class) {
-            _dataType = "GridData";
-            this.jButton_ToStation.setEnabled(true);
+        _dataType = "GridData";
+        this.jButton_ToStation.setEnabled(true);
 
-            GridData gData = (GridData) _data;
-            int xNum = gData.getXNum();
-            int yNum = gData.getYNum();
-            Object[][] tData = new Object[yNum][xNum];
-            _colNames = new String[xNum];
-            for (int i = 0; i < xNum; i++) {
-                _colNames[i] = String.valueOf(i);
-            }
-
-            double min = gData.getMaxMinValue()[1];
-            int dNum = MIMath.getDecimalNum(min);
-            String dFormat = "%1$." + String.valueOf(dNum) + "f";
-
-            for (int i = 0; i < yNum; i++) {
-                for (int j = 0; j < xNum; j++) {
-                    tData[i][j] = String.format(dFormat, gData.data[i][j]);
-                }
-            }
-
-            DefaultTableModel model = new DefaultTableModel(tData, _colNames) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-            this.jTable1.setModel(model);
-            this.jScrollPane1.setRowHeaderView(new RowHeaderTable(this.jTable1, 40, true));
-        } else if (_data.getClass() == StationData.class) {
-            _dataType = "StationData";
-            this.jButton_ToStation.setEnabled(false);
-
-            StationData sData = (StationData) _data;
-            double min = sData.getMinValue();
-            int dNum = MIMath.getDecimalNum(min);
-            String dFormat = "%1$." + String.valueOf(dNum) + "f";
-
-            int yNum = sData.getStNum();
-            //int xNum = sData.data.length + 1;
-            int xNum = 4;
-            Object[][] tData = new Object[yNum][xNum];
-            for (int i = 0; i < xNum; i++) {
-                if (i == 0) {
-                    for (int j = 0; j < yNum; j++) {
-                        tData[j][i] = sData.stations.get(j);
-                    }
-                } else if (i <= 2) {
-                    for (int j = 0; j < yNum; j++) {
-                        //tData[j][i] = String.format("%1$.2f", sData.data[i - 1][j]);
-                        tData[j][i] = String.valueOf(sData.data[j][i - 1]);
-                    }
-                } else {
-                    for (int j = 0; j < yNum; j++) {
-                        tData[j][i] = String.format(dFormat, sData.data[j][i - 1]);
-                    }
-                }
-            }
-
-            DefaultTableModel model = new DefaultTableModel(tData, _colNames) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-            this.jTable1.setModel(model);
-            this.jScrollPane1.setRowHeaderView(new RowHeaderTable(this.jTable1, 40));
+        GridData gData = (GridData) _data;
+        int xNum = gData.getXNum();
+        int yNum = gData.getYNum();
+        Object[][] tData = new Object[yNum][xNum];
+        _colNames = new String[xNum];
+        for (int i = 0; i < xNum; i++) {
+            _colNames[i] = String.valueOf(i);
         }
+
+        double min = gData.getMaxMinValue()[1];
+        int dNum = MIMath.getDecimalNum(min);
+        String dFormat = "%1$." + String.valueOf(dNum) + "f";
+
+        for (int i = 0; i < yNum; i++) {
+            for (int j = 0; j < xNum; j++) {
+                tData[i][j] = String.format(dFormat, gData.data[i][j]);
+            }
+        }
+
+        DefaultTableModel model = new DefaultTableModel(tData, _colNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.jTable1.setModel(model);
+        this.jScrollPane1.setRowHeaderView(new RowHeaderTable(this.jTable1, 40, true));
+    }
+
+    public void setStationData(StationData value) {
+        _data = value;
+        _dataType = "StationData";
+        this.jButton_ToStation.setEnabled(false);
+
+        StationData sData = (StationData) _data;
+        double min = sData.getMinValue();
+        int dNum = MIMath.getDecimalNum(min);
+        String dFormat = "%1$." + String.valueOf(dNum) + "f";
+
+        int yNum = sData.getStNum();
+        //int xNum = sData.data.length + 1;
+        int xNum = 4;
+        Object[][] tData = new Object[yNum][xNum];
+        for (int i = 0; i < xNum; i++) {
+            if (i == 0) {
+                for (int j = 0; j < yNum; j++) {
+                    tData[j][i] = sData.stations.get(j);
+                }
+            } else if (i <= 2) {
+                for (int j = 0; j < yNum; j++) {
+                    //tData[j][i] = String.format("%1$.2f", sData.data[i - 1][j]);
+                    tData[j][i] = String.valueOf(sData.data[j][i - 1]);
+                }
+            } else {
+                for (int j = 0; j < yNum; j++) {
+                    tData[j][i] = String.format(dFormat, sData.data[j][i - 1]);
+                }
+            }
+        }
+
+        DefaultTableModel model = new DefaultTableModel(tData, _colNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.jTable1.setModel(model);
+        this.jScrollPane1.setRowHeaderView(new RowHeaderTable(this.jTable1, 40));
+    }
+
+    public void setXYData(XYListDataset value) {
+        _data = value;
+        _dataType = "XYData";
+        this.jButton_ToStation.setEnabled(false);
+
+        double min = value.getY(0, 0);
+        int dNum = MIMath.getDecimalNum(min);
+        String dFormat = "%1$." + String.valueOf(dNum) + "f";
+
+        int yNum = value.getItemCount();
+        int xNum = value.getSeriesCount() * 2;
+        _colNames = new String[xNum];
+        for (int i = 0; i < xNum / 2; i++) {
+            _colNames[i * 2] = value.getSeriesKey(i) + "_X";
+            _colNames[i * 2 + 1] = value.getSeriesKey(i) + "_Y";
+        }
+        Object[][] tData = new Object[yNum][xNum];
+        for (int i = 0; i < xNum / 2; i++) {
+            for (int j = 0; j < yNum; j++) {
+                tData[j][i * 2] = value.getX(i, j);
+                tData[j][i * 2 + 1] = value.getY(i, j);
+            }
+        }
+
+        DefaultTableModel model = new DefaultTableModel(tData, _colNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.jTable1.setModel(model);
+        this.jScrollPane1.setRowHeaderView(new RowHeaderTable(this.jTable1, 40));
     }
 
     public void setProjectionInfo(ProjectionInfo value) {
@@ -115,6 +151,7 @@ public class FrmViewData extends javax.swing.JFrame {
     public FrmViewData() {
         initComponents();
 
+        this.setSize(600, 400);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         BufferedImage image = null;
         try {
@@ -158,7 +195,7 @@ public class FrmViewData extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
-        jButton_Save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Disk_1_16x16x8.png"))); // NOI18N
+        jButton_Save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Disk_1_16x16x8.png"))); // NOI18N
         jButton_Save.setToolTipText("Save File");
         jButton_Save.setFocusable(false);
         jButton_Save.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -166,21 +203,21 @@ public class FrmViewData extends javax.swing.JFrame {
         jToolBar1.add(jButton_Save);
         jToolBar1.add(jSeparator1);
 
-        jButton_ToStation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_NewPoint.Image.png"))); // NOI18N
+        jButton_ToStation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_NewPoint.Image.png"))); // NOI18N
         jButton_ToStation.setToolTipText("To Station Data");
         jButton_ToStation.setFocusable(false);
         jButton_ToStation.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ToStation.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton_ToStation);
 
-        jButton_Stat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Statictics.png"))); // NOI18N
+        jButton_Stat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/Statictics.png"))); // NOI18N
         jButton_Stat.setToolTipText("Statistics");
         jButton_Stat.setFocusable(false);
         jButton_Stat.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Stat.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton_Stat);
 
-        jButton_Chart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/chart.png"))); // NOI18N
+        jButton_Chart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/chart.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMeteoData"); // NOI18N
         jButton_Chart.setToolTipText(bundle.getString("FrmMeteoData.jButton_1DPlot.toolTipText")); // NOI18N
         jButton_Chart.setFocusable(false);
@@ -192,6 +229,8 @@ public class FrmViewData extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton_Chart);
+
+        getContentPane().add(jToolBar1, java.awt.BorderLayout.PAGE_START);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -207,20 +246,7 @@ public class FrmViewData extends javax.swing.JFrame {
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE))
-        );
+        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
