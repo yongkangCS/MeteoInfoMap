@@ -2,7 +2,7 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Dialog.plain" GridFontSize="12" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="380" Left="44" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="36" Width="592">
-      <Extents xMax="149.75" xMin="34.75" yMax="65.0" yMin="15.0"/>
+      <Extents xMax="180.0" xMin="-180.0" yMax="83.62359619140625" yMin="-90.0"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff00ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="china.shp" SetMaskLayer="true"/>
@@ -47,7 +47,7 @@
   <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="true">
     <LayoutElements>
       <LayoutMap DrawBackColor="false" DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="380" Left="44" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="36" Width="592"/>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="220" LayerUpdateType="FirstExpandedLayer" LayoutMapIndex="0" Left="653" LegendLayer="Raster_fktm_1000.0_2013-01-13 06:00" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="115" Width="33"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutLegend" FontName="宋体" FontSize="12" Height="220" LayerUpdateType="FirstExpandedLayer" LayoutMapIndex="0" Left="653" LegendLayer="" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="115" Width="33"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="17" IsTitle="false" Left="237" Top="9" Width="250">
         <Graphic>
           <Shape Selected="false" ShapeType="Point" Visible="true">
