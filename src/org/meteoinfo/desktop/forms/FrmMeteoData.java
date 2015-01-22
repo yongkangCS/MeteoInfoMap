@@ -196,7 +196,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         jPanel_DataSet.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMeteoData"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmMeteoData"); // NOI18N
         jLabel2.setText(bundle.getString("FrmMeteoData.jLabel2.text")); // NOI18N
 
         jComboBox_Time.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));

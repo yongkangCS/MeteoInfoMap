@@ -143,10 +143,12 @@ public class FrmOneDim extends javax.swing.JFrame {
         jComboBox_Lon2 = new javax.swing.JComboBox();
         jLabel_Variable = new javax.swing.JLabel();
         jComboBox_Variable = new javax.swing.JComboBox();
+        jCheckBox_YReverse = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("One Dimension Chart");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmOneDim"); // NOI18N
+        setTitle(bundle.getString("FrmOneDim.title")); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -156,9 +158,9 @@ public class FrmOneDim extends javax.swing.JFrame {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton_DataInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/information.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMeteoData"); // NOI18N
-        jButton_DataInfo.setToolTipText(bundle.getString("FrmMeteoData.jButton_DataInfo.toolTipText")); // NOI18N
+        jButton_DataInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/information.png"))); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmMeteoData"); // NOI18N
+        jButton_DataInfo.setToolTipText(bundle1.getString("FrmMeteoData.jButton_DataInfo.toolTipText")); // NOI18N
         jButton_DataInfo.setFocusable(false);
         jButton_DataInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_DataInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -170,8 +172,8 @@ public class FrmOneDim extends javax.swing.JFrame {
         jToolBar1.add(jButton_DataInfo);
         jToolBar1.add(jSeparator1);
 
-        jButton_Draw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_Draw.Image.png"))); // NOI18N
-        jButton_Draw.setToolTipText(bundle.getString("FrmMeteoData.jButton_Draw.toolTipText")); // NOI18N
+        jButton_Draw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_Draw.Image.png"))); // NOI18N
+        jButton_Draw.setToolTipText(bundle1.getString("FrmMeteoData.jButton_Draw.toolTipText")); // NOI18N
         jButton_Draw.setFocusable(false);
         jButton_Draw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Draw.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -182,8 +184,8 @@ public class FrmOneDim extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_Draw);
 
-        jButton_ViewData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_ViewData.Image.png"))); // NOI18N
-        jButton_ViewData.setToolTipText(bundle.getString("FrmMeteoData.jButton_ViewData.toolTipText")); // NOI18N
+        jButton_ViewData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ViewData.Image.png"))); // NOI18N
+        jButton_ViewData.setToolTipText(bundle1.getString("FrmMeteoData.jButton_ViewData.toolTipText")); // NOI18N
         jButton_ViewData.setFocusable(false);
         jButton_ViewData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ViewData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -194,8 +196,8 @@ public class FrmOneDim extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_ViewData);
 
-        jButton_ClearDraw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_ClearDrawing.Image.png"))); // NOI18N
-        jButton_ClearDraw.setToolTipText(bundle.getString("FrmMeteoData.jButton_ClearDraw.toolTipText")); // NOI18N
+        jButton_ClearDraw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ClearDrawing.Image.png"))); // NOI18N
+        jButton_ClearDraw.setToolTipText(bundle1.getString("FrmMeteoData.jButton_ClearDraw.toolTipText")); // NOI18N
         jButton_ClearDraw.setFocusable(false);
         jButton_ClearDraw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ClearDraw.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -207,8 +209,8 @@ public class FrmOneDim extends javax.swing.JFrame {
         jToolBar1.add(jButton_ClearDraw);
         jToolBar1.add(jSeparator2);
 
-        jButton_PreTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_PreTime.Image.png"))); // NOI18N
-        jButton_PreTime.setToolTipText(bundle.getString("FrmMeteoData.jButton_PreTime.toolTipText")); // NOI18N
+        jButton_PreTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_PreTime.Image.png"))); // NOI18N
+        jButton_PreTime.setToolTipText(bundle1.getString("FrmMeteoData.jButton_PreTime.toolTipText")); // NOI18N
         jButton_PreTime.setFocusable(false);
         jButton_PreTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_PreTime.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -219,8 +221,8 @@ public class FrmOneDim extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_PreTime);
 
-        jButton_NexTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/TSB_NextTime.Image.png"))); // NOI18N
-        jButton_NexTime.setToolTipText(bundle.getString("FrmMeteoData.jButton_NexTime.toolTipText")); // NOI18N
+        jButton_NexTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_NextTime.Image.png"))); // NOI18N
+        jButton_NexTime.setToolTipText(bundle1.getString("FrmMeteoData.jButton_NexTime.toolTipText")); // NOI18N
         jButton_NexTime.setFocusable(false);
         jButton_NexTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NexTime.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -231,8 +233,8 @@ public class FrmOneDim extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_NexTime);
 
-        jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/meteoinfo/resources/animation-1.png"))); // NOI18N
-        jButton_Animator.setToolTipText(bundle.getString("FrmMeteoData.jButton_Animator.toolTipText")); // NOI18N
+        jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/animation-1.png"))); // NOI18N
+        jButton_Animator.setToolTipText(bundle1.getString("FrmMeteoData.jButton_Animator.toolTipText")); // NOI18N
         jButton_Animator.setFocusable(false);
         jButton_Animator.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Animator.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -248,7 +250,7 @@ public class FrmOneDim extends javax.swing.JFrame {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(250, 463));
 
-        jLabel_DrawType.setText("DrawType:");
+        jLabel_DrawType.setText(bundle.getString("FrmOneDim.jLabel_DrawType.text")); // NOI18N
 
         jComboBox_DrawType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_DrawType.addActionListener(new java.awt.event.ActionListener() {
@@ -257,7 +259,7 @@ public class FrmOneDim extends javax.swing.JFrame {
             }
         });
 
-        jLabel_PlotDims.setText("PlotDims:");
+        jLabel_PlotDims.setText(bundle.getString("FrmOneDim.jLabel_PlotDims.text")); // NOI18N
 
         jComboBox_PlotDim.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_PlotDim.addActionListener(new java.awt.event.ActionListener() {
@@ -266,9 +268,9 @@ public class FrmOneDim extends javax.swing.JFrame {
             }
         });
 
-        jPanel_Dimensions.setBorder(javax.swing.BorderFactory.createTitledBorder("Dimensions"));
+        jPanel_Dimensions.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jCheckBox_Time.setText("Time");
+        jCheckBox_Time.setText(bundle.getString("FrmOneDim.jCheckBox_Time.text")); // NOI18N
         jCheckBox_Time.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox_TimeStateChanged(evt);
@@ -277,7 +279,7 @@ public class FrmOneDim extends javax.swing.JFrame {
 
         jComboBox_Time1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jCheckBox_Level.setText("Level");
+        jCheckBox_Level.setText(bundle.getString("FrmOneDim.jCheckBox_Level.text")); // NOI18N
         jCheckBox_Level.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox_LevelStateChanged(evt);
@@ -290,7 +292,7 @@ public class FrmOneDim extends javax.swing.JFrame {
 
         jComboBox_Level2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jCheckBox_Lat.setText("Lat/Y");
+        jCheckBox_Lat.setText(bundle.getString("FrmOneDim.jCheckBox_Lat.text")); // NOI18N
         jCheckBox_Lat.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox_LatStateChanged(evt);
@@ -301,7 +303,7 @@ public class FrmOneDim extends javax.swing.JFrame {
 
         jComboBox_Lat2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jCheckBox_Lon.setText("Lon/X");
+        jCheckBox_Lon.setText(bundle.getString("FrmOneDim.jCheckBox_Lon.text")); // NOI18N
         jCheckBox_Lon.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox_LonStateChanged(evt);
@@ -322,24 +324,24 @@ public class FrmOneDim extends javax.swing.JFrame {
                         .addComponent(jCheckBox_Lat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox_Lat2, 0, 146, Short.MAX_VALUE)
-                            .addComponent(jComboBox_Lat1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jComboBox_Lat2, 0, 124, Short.MAX_VALUE)
+                            .addComponent(jComboBox_Lat1, 0, 1, Short.MAX_VALUE)))
                     .addGroup(jPanel_DimensionsLayout.createSequentialGroup()
                         .addComponent(jCheckBox_Lon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox_Lon1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox_Lon2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jComboBox_Lon1, 0, 1, Short.MAX_VALUE)
+                            .addComponent(jComboBox_Lon2, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_DimensionsLayout.createSequentialGroup()
                         .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBox_Level)
                             .addComponent(jCheckBox_Time))
                         .addGap(6, 6, 6)
                         .addGroup(jPanel_DimensionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox_Time1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox_Time2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox_Level1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox_Level2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jComboBox_Time1, 0, 1, Short.MAX_VALUE)
+                            .addComponent(jComboBox_Time2, 0, 0, Short.MAX_VALUE)
+                            .addComponent(jComboBox_Level1, 0, 1, Short.MAX_VALUE)
+                            .addComponent(jComboBox_Level2, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel_DimensionsLayout.setVerticalGroup(
@@ -372,7 +374,7 @@ public class FrmOneDim extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel_Variable.setText("Var:");
+        jLabel_Variable.setText(bundle.getString("FrmOneDim.jLabel_Variable.text")); // NOI18N
 
         jComboBox_Variable.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_Variable.addActionListener(new java.awt.event.ActionListener() {
@@ -380,6 +382,8 @@ public class FrmOneDim extends javax.swing.JFrame {
                 jComboBox_VariableActionPerformed(evt);
             }
         });
+
+        jCheckBox_YReverse.setText(bundle.getString("FrmOneDim.jCheckBox_YReverse.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -391,17 +395,19 @@ public class FrmOneDim extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel_PlotDims)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox_PlotDim, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jComboBox_PlotDim, 0, 1, Short.MAX_VALUE))
                     .addComponent(jPanel_Dimensions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel_DrawType)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox_DrawType, 0, 172, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addComponent(jComboBox_DrawType, 0, 1, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jCheckBox_YReverse)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel_Variable)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox_Variable, 0, 171, Short.MAX_VALUE)))
+                        .addComponent(jComboBox_Variable, 0, 1, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -419,9 +425,11 @@ public class FrmOneDim extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_PlotDims)
                     .addComponent(jComboBox_PlotDim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(14, 14, 14)
+                .addComponent(jCheckBox_YReverse)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel_Dimensions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -441,7 +449,7 @@ public class FrmOneDim extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE))
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
         );
 
         pack();
@@ -584,10 +592,10 @@ public class FrmOneDim extends javax.swing.JFrame {
 
                     String title = varName + "_" + this.jComboBox_PlotDim.getSelectedItem().toString() + " Graph";
                     PlotOrientation po = PlotOrientation.VERTICAL;
-                    yInverse = false;
+                    yInverse = this.jCheckBox_YReverse.isSelected();
                     if (_plotDimension == PlotDimension.Level) {
                         po = PlotOrientation.HORIZONTAL;
-                        yInverse = true;
+                        //yInverse = true;
                     }
                     String xLabel = _plotDimension.toString();
                     boolean isTime = false;
@@ -1340,6 +1348,7 @@ public class FrmOneDim extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox_Level;
     private javax.swing.JCheckBox jCheckBox_Lon;
     private javax.swing.JCheckBox jCheckBox_Time;
+    private javax.swing.JCheckBox jCheckBox_YReverse;
     private javax.swing.JComboBox jComboBox_DrawType;
     private javax.swing.JComboBox jComboBox_Lat1;
     private javax.swing.JComboBox jComboBox_Lat2;

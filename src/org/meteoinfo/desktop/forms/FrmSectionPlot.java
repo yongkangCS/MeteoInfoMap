@@ -192,7 +192,8 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jLabel_Status = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Section Plot");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmSectionPlot"); // NOI18N
+        setTitle(bundle.getString("FrmSectionPlot.title")); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -203,8 +204,8 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         jButton_DataInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/information.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMeteoData"); // NOI18N
-        jButton_DataInfo.setToolTipText(bundle.getString("FrmMeteoData.jButton_DataInfo.toolTipText")); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmMeteoData"); // NOI18N
+        jButton_DataInfo.setToolTipText(bundle1.getString("FrmMeteoData.jButton_DataInfo.toolTipText")); // NOI18N
         jButton_DataInfo.setFocusable(false);
         jButton_DataInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_DataInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -217,7 +218,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jSeparator1);
 
         jButton_Draw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/MeteoInfo_1_16x16x8.png"))); // NOI18N
-        jButton_Draw.setToolTipText(bundle.getString("FrmMeteoData.jButton_Draw.toolTipText")); // NOI18N
+        jButton_Draw.setToolTipText(bundle1.getString("FrmMeteoData.jButton_Draw.toolTipText")); // NOI18N
         jButton_Draw.setFocusable(false);
         jButton_Draw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Draw.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -229,7 +230,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_Draw);
 
         jButton_ViewData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ViewData.Image.png"))); // NOI18N
-        jButton_ViewData.setToolTipText(bundle.getString("FrmMeteoData.jButton_ViewData.toolTipText")); // NOI18N
+        jButton_ViewData.setToolTipText(bundle1.getString("FrmMeteoData.jButton_ViewData.toolTipText")); // NOI18N
         jButton_ViewData.setFocusable(false);
         jButton_ViewData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ViewData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -241,7 +242,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_ViewData);
 
         jButton_ClearDraw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ClearDrawing.Image.png"))); // NOI18N
-        jButton_ClearDraw.setToolTipText(bundle.getString("FrmMeteoData.jButton_ClearDraw.toolTipText")); // NOI18N
+        jButton_ClearDraw.setToolTipText(bundle1.getString("FrmMeteoData.jButton_ClearDraw.toolTipText")); // NOI18N
         jButton_ClearDraw.setFocusable(false);
         jButton_ClearDraw.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ClearDraw.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -254,7 +255,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jSeparator2);
 
         jButton_PreTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_PreTime.Image.png"))); // NOI18N
-        jButton_PreTime.setToolTipText(bundle.getString("FrmMeteoData.jButton_PreTime.toolTipText")); // NOI18N
+        jButton_PreTime.setToolTipText(bundle1.getString("FrmMeteoData.jButton_PreTime.toolTipText")); // NOI18N
         jButton_PreTime.setFocusable(false);
         jButton_PreTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_PreTime.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -266,7 +267,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_PreTime);
 
         jButton_NexTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_NextTime.Image.png"))); // NOI18N
-        jButton_NexTime.setToolTipText(bundle.getString("FrmMeteoData.jButton_NexTime.toolTipText")); // NOI18N
+        jButton_NexTime.setToolTipText(bundle1.getString("FrmMeteoData.jButton_NexTime.toolTipText")); // NOI18N
         jButton_NexTime.setFocusable(false);
         jButton_NexTime.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_NexTime.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -278,7 +279,6 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_NexTime);
 
         jButton_Animator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/animation-1.png"))); // NOI18N
-        jButton_Animator.setToolTipText(bundle.getString("FrmMeteoData.jButton_Animator.toolTipText")); // NOI18N
         jButton_Animator.setFocusable(false);
         jButton_Animator.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Animator.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -290,7 +290,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_Animator);
 
         jButton_CreateAnimatorFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Animation-2.png"))); // NOI18N
-        jButton_CreateAnimatorFile.setToolTipText(bundle.getString("FrmMeteoData.jButton_CreateAnimatorFile.toolTipText")); // NOI18N
+        jButton_CreateAnimatorFile.setToolTipText(bundle1.getString("FrmMeteoData.jButton_CreateAnimatorFile.toolTipText")); // NOI18N
         jButton_CreateAnimatorFile.setFocusable(false);
         jButton_CreateAnimatorFile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_CreateAnimatorFile.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -303,7 +303,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jSeparator3);
 
         jButton_DrawSetting.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_DrawSetting.Image.png"))); // NOI18N
-        jButton_DrawSetting.setToolTipText(bundle.getString("FrmMeteoData.jButton_DrawSetting.toolTipText")); // NOI18N
+        jButton_DrawSetting.setToolTipText(bundle1.getString("FrmMeteoData.jButton_DrawSetting.toolTipText")); // NOI18N
         jButton_DrawSetting.setFocusable(false);
         jButton_DrawSetting.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_DrawSetting.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -316,8 +316,8 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jSeparator4);
 
         jButton_SelectElement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Arrow.png"))); // NOI18N
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMain"); // NOI18N
-        jButton_SelectElement.setToolTipText(bundle1.getString("FrmMain.jButton_SelectElement.toolTipText")); // NOI18N
+        java.util.ResourceBundle bundle2 = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmMain"); // NOI18N
+        jButton_SelectElement.setToolTipText(bundle2.getString("FrmMain.jButton_SelectElement.toolTipText")); // NOI18N
         jButton_SelectElement.setFocusable(false);
         jButton_SelectElement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_SelectElement.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -329,7 +329,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_SelectElement);
 
         jButton_ZoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ZoomIn.Image.png"))); // NOI18N
-        jButton_ZoomIn.setToolTipText(bundle1.getString("FrmMain.jButton_ZoomIn.toolTipText")); // NOI18N
+        jButton_ZoomIn.setToolTipText(bundle2.getString("FrmMain.jButton_ZoomIn.toolTipText")); // NOI18N
         jButton_ZoomIn.setFocusable(false);
         jButton_ZoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ZoomIn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -341,7 +341,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_ZoomIn);
 
         jButton_ZoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ZoomOut.Image.png"))); // NOI18N
-        jButton_ZoomOut.setToolTipText(bundle1.getString("FrmMain.jButton_ZoomOut.toolTipText")); // NOI18N
+        jButton_ZoomOut.setToolTipText(bundle2.getString("FrmMain.jButton_ZoomOut.toolTipText")); // NOI18N
         jButton_ZoomOut.setFocusable(false);
         jButton_ZoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ZoomOut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -353,7 +353,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_ZoomOut);
 
         jButton_Pan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_Pan.Image.png"))); // NOI18N
-        jButton_Pan.setToolTipText(bundle1.getString("FrmMain.jButton_Pan.toolTipText")); // NOI18N
+        jButton_Pan.setToolTipText(bundle2.getString("FrmMain.jButton_Pan.toolTipText")); // NOI18N
         jButton_Pan.setFocusable(false);
         jButton_Pan.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Pan.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -365,7 +365,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_Pan);
 
         jButton_FullExtent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_FullExent.Image.png"))); // NOI18N
-        jButton_FullExtent.setToolTipText(bundle1.getString("FrmMain.jButton_FullExtent.toolTipText")); // NOI18N
+        jButton_FullExtent.setToolTipText(bundle2.getString("FrmMain.jButton_FullExtent.toolTipText")); // NOI18N
         jButton_FullExtent.setFocusable(false);
         jButton_FullExtent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_FullExtent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -377,7 +377,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_FullExtent);
 
         jButton_ZoomToLayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_ZoomToLayer.Image.png"))); // NOI18N
-        jButton_ZoomToLayer.setToolTipText(bundle1.getString("FrmMain.jButton_ZoomToLayer.toolTipText")); // NOI18N
+        jButton_ZoomToLayer.setToolTipText(bundle2.getString("FrmMain.jButton_ZoomToLayer.toolTipText")); // NOI18N
         jButton_ZoomToLayer.setFocusable(false);
         jButton_ZoomToLayer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ZoomToLayer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -389,7 +389,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_ZoomToLayer);
 
         jButton_Identifer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/information.png"))); // NOI18N
-        jButton_Identifer.setToolTipText(bundle1.getString("FrmMain.jButton_Identifer.toolTipText")); // NOI18N
+        jButton_Identifer.setToolTipText(bundle2.getString("FrmMain.jButton_Identifer.toolTipText")); // NOI18N
         jButton_Identifer.setFocusable(false);
         jButton_Identifer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Identifer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -402,7 +402,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jSeparator5);
 
         jButton_LabelSet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_LabelSet.Image.png"))); // NOI18N
-        jButton_LabelSet.setToolTipText(bundle1.getString("FrmMain.jButton_LabelSet.toolTipText")); // NOI18N
+        jButton_LabelSet.setToolTipText(bundle2.getString("FrmMain.jButton_LabelSet.toolTipText")); // NOI18N
         jButton_LabelSet.setFocusable(false);
         jButton_LabelSet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_LabelSet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -415,7 +415,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jSeparator6);
 
         jButton_PageSet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/page_portrait.png"))); // NOI18N
-        jButton_PageSet.setToolTipText(bundle1.getString("FrmMain.jButton_PageSet.toolTipText")); // NOI18N
+        jButton_PageSet.setToolTipText(bundle2.getString("FrmMain.jButton_PageSet.toolTipText")); // NOI18N
         jButton_PageSet.setFocusable(false);
         jButton_PageSet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_PageSet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -427,7 +427,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_PageSet);
 
         jButton_PageZoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_PageZoomIn.Image.png"))); // NOI18N
-        jButton_PageZoomIn.setToolTipText(bundle1.getString("FrmMain.jButton_PageZoomIn.toolTipText")); // NOI18N
+        jButton_PageZoomIn.setToolTipText(bundle2.getString("FrmMain.jButton_PageZoomIn.toolTipText")); // NOI18N
         jButton_PageZoomIn.setFocusable(false);
         jButton_PageZoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_PageZoomIn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -439,7 +439,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_PageZoomIn);
 
         jButton_PageZoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_PageZoomOut.Image.png"))); // NOI18N
-        jButton_PageZoomOut.setToolTipText(bundle1.getString("FrmMain.jButton_PageZoomOut.toolTipText")); // NOI18N
+        jButton_PageZoomOut.setToolTipText(bundle2.getString("FrmMain.jButton_PageZoomOut.toolTipText")); // NOI18N
         jButton_PageZoomOut.setFocusable(false);
         jButton_PageZoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_PageZoomOut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -451,7 +451,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jButton_PageZoomOut);
 
         jButton_FitToScreen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/ZoomFullMap.png"))); // NOI18N
-        jButton_FitToScreen.setToolTipText(bundle1.getString("FrmMain.jButton_FitToScreen.toolTipText")); // NOI18N
+        jButton_FitToScreen.setToolTipText(bundle2.getString("FrmMain.jButton_FitToScreen.toolTipText")); // NOI18N
         jButton_FitToScreen.setFocusable(false);
         jButton_FitToScreen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_FitToScreen.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -475,7 +475,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar1.add(jSeparator7);
 
         jButton_SavePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Save_Image.png"))); // NOI18N
-        jButton_SavePicture.setToolTipText(bundle1.getString("FrmMain.jButton_SavePicture.toolTipText")); // NOI18N
+        jButton_SavePicture.setToolTipText(bundle2.getString("FrmMain.jButton_SavePicture.toolTipText")); // NOI18N
         jButton_SavePicture.setFocusable(false);
         jButton_SavePicture.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_SavePicture.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -488,9 +488,9 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         jSplitPane1.setDividerLocation(250);
 
-        jLabel3.setText("DrawType:");
+        jLabel3.setText(bundle.getString("FrmSectionPlot.jLabel3.text")); // NOI18N
 
-        jLabel_Variable.setText("Var:");
+        jLabel_Variable.setText(bundle.getString("FrmSectionPlot.jLabel_Variable.text")); // NOI18N
 
         jComboBox_DrawType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_DrawType.addActionListener(new java.awt.event.ActionListener() {
@@ -499,11 +499,11 @@ public class FrmSectionPlot extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox_YReverse.setText("Y_Reverse");
+        jCheckBox_YReverse.setText(bundle.getString("FrmSectionPlot.jCheckBox_YReverse.text")); // NOI18N
 
-        jCheckBox_ColorVar.setText("ColorVar");
+        jCheckBox_ColorVar.setText(bundle.getString("FrmSectionPlot.jCheckBox_ColorVar.text")); // NOI18N
 
-        jLabel4.setText("PlotDims:");
+        jLabel4.setText(bundle.getString("FrmSectionPlot.jLabel4.text")); // NOI18N
 
         jComboBox_PlotDim.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_PlotDim.addActionListener(new java.awt.event.ActionListener() {
@@ -512,9 +512,9 @@ public class FrmSectionPlot extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dimensions"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FrmSectionPlot.jPanel1.border.title"))); // NOI18N
 
-        jCheckBox_Time.setText("Time");
+        jCheckBox_Time.setText(bundle.getString("FrmSectionPlot.jCheckBox_Time.text")); // NOI18N
         jCheckBox_Time.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox_TimeStateChanged(evt);
@@ -523,7 +523,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         jComboBox_Time1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jCheckBox_Level.setText("Level");
+        jCheckBox_Level.setText(bundle.getString("FrmSectionPlot.jCheckBox_Level.text")); // NOI18N
         jCheckBox_Level.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox_LevelStateChanged(evt);
@@ -536,7 +536,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         jComboBox_Level2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jCheckBox_Lat.setText("Lat/Y");
+        jCheckBox_Lat.setText(bundle.getString("FrmSectionPlot.jCheckBox_Lat.text")); // NOI18N
         jCheckBox_Lat.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox_LatStateChanged(evt);
@@ -547,7 +547,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         jComboBox_Lat2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jCheckBox_Lon.setText("Lon/X");
+        jCheckBox_Lon.setText(bundle.getString("FrmSectionPlot.jCheckBox_Lon.text")); // NOI18N
         jCheckBox_Lon.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox_LonStateChanged(evt);
@@ -689,7 +689,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Setting", jPanel_Setting);
+        jTabbedPane1.addTab(bundle.getString("FrmSectionPlot.jPanel_Setting.TabConstraints.tabTitle"), jPanel_Setting); // NOI18N
 
         javax.swing.GroupLayout jPanel_LayersLayout = new javax.swing.GroupLayout(jPanel_Layers);
         jPanel_Layers.setLayout(jPanel_LayersLayout);
@@ -702,7 +702,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
             .addComponent(layersLegend1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Layers", jPanel_Layers);
+        jTabbedPane1.addTab(bundle.getString("FrmSectionPlot.jPanel_Layers.TabConstraints.tabTitle"), jPanel_Layers); // NOI18N
 
         jSplitPane1.setLeftComponent(jTabbedPane1);
         jSplitPane1.setRightComponent(mapLayout1);
@@ -710,11 +710,11 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
 
-        jLabel_Coordinate.setText(bundle1.getString("FrmMain.jLabel_Coordinate.text")); // NOI18N
+        jLabel_Coordinate.setText(bundle2.getString("FrmMain.jLabel_Coordinate.text")); // NOI18N
         jLabel_Coordinate.setPreferredSize(new java.awt.Dimension(80, 15));
         jToolBar2.add(jLabel_Coordinate);
 
-        jLabel_Status.setText(bundle1.getString("FrmMain.jLabel_Status.text")); // NOI18N
+        jLabel_Status.setText(bundle2.getString("FrmMain.jLabel_Status.text")); // NOI18N
         jToolBar2.add(jLabel_Status);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

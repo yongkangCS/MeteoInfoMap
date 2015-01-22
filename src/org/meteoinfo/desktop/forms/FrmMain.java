@@ -432,7 +432,7 @@ public class FrmMain extends JFrame implements IApplication {
         jToolBar_Base.setName(""); // NOI18N
 
         jButton_AddLayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Add_Layer.png"))); // NOI18N
-        final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmMain"); // NOI18N
+        final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmMain"); // NOI18N
         jButton_AddLayer.setToolTipText(bundle.getString("FrmMain.jButton_AddLayer.toolTipText")); // NOI18N
         jButton_AddLayer.setFocusable(false);
         jButton_AddLayer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
