@@ -67,7 +67,7 @@ public class FrmProjection extends javax.swing.JDialog {
             }
         });
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmProjection"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmProjection"); // NOI18N
         jLabel1.setText(bundle.getString("FrmProjection.jLabel1.text")); // NOI18N
 
         jComboBox_Projection.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -107,7 +107,7 @@ public class FrmProjection extends javax.swing.JDialog {
                             .addComponent(jLabel_CentralMeridian))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel_ParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_CentralMeridian, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                            .addComponent(jTextField_CentralMeridian, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                             .addComponent(jTextField_RefLat)
                             .addComponent(jTextField_StandPara1)))
                     .addGroup(jPanel_ParametersLayout.createSequentialGroup()
@@ -179,12 +179,6 @@ public class FrmProjection extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jButton_Apply)
-                        .addGap(59, 59, 59)
-                        .addComponent(jButton_Close)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel_Parameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -194,6 +188,12 @@ public class FrmProjection extends javax.swing.JDialog {
                         .addComponent(jComboBox_Projection, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(9, 9, 9)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(112, 112, 112)
+                .addComponent(jButton_Apply)
+                .addGap(59, 59, 59)
+                .addComponent(jButton_Close)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +236,7 @@ public class FrmProjection extends javax.swing.JDialog {
         ProjectionInfo aProjInfo = _parent.getMapDocument().getActiveMapFrame().getMapView().getProjection().getProjInfo();
         Projection aProj = aProjInfo.getCoordinateReferenceSystem().getProjection();
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("meteoinfo/bundle/Bundle_FrmProjection");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmProjection");
         this.jLabel_RefLat.setText(bundle.getString("FrmProjection.jLabel_RefLat.text"));
         switch (aPrjName) {
             case LongLat:
