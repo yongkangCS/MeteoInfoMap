@@ -78,7 +78,7 @@ public class FrmConsole extends javax.swing.JFrame {
             interp.exec("from milab import *");
             //interp.exec("import mipylib");
             //interp.exec("from mipylib.miscript import *");
-            interp.exec("mipylib.miscript.isinteractive = True");
+            interp.exec("mipylib.miplot.isinteractive = True");
             //interp.exec("from meteoinfo.numeric.JNumeric import *");
             //interp.exec("import mipylib.miscript as plt");
             //interp.exec("import meteoinfo.numeric.JNumeric as np");

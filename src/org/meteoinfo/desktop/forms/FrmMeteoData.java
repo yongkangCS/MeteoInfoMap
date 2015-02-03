@@ -719,8 +719,24 @@ public class FrmMeteoData extends javax.swing.JDialog {
             //Set levels
             this.jComboBox_Level.removeAllItems();
             if (var.getZDimension() == null) {
-                this.jComboBox_Level.addItem("Surface");
-                this.jComboBox_Level.setSelectedIndex(0);
+                if (this._meteoDataInfo.isSWATHData()) {
+                    Variable lonvar = _meteoDataInfo.getDataInfo().getVariable("longitude");
+                    org.meteoinfo.data.meteodata.Dimension ldim = var.getLevelDimension(lonvar);
+                    if (ldim == null) {
+                        this.jComboBox_Level.addItem("Surface");
+                        this.jComboBox_Level.setSelectedIndex(0);
+                    } else {
+                        for (i = 0; i < ldim.getDimLength(); i++) {
+                            this.jComboBox_Level.addItem(String.valueOf(ldim.getDimValue().get(i)));
+                        }
+                        if (this.jComboBox_Level.getItemCount() > _meteoDataInfo.getLevelIndex()) {
+                            this.jComboBox_Level.setSelectedIndex(_meteoDataInfo.getLevelIndex());
+                        }
+                    }
+                } else {
+                    this.jComboBox_Level.addItem("Surface");
+                    this.jComboBox_Level.setSelectedIndex(0);
+                }
             } else {
                 for (i = 0; i < var.getZDimension().getDimLength(); i++) {
                     this.jComboBox_Level.addItem(String.valueOf(var.getZDimension().getDimValue().get(i)));
@@ -1402,7 +1418,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open ARL data file
      *
@@ -1416,7 +1432,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open ASCII grid data file
      *
@@ -1430,7 +1446,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open Surfer grid data file
      *
@@ -1444,7 +1460,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open HYSPLIT concentration data file
      *
@@ -1458,7 +1474,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open HYSPLIT particle data file
      *
@@ -1472,7 +1488,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open HYSPLIT trajectory data file
      *
@@ -1486,7 +1502,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open HYSPLIT trajectory data files
      *
@@ -1500,7 +1516,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open NetCDF, GRIB, HDF... data file
      *
@@ -1514,7 +1530,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open Lon/Lat station data file
      *
@@ -1528,7 +1544,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open MICAPS data file
      *
@@ -1542,7 +1558,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open MM5 output data file
      *
@@ -1556,7 +1572,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         return aDataInfo;
     }
-    
+
     /**
      * Open MM5 intermedia data file
      *
@@ -1853,18 +1869,20 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
+
     // </editor-fold>
     // <editor-fold desc="Get Set Methods">
     /**
      * Get last add layer
+     *
      * @return Last added layer
      */
-    public MapLayer getLastAddLayer(){
+    public MapLayer getLastAddLayer() {
         MapLayer layer = null;
-        if (this._lastAddedLayerHandle >= 0){
+        if (this._lastAddedLayerHandle >= 0) {
             layer = this._parent.getMapView().getLayerByHandle(this._lastAddedLayerHandle);
         }
-        
+
         return layer;
     }
     // </editor-fold>
@@ -1968,7 +1986,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             Variable var = aDataInfo.getVariables().get(i);
             if (_meteoDataInfo.isSWATHData()) {
                 Variable lonvar = _meteoDataInfo.getDataInfo().getVariable("longitude");
-                if (var.dimensionSizeEquals(lonvar)) {
+                if (var.dimensionContains(lonvar)) {
                     this.jComboBox_Variable.addItem(var.getName());
                 }
             } else {
@@ -2347,11 +2365,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
     public MapLayer drawMeteoMap(boolean isNew, LegendScheme aLS, String fieldName) {
         if (_meteoDataInfo.isGridData()) {
-                return drawMeteoMap_Grid(isNew, aLS, fieldName);
-        } else if (_meteoDataInfo.isStationData() || _meteoDataInfo.isSWATHData()){
-                return drawMeteoMap_Station(isNew, aLS, fieldName);
+            return drawMeteoMap_Grid(isNew, aLS, fieldName);
+        } else if (_meteoDataInfo.isStationData() || _meteoDataInfo.isSWATHData()) {
+            return drawMeteoMap_Station(isNew, aLS, fieldName);
         } else {
-                return null;
+            return null;
         }
     }
 

@@ -133,7 +133,7 @@ public class Program {
             console.exec("from milab import *");
             //console.exec("import mipylib");
             //console.exec("from mipylib.miscript import *");
-            console.exec("mipylib.miscript.isinteractive = True");
+            console.exec("mipylib.miplot.isinteractive = True");
             //console.exec("from meteoinfo.numeric.JNumeric import *");
             //console.exec("import mipylib.miscript as plt");
             //console.exec("import meteoinfo.numeric.JNumeric as np");
