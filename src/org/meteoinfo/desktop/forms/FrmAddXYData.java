@@ -221,7 +221,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
                 BufferedReader sr = new BufferedReader(new FileReader(aFile));
                 String title = sr.readLine().trim();
                 //Determine separator
-                separator = GlobalUtil.getSeparator(title);
+                separator = GlobalUtil.getDelimiter(title);
                 String[] titleArray = GlobalUtil.split(title, separator);
                 if (titleArray.length <= 2) {
                     JOptionPane.showMessageDialog(null, "File Format Error!");

@@ -57,17 +57,17 @@ public class FrmConsole extends javax.swing.JFrame {
         console.println(new ImageIcon(this.getClass().getResource("/org/meteoinfo/desktop/resources/jython_small_c.png")));
         this.getContentPane().add(console, BorderLayout.CENTER);
 
-        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
-                getInputArguments().toString().contains("jdwp");
+//        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+//                getInputArguments().toString().contains("jdwp");
         String pluginPath = this.frmMain.getStartupPath() + File.separator + "plugins";
         List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
 
         Py.getSystemState().setdefaultencoding("utf-8");
         PythonInteractiveInterpreter interp = new PythonInteractiveInterpreter(console);
-        String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "pylib";
-        if (isDebug) {
-            path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/pylib";
-        }
+        String path = this.frmMain.getStartupPath() + File.separator + "pylib";
+//        if (isDebug) {
+//            path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/pylib";
+//        }
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         try {

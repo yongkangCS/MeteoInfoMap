@@ -625,15 +625,14 @@ public class FrmTextEditor extends javax.swing.JFrame {
                 //System.out.println("Out test!");
                 //System.err.println("Error test!");
 
-                boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
-                        getInputArguments().toString().contains("jdwp");
+//                boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+//                        getInputArguments().toString().contains("jdwp");
                 String pluginPath = _parent.getStartupPath() + File.separator + "plugins";
                 List<String> jarfns = GlobalUtil.getFiles(pluginPath, ".jar");
                 String path = _parent.getStartupPath() + File.separator + "pylib";
-                //MeteoInfoScript mis = new MeteoInfoScript(path);
-                if (isDebug) {
-                    path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/pylib";
-                }
+//                if (isDebug) {
+//                    path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/pylib";
+//                }
 
                 try {
                     interp.exec("import sys");
