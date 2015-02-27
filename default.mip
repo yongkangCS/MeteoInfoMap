@@ -41,7 +41,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="Meteorological Data Information System" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="30" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="182" LegendLayer="" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="444" Width="360"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="30" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="182" LegendLayer="Raster_air_1000.0_1948-01-01 00:00" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="444" Width="210"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="20" IsTitle="false" Left="643" Top="448" Width="20">
         <Graphic>
           <Shape Selected="false" ShapeType="WindArraw" Visible="true">

@@ -71,7 +71,7 @@ public class FrmAbout extends javax.swing.JDialog {
 
         jLabel6.setText("Yaqiang Wang");
 
-        jLabel7.setText("1.2R1");
+        jLabel7.setText("1.2R3");
 
         jLabel8.setFont(new java.awt.Font("宋体", 1, 15)); // NOI18N
         jLabel8.setText("Email:");
@@ -158,6 +158,8 @@ public class FrmAbout extends javax.swing.JDialog {
                 .addComponent(jButton_Close)
                 .addGap(25, 25, 25))
         );
+
+        jLabel7.getAccessibleContext().setAccessibleName("1.2R3");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

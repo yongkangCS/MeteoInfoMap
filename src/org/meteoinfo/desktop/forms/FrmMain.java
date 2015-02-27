@@ -122,7 +122,7 @@ import static org.meteoinfo.shape.ShapeTypes.CurveLine;
 import static org.meteoinfo.shape.ShapeTypes.CurvePolygon;
 import static org.meteoinfo.shape.ShapeTypes.Polygon;
 import static org.meteoinfo.shape.ShapeTypes.Polyline;
-import org.meteoinfo.table.DataTypes;
+import org.meteoinfo.data.DataTypes;
 import org.xml.sax.SAXException;
 
 /**
@@ -2981,8 +2981,7 @@ public class FrmMain extends JFrame implements IApplication {
         JFileChooser aDlg = new JFileChooser();
         //aDlg.setAcceptAllFileFilterUsed(false);
         aDlg.setCurrentDirectory(pathDir);
-        //String[] fileExts = new String[]{"shp", "bil", "wmp", "bln", "bmp", "gif", "jpg", "tif", "png"};
-        String[] fileExts = new String[]{"shp", "bil", "wmp", "bln", "gif", "jpg", "png", "tif"};
+        String[] fileExts = new String[]{"shp", "bil", "bip", "bsq", "wmp", "bln", "gif", "jpg", "png", "tif"};
         GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Supported Formats");
         aDlg.addChoosableFileFilter(mapFileFilter);
         fileExts = new String[]{"shp"};
@@ -3001,7 +3000,7 @@ public class FrmMain extends JFrame implements IApplication {
                     String fn = aFile.getAbsolutePath();
                     aLayer = MapDataManage.loadLayer(fn);
                     String ext = GlobalUtil.getFileExtension(fn);
-                    if (ext.equals("bil")) {
+                    if (ext.equalsIgnoreCase("bil") || ext.equalsIgnoreCase("bip") || ext.equalsIgnoreCase("bsq")) {
                         aLayer.setProjInfo(this._mapDocument.getActiveMapFrame().getMapView().getProjection().getProjInfo());
                     }
                 } catch (IOException ex) {
