@@ -8,7 +8,7 @@
       <MaskOut MaskLayer="" SetMaskLayer="false"/>
       <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees " RefCutLon="180.0" RefLon="0.0"/>
       <GroupLayer>
-        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0"/>
@@ -41,7 +41,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="Meteorological Data Information System" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="30" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="182" LegendLayer="Raster_air_1000.0_1948-01-01 00:00" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="444" Width="210"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="30" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="182" LegendLayer="gbats2_0ll11.bil" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="444" Width="150"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="20" IsTitle="false" Left="643" Top="448" Width="20">
         <Graphic>
           <Shape Selected="false" ShapeType="WindArraw" Visible="true">

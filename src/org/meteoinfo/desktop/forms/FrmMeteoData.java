@@ -1217,6 +1217,16 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     }
                     break;
                 case Weather_Symbol:
+                    Object[] possibleValues = { "All Weather", "SDS", "SDS, Haze", "Smoke", "Haze", "Mist", "Smoke, Haze, Mist", "Fog" } ;
+                    Object selectedValue = JOptionPane.showInputDialog(null,
+                        "Choose one", "Input", JOptionPane.INFORMATION_MESSAGE ,
+                        null, possibleValues , possibleValues[0]);
+                    if (selectedValue != null){
+                        VectorLayer layer = DrawMeteoData.createWeatherSymbolLayer(_stationData, selectedValue.toString(), "Weather");
+                        layer.setProjInfo(this._meteoDataInfo.getProjectionInfo());
+                        this._parent.getMapDocument().getActiveMapFrame().removeLayerByHandle(this._lastAddedLayerHandle);
+                        this._lastAddedLayerHandle = this._parent.getMapDocument().getActiveMapFrame().addLayer(layer);
+                    }
 //                        frmComboBox frmCB = new frmComboBox();
 //                        frmCB.Text = "Weather Symbol Set";
 //                        string[] symbols = new string[] { "All Weather", "SDS", "SDS, Haze", "Smoke", "Haze", "Mist", "Smoke, Haze, Mist", "Fog" };
