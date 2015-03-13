@@ -1118,7 +1118,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                                     if (_parent.getMainTab().getSelectedIndex() == 0) {
                                         encoder.addFrame(_parent.getMapDocument().getActiveMapFrame().getMapView().getViewImage());
                                     } else {
-                                        encoder.addFrame(_parent.getMapDocument().getMapLayout().getViewIamge());
+                                        encoder.addFrame(_parent.getMapDocument().getMapLayout().getViewImage());
                                     }
                                 } else {
                                     try {
