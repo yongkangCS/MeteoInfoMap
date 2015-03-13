@@ -4,4 +4,4 @@ from mipylib.miplot import *
 from mipylib.midata import *
 import org.meteoinfo.numeric.JNumeric as np
 import mipylib.miplot as plt
-import mipylib.midata as dat
+import mipylib.midata as ds

@@ -11,7 +11,7 @@ from org.meteoinfo.data import XYListDataset, GridData
 from org.meteoinfo.data.mapdata import MapDataManage
 from org.meteoinfo.data.meteodata import MeteoDataInfo, DrawMeteoData
 from org.meteoinfo.chart.plot import XY1DPlot, XY2DPlot, MapPlot, ChartPlotMethod
-from org.meteoinfo.chart import Chart, ChartText
+from org.meteoinfo.chart import Chart, ChartText, LegendPosition
 from org.meteoinfo.script import ChartForm, MapForm
 from org.meteoinfo.legend import MapFrame, LineStyles, PointBreak, PolylineBreak
 from org.meteoinfo.drawing import PointStyle
@@ -249,12 +249,14 @@ def __setplotstyle(plot, idx, style, n, **kwargs):
     c = __getcolor(style)
     linewidth = kwargs.pop('linewidth', 1.0)
     #print 'Line width: ' + str(linewidth)
+    caption = plot.getLegendBreak(idx).getCaption()
     pointStyle = __getpointstyle(style)
     lineStyle = __getlinestyle(style)
     if not pointStyle is None:
         if lineStyle is None:
             #plot.setChartPlotMethod(ChartPlotMethod.POINT)            
             pb = PointBreak()
+            pb.setCaption(caption)
             pb.setSize(8)
             pb.setStyle(pointStyle)
             if not c is None:
@@ -263,6 +265,7 @@ def __setplotstyle(plot, idx, style, n, **kwargs):
         else:
             plot.setChartPlotMethod(ChartPlotMethod.LINE_POINT)
             plb = PolylineBreak()
+            plb.setCaption(caption)
             plb.setSize(linewidth)
             plb.setStyle(lineStyle)
             plb.setDrawSymbol(True)
@@ -275,6 +278,7 @@ def __setplotstyle(plot, idx, style, n, **kwargs):
     else:
         plot.setChartPlotMethod(ChartPlotMethod.LINE)
         plb = PolylineBreak()
+        plb.setCaption(caption)
         plb.setSize(linewidth)
         if not c is None:
             plb.setColor(c)
@@ -393,12 +397,40 @@ def axis(limits):
         plot.setDrawExtent(Extent(xmin, xmax, ymin, ymax))
         if isinteractive:
             chartpanel.paintGraphics()
+            
+def legend(*args, **kwargs):
+    plot = chartpanel.getChart().getPlot()
+    plot.updateLegendScheme()
+    legend = plot.getLegend()
+    loc = kwargs.pop('loc', 'upper right')    
+    lp = LegendPosition.fromString(loc)
+    legend.setPosition(lp)
+    if lp == LegendPosition.CUSTOM:
+        x = kwargs.pop('x', 0)
+        y = kwargs.pop('y', 0)
+        legend.setX(x)
+        legend.setY(y)
+    plot.setDrawLegend(True)
+    if isinteractive:
+        chartpanel.paintGraphics()
+        
+def colorbar(layer, **kwargs):
+    cmap = kwargs.pop('cmap', None)
+    shrink = kwargs.pop('shrink', 1)
+    plot = chartpanel.getChart().getPlot()
+    ls = layer.getLegendScheme()
+    legend = plot.getLegend()
+    legend.setPosition(LegendPosition.RIGHT_OUTSIDE)
+    plot.setDrawLegend(True)
+    if isinteractive:
+        chartpanel.paintGraphics()
 
 def contour(*args, **kwargs):
     n = len(args)    
     print 'Args number: ' + str(n)
     if n == 1:    
-        __contour_griddata(args[0])
+        plot = __contour_griddata(args[0])
+        return plot
 
 def __contour_griddata(gdata, fill=False):
     print 'GridData...'
@@ -416,12 +448,14 @@ def __contour_griddata(gdata, fill=False):
     chartpanel.setChart(chart)
     if isinteractive:
         chartpanel.paintGraphics()
+    return plot
         
 def contourf(*args, **kwargs):
     n = len(args)    
     print 'Args number: ' + str(n)
     if n == 1:    
-        __contour_griddata(args[0], fill=True)
+        plot = __contour_griddata(args[0], fill=True)
+        return plot
 
 def contourm(*args, **kwargs):
     n = len(args)    
@@ -433,7 +467,9 @@ def contourfm(*args, **kwargs):
     n = len(args)    
     print 'Args number: ' + str(n)
     if n == 2:    
-        __contour_griddata_m(args[0], args[1], fill=True)
+        plot = args[0]
+        __contour_griddata_m(plot, args[1], fill=True)
+        return plot
         
 def __contour_griddata_m(plot, gdata, fill=False):
     print 'GridData...'
