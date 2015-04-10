@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -247,11 +246,12 @@ public class Options {
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
             DOMSource source = new DOMSource(doc);
+            
             Properties properties = transformer.getOutputProperties();
             properties.setProperty(OutputKeys.ENCODING, "UTF-8");
             properties.setProperty(OutputKeys.INDENT, "yes");
             properties.setProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-//            transformer.setOutputProperties(properties);
+            transformer.setOutputProperties(properties);
 //            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 //            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 //            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");

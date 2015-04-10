@@ -4,7 +4,8 @@
 # Purpose: MeteoInfo plot module
 # Note: Jython
 #-----------------------------------------------------
-import os, inspect
+import os
+import inspect
 
 from org.meteoinfo.chart import ChartPanel
 from org.meteoinfo.data import XYListDataset, GridData
@@ -428,9 +429,18 @@ def colorbar(layer, **kwargs):
 def contour(*args, **kwargs):
     n = len(args)    
     print 'Args number: ' + str(n)
-    if n == 1:    
+    #if isinstance(args[0], PyGridData):
+    if n == 1:
         plot = __contour_griddata(args[0])
         return plot
+    #else:
+    #    gdata = GridData()
+    #    gdata.xArray = args[0]
+    #    gdata.yArray = args[1]
+    #    gdata.data = args[2]
+    #    pygdata = PyGridData(gdata)
+    #    plot = __contour_griddata(pygdata)
+    #    return plot
 
 def __contour_griddata(gdata, fill=False):
     print 'GridData...'
