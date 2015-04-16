@@ -186,6 +186,7 @@ public class FrmTextEditor extends javax.swing.JFrame {
         });
 
         jToolBar1.setRollover(true);
+        jToolBar1.setPreferredSize(new java.awt.Dimension(74, 25));
 
         jButton_NewFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSB_NewFile.Image.png"))); // NOI18N
         jButton_NewFile.setToolTipText("New File");

@@ -14,19 +14,22 @@ from org.meteoinfo.data.meteodata import MeteoDataInfo, DrawMeteoData
 from org.meteoinfo.chart.plot import XY1DPlot, XY2DPlot, MapPlot, ChartPlotMethod
 from org.meteoinfo.chart import Chart, ChartText, LegendPosition
 from org.meteoinfo.script import ChartForm, MapForm
-from org.meteoinfo.legend import MapFrame, LineStyles, PointBreak, PolylineBreak
+from org.meteoinfo.legend import MapFrame, LineStyles, PointBreak, PolylineBreak, LegendManage, LegendScheme
 from org.meteoinfo.drawing import PointStyle
 from org.meteoinfo.global import Extent
+from org.meteoinfo.global.colors import ColorUtil, ColorMap
 from org.meteoinfo.layout import MapLayout
 from org.meteoinfo.map import MapView
+from org.meteoinfo.laboratory.gui import FrmMain
 
 from javax.swing import WindowConstants
 from java.awt import Color, Font
 
-import midata
-from midata import PyGridData
+import dimarray
+from dimarray import DimArray, PyGridData
 
 ## Global ##
+milapp = None
 isinteractive = False
 maplayout = MapLayout()
 chartpanel = ChartPanel(Chart())
@@ -37,12 +40,14 @@ maplayer = None
 #mapfn = os.path.join(inspect.getfile(inspect.currentframe()), '../../../map/country1.shp')
 mapfn = os.path.join(inspect.getfile(inspect.currentframe()), 'D:/Temp/map/country1.shp')
 mapfn = os.path.abspath(mapfn)
+""""
 if os.path.exists(mapfn):
     print 'Default map file: ' + mapfn
     maplayer = MapDataManage.loadLayer(mapfn)
     pgb = maplayer.getLegendScheme().getLegendBreaks().get(0)
     pgb.setDrawFill(False)
     pgb.setOutlineColor(Color.darkGray)    
+"""
     
 def map(map=True):
     global ismap
@@ -207,6 +212,7 @@ def figure():
     show()
     
 def show():
+    #print ismap
     if ismap:
         frame = MapForm(maplayout)
         frame.setSize(750, 540)
@@ -215,13 +221,16 @@ def show():
         frame.setVisible(True)
         maplayout.paintGraphics()
     else:
-        form = ChartForm(chartpanel)
-        chartpanel.paintGraphics()
-        form.setSize(600, 500)
-        form.setLocationRelativeTo(None)
-        form.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
-        form.setVisible(True)
-        #chartpanel.paintGraphics()
+        if milapp == None:
+            form = ChartForm(chartpanel)
+            chartpanel.paintGraphics()
+            form.setSize(600, 500)
+            form.setLocationRelativeTo(None)
+            form.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
+            form.setVisible(True)     
+        else:
+            figureDock = milapp.getFigureDock()
+            figureDock.addNewFigure('Figure 1', chartpanel)
     
 def subplot(nrows, ncols, plot_number):
     global c_plot
@@ -374,17 +383,33 @@ def title(title, fontname='Arial', fontsize=14, bold=True, color='black'):
     if isinteractive:
         chartpanel.paintGraphics()
 
-def xlabel(label):
+def xlabel(label, fontname='Arial', fontsize=14, bold=False, color='black'):
+    if bold:
+        font = Font(fontname, Font.BOLD, fontsize)
+    else:
+        font = Font(fontname, Font.PLAIN, fontsize)
+    c = __getcolor(color)
     plot = chartpanel.getChart().getPlot()
-    plot.getXAxis().setLabel(label)
-    plot.getXAxis().setDrawLabel(True)
+    axis = plot.getXAxis()
+    axis.setLabel(label)
+    axis.setDrawLabel(True)
+    axis.setLabelFont(font)
+    axis.setLabelColor(c)
     if isinteractive:
         chartpanel.paintGraphics()
     
-def ylabel(label):
+def ylabel(label, fontname='Arial', fontsize=14, bold=False, color='black'):
+    if bold:
+        font = Font(fontname, Font.BOLD, fontsize)
+    else:
+        font = Font(fontname, Font.PLAIN, fontsize)
+    c = __getcolor(color)
     plot = chartpanel.getChart().getPlot()
-    plot.getYAxis().setLabel(label)
-    plot.getYAxis().setDrawLabel(True)
+    axis = plot.getYAxis()
+    axis.setLabel(label)
+    axis.setDrawLabel(True)
+    axis.setLabelFont(font)
+    axis.setLabelColor(c)
     if isinteractive:
         chartpanel.paintGraphics()
     
@@ -428,10 +453,17 @@ def colorbar(layer, **kwargs):
 
 def contour(*args, **kwargs):
     n = len(args)    
-    print 'Args number: ' + str(n)
+    #print 'Args number: ' + str(n)
     #if isinstance(args[0], PyGridData):
-    if n == 1:
-        plot = __contour_griddata(args[0])
+    cmapstr = kwargs.pop('cmap', 'grads_rainbow')
+    cmap = ColorUtil.getColorMap(cmapstr) 
+    if n == 1:        
+        if isinstance(args[0], DimArray):
+            gdata = args[0].togriddata()
+        else:
+            gdata = args[0]
+        ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
+        plot = __contour_griddata(gdata, ls)
         return plot
     #else:
     #    gdata = GridData()
@@ -442,12 +474,12 @@ def contour(*args, **kwargs):
     #    plot = __contour_griddata(pygdata)
     #    return plot
 
-def __contour_griddata(gdata, fill=False):
+def __contour_griddata(gdata, ls, fill=False):
     print 'GridData...'
     if fill:
-        layer = DrawMeteoData.createShadedLayer(gdata.data, 'layer', 'data')
+        layer = DrawMeteoData.createShadedLayer(gdata.data, ls, 'layer', 'data', True)
     else:
-        layer = DrawMeteoData.createContourLayer(gdata.data, 'layer', 'data')
+        layer = DrawMeteoData.createContourLayer(gdata.data, ls, 'layer', 'data', True)
     mapview = MapView()
     mapview.setLockViewUpdate(True)
     mapview.addLayer(layer)
@@ -462,9 +494,16 @@ def __contour_griddata(gdata, fill=False):
         
 def contourf(*args, **kwargs):
     n = len(args)    
-    print 'Args number: ' + str(n)
+    #print 'Args number: ' + str(n)
+    cmapstr = kwargs.pop('cmap', 'grads_rainbow')
+    cmap = ColorUtil.getColorMap(cmapstr)
     if n == 1:    
-        plot = __contour_griddata(args[0], fill=True)
+        if isinstance(args[0], DimArray):
+            gdata = args[0].togriddata()
+        else:
+            gdata = args[0]
+        ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
+        plot = __contour_griddata(gdata, ls, fill=True)
         return plot
 
 def contourm(*args, **kwargs):

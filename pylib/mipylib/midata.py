@@ -7,6 +7,11 @@
 from org.meteoinfo.data import GridData, StationData, DataMath, TableData
 from org.meteoinfo.data.meteodata import MeteoDataInfo
 
+import dimdataset
+import dimvariable
+from dimdataset import DimDataset
+from dimvariable import DimVariable
+
 # Global variables
 meteodatalist = []
 c_meteodata = None
@@ -16,100 +21,6 @@ def isgriddata(gdata):
     
 def isstationdata(sdata):
     return isinstance(sdata, PyStationData)
-
-# The encapsulate class of GridData
-class PyGridData():
-    
-    # data must be a GridData object
-    def __init__(self, data=None):
-        self.data = data
-    
-    def __getitem__(self, indices):
-        print type(indices)
-        if not isinstance(indices, tuple):
-            print 'indices must be tuple!'
-            return None
-        
-        if len(indices) != 2:
-            print 'indices must be 2 dimension!'
-            return None
-            
-        sxidx = 0 if indices[0].start is None else indices[0].start
-        exidx = indices[0].stop is None and self.data.getXNum() or indices[0].stop
-        xstep = indices[0].step is None and 1 or indices[0].step
-        syidx = 0 if indices[1].start is None else indices[1].start
-        eyidx = indices[1].stop is None and self.data.getYNum() or indices[1].stop
-        ystep = indices[1].step is None and 1 or indices[1].step
-        gdata = PyGridData(self.data.extract(sxidx, exidx, xstep, syidx, eyidx, ystep))
-        return gdata
-    
-    def add(self, other):
-        gdata = None
-        if isinstance(other, PyGridData):            
-            gdata = PyGridData(self.data.add(other.data))
-        else:
-            gdata = PyGridData(self.data.add(other))
-        return gdata
-    
-    def __add__(self, other):
-        gdata = None
-        print isinstance(other, PyGridData)
-        if isinstance(other, PyGridData):            
-            gdata = PyGridData(self.data.add(other.data))
-        else:
-            gdata = PyGridData(self.data.add(other))
-        return gdata
-        
-    def __radd__(self, other):
-        return PyGridData.__add__(self, other)
-        
-    def __sub__(self, other):
-        gdata = None
-        if isinstance(other, PyGridData):
-            gdata = PyGridData(self.data.sub(other.data))
-        else:
-            gdata = PyGridData(self.data.sub(other))
-        return gdata
-        
-    def __rsub__(self, other):
-        gdata = None
-        if isinstance(other, PyGridData):
-            gdata = PyGridData(other.data.sub(self.data))
-        else:
-            gdata = PyGridData(DataMath.sub(other, self.data))
-        return gdata
-    
-    def __mul__(self, other):
-        gdata = None
-        if isinstance(other, PyGridData):
-            gdata = PyGridData(self.data.mul(other.data))
-        else:
-            gdata = PyGridData(self.data.mul(other))
-        return gdata
-        
-    def __rmul__(self, other):
-        return PyGridData.__mul__(self, other)
-        
-    def __div__(self, other):
-        gdata = None
-        if isinstance(other, PyGridData):
-            gdata = PyGridData(self.data.div(other.data))
-        else:
-            gdata = PyGridData(self.data.div(other))
-        return gdata
-        
-    def __rdiv__(self, other):
-        gdata = None
-        if isinstance(other, PyGridData):
-            gdata = PyGridData(other.data.div(self.data))
-        else:
-            gdata = PyGridData(DataMath.div(other, self))
-        return gdata
-        
-    # other must be a numeric data
-    def __pow__(self, other):
-        gdata = PyGridData(self.data.pow(other))
-        return gdata
 
 ###############################################################         
 # The encapsulate class of StationData
@@ -211,7 +122,9 @@ def opennc(fname):
     meteodata = MeteoDataInfo()
     meteodata.openNetCDFData(fname)
     __addmeteodata(meteodata)
-    return meteodata
+    #return meteodata
+    dataset = DimDataset(meteodata)
+    return dataset
 
 def __addmeteodata(meteodata):
     global c_meteodata, meteodatalist
