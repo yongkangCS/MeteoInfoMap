@@ -22,6 +22,12 @@ class DimVariable():
     def getdimlen(self, idx):
         return self.variable.getDimLength(idx)
         
+    def __len__(self):
+        len = 1;
+        for dim in self.variable.getDimensions():
+            len = len * dim.getDimLength()            
+        return len
+        
     def __getitem__(self, indices):
         #print type(indices)
         if not isinstance(indices, tuple):

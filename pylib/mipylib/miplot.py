@@ -446,6 +446,8 @@ def colorbar(layer, **kwargs):
     plot = chartpanel.getChart().getPlot()
     ls = layer.getLegendScheme()
     legend = plot.getLegend()
+    legend.setColorbar(True)
+    legend.setLegendScheme(ls)
     legend.setPosition(LegendPosition.RIGHT_OUTSIDE)
     plot.setDrawLegend(True)
     if isinteractive:
@@ -463,8 +465,8 @@ def contour(*args, **kwargs):
         else:
             gdata = args[0]
         ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
-        plot = __contour_griddata(gdata, ls)
-        return plot
+        layer = __contour_griddata(gdata, ls)
+        return layer
     #else:
     #    gdata = GridData()
     #    gdata.xArray = args[0]
@@ -490,7 +492,7 @@ def __contour_griddata(gdata, ls, fill=False):
     chartpanel.setChart(chart)
     if isinteractive:
         chartpanel.paintGraphics()
-    return plot
+    return layer
         
 def contourf(*args, **kwargs):
     n = len(args)    
@@ -503,8 +505,8 @@ def contourf(*args, **kwargs):
         else:
             gdata = args[0]
         ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
-        plot = __contour_griddata(gdata, ls, fill=True)
-        return plot
+        layer = __contour_griddata(gdata, ls, fill=True)
+        return layer
 
 def contourm(*args, **kwargs):
     n = len(args)    

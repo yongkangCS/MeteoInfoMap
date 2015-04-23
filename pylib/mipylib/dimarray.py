@@ -24,6 +24,13 @@ class DimArray():
         gdata = GridData(self.array, xdata, ydata, self.missingvalue, self.proj)
         return PyGridData(gdata)
         
+    def __len__(self):
+        shape = self.array.getShape()
+        len = 1
+        for l in shape:
+            len = len * l
+        return len
+        
 # The encapsulate class of GridData
 class PyGridData():
     

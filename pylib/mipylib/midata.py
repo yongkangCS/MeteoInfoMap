@@ -9,8 +9,10 @@ from org.meteoinfo.data.meteodata import MeteoDataInfo
 
 import dimdataset
 import dimvariable
+import dimarray
 from dimdataset import DimDataset
 from dimvariable import DimVariable
+from dimarray import PyGridData
 
 # Global variables
 meteodatalist = []

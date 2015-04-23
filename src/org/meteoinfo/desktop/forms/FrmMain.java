@@ -403,6 +403,8 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_AddXYData = new javax.swing.JMenuItem();
         jMenuItem_Clipping = new javax.swing.JMenuItem();
         jMenuItem_Animator = new javax.swing.JMenuItem();
+        jMenu_NetCDFData = new javax.swing.JMenu();
+        jMenuItem_JoinNCFiles = new javax.swing.JMenuItem();
         jMenu_Plugin = new javax.swing.JMenu();
         jMenuItem_PluginManager = new javax.swing.JMenuItem();
         jSeparator18 = new javax.swing.JPopupMenu.Separator();
@@ -1418,6 +1420,17 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
         jMenu_Tools.add(jMenuItem_Animator);
+        
+        jMenu_NetCDFData.setText(bundle.getString("FrmMain.jMenu_NetCDFData.text"));
+        jMenuItem_JoinNCFiles.setText(bundle.getString("FrmMain.jMenuItem_JoinNCFiles.text")); // NOI18N
+        jMenuItem_JoinNCFiles.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_JoinNCFilesActionPerformed(evt);
+            }
+        });
+        jMenu_NetCDFData.add(jMenuItem_JoinNCFiles);
+        jMenu_Tools.add(jMenu_NetCDFData);
 
         jMenuBar_Main.add(jMenu_Tools);
 
@@ -3182,6 +3195,12 @@ public class FrmMain extends JFrame implements IApplication {
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }
+    
+    private void jMenuItem_JoinNCFilesActionPerformed(java.awt.event.ActionEvent evt) {
+        FrmJoinNCFiles frm = new FrmJoinNCFiles(this, false);
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }
 
     private void jMenuItem_PluginManagerActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -3347,6 +3366,8 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_SaveAs;
     private javax.swing.JMenuItem jMenuItem_Script;
     private javax.swing.JMenuItem jMenuItem_ScriptConsole;
+    private javax.swing.JMenu jMenu_NetCDFData;
+    private javax.swing.JMenuItem jMenuItem_JoinNCFiles;
     private javax.swing.JMenuItem jMenuItem_SelByAttr;
     private javax.swing.JMenuItem jMenuItem_SelByLocation;
     private javax.swing.JMenuItem jMenuItem_Undo;
