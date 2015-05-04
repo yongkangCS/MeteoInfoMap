@@ -6,13 +6,16 @@
 #-----------------------------------------------------
 from org.meteoinfo.data import GridData, StationData, DataMath, TableData
 from org.meteoinfo.data.meteodata import MeteoDataInfo
+from org.meteoinfo.array import ArrayUtil
 
-import dimdataset
+import dimdatafile
 import dimvariable
 import dimarray
-from dimdataset import DimDataset
+import miarray
+from dimdatafile import DimDataFile
 from dimvariable import DimVariable
 from dimarray import PyGridData
+from miarray import MIArray
 
 # Global variables
 meteodatalist = []
@@ -114,19 +117,61 @@ class PyTableData():
         return None
 
 #################################################################        
-def opengrads(fname):
+def addfile_grads(fname):
     meteodata = MeteoDataInfo()
     meteodata.openGrADSData(fname)
     __addmeteodata(meteodata)
-    return meteodata
+    datafile = DimDataFile(meteodata)
+    return datafile
     
-def opennc(fname):
+def addfile(fname):
+    meteodata = MeteoDataInfo()
+    meteodata.openData(fname)
+    __addmeteodata(meteodata)
+    datafile = DimDataFile(meteodata)
+    return datafile
+    
+def addfile_nc(fname):
     meteodata = MeteoDataInfo()
     meteodata.openNetCDFData(fname)
     __addmeteodata(meteodata)
-    #return meteodata
-    dataset = DimDataset(meteodata)
-    return dataset
+    datafile = DimDataFile(meteodata)
+    return datafile
+    
+def addfile_arl(fname):
+    meteodata = MeteoDataInfo()
+    meteodata.openARLData(fname)
+    __addmeteodata(meteodata)
+    datafile = DimDataFile(meteodata)
+    return datafile
+    
+def addfile_surfer(fname):
+    meteodata = MeteoDataInfo()
+    meteodata.openSurferGridData(fname)
+    __addmeteodata(meteodata)
+    datafile = DimDataFile(meteodata)
+    return datafile
+    
+def addfile_mm5(fname):
+    meteodata = MeteoDataInfo()
+    meteodata.openMM5Data(fname)
+    __addmeteodata(meteodata)
+    datafile = DimDataFile(meteodata)
+    return datafile
+    
+def addfile_micaps(fname):
+    meteodata = MeteoDataInfo()
+    meteodata.openMICAPSData(fname)
+    __addmeteodata(meteodata)
+    datafile = DimDataFile(meteodata)
+    return datafile
+    
+def addfile_hyconc(fname):
+    meteodata = MeteoDataInfo()
+    meteodata.openHYSPLITConcData(fname)
+    __addmeteodata(meteodata)
+    datafile = DimDataFile(meteodata)
+    return datafile
 
 def __addmeteodata(meteodata):
     global c_meteodata, meteodatalist
@@ -160,3 +205,6 @@ def readtable(filename, **kwargs):
     tdata = TableData()
     tdata.readASCIIFile(filename, delimiter, headerlines, format, encoding)
     return PyTableData(tdata)
+    
+def arange(start=0, stop=1, step=1, dtype=None):
+    return MIArray(ArrayUtil.arrayRange(start, stop, step))

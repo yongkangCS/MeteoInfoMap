@@ -64,27 +64,13 @@ public class FrmConsole extends javax.swing.JFrame {
 
         Py.getSystemState().setdefaultencoding("utf-8");
         PythonInteractiveInterpreter interp = new PythonInteractiveInterpreter(console);
-        String path = this.frmMain.getStartupPath() + File.separator + "pylib";
-//        if (isDebug) {
-//            path = "D:/MyProgram/Distribution/Java/MeteoInfo/MeteoInfo/pylib";
-//        }
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         try {
-            //MeteoInfoScript mis = new MeteoInfoScript(path);
             interp.exec("import sys");
-            //interp.set("mis", mis);
-            interp.exec("sys.path.append('" + path + "')");
-            interp.exec("from milab import *");
-            //interp.exec("import mipylib");
-            //interp.exec("from mipylib.miscript import *");
-            interp.exec("mipylib.miplot.isinteractive = True");
-            //interp.exec("from meteoinfo.numeric.JNumeric import *");
-            //interp.exec("import mipylib.miscript as plt");
-            //interp.exec("import meteoinfo.numeric.JNumeric as np");
-            //interp.exec("import miscript");
-            //interp.exec("from miscript import MeteoInfoScript");
-            //interp.exec("mis = MeteoInfoScript()");
+            //interp.exec("sys.path.append('" + path + "')");
+            //interp.exec("from milab import *");
+            //interp.exec("mipylib.miplot.isinteractive = True");
             interp.set("miapp", frmMain);
             for (String jarfn : jarfns) {
                 interp.exec("sys.path.append('" + jarfn + "')");

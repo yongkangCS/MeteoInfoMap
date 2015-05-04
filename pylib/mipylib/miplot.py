@@ -12,21 +12,24 @@ from org.meteoinfo.data import XYListDataset, GridData
 from org.meteoinfo.data.mapdata import MapDataManage
 from org.meteoinfo.data.meteodata import MeteoDataInfo, DrawMeteoData
 from org.meteoinfo.chart.plot import XY1DPlot, XY2DPlot, MapPlot, ChartPlotMethod
-from org.meteoinfo.chart import Chart, ChartText, LegendPosition
+from org.meteoinfo.chart import Chart, ChartText, ChartLegend, LegendPosition
 from org.meteoinfo.script import ChartForm, MapForm
-from org.meteoinfo.legend import MapFrame, LineStyles, PointBreak, PolylineBreak, LegendManage, LegendScheme
+from org.meteoinfo.legend import MapFrame, LineStyles, BreakTypes, PointBreak, PolylineBreak, LegendManage, LegendScheme
 from org.meteoinfo.drawing import PointStyle
 from org.meteoinfo.global import Extent
 from org.meteoinfo.global.colors import ColorUtil, ColorMap
 from org.meteoinfo.layout import MapLayout
 from org.meteoinfo.map import MapView
 from org.meteoinfo.laboratory.gui import FrmMain
+from org.meteoinfo.projection import ProjectionInfo
 
 from javax.swing import WindowConstants
 from java.awt import Color, Font
 
 import dimarray
 from dimarray import DimArray, PyGridData
+import miarray
+from miarray import MIArray
 
 ## Global ##
 milapp = None
@@ -48,6 +51,13 @@ if os.path.exists(mapfn):
     pgb.setDrawFill(False)
     pgb.setOutlineColor(Color.darkGray)    
 """
+
+def shaperead(fn):
+    layer = MapDataManage.loadLayer(fn)
+    pgb = layer.getLegendScheme().getLegendBreaks().get(0)
+    pgb.setDrawFill(False)
+    pgb.setOutlineColor(Color.darkGray) 
+    return layer
     
 def map(map=True):
     global ismap
@@ -82,18 +92,30 @@ def plot(*args, **kwargs):
     c = 'x'
     for arg in args:
         if len(args) == 1:
-            ydata = arg
+            if isinstance(arg, MIArray):
+                data = arg.array
+            else:
+                data = arg
+            ydata = data
             xdata = []
-            for i in range(0, len(ydata)):
+            for i in range(0, len(arg)):
                 xdata.append(i)
             xdatalist.append(xdata)
             ydatalist.append(ydata)
         else:
             if c == 'x':
-                xdatalist.append(arg)                
+                if isinstance(arg, MIArray):
+                    data = arg.array
+                else:
+                    data = arg
+                xdatalist.append(data)                
                 c = 'y'
             elif c == 'y':
-                ydatalist.append(arg)
+                if isinstance(arg, MIArray):
+                    data = arg.array
+                else:
+                    data = arg
+                ydatalist.append(data)
                 c = 's'
             elif c == 's':
                 if isinstance(arg, basestring):
@@ -329,7 +351,7 @@ def __getpointstyle(style):
     return pointStyle
     
 def __getcolor(style):
-    c = None
+    c = Color.black
     if style == 'red':
         c = Color.red
     elif style == 'black':
@@ -342,23 +364,28 @@ def __getcolor(style):
         c = Color.white
     elif style == 'yellow':
         c = Color.yellow
-    elif 'r' in style:
-        c = Color.red
-    elif 'k' in style:
-        c = Color.black
-    elif 'b' in style:
-        c = Color.blue
-    elif 'g' in style:
-        c = Color.green
-    elif 'w' in style:
-        c = Color.white
-    elif 'c' in style:
-        c = Color.cyan
-    elif 'm' in style:
-        c = Color.magenta
-    elif 'y' in style:
-        c = Color.yellow
-        
+    elif style == 'gray':
+        c = Color.gray
+    elif style == 'lightgray':
+        c = Color.lightGray
+    else:
+        if 'r' in style:
+            c = Color.red
+        elif 'k' in style:
+            c = Color.black
+        elif 'b' in style:
+            c = Color.blue
+        elif 'g' in style:
+            c = Color.green
+        elif 'w' in style:
+            c = Color.white
+        elif 'c' in style:
+            c = Color.cyan
+        elif 'm' in style:
+            c = Color.magenta
+        elif 'y' in style:
+            c = Color.yellow        
+               
     return c
     
 def __getsymbolinterval(n):
@@ -446,9 +473,14 @@ def colorbar(layer, **kwargs):
     plot = chartpanel.getChart().getPlot()
     ls = layer.getLegendScheme()
     legend = plot.getLegend()
-    legend.setColorbar(True)
-    legend.setLegendScheme(ls)
+    if legend == None:
+        legend = ChartLegend(ls)
+        plot.setLegend(legend)
+    else:
+        legend.setLegendScheme(ls)
+    legend.setColorbar(True)    
     legend.setPosition(LegendPosition.RIGHT_OUTSIDE)
+    legend.setDrawNeatLine(False)
     plot.setDrawLegend(True)
     if isinteractive:
         chartpanel.paintGraphics()
@@ -458,15 +490,21 @@ def contour(*args, **kwargs):
     #print 'Args number: ' + str(n)
     #if isinstance(args[0], PyGridData):
     cmapstr = kwargs.pop('cmap', 'grads_rainbow')
-    cmap = ColorUtil.getColorMap(cmapstr) 
-    if n == 1:        
-        if isinstance(args[0], DimArray):
-            gdata = args[0].togriddata()
+    cmap = ColorUtil.getColorMap(cmapstr)         
+    if isinstance(args[0], DimArray):
+        gdata = args[0].togriddata()
+    else:
+        gdata = args[0]
+    if n == 2:
+        if isinstance(args[1], int):
+            cn = args[1]
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cn, cmap)
         else:
-            gdata = args[0]
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cn, cmap)
+    else:
         ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
-        layer = __contour_griddata(gdata, ls)
-        return layer
+    layer = __contour_griddata(gdata, ls)
+    return layer
     #else:
     #    gdata = GridData()
     #    gdata.xArray = args[0]
@@ -477,16 +515,14 @@ def contour(*args, **kwargs):
     #    return plot
 
 def __contour_griddata(gdata, ls, fill=False):
-    print 'GridData...'
+    #print 'GridData...'
     if fill:
         layer = DrawMeteoData.createShadedLayer(gdata.data, ls, 'layer', 'data', True)
     else:
         layer = DrawMeteoData.createContourLayer(gdata.data, ls, 'layer', 'data', True)
     mapview = MapView()
-    mapview.setLockViewUpdate(True)
-    mapview.addLayer(layer)
-    mapview.setLockViewUpdate(False)
     plot = XY2DPlot(mapview)
+    plot.addLayer(layer)
     chart = Chart(plot)
     #chart.setAntiAlias(True)
     chartpanel.setChart(chart)
@@ -510,39 +546,124 @@ def contourf(*args, **kwargs):
 
 def contourm(*args, **kwargs):
     n = len(args)    
-    print 'Args number: ' + str(n)
+    #print 'Args number: ' + str(n)
+    cmapstr = kwargs.pop('cmap', 'grads_rainbow')
+    cmap = ColorUtil.getColorMap(cmapstr)
     if n == 2:    
-        __contour_griddata_m(args[0], args[1])
+        plot = args[0]
+        if isinstance(args[1], DimArray):
+            gdata = args[1].togriddata()
+        else:
+            gdata = args[1]
+        ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
+        layer = __contour_griddata_m(plot, gdata, ls)
+        return layer
         
 def contourfm(*args, **kwargs):
     n = len(args)    
-    print 'Args number: ' + str(n)
+    #print 'Args number: ' + str(n)
+    cmapstr = kwargs.pop('cmap', 'grads_rainbow')
+    cmap = ColorUtil.getColorMap(cmapstr)
     if n == 2:    
         plot = args[0]
-        __contour_griddata_m(plot, args[1], fill=True)
-        return plot
+        if isinstance(args[1], DimArray):
+            gdata = args[1].togriddata()
+        else:
+            gdata = args[1]
+        ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
+        layer = __contour_griddata_m(plot, gdata, ls, fill=True)
+        return layer
         
-def __contour_griddata_m(plot, gdata, fill=False):
-    print 'GridData...'
+def __contour_griddata_m(plot, gdata, ls, fill=False):
+    #print 'GridData...'
     if fill:
-        layer = DrawMeteoData.createShadedLayer(gdata.data, 'layer', 'data')
+        layer = DrawMeteoData.createShadedLayer(gdata.data, ls, 'layer', 'data', True)
     else:
-        layer = DrawMeteoData.createContourLayer(gdata.data, 'layer', 'data')
-    plot.getMapFrame().addLayer(0, layer)
+        layer = DrawMeteoData.createContourLayer(gdata.data, ls, 'layer', 'data', True)
+    plot.addLayer(0, layer)
+    plot.setDrawExtent(layer.getExtent())
     chart = Chart(plot)
     #chart.setAntiAlias(True)
     chartpanel.setChart(chart)
     if isinteractive:
         chartpanel.paintGraphics()
+    return layer
         
-def geomap():
+def worldmap():
     mapview = MapView()
+    mapview.setXYScaleFactor(1.0)
     #print 'Is GeoMap: ' + str(mapview.isGeoMap())
     plot = MapPlot(mapview)
+    chart = chartpanel.getChart()
+    chart.clearPlots()
+    chart.setPlot(plot)
+    global c_plot
+    c_plot = plot
     return plot
+    
+def axesm(proj='longlat', **kwargs):
+    origin = kwargs.pop('origin', [0, 0, 0])    
+    lat_0 = origin[0]
+    lon_0 = origin[1]
+    lat_ts = kwargs.pop('truescalelat', 0)
+    k = kwargs.pop('scalefactor', 1)
+    paralles = kwargs.pop('paralles', [30, 60])
+    lat_1 = paralles[0]
+    if len(paralles) == 2:
+        lat_2 = paralles[1]
+    else:
+        lat_2 = lat_1
+    x_0 = kwargs.pop('falseeasting', 0)
+    y_0 = kwargs.pop('falsenorthing', 0)
+    projstr = '+proj=' + proj \
+        + ' +lat_0=' + str(lat_0) \
+        + ' +lon_0=' + str(lon_0) \
+        + ' +lat_1=' + str(lat_1) \
+        + ' +lat_2=' + str(lat_2) \
+        + ' +lat_ts=' + str(lat_ts) \
+        + ' +k=' + str(k) \
+        + ' +x_0=' + str(x_0) \
+        + ' +y_0=' + str(y_0)
+    toproj = ProjectionInfo(projstr)
+    c_plot.getMapView().projectLayers(toproj)
         
-def geoshow(plot, layer):
-    plot.getMapFrame().addLayer(layer)
+def geoshow(plot, layer, **kwargs):
+    drawfill = kwargs.pop('drawfill', False)
+    fcobj = kwargs.pop('facecolor', None)
+    if fcobj == None:
+        facecolor = Color.lightGray
+    else:
+        if isinstance(fcobj, str):
+            facecolor = __getcolor(fcobj)
+        else:
+            if len(fcobj) == 3:
+                facecolor = Color(fcobj[0], fcobj[1], fcobj[2])
+            else:
+                facecolor = Color(fcobj[0], fcobj[1], fcobj[2])
+    lcobj = kwargs.pop('linecolor', None)
+    if lcobj == None:
+        linecolor = Color.black
+    else:
+        if isinstance(lcobj, str):
+            linecolor = __getcolor(lcobj)
+        else:
+            if len(lcobj) == 3:                
+                linecolor = Color(lcobj[0], lcobj[1], lcobj[2])
+            else:
+                linecolor = Color(lcobj[0], lcobj[1], lcobj[2], lcobj[3])
+    size = kwargs.pop('size', 1)
+    lb = layer.getLegendScheme().getLegendBreaks().get(0)
+    lb.setColor(facecolor)
+    btype = lb.getBreakType()
+    if btype == BreakTypes.PointBreak:
+        lb.setOutlineColor(linecolor)
+    elif btype == BreakTypes.PolylineBreak:
+        lb.setSize(size)
+    elif btype == BreakTypes.PolygonBreak:
+        lb.setDrawFill(drawfill)
+        lb.setOutlineColor(linecolor)
+        lb.setOutlineSize(size)
+    plot.addLayer(layer)
     
 def display(data):
     if not ismap:

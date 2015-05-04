@@ -119,27 +119,14 @@ public class Program {
     }
 
     private static void runInteractive() {
-//        PlotForm plotForm = new PlotForm();
-//        plotForm.setSize(800, 600);
-//        plotForm.setVisible(true);
-//        MeteoInfoScript mis = new MeteoInfoScript(plotForm);
-        String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "pylib";
-        //MeteoInfoScript mis = new MeteoInfoScript(path);
+        //String path = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "pylib";
         InteractiveConsole console = new InteractiveConsole();
         try {
             //console.set("mis", mis);
             console.exec("import sys");
-            console.exec("sys.path.append('" + path + "')");
-            console.exec("from milab import *");
-            //console.exec("import mipylib");
-            //console.exec("from mipylib.miscript import *");
-            console.exec("mipylib.miplot.isinteractive = True");
-            //console.exec("from meteoinfo.numeric.JNumeric import *");
-            //console.exec("import mipylib.miscript as plt");
-            //console.exec("import meteoinfo.numeric.JNumeric as np");
-            //console.exec("import miscript");
-            //console.exec("from miscript import MeteoInfoScript");
-            //console.exec("mis = MeteoInfoScript()");
+            //console.exec("sys.path.append('" + path + "')");
+            //console.exec("from milab import *");
+            //console.exec("mipylib.miplot.isinteractive = True");
         } catch (Exception e) {
             e.printStackTrace();
         }

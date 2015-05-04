@@ -8,9 +8,11 @@ from org.meteoinfo.data.meteodata import MeteoDataInfo
 from ucar.ma2 import Section
 import dimvariable
 from dimvariable import DimVariable
+import dimarray
+from dimarray import PyGridData
 
 # Dimension dataset
-class DimDataset():
+class DimDataFile():
     
     # dataset must be org.meteoinfo.data.meteodata.MeteoDataInfo
     def __init__(self, dataset=None):
@@ -30,4 +32,22 @@ class DimDataset():
         return self.dataset.read(varname, origin, size)
         
     def dump(self):
-        return self.dataset.getInfoText()
+        print self.dataset.getInfoText()
+        
+    def griddata(self, varname='var', timeindex=0, levelindex=0, yindex=None, xindex=None):
+        if self.dataset.isGridData():
+            self.dataset.setTimeIndex(timeindex)
+            self.dataset.setLevelIndex(levelindex)
+            gdata = PyGridData(self.dataset.getGridData(varname))
+            return gdata
+        else:
+            return None
+        
+    def stationdata(varname='var', timeindex=0, levelindex=0):
+        if self.dataset.isStationData():
+            self.dataset.setTimeIndex(timeindex)
+            self.dataset.setLevelIndex(levelindex)
+            sdata = PyStationData(self.dataset.getStationData(varname))
+            return sdata
+        else:
+            return None

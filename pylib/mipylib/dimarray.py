@@ -5,31 +5,141 @@
 # Note: Jython
 #-----------------------------------------------------
 from org.meteoinfo.projection import ProjectionInfo
-from org.meteoinfo.data import GridData
+from org.meteoinfo.data import GridData, ArrayMath
 from ucar.ma2 import Array
+import miarray
+from miarray import MIArray
 
 # Dimension array
 class DimArray():
     
-    # array must be ucar.ma2.Array
+    # array must be MIArray
     def __init__(self, array=None, dims=None, missingvalue=-9999.0, proj=None):
         self.array = array
         self.dims = dims
+        self.ndim = len(dims)
         self.missingvalue = missingvalue
         self.proj = proj
         
     def togriddata(self):
         xdata = self.dims[1].getDimValue()
         ydata = self.dims[0].getDimValue()
-        gdata = GridData(self.array, xdata, ydata, self.missingvalue, self.proj)
+        gdata = GridData(self.array.array, xdata, ydata, self.missingvalue, self.proj)
         return PyGridData(gdata)
         
     def __len__(self):
-        shape = self.array.getShape()
+        shape = self.array.getshape()
         len = 1
         for l in shape:
             len = len * l
         return len
+        
+    def __getitem__(self, indices):
+        #print type(indices)
+        if not isinstance(indices, tuple):
+            print 'indices must be tuple!'
+            return None
+        
+        if len(indices) != self.ndim:
+            print 'indices must be ' + str(self.ndim) + ' dimensions!'
+            return None
+            
+        origin = []
+        size = []
+        stride = []
+        dims = []
+        for i in range(0, self.ndim):   
+            if isinstance(indices[i], int):
+                sidx = indices[i]
+                eidx = indices[i]
+                step = 1
+            else:
+                sidx = 0 if indices[i].start is None else indices[i].start
+                eidx = indices[i].stop is None and self.dims[i].getDimLength()-1 or indices[i].stop
+                step = indices[i].step is None and 1 or indices[i].step
+            origin.append(sidx)
+            n = eidx - sidx + 1
+            size.append(n)
+            stride.append(step)
+            if n > 1:
+                dim = self.dims[i]
+                dims.append(dim.extract(sidx, eidx, step))
+                    
+        r = ArrayMath.section(self.array.array, origin, size, stride)
+        array = MIArray(r)
+        data = DimArray(array, dims, self.missingvalue, self.proj)
+        return data
+        
+    def __add__(self, other):
+        r = None
+        if isinstance(other, DimArray):      
+            r = DimArray(self.array.__add__(other.array), self.dims, self.missingvalue, self.proj)
+        else:
+            r = DimArray(self.array.__add__(other), self.dims, self.missingvalue, self.proj)
+        return r
+        
+    def __radd__(self, other):
+        return DimArray.__add__(self, other)
+        
+    def __sub__(self, other):
+        r = None
+        if isinstance(other, DimArray): 
+            r = DimArray(self.array.__sub__(other.array), self.dims, self.missingvalue, self.proj)
+        else:
+            r = DimArray(self.array.__sub__(other), self.dims, self.missingvalue, self.proj)
+        return r
+        
+    def __rsub__(self, other):
+        r = None
+        if isinstance(other, DimArray): 
+            r = DimArray(self.array.__rsub__(other.array), self.dims, self.missingvalue, self.proj)
+        else:
+            r = DimArray(self.array.__rsub__(other), self.dims, self.missingvalue, self.proj)
+        return r
+        
+    def __mul__(self, other):
+        r = None
+        if isinstance(other, DimArray): 
+            r = DimArray(self.array.__mul__(other.array), self.dims, self.missingvalue, self.proj)
+        else:
+            r = DimArray(self.array.__mul__(other), self.dims, self.missingvalue, self.proj)
+        return r
+        
+    def __rmul__(self, other):
+        return DimArray.__mul__(self, other)
+        
+    def __div__(self, other):
+        r = None
+        if isinstance(other, DimArray): 
+            r = DimArray(self.array.__div__(other.array), self.dims, self.missingvalue, self.proj)
+        else:
+            r = DimArray(self.array.__div__(other), self.dims, self.missingvalue, self.proj)
+        return r
+        
+    def __rdiv__(self, other):
+        r = None
+        if isinstance(other, DimArray): 
+            r = DimArray(self.array.__rdiv__(other.array), self.dims, self.missingvalue, self.proj)
+        else:
+            r = DimArray(self.array.__rdiv__(other), self.dims, self.missingvalue, self.proj)
+        return r
+        
+    def __pow__(self, other):
+        r = DimArray(self.array.__pow__(other), self.dims, self.missingvalue, self.proj)
+        return r
+        
+    def getminvalue(self):
+        return self.array.getminvalue()
+        
+    def getmaxvalue(self):
+        return self.array.getmaxvalue()
+        
+    def sum(self, missingv=None):
+        return self.array.sum(missingv)
+        
+    def ave(self, missingv=None):
+        return self.array.ave(missingv)
+    
         
 # The encapsulate class of GridData
 class PyGridData():

@@ -7,6 +7,8 @@
 from org.meteoinfo.data.meteodata import Variable, Dimension
 import dimarray
 from dimarray import DimArray, PyGridData
+import miarray
+from miarray import MIArray
 
 # Dimension variable
 class DimVariable():
@@ -59,6 +61,6 @@ class DimVariable():
                 dim = self.variable.getDimension(i)
                 dims.append(dim.extract(sidx, eidx, step))
                     
-        array = self.dataset.read(self.name, origin, size, stride)
+        array = MIArray(self.dataset.read(self.name, origin, size, stride).reduce())
         data = DimArray(array, dims, self.dataset.missingvalue, self.dataset.proj)
         return data
