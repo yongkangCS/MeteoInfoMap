@@ -4,8 +4,8 @@
  */
 package org.meteoinfo.desktop.config;
 
-import bsh.JavaCharStream;
-import bsh.util.JConsole;
+import org.meteoinfo.console.JavaCharStream;
+import org.meteoinfo.console.JConsole;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;

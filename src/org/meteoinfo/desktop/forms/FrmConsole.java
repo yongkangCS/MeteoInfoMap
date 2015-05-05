@@ -4,7 +4,6 @@
  */
 package org.meteoinfo.desktop.forms;
 
-import bsh.util.JConsole;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -16,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.meteoinfo.desktop.config.PythonInteractiveInterpreter;
 import org.meteoinfo.global.util.GlobalUtil;
+import org.meteoinfo.console.JConsole;
 import org.python.core.Py;
 
 /**
