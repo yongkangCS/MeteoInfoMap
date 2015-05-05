@@ -136,3 +136,6 @@ class MIArray():
             return ArrayMath.aveDouble(self.array)
         else:
             return ArrayMath.aveDouble(self.array, missingv)
+            
+    def aslist(self):
+        return ArrayMath.asList(self.array)

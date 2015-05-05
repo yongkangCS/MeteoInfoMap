@@ -21,7 +21,7 @@ class DimArray():
         self.missingvalue = missingvalue
         self.proj = proj
         
-    def togriddata(self):
+    def asgriddata(self):
         xdata = self.dims[1].getDimValue()
         ydata = self.dims[0].getDimValue()
         gdata = GridData(self.array.array, xdata, ydata, self.missingvalue, self.proj)

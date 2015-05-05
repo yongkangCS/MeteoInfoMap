@@ -14,7 +14,7 @@ import dimarray
 import miarray
 from dimdatafile import DimDataFile
 from dimvariable import DimVariable
-from dimarray import PyGridData
+from dimarray import PyGridData, DimArray
 from miarray import MIArray
 
 # Global variables
@@ -208,3 +208,11 @@ def readtable(filename, **kwargs):
     
 def arange(start=0, stop=1, step=1, dtype=None):
     return MIArray(ArrayUtil.arrayRange(start, stop, step))
+    
+def asgriddata(data):
+    if isinstance(data, PyGridData):
+        return data
+    elif isinstance(data, DimArray):
+        return data.asgriddata()
+    else:
+        return None

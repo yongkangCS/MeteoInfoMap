@@ -30,6 +30,7 @@ import dimarray
 from dimarray import DimArray, PyGridData
 import miarray
 from miarray import MIArray
+import midata
 
 ## Global ##
 milapp = None
@@ -352,39 +353,45 @@ def __getpointstyle(style):
     
 def __getcolor(style):
     c = Color.black
-    if style == 'red':
-        c = Color.red
-    elif style == 'black':
-        c = Color.black
-    elif style == 'blue':
-        c = Color.blue
-    elif style == 'green':
-        c = Color.green
-    elif style == 'white':
-        c = Color.white
-    elif style == 'yellow':
-        c = Color.yellow
-    elif style == 'gray':
-        c = Color.gray
-    elif style == 'lightgray':
-        c = Color.lightGray
-    else:
-        if 'r' in style:
+    if isinstance(style, str):
+        if style == 'red':
             c = Color.red
-        elif 'k' in style:
+        elif style == 'black':
             c = Color.black
-        elif 'b' in style:
+        elif style == 'blue':
             c = Color.blue
-        elif 'g' in style:
+        elif style == 'green':
             c = Color.green
-        elif 'w' in style:
+        elif style == 'white':
             c = Color.white
-        elif 'c' in style:
-            c = Color.cyan
-        elif 'm' in style:
-            c = Color.magenta
-        elif 'y' in style:
-            c = Color.yellow        
+        elif style == 'yellow':
+            c = Color.yellow
+        elif style == 'gray':
+            c = Color.gray
+        elif style == 'lightgray':
+            c = Color.lightGray
+        else:
+            if 'r' in style:
+                c = Color.red
+            elif 'k' in style:
+                c = Color.black
+            elif 'b' in style:
+                c = Color.blue
+            elif 'g' in style:
+                c = Color.green
+            elif 'w' in style:
+                c = Color.white
+            elif 'c' in style:
+                c = Color.cyan
+            elif 'm' in style:
+                c = Color.magenta
+            elif 'y' in style:
+                c = Color.yellow 
+    elif isinstance(style, tuple):
+        if len(style) == 3:
+            c = Color(style[0], style[1], style[2])
+        else:
+            c = Color(style[0], style[1], style[2], style[3])
                
     return c
     
@@ -397,6 +404,16 @@ def __getsymbolinterval(n):
         i = n / v
     
     return i
+    
+def __getfont(**kwargs):
+    fontname = kwargs.pop('fontname', 'Arial')
+    fontsize = kwargs.pop('fontsize', 14)
+    bold = kwargs.pop('bold', False)
+    if bold:
+        font = Font(fontname, Font.BOLD, fontsize)
+    else:
+        font = Font(fontname, Font.PLAIN, fontsize)
+    return font
 
 def title(title, fontname='Arial', fontsize=14, bold=True, color='black'):
     if bold:
@@ -485,34 +502,44 @@ def colorbar(layer, **kwargs):
     if isinteractive:
         chartpanel.paintGraphics()
 
-def contour(*args, **kwargs):
-    n = len(args)    
-    #print 'Args number: ' + str(n)
-    #if isinstance(args[0], PyGridData):
-    cmapstr = kwargs.pop('cmap', 'grads_rainbow')
-    cmap = ColorUtil.getColorMap(cmapstr)         
-    if isinstance(args[0], DimArray):
-        gdata = args[0].togriddata()
+def __getcolormap(**kwargs):
+    colors = kwargs.pop('colors', None)
+    if colors != None:
+        if isinstance(colors, str):
+            c = __getcolor(colors)
+            cmap = ColorMap(c)
+        elif isinstance(colors, tuple):
+            cs = []
+            for cc in colors:
+                cs.append(__getcolor(cc))
+            cmap = ColorMap(cs)
     else:
-        gdata = args[0]
-    if n == 2:
-        if isinstance(args[1], int):
-            cn = args[1]
+        cmapstr = kwargs.pop('cmap', 'matlab_jet')
+        cmap = ColorUtil.getColorMap(cmapstr)
+    return cmap
+        
+def contour(*args, **kwargs):
+    n = len(args)
+    cmap = __getcolormap(**kwargs)
+    if n <= 2:
+        gdata = midata.asgriddata(args[0])
+        args = args[1:]
+    elif n <=4:
+        x = args[0]
+        y = args[1]
+        gdata = args[4]
+        args = args[3:]
+    if len(args) > 0:
+        level_arg = args[0]
+        if isinstance(level_arg, int):
+            cn = level_arg
             ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cn, cmap)
         else:
-            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cn, cmap)
-    else:
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), level_arg, cmap)
+    else:    
         ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
     layer = __contour_griddata(gdata, ls)
     return layer
-    #else:
-    #    gdata = GridData()
-    #    gdata.xArray = args[0]
-    #    gdata.yArray = args[1]
-    #    gdata.data = args[2]
-    #    pygdata = PyGridData(gdata)
-    #    plot = __contour_griddata(pygdata)
-    #    return plot
 
 def __contour_griddata(gdata, ls, fill=False):
     #print 'GridData...'
@@ -532,47 +559,78 @@ def __contour_griddata(gdata, ls, fill=False):
         
 def contourf(*args, **kwargs):
     n = len(args)    
-    #print 'Args number: ' + str(n)
-    cmapstr = kwargs.pop('cmap', 'grads_rainbow')
-    cmap = ColorUtil.getColorMap(cmapstr)
-    if n == 1:    
-        if isinstance(args[0], DimArray):
-            gdata = args[0].togriddata()
+    cmap = __getcolormap(**kwargs)
+    if n <= 2:
+        gdata = midata.asgriddata(args[0])
+        args = args[1:]
+    elif n <=4:
+        x = args[0]
+        y = args[1]
+        gdata = args[4]
+        args = args[3:]
+    if len(args) > 0:
+        level_arg = args[0]
+        if isinstance(level_arg, int):
+            cn = level_arg
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cn, cmap)
         else:
-            gdata = args[0]
+            if isinstance(level_arg, MIArray):
+                level_arg = level_arg.aslist()
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), level_arg, cmap)
+    else:    
         ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
-        layer = __contour_griddata(gdata, ls, fill=True)
-        return layer
+    layer = __contour_griddata(gdata, ls, fill=True)
+    return layer
 
-def contourm(*args, **kwargs):
-    n = len(args)    
-    #print 'Args number: ' + str(n)
-    cmapstr = kwargs.pop('cmap', 'grads_rainbow')
-    cmap = ColorUtil.getColorMap(cmapstr)
-    if n == 2:    
-        plot = args[0]
-        if isinstance(args[1], DimArray):
-            gdata = args[1].togriddata()
+def contourm(*args, **kwargs):      
+    cmap = __getcolormap(**kwargs)
+    plot = args[0]
+    args = args[1:]
+    n = len(args) 
+    if n <= 2:
+        gdata = midata.asgriddata(args[0])
+        args = args[1:]
+    elif n <=4:
+        x = args[0]
+        y = args[1]
+        gdata = args[4]
+        args = args[3:]
+    if len(args) > 0:
+        level_arg = args[0]
+        if isinstance(level_arg, int):
+            cn = level_arg
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cn, cmap)
         else:
-            gdata = args[1]
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), level_arg, cmap)
+    else:    
         ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
-        layer = __contour_griddata_m(plot, gdata, ls)
-        return layer
+    layer = __contour_griddata_m(plot, gdata, ls)
+    return layer
         
 def contourfm(*args, **kwargs):
-    n = len(args)    
-    #print 'Args number: ' + str(n)
-    cmapstr = kwargs.pop('cmap', 'grads_rainbow')
-    cmap = ColorUtil.getColorMap(cmapstr)
-    if n == 2:    
-        plot = args[0]
-        if isinstance(args[1], DimArray):
-            gdata = args[1].togriddata()
+    cmap = __getcolormap(**kwargs)
+    plot = args[0]
+    args = args[1:]
+    n = len(args) 
+    if n <= 2:
+        gdata = midata.asgriddata(args[0])
+        args = args[1:]
+    elif n <=4:
+        x = args[0]
+        y = args[1]
+        gdata = args[4]
+        args = args[3:]
+    if len(args) > 0:
+        level_arg = args[0]
+        if isinstance(level_arg, int):
+            cn = level_arg
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cn, cmap)
         else:
-            gdata = args[1]
+            ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), level_arg, cmap)
+    else:    
         ls = LegendManage.createLegendScheme(gdata.getminvalue(), gdata.getmaxvalue(), cmap)
-        layer = __contour_griddata_m(plot, gdata, ls, fill=True)
-        return layer
+    layer = __contour_griddata_m(plot, gdata, ls, fill=True)
+    return layer
         
 def __contour_griddata_m(plot, gdata, ls, fill=False):
     #print 'GridData...'
@@ -588,6 +646,17 @@ def __contour_griddata_m(plot, gdata, ls, fill=False):
     if isinteractive:
         chartpanel.paintGraphics()
     return layer
+    
+def clabel(layer, **kwargs):
+    font = __getfont(**kwargs)
+    cstr = kwargs.pop('color', 'black')
+    color = __getcolor(cstr)
+    labelset = layer.getLabelSet()
+    labelset.setLabelFont(font)
+    labelset.setLabelColor(color)
+    layer.addLabelsContourDynamic(layer.getExtent())
+    if isinteractive:
+        chartpanel.paintGraphics()
         
 def worldmap():
     mapview = MapView()
@@ -633,13 +702,7 @@ def geoshow(plot, layer, **kwargs):
     if fcobj == None:
         facecolor = Color.lightGray
     else:
-        if isinstance(fcobj, str):
-            facecolor = __getcolor(fcobj)
-        else:
-            if len(fcobj) == 3:
-                facecolor = Color(fcobj[0], fcobj[1], fcobj[2])
-            else:
-                facecolor = Color(fcobj[0], fcobj[1], fcobj[2])
+        facecolor = __getcolor(fcobj)
     lcobj = kwargs.pop('linecolor', None)
     if lcobj == None:
         linecolor = Color.black

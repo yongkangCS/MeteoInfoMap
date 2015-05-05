@@ -45,14 +45,30 @@ class DimVariable():
         stride = []
         dims = []
         for i in range(0, self.ndim):   
-            if isinstance(indices[i], int):
-                sidx = indices[i]
-                eidx = indices[i]
+            k = indices[i]
+            if isinstance(k, int):
+                sidx = k
+                eidx = k
                 step = 1
+            elif isinstance(k, slice):
+                sidx = 0 if k.start is None else k.start
+                eidx = k.stop is None and self.getdimlen(i)-1 or k.stop
+                step = k.step is None and 1 or k.step
+            elif isinstance(k, tuple):
+                #k = k[0]
+                dim = self.variable.getDimension(i)
+                sidx = dim.getValueIndex(k[0])
+                if len(k) == 1:
+                    eidx = sidx
+                    step = 1
+                else:                    
+                    eidx = dim.getValueIndex(k[1])
+                    if len(k) == 2:
+                        step = 1
+                    else:
+                        step = int(k[2] / dim.getDeltaValue)
             else:
-                sidx = 0 if indices[i].start is None else indices[i].start
-                eidx = indices[i].stop is None and self.getdimlen(i)-1 or indices[i].stop
-                step = indices[i].step is None and 1 or indices[i].step
+                return None
             origin.append(sidx)
             n = eidx - sidx + 1
             size.append(n)

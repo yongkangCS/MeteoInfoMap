@@ -28,6 +28,12 @@ class DimDataFile():
             return DimVariable(self.dataset.getDataInfo().getVariable(key), self)
         return None
         
+    def __str__(self):
+        return self.dataset.getInfoText()
+        
+    def __repr__(self):
+        return self.dataset.getInfoText()
+        
     def read(self, varname, origin, size, stride=None):
         return self.dataset.read(varname, origin, size)
         
