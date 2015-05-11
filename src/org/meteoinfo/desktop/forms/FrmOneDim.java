@@ -708,7 +708,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         XYListDataset dataset = (XYListDataset)this._chartPanel.getChart().getPlot().getDataset();
        
         FrmViewData frmData = new FrmViewData();
-        frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
+        //frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
         frmData.setXYData(dataset);
         frmData.setLocationRelativeTo(this);
         frmData.setVisible(true);

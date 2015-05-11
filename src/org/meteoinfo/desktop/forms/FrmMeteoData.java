@@ -819,7 +819,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         }
 
         FrmViewData frmData = new FrmViewData();
-        frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
+        //frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
         frmData.setGridData(_gridData);
         frmData.setLocationRelativeTo(this);
         frmData.setVisible(true);
@@ -836,7 +836,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         String[] colNames = new String[]{"Stid", "Longitude", "Latitude", this.jComboBox_Variable.getSelectedItem().toString()};
         FrmViewData frmData = new FrmViewData(colNames);
-        frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
+        //frmData.setProjectionInfo(_meteoDataInfo.getProjectionInfo());
         frmData.setStationData(_stationData);
         frmData.setLocationRelativeTo(this._parent);
         frmData.setVisible(true);

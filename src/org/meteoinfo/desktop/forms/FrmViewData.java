@@ -4,15 +4,25 @@
  */
 package org.meteoinfo.desktop.forms;
 
+import java.awt.Cursor;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.meteoinfo.data.GridData;
 import org.meteoinfo.data.StationData;
 import org.meteoinfo.data.XYListDataset;
+import org.meteoinfo.data.meteodata.ascii.LonLatStationDataInfo;
+import org.meteoinfo.desktop.config.GenericFileFilter;
 import org.meteoinfo.global.MIMath;
+import org.meteoinfo.projection.KnownCoordinateSystems;
 import org.meteoinfo.table.RowHeaderTable;
 import org.meteoinfo.projection.ProjectionInfo;
 
@@ -25,7 +35,6 @@ public class FrmViewData extends javax.swing.JFrame {
     private double _missingValue;
     private String _dataType = "GridData";
     private Object _data;
-    private ProjectionInfo _projInfo;
     private String[] _colNames;
 
     public void setMissingValue(double value) {
@@ -141,10 +150,6 @@ public class FrmViewData extends javax.swing.JFrame {
         this.jScrollPane1.setRowHeaderView(new RowHeaderTable(this.jTable1, 40));
     }
 
-    public void setProjectionInfo(ProjectionInfo value) {
-        _projInfo = value;
-    }
-
     /**
      * Creates new form FrmViewData
      */
@@ -208,6 +213,11 @@ public class FrmViewData extends javax.swing.JFrame {
         jButton_ToStation.setFocusable(false);
         jButton_ToStation.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ToStation.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_ToStation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ToStationActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton_ToStation);
 
         jButton_Stat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Statictics.png"))); // NOI18N
@@ -255,6 +265,74 @@ public class FrmViewData extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Under developing!");
     }//GEN-LAST:event_jButton_ChartActionPerformed
+
+    private void jButton_ToStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ToStationActionPerformed
+        // TODO add your handling code here:        
+        String path = System.getProperty("user.dir");
+        File pathDir = new File(path);
+
+        JFileChooser aDlg = new JFileChooser();
+        //aDlg.setAcceptAllFileFilterUsed(false);
+        aDlg.setCurrentDirectory(pathDir);
+        String[] fileExts = new String[]{"txt", "csv"};
+        GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Supported Formats");
+        aDlg.setFileFilter(mapFileFilter);
+        if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
+            File inf = aDlg.getSelectedFile();
+            String inFile = inf.getAbsolutePath();
+            JFileChooser outDlg = new JFileChooser();
+            outDlg.setCurrentDirectory(pathDir);
+            fileExts = new String[]{"csv"};
+            GenericFileFilter txtFileFilter = new GenericFileFilter(fileExts, "CSV file (*.csv)");
+            outDlg.setFileFilter(txtFileFilter);
+            outDlg.setAcceptAllFileFilterUsed(false);
+            if (JFileChooser.APPROVE_OPTION == outDlg.showSaveDialog(this)) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                String fileName = outDlg.getSelectedFile().getAbsolutePath();
+                String extent = ((GenericFileFilter) outDlg.getFileFilter()).getFileExtent();
+                if (!fileName.substring(fileName.length() - extent.length()).equals(extent)) {
+                    fileName = fileName + "." + extent;
+                }
+
+                ProjectionInfo projInfo = ((GridData) _data).projInfo;
+                if (projInfo.isLonLat()) {
+                    try {
+                        ((GridData) _data).toStation(inFile, fileName);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(FrmViewData.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FrmViewData.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    int result = JOptionPane.showConfirmDialog(null, "If project stations?", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION);
+                    if (result == JOptionPane.YES_OPTION) {
+                        try {
+                            LonLatStationDataInfo aDataInfo = new LonLatStationDataInfo();
+                            aDataInfo.readDataInfo(inFile);
+                            StationData inStData = aDataInfo.getNullStationData();
+                            ProjectionInfo fromProj = KnownCoordinateSystems.geographic.world.WGS1984;
+                            StationData midStData = inStData.project(fromProj, projInfo);
+                            StationData outStData = ((GridData) _data).toStation(midStData);
+                            outStData.saveAsCSVFile(fileName, "data");
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(FrmViewData.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(FrmViewData.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        try {
+                            ((GridData) _data).toStation(inFile, fileName);
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(FrmViewData.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(FrmViewData.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+                this.setCursor(Cursor.getDefaultCursor());
+            }
+        }
+    }//GEN-LAST:event_jButton_ToStationActionPerformed
 
     /**
      * @param args the command line arguments
