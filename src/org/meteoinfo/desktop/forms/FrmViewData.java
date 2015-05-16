@@ -205,6 +205,11 @@ public class FrmViewData extends javax.swing.JFrame {
         jButton_Save.setFocusable(false);
         jButton_Save.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Save.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_SaveActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton_Save);
         jToolBar1.add(jSeparator1);
 
@@ -333,6 +338,40 @@ public class FrmViewData extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton_ToStationActionPerformed
+
+    private void jButton_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveActionPerformed
+        // TODO add your handling code here:
+        String path = System.getProperty("user.dir");
+        File pathDir = new File(path);
+        JFileChooser outDlg = new JFileChooser();
+        outDlg.setCurrentDirectory(pathDir);
+        String[] fileExts;
+        GenericFileFilter txtFileFilter;
+        if (this._data instanceof GridData) {
+            fileExts = new String[]{"dat"};
+            txtFileFilter = new GenericFileFilter(fileExts, "Surfer ASCII file (*.dat)");
+        } else {
+            fileExts = new String[]{"csv"};
+            txtFileFilter = new GenericFileFilter(fileExts, "CSV file (*.csv)");
+        }
+        outDlg.setFileFilter(txtFileFilter);
+        outDlg.setAcceptAllFileFilterUsed(false);
+        if (JFileChooser.APPROVE_OPTION == outDlg.showSaveDialog(this)) {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            String fileName = outDlg.getSelectedFile().getAbsolutePath();
+            String extent = ((GenericFileFilter) outDlg.getFileFilter()).getFileExtent();
+            if (!fileName.substring(fileName.length() - extent.length()).equals(extent)) {
+                fileName = fileName + "." + extent;
+            }
+
+            if (this._data instanceof GridData) {
+                ((GridData) this._data).saveAsSurferASCIIFile(fileName);
+            } else {
+                ((StationData) this._data).saveAsCSVFile(fileName, this._colNames[this._colNames.length - 1]);
+            }
+            this.setCursor(Cursor.getDefaultCursor());
+        }
+    }//GEN-LAST:event_jButton_SaveActionPerformed
 
     /**
      * @param args the command line arguments
