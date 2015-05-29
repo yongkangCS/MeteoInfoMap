@@ -20,9 +20,9 @@ import org.meteoinfo.map.MapView;
  */
 public class FrmClipping extends javax.swing.JDialog {
 
-    List<VectorLayer> _vLayers = new ArrayList<VectorLayer>();
-    List<VectorLayer> _polygonLayers = new ArrayList<VectorLayer>();
-    private FrmMain _parent;
+    List<VectorLayer> _vLayers = new ArrayList<>();
+    List<VectorLayer> _polygonLayers = new ArrayList<>();
+    private final FrmMain _parent;
 
     /**
      * Creates new form FrmClipping

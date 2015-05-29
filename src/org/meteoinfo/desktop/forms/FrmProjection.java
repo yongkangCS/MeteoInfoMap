@@ -18,11 +18,13 @@ import static org.meteoinfo.projection.ProjectionNames.Mercator;
  */
 public class FrmProjection extends javax.swing.JDialog {
 
-    private FrmMain _parent;
+    private final FrmMain _parent;
     private boolean _isLoading = false;
 
     /**
      * Creates new form FrmProjection
+     * @param parent
+     * @param modal
      */
     public FrmProjection(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

@@ -23,10 +23,12 @@ import javax.swing.JOptionPane;
  */
 public class FrmZoomToExtent extends javax.swing.JDialog {
 
-    private FrmMain parent;
+    private final FrmMain parent;
 
     /**
      * Creates new form FrmZoomToExtent
+     * @param parent
+     * @param modal
      */
     public FrmZoomToExtent(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -197,34 +199,31 @@ public class FrmZoomToExtent extends javax.swing.JDialog {
     private void jButton_ZoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ZoomActionPerformed
         // TODO add your handling code here:
         //Check lon/lat set
-            double minLon, maxLon, minLat, maxLat;
-            minLon = Double.parseDouble(this.jTextField_MinLon.getText());
-            maxLon = Double.parseDouble(this.jTextField_MaxLon.getText());
-            minLat = Double.parseDouble(this.jTextField_MinLat.getText());
-            maxLat = Double.parseDouble(this.jTextField_MaxLat.getText());
+        double minLon, maxLon, minLat, maxLat;
+        minLon = Double.parseDouble(this.jTextField_MinLon.getText());
+        maxLon = Double.parseDouble(this.jTextField_MaxLon.getText());
+        minLat = Double.parseDouble(this.jTextField_MinLat.getText());
+        maxLat = Double.parseDouble(this.jTextField_MaxLat.getText());
 
-            if (minLon >= maxLon || minLat >= maxLat)
-            {
-                JOptionPane.showMessageDialog(this, "Lon/Lat set error!", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            //Zoom to lon/lat extent
-            Extent aExtent = new Extent();
-            aExtent.minX = minLon;
-            aExtent.maxX = maxLon;
-            aExtent.minY = minLat;
-            aExtent.maxY = maxLat;
-
-            FrmMain frmMain = (FrmMain)parent;
-            if (frmMain.getMainTab().getSelectedIndex() == 0) {
-            frmMain.getMapDocument().getActiveMapFrame().getMapView().zoomToExtentLonLatEx(aExtent);
+        if (minLon >= maxLon || minLat >= maxLat) {
+            JOptionPane.showMessageDialog(this, "Lon/Lat set error!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-            else if (frmMain.getMainTab().getSelectedIndex() == 1)
-            {
-                frmMain.getMapDocument().getMapLayout().getActiveLayoutMap().zoomToExtentLonLatEx(aExtent);
-                frmMain.getMapDocument().getMapLayout().paintGraphics();
-            }
+
+        //Zoom to lon/lat extent
+        Extent aExtent = new Extent();
+        aExtent.minX = minLon;
+        aExtent.maxX = maxLon;
+        aExtent.minY = minLat;
+        aExtent.maxY = maxLat;
+
+        FrmMain frmMain = (FrmMain) parent;
+        if (frmMain.getMainTab().getSelectedIndex() == 0) {
+            frmMain.getMapDocument().getActiveMapFrame().getMapView().zoomToExtentLonLatEx(aExtent);
+        } else if (frmMain.getMainTab().getSelectedIndex() == 1) {
+            frmMain.getMapDocument().getMapLayout().getActiveLayoutMap().zoomToExtentLonLatEx(aExtent);
+            frmMain.getMapDocument().getMapLayout().paintGraphics();
+        }
     }//GEN-LAST:event_jButton_ZoomActionPerformed
 
     private void jButton_CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CloseActionPerformed

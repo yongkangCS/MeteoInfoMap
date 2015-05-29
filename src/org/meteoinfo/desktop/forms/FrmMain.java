@@ -132,12 +132,12 @@ import org.xml.sax.SAXException;
 public class FrmMain extends JFrame implements IApplication {
     // <editor-fold desc="Variables">
 
-    private String _startupPath;
+    private final String _startupPath;
     private Options _options = new Options();
     private JButton _currentTool = null;
     ResourceBundle bundle;
     ProjectFile _projectFile;
-    private boolean _isEditingVertices = false;
+    //private boolean _isEditingVertices = false;
     private boolean _isLoading = false;
     private FrmMeteoData _frmMeteoData;
     //private String _currentDataFolder = "";
@@ -2539,7 +2539,7 @@ public class FrmMain extends JFrame implements IApplication {
             }
         }
 
-        _mapDocument.getActiveMapFrame().getMapView().paintLayers();
+        this.refreshMap();
     }
 
     private void jMenuItem_HelpActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2660,10 +2660,10 @@ public class FrmMain extends JFrame implements IApplication {
         if (jButton_EditVertices.isSelected()) {
             _mapView.setMouseTool(MouseTools.EditVertices);
             _mapDocument.getMapLayout().setMouseMode(MouseMode.EditVertices);
-            _isEditingVertices = true;
+            //_isEditingVertices = true;
         } else {
             this.jButton_SelectElement.doClick();
-            _isEditingVertices = false;
+            //_isEditingVertices = false;
         }
 
         //setCurrentTool((JButton) evt.getSource());
@@ -3242,6 +3242,20 @@ public class FrmMain extends JFrame implements IApplication {
             this._mapView.paintLayers();
         else
             this._mapLayout.paintGraphics();
+    }
+    
+    /**
+     * Refresh map view / map layer
+     */
+    public void refreshMap(){
+        int selIndex = this.jTabbedPane_Main.getSelectedIndex();
+        switch (selIndex) {
+            case 0:    //MapView
+                this._mapView.paintLayers();
+                break;
+            default:
+                this._mapLayout.paintGraphics();
+        }
     }
     // </editor-fold>
     // </editor-fold>

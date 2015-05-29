@@ -24,11 +24,13 @@ import org.meteoinfo.shape.ShapeTypes;
  */
 public class FrmSelectByLocation extends javax.swing.JDialog {
 
-    List<VectorLayer> _vLayers = new ArrayList<VectorLayer>();
-    private FrmMain _frmMain;
+    List<VectorLayer> _vLayers = new ArrayList<>();
+    private final FrmMain _frmMain;
 
     /**
      * Creates new form FrmSelectByLocation
+     * @param parent
+     * @param modal
      */
     public FrmSelectByLocation(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -229,7 +231,7 @@ public class FrmSelectByLocation extends javax.swing.JDialog {
                     this.setCursor(Cursor.getDefaultCursor());
                     return;
                 } else {
-                    List<Shape> shapes = new ArrayList<Shape>();
+                    List<Shape> shapes = new ArrayList<>();
                     if (onlySel) {
                         for (Shape aShape : relatedLayer.getShapes()) {
                             if (aShape.isSelected()) {
@@ -262,7 +264,7 @@ public class FrmSelectByLocation extends javax.swing.JDialog {
                 break;
         }
 
-        _frmMain.getMapDocument().getActiveMapFrame().getMapView().paintLayers();
+        _frmMain.refreshMap();
 
         //---- Hide progressbar                      
         this.setCursor(Cursor.getDefaultCursor());
@@ -272,7 +274,7 @@ public class FrmSelectByLocation extends javax.swing.JDialog {
         // TODO add your handling code here:
         VectorLayer fromLayer = _vLayers.get(this.jComboBox_FromLayer.getSelectedIndex());
         fromLayer.clearSelectedShapes();
-        _frmMain.getMapDocument().getActiveMapFrame().getMapView().paintLayers();
+        _frmMain.refreshMap();
     }//GEN-LAST:event_jButton_ClearActionPerformed
 
     /**

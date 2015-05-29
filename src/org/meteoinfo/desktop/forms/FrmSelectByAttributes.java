@@ -23,13 +23,15 @@ import org.meteoinfo.shape.Shape;
  */
 public class FrmSelectByAttributes extends javax.swing.JDialog {
 
-    private List<VectorLayer> _mapLayers;
+    private final List<VectorLayer> _mapLayers;
     private VectorLayer _selectLayer;
     private String _selectField;
-    private FrmMain _frmMain;
+    private final FrmMain _frmMain;
 
     /**
      * Creates new form FrmSelectByAttributes
+     * @param parent
+     * @param modal
      */
     public FrmSelectByAttributes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -37,7 +39,7 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
 
         _frmMain = (FrmMain) parent;
         //---- Add selectable layers
-        _mapLayers = new ArrayList<VectorLayer>();
+        _mapLayers = new ArrayList<>();
         int i;
         for (i = 0; i < _frmMain.getMapDocument().getActiveMapFrame().getMapView().getLayerNum(); i++) {
             MapLayer mLayer = _frmMain.getMapDocument().getActiveMapFrame().getMapView().getLayers().get(i);
@@ -484,7 +486,7 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
         String expression = this.jTextField_QueryString.getText();
         boolean onlySelVisible = this.jCheckBox_OnlySelVisible.isSelected();
         List<DataRow> rows = this._selectLayer.getAttributeTable().getTable().select(expression);
-        List<Integer> rowIdxs = new ArrayList<Integer>();
+        List<Integer> rowIdxs = new ArrayList<>();
         for (DataRow row : rows) {
             rowIdxs.add(row.getRowIndex());
         }
@@ -531,7 +533,7 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
             }
         }
 
-        this._frmMain.getMapDocument().getActiveMapFrame().getMapView().paintLayers();
+        this._frmMain.refreshMap();
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jButton_SelectActionPerformed
 
@@ -542,7 +544,7 @@ public class FrmSelectByAttributes extends javax.swing.JDialog {
         for (Shape shape : _selectLayer.getShapes()) {
             shape.setVisible(true);
         }
-        this._frmMain.getMapDocument().getActiveMapFrame().getMapView().paintLayers();
+        this._frmMain.refreshMap();
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jButton_ClearActionPerformed
 
