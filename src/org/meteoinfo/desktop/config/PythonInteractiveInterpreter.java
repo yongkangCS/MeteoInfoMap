@@ -9,7 +9,6 @@ import org.meteoinfo.console.JConsole;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
-import org.python.core.PyObject;
 import org.python.util.InteractiveConsole;
 
 /**
@@ -40,13 +39,15 @@ public class PythonInteractiveInterpreter extends InteractiveConsole implements 
         boolean eof = false;
         JavaCharStream stream = new JavaCharStream(in, 1, 1);
 
-        exec("_ps1 = sys.ps1");
-        PyObject ps1Obj = get("_ps1");
-        String ps1 = ps1Obj.toString();
+//        exec("_ps1 = sys.ps1");
+//        PyObject ps1Obj = get("_ps1");
+//        String ps1 = ps1Obj.toString();
+        String ps1 = ">>> ";
 
-        exec("_ps2 = sys.ps2");
-        PyObject ps2Obj = get("_ps2");
-        String ps2 = ps2Obj.toString();
+//        exec("_ps2 = sys.ps2");
+//        PyObject ps2Obj = get("_ps2");
+//        String ps2 = ps2Obj.toString();
+        String ps2 = "... ";
         out.print(getDefaultBanner() + "\n");
 
         out.print(ps1);
