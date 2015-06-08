@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingWorker;
 import org.meteoinfo.chart.Chart;
+import org.meteoinfo.chart.Location;
 import org.meteoinfo.chart.plot.ChartPlotMethod;
 import org.meteoinfo.chart.plot.PlotOrientation;
 import org.meteoinfo.chart.plot.XY1DPlot;
@@ -1189,7 +1190,8 @@ public class FrmOneDim extends javax.swing.JFrame {
             plot.setTitle(title);
         }
         plot.setChartPlotMethod(method);
-        plot.setDrawTopRightAxis(false);
+        plot.getAxis(Location.TOP).setVisible(false);
+        plot.getAxis(Location.RIGHT).setVisible(false);
         plot.setDrawLegend(drawLegend);
         plot.getGridLine().setDrawXLine(true);
         plot.getGridLine().setDrawYLine(true);

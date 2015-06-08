@@ -31,14 +31,14 @@
   <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="false">
     <LayoutElements>
       <LayoutMap DrawBackColor="false" DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Arial" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="380" Left="51" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="34" Width="650"/>
-      <LayoutGraphic ElementType="LayoutGraphic" Height="19" IsTitle="false" Left="274" Top="11" Width="176">
+      <LayoutGraphic ElementType="LayoutGraphic" Height="16" IsTitle="false" Left="309" Top="13" Width="106">
         <Graphic>
           <Shape Selected="false" ShapeType="Point" Visible="true">
             <Points>
               <Point X="362.0" Y="23.0"/>
             </Points>
           </Shape>
-          <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$Unit: \mu g \ m^{-3}$" YShift="0.0"/>
+          <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
       <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="37" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="182" LegendLayer="" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="444" Width="403"/>
