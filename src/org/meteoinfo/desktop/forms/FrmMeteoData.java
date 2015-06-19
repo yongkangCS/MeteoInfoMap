@@ -659,6 +659,15 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
         });
         mm5M.add(dataMI);
+        
+        dataMI = new JMenuItem("AWX Data");
+        dataMI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onAWXDataClick(e);
+            }
+        });
+        menu_OpenData.add(dataMI);
 
         menu_OpenData.show(this, evt.getX(), evt.getY());
     }
@@ -1878,6 +1887,26 @@ public class FrmMeteoData extends javax.swing.JDialog {
         }
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
+    
+    private void onAWXDataClick(ActionEvent e) {
+        String path = this.getStartupPath();
+        File pathDir = new File(path);
+
+        JFileChooser aDlg = new JFileChooser();
+        aDlg.setCurrentDirectory(pathDir);
+        aDlg.setAcceptAllFileFilterUsed(false);
+        String[] fileExts = new String[]{"awx"};
+        GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "AWX Data (*.awx)");
+        aDlg.setFileFilter(mapFileFilter);
+        if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
+            File file = aDlg.getSelectedFile();
+            System.setProperty("user.dir", file.getParent());
+
+            MeteoDataInfo aDataInfo = new MeteoDataInfo();
+            aDataInfo.openAWXData(file.getAbsolutePath());
+            addMeteoData(aDataInfo);
+        }
     }
 
     // </editor-fold>
