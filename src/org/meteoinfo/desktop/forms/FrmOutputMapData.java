@@ -298,6 +298,7 @@ public class FrmOutputMapData extends javax.swing.JDialog {
                     }
                     break;
                 case Polyline:
+                case PolylineZ:
                     sw.write("Polyline");
                     sw.newLine();
                     int shapeNum = 0;

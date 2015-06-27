@@ -1,21 +1,11 @@
-11 02 28 18
+15 06 20 06
 1
-42.68 74.69 1000.00
+42.50 125.20 5000.00
 -96
 0
 10000.0
-6
-P:\MetData\MetData\2011\
-gdas1.feb11.w1
-P:\MetData\MetData\2011\
-gdas1.feb11.w2
-P:\MetData\MetData\2011\
-gdas1.feb11.w3
-P:\MetData\MetData\2011\
-gdas1.feb11.w4
-P:\MetData\MetData\2011\
-gdas1.jan11.w4
-P:\MetData\MetData\2011\
-gdas1.jan11.w5
-O:/trajectory/bishkek/trajdata\
-11022818
+1
+D:\Temp\arl\
+wrfout_d02.arl
+D:\Temp\traj\test\
+15062006
