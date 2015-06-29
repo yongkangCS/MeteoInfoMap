@@ -2740,7 +2740,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         //Set U/V strings
         if (!_meteoDataInfo.getMeteoUVSet().isFixUVStr()) {
-            List<String> vList = new ArrayList<String>();
+            List<String> vList = new ArrayList<>();
             for (i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
                 vList.add(this.jComboBox_Variable.getItemAt(i).toString());
             }
