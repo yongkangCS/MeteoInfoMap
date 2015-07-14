@@ -8,7 +8,8 @@
       <MaskOut MaskLayer="" SetMaskLayer="false"/>
       <Projection IsLonLatMap="false" ProjStr="+proj=merc +lat_ts=0 +lon_0=105 +x_0=0 +y_0=0 " RefCutLon="-75.0" RefLon="0.0"/>
       <GroupLayer>
-        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer Handle="1" IsMaskout="false" LayerDrawType="Image" LayerName="WebMap_GoogleSatelliteMap" LayerType="WebMapLayer" TransparencyPerc="0" Visible="true" WebMapProvider="GoogleSatelliteMap"/>
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0" Tag=""/>
