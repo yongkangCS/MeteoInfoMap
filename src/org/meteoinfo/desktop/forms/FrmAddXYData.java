@@ -38,7 +38,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
 
     private FrmMain _parent;
     private String separator = null;
-    private List<Field> fields = new ArrayList<Field>();
+    private List<Field> fields = new ArrayList<>();
 
     /**
      * Creates new form FrmAddXYData
@@ -321,8 +321,8 @@ public class FrmAddXYData extends javax.swing.JDialog {
                     }
 
                     PointD aPoint = new PointD();
-                    lon = Double.parseDouble(dataArray[lonIdx]);
-                    lat = Double.parseDouble(dataArray[latIdx]);
+                    lon = Double.parseDouble(dataArray[lonIdx].trim());
+                    lat = Double.parseDouble(dataArray[latIdx].trim());
                     aPoint.X = lon;
                     aPoint.Y = lat;
 
@@ -336,10 +336,10 @@ public class FrmAddXYData extends javax.swing.JDialog {
                             Field field = aLayer.getField(j);
                             switch (field.getDataType()) {
                                 case Double:
-                                    aLayer.editCellValue(j, shapeNum, Double.parseDouble(dataArray[j]));
+                                    aLayer.editCellValue(j, shapeNum, Double.parseDouble(dataArray[j].trim()));
                                     break;
                                 case String:
-                                    aLayer.editCellValue(j, shapeNum, dataArray[j]);
+                                    aLayer.editCellValue(j, shapeNum, dataArray[j].trim());
                                     break;
                             }
                         }
