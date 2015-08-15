@@ -1189,6 +1189,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         if (title != null) {
             plot.setTitle(title);
         }
+        plot.setAutoPosition(true);
         plot.setChartPlotMethod(method);
         plot.getAxis(Location.TOP).setVisible(false);
         plot.getAxis(Location.RIGHT).setVisible(false);
