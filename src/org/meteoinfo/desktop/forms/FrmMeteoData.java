@@ -82,7 +82,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
     // <editor-fold desc="Variables">
     //ResourceBundle bundle;
     private FrmMain _parent;
-    private List<MeteoDataInfo> _dataInfoList = new ArrayList<MeteoDataInfo>();
+    private List<MeteoDataInfo> _dataInfoList = new ArrayList<>();
     private MeteoDataInfo _meteoDataInfo = new MeteoDataInfo();
     DrawType2D _2DDrawType;
     private GridData _gridData = new GridData();
@@ -606,6 +606,15 @@ public class FrmMeteoData extends javax.swing.JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onLonLatStationsClick(e);
+            }
+        });
+        asciiM.add(dataMI);
+        
+        dataMI = new JMenuItem("SYNOP Data");
+        dataMI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSYNOPClick(e);
             }
         });
         asciiM.add(dataMI);
@@ -1822,6 +1831,24 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
             MeteoDataInfo aDataInfo = new MeteoDataInfo();
             aDataInfo.openLonLatData(file.getAbsolutePath());
+            addMeteoData(aDataInfo);
+        }
+    }
+    
+    private void onSYNOPClick(ActionEvent e) {
+        String path = this.getStartupPath();
+        File pathDir = new File(path);
+
+        JFileChooser aDlg = new JFileChooser();
+        aDlg.setCurrentDirectory(pathDir);        
+        if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
+            File file = aDlg.getSelectedFile();
+            //this._parent.setCurrentDataFolder(file.getParent());
+            System.setProperty("user.dir", file.getParent());
+
+            MeteoDataInfo aDataInfo = new MeteoDataInfo();
+            String stFile = this._parent.getStartupPath() + "\\station\\SYNOP_Stations.csv";
+            aDataInfo.openSYNOPData(file.getAbsolutePath(), stFile);
             addMeteoData(aDataInfo);
         }
     }
