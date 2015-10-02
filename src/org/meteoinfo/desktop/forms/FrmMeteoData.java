@@ -541,7 +541,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private void jButton_OpenDataMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         JPopupMenu menu_OpenData = new JPopupMenu();
-        JMenuItem dataMI = new JMenuItem("Grid Data (NetCDF, GRIB, HDF...)");
+        JMenuItem dataMI = new JMenuItem("NetCDF, GRIB, HDF...");
         dataMI.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -609,7 +609,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
         });
         asciiM.add(dataMI);
-        
+
         dataMI = new JMenuItem("SYNOP Data");
         dataMI.addActionListener(new ActionListener() {
             @Override
@@ -668,7 +668,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
         });
         mm5M.add(dataMI);
-        
+
         dataMI = new JMenuItem("AWX Data");
         dataMI.addActionListener(new ActionListener() {
             @Override
@@ -820,6 +820,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
             viewGridData();
         } else if (_meteoDataInfo.isStationData()) {
             viewStationData();
+            if (_gridData.xArray != null && _gridData.yArray != null) {
+                if (_gridData.getXNum() > 0 && _gridData.getYNum() > 0) {
+                    viewGridData();
+                }
+            }
         }
     }
 
@@ -1235,11 +1240,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     }
                     break;
                 case Weather_Symbol:
-                    Object[] possibleValues = { "All Weather", "SDS", "SDS, Haze", "Smoke", "Haze", "Mist", "Smoke, Haze, Mist", "Fog" } ;
+                    Object[] possibleValues = {"All Weather", "SDS", "SDS, Haze", "Smoke", "Haze", "Mist", "Smoke, Haze, Mist", "Fog"};
                     Object selectedValue = JOptionPane.showInputDialog(null,
-                        "Choose one", "Input", JOptionPane.INFORMATION_MESSAGE ,
-                        null, possibleValues , possibleValues[0]);
-                    if (selectedValue != null){
+                            "Choose one", "Input", JOptionPane.INFORMATION_MESSAGE,
+                            null, possibleValues, possibleValues[0]);
+                    if (selectedValue != null) {
                         VectorLayer layer = DrawMeteoData.createWeatherSymbolLayer(_stationData, selectedValue.toString(), "Weather");
                         layer.setProjInfo(this._meteoDataInfo.getProjectionInfo());
                         this._parent.getMapDocument().getActiveMapFrame().removeLayerByHandle(this._lastAddedLayerHandle);
@@ -1834,13 +1839,13 @@ public class FrmMeteoData extends javax.swing.JDialog {
             addMeteoData(aDataInfo);
         }
     }
-    
+
     private void onSYNOPClick(ActionEvent e) {
         String path = this.getStartupPath();
         File pathDir = new File(path);
 
         JFileChooser aDlg = new JFileChooser();
-        aDlg.setCurrentDirectory(pathDir);        
+        aDlg.setCurrentDirectory(pathDir);
         if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
             File file = aDlg.getSelectedFile();
             //this._parent.setCurrentDataFolder(file.getParent());
@@ -1915,7 +1920,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
-    
+
     private void onAWXDataClick(ActionEvent e) {
         String path = this.getStartupPath();
         File pathDir = new File(path);
