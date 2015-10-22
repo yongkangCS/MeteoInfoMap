@@ -218,7 +218,8 @@ public class FrmAddXYData extends javax.swing.JDialog {
             System.setProperty("user.dir", aFile.getParent());
             this.jTextField_InputFile.setText(aFile.getAbsolutePath());
             try {
-                BufferedReader sr = new BufferedReader(new FileReader(aFile));
+                //BufferedReader sr = new BufferedReader(new FileReader(aFile));
+                BufferedReader sr = new BufferedReader(new InputStreamReader(new FileInputStream(aFile), "UTF-8"));
                 String title = sr.readLine().trim();
                 //Determine separator
                 separator = GlobalUtil.getDelimiter(title);
