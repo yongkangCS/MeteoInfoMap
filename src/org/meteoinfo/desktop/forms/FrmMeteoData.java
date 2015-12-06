@@ -141,7 +141,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
         for (Component aItem : this.jToolBar1.getComponents()) {
             aItem.setEnabled(false);
         }
-        this.jButton_OpenData.setEnabled(true);
+        //this.jButton_OpenData.setEnabled(true);
+        this.jSplitButton_OpenData.setEnabled(true);
         this.jPanel_DataSet.setEnabled(false);
         this.jCheckBox_ColorVar.setVisible(false);
         this.jCheckBox_Big_Endian.setVisible(false);
@@ -166,7 +167,26 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList_DataFiles = new javax.swing.JList();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton_OpenData = new javax.swing.JButton();
+        //jButton_OpenData = new javax.swing.JButton();
+        jSplitButton_OpenData = new org.meteoinfo.ui.JSplitButton();
+        jPopupMenu_OpenData = new javax.swing.JPopupMenu();
+        jMenuItem_NetCDF = new javax.swing.JMenuItem();
+        jMenuItem_GrADS = new javax.swing.JMenuItem();
+        jMenuItem_ARL = new javax.swing.JMenuItem();
+        jMenu_HYSPLIT = new javax.swing.JMenu();
+        jMenuItem_HYSPLIT_Traj = new javax.swing.JMenuItem();
+        jMenuItem_HYSPLIT_Conc = new javax.swing.JMenuItem();
+        jMenuItem_HYSPLIT_Particle = new javax.swing.JMenuItem();
+        jMenu_ASCII = new javax.swing.JMenu();
+        jMenuItem_ASCII_LonLat = new javax.swing.JMenuItem();
+        jMenuItem_ASCII_SYNOP = new javax.swing.JMenuItem();
+        jMenuItem_ASCII_EsriGrid = new javax.swing.JMenuItem();
+        jMenuItem_ASCII_SurferGrid = new javax.swing.JMenuItem();
+        jMenuItem_MICAPS = new javax.swing.JMenuItem();
+        jMenu_MM5 = new javax.swing.JMenu();
+        jMenuItem_MM5_Output = new javax.swing.JMenuItem();
+        jMenuItem_MM5_Inter = new javax.swing.JMenuItem();
+        jMenuItem_AWX = new javax.swing.JMenuItem();
         jButton_DataInfo = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jButton_Draw = new javax.swing.JButton();
@@ -201,6 +221,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         jComboBox_Time.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         jComboBox_Time.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_TimeActionPerformed(evt);
             }
@@ -210,6 +231,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         jComboBox_Level.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         jComboBox_Level.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_LevelActionPerformed(evt);
             }
@@ -219,6 +241,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         jComboBox_DrawType.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         jComboBox_DrawType.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_DrawTypeActionPerformed(evt);
             }
@@ -230,6 +253,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         jComboBox_Variable.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         jComboBox_Variable.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_VariableActionPerformed(evt);
             }
@@ -237,6 +261,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         jCheckBox_Big_Endian.setText(bundle.getString("FrmMeteoData.jCheckBox_Big_Endian.text")); // NOI18N
         jCheckBox_Big_Endian.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox_Big_EndianActionPerformed(evt);
             }
@@ -344,18 +369,152 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         jToolBar1.setRollover(true);
 
-        jButton_OpenData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Folder_1_16x16x8.png"))); // NOI18N
-        jButton_OpenData.setToolTipText(bundle.getString("FrmMeteoData.jButton_OpenData.toolTipText")); // NOI18N
-        jButton_OpenData.setFocusable(false);
-        jButton_OpenData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_OpenData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_OpenData.addMouseListener(new java.awt.event.MouseAdapter() {
+//        jButton_OpenData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Folder_1_16x16x8.png"))); // NOI18N
+//        jButton_OpenData.setToolTipText(bundle.getString("FrmMeteoData.jButton_OpenData.toolTipText")); // NOI18N
+//        jButton_OpenData.setFocusable(false);
+//        jButton_OpenData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+//        jButton_OpenData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+//        jButton_OpenData.addMouseListener(new java.awt.event.MouseAdapter() {
+//            @Override
+//            public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                jButton_OpenDataMouseClicked(evt);
+//            }
+//        });
+//        jToolBar1.add(jButton_OpenData);
+        
+        jSplitButton_OpenData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Folder_1_16x16x8.png"))); // NOI18N
+        jSplitButton_OpenData.setText("  ");
+        jSplitButton_OpenData.setToolTipText(bundle.getString("FrmMeteoData.jButton_OpenData.toolTipText"));
+        jSplitButton_OpenData.setFocusable(false);
+        jMenuItem_NetCDF.setText("NetCDF, GRIB, HDF...");
+        jMenuItem_NetCDF.addActionListener(new java.awt.event.ActionListener() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton_OpenDataMouseClicked(evt);
+            public void actionPerformed(ActionEvent e) {
+                onNetCDFDataClick(e);
             }
         });
-        jToolBar1.add(jButton_OpenData);
+        jPopupMenu_OpenData.add(jMenuItem_NetCDF);
+        
+        jMenuItem_GrADS.setText("GrADS Data");
+        jMenuItem_GrADS.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onGrADSDataClick(e);
+            }
+        });
+        jPopupMenu_OpenData.add(jMenuItem_GrADS);
+        
+        jMenuItem_ARL.setText("ARL Data");
+        jMenuItem_ARL.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onARLDataClick(e);
+            }
+        });        
+        jPopupMenu_OpenData.add(jMenuItem_ARL);
+        
+        jMenu_HYSPLIT.setText("HYSPLIT Data");
+        jMenuItem_HYSPLIT_Traj.setText("Trajectory Data");
+        jMenuItem_HYSPLIT_Traj.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onHYSPLITTrajDataClick(e);
+            }
+        });   
+        jMenu_HYSPLIT.add(jMenuItem_HYSPLIT_Traj);
+        jMenuItem_HYSPLIT_Conc.setText("Concentration Data");
+        jMenuItem_HYSPLIT_Conc.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onHYSPLITConcDataClick(e);
+            }
+        });   
+        jMenu_HYSPLIT.add(jMenuItem_HYSPLIT_Conc);
+        jMenuItem_HYSPLIT_Particle.setText("Particle Data");
+        jMenuItem_HYSPLIT_Particle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onHYSPLITPartDataClick(e);
+            }
+        });   
+        jMenu_HYSPLIT.add(jMenuItem_HYSPLIT_Particle);
+        jPopupMenu_OpenData.add(jMenu_HYSPLIT);
+        
+        jMenu_ASCII.setText("ASCII Data");
+        jMenuItem_ASCII_LonLat.setText("Lon/Lat Station Data");
+        jMenuItem_ASCII_LonLat.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onLonLatStationsClick(e);
+            }
+        });   
+        jMenu_ASCII.add(jMenuItem_ASCII_LonLat);
+        jMenuItem_ASCII_SYNOP.setText("SYNOP Data");
+        jMenuItem_ASCII_SYNOP.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSYNOPClick(e);
+            }
+        });   
+        jMenu_ASCII.add(jMenuItem_ASCII_SYNOP);
+        jMenu_ASCII.add(new JSeparator());
+        jMenuItem_ASCII_EsriGrid.setText("Esri ASCII Grid Data");
+        jMenuItem_ASCII_EsriGrid.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onASCIIGridDataClick(e);
+            }
+        });   
+        jMenu_ASCII.add(jMenuItem_ASCII_EsriGrid);
+        jMenuItem_ASCII_SurferGrid.setText("Surfer ASCII Grid Data");
+        jMenuItem_ASCII_SurferGrid.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSurferGridDataClick(e);
+            }
+        });   
+        jMenu_ASCII.add(jMenuItem_ASCII_SurferGrid);
+        jPopupMenu_OpenData.add(jMenu_ASCII);
+        
+        jMenuItem_MICAPS.setText("MICAPS Data");
+        jMenuItem_MICAPS.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onMICAPSDataClick(e);
+            }
+        });        
+        jPopupMenu_OpenData.add(jMenuItem_MICAPS);
+        
+        jMenu_MM5.setText("MM5 Data");
+        jMenuItem_MM5_Output.setText("MM5 Output Data");
+        jMenuItem_MM5_Output.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onMM5DataClick(e);
+            }
+        });   
+        jMenu_MM5.add(jMenuItem_MM5_Output);
+        jMenuItem_MM5_Inter.setText("MM5 Intermediate Data");
+        jMenuItem_MM5_Inter.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onMM5IMDataClick(e);
+            }
+        });   
+        jMenu_MM5.add(jMenuItem_MM5_Inter);        
+        jPopupMenu_OpenData.add(jMenu_MM5);
+        
+        jMenuItem_AWX.setText("AWX Data");
+        jMenuItem_AWX.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onAWXDataClick(e);
+            }
+        });        
+        jPopupMenu_OpenData.add(jMenuItem_AWX);
+        
+        jSplitButton_OpenData.setPopupMenu(jPopupMenu_OpenData);
+        jToolBar1.add(jSplitButton_OpenData);
 
         jButton_DataInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/information.png"))); // NOI18N
         jButton_DataInfo.setToolTipText(bundle.getString("FrmMeteoData.jButton_DataInfo.toolTipText")); // NOI18N
@@ -2917,7 +3076,26 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private javax.swing.JButton jButton_Draw;
     private javax.swing.JButton jButton_DrawSetting;
     private javax.swing.JButton jButton_NexTime;
-    private javax.swing.JButton jButton_OpenData;
+    //private javax.swing.JButton jButton_OpenData;
+    private org.meteoinfo.ui.JSplitButton jSplitButton_OpenData;
+    private javax.swing.JPopupMenu jPopupMenu_OpenData;
+    private javax.swing.JMenuItem jMenuItem_NetCDF;
+    private javax.swing.JMenuItem jMenuItem_GrADS;
+    private javax.swing.JMenuItem jMenuItem_ARL;
+    private javax.swing.JMenu jMenu_HYSPLIT;
+    private javax.swing.JMenuItem jMenuItem_HYSPLIT_Traj;
+    private javax.swing.JMenuItem jMenuItem_HYSPLIT_Conc;
+    private javax.swing.JMenuItem jMenuItem_HYSPLIT_Particle;
+    private javax.swing.JMenu jMenu_ASCII;
+    private javax.swing.JMenuItem jMenuItem_ASCII_LonLat;
+    private javax.swing.JMenuItem jMenuItem_ASCII_SYNOP;
+    private javax.swing.JMenuItem jMenuItem_ASCII_EsriGrid;
+    private javax.swing.JMenuItem jMenuItem_ASCII_SurferGrid;
+    private javax.swing.JMenuItem jMenuItem_MICAPS;
+    private javax.swing.JMenu jMenu_MM5;
+    private javax.swing.JMenuItem jMenuItem_MM5_Output;
+    private javax.swing.JMenuItem jMenuItem_MM5_Inter;
+    private javax.swing.JMenuItem jMenuItem_AWX;
     private javax.swing.JButton jButton_PreTime;
     private javax.swing.JButton jButton_RemoveAllData;
     private javax.swing.JButton jButton_SectionPlot;
