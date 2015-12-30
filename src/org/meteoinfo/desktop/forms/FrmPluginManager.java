@@ -23,11 +23,13 @@ import org.meteoinfo.ui.CheckBoxListEntry;
  */
 public class FrmPluginManager extends javax.swing.JDialog {
 
-    private FrmMain _parent;
+    private final FrmMain _parent;
     PluginCollection _plugins = new PluginCollection();
 
     /**
      * Creates new form FrmPluginManager
+     * @param parent
+     * @param modal
      */
     public FrmPluginManager(JFrame parent, boolean modal) {
         super(parent, modal);
@@ -176,7 +178,7 @@ public class FrmPluginManager extends javax.swing.JDialog {
 
     private void jButton_UpdateListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpdateListActionPerformed
         // TODO add your handling code here:
-        List<Plugin> plugins = new ArrayList<Plugin>();
+        List<Plugin> plugins = new ArrayList<>();
 
         String pluginPath = _parent.getStartupPath() + File.separator + "plugins";
         if (new File(pluginPath).isDirectory()) {
@@ -188,12 +190,12 @@ public class FrmPluginManager extends javax.swing.JDialog {
                 }
             }
 
-            List<String> pluginNames = new ArrayList<String>();
+            List<String> pluginNames = new ArrayList<>();
             for (Plugin plugin : _plugins) {
                 pluginNames.add(plugin.getName());
             }
 
-            List<String> newPluginNames = new ArrayList<String>();
+            List<String> newPluginNames = new ArrayList<>();
             for (Plugin plugin : plugins) {
                 newPluginNames.add(plugin.getName());
             }
@@ -250,6 +252,7 @@ public class FrmPluginManager extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 FrmPluginManager dialog = new FrmPluginManager(new FrmMain(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {

@@ -45,6 +45,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -1754,6 +1755,15 @@ public class FrmMain extends JFrame implements IApplication {
     public JMenuBar getMainMenuBar() {
         return this.jMenuBar_Main;
     }
+    
+    /**
+     * Get plugin menu
+     * @return Plugin menu
+     */
+    @Override
+    public JMenu getPluginMenu() {
+        return this.jMenu_Plugin;
+    }
 
     /**
      * Get tool bar panel
@@ -1944,14 +1954,17 @@ public class FrmMain extends JFrame implements IApplication {
             Plugin plugin = new Plugin();
             plugin.setJarFileName(jarFileName);
             String className = GlobalUtil.getPluginClassName(jarFileName);
-            plugin.setClassName(className);
-            URL url = new URL("file:" + plugin.getJarFileName());
-            URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{url});
-            Class<?> clazz = urlClassLoader.loadClass(plugin.getClassName());
-            IPlugin instance = (IPlugin) clazz.newInstance();
-            plugin.setPluginObject(instance);
-
-            return plugin;
+            if (className == null){
+                return null;
+            } else {
+                plugin.setClassName(className);
+                URL url = new URL("file:" + plugin.getJarFileName());
+                URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{url});
+                Class<?> clazz = urlClassLoader.loadClass(plugin.getClassName());
+                IPlugin instance = (IPlugin) clazz.newInstance();
+                plugin.setPluginObject(instance);
+                return plugin;
+            }
         } catch (MalformedURLException ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1965,7 +1978,7 @@ public class FrmMain extends JFrame implements IApplication {
     }
 
     public List<Plugin> readPlugins() throws MalformedURLException {
-        List<Plugin> plugins = new ArrayList<Plugin>();
+        List<Plugin> plugins = new ArrayList<>();
         String pluginPath = this._startupPath + File.separator + "plugins";
         if (new File(pluginPath).isDirectory()) {
             List<String> fileNames = GlobalUtil.getFiles(pluginPath, ".jar");
@@ -2132,6 +2145,10 @@ public class FrmMain extends JFrame implements IApplication {
         //this.setCursor(Cursor.getDefaultCursor());
     }
 
+    /**
+     * Load plugin
+     * @param plugin Plugin
+     */
     public void loadPlugin(Plugin plugin) {
         if (plugin.isLoad()) {
             return;
