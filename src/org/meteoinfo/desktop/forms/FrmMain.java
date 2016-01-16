@@ -3003,8 +3003,7 @@ public class FrmMain extends JFrame implements IApplication {
     }
 
     private void jButton_AddLayerActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        // TODO add your handling code here:        
         String path = System.getProperty("user.dir");
         File pathDir = new File(path);
 
@@ -3020,6 +3019,7 @@ public class FrmMain extends JFrame implements IApplication {
         aDlg.setFileFilter(mapFileFilter);
         aDlg.setMultiSelectionEnabled(true);
         if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             File[] files = aDlg.getSelectedFiles();
             System.setProperty("user.dir", files[0].getParent());
 
@@ -3049,8 +3049,8 @@ public class FrmMain extends JFrame implements IApplication {
                     this._mapDocument.getActiveMapFrame().addLayer(aLayer);
                 }
             }
-        }
-        this.setCursor(Cursor.getDefaultCursor());
+            this.setCursor(Cursor.getDefaultCursor());
+        }        
     }
 
     private void jButton_EditStartOrEndActionPerformed(ActionEvent evt) {
