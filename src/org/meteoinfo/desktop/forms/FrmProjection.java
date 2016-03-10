@@ -272,6 +272,31 @@ public class FrmProjection extends javax.swing.JDialog {
                     this.jTextField_FalseNorthing.setText("0");
                 }
                 break;
+            case Lambert_Azimuthal_Equal_Area:
+                this.jPanel_Parameters.setEnabled(true);
+                for (Component aControl : this.jPanel_Parameters.getComponents()) {
+                    aControl.setVisible(false);
+                }
+                this.jLabel_CentralMeridian.setVisible(true);
+                this.jTextField_CentralMeridian.setVisible(true);
+                this.jLabel_RefLat.setVisible(true);
+                this.jTextField_RefLat.setVisible(true);
+                this.jLabel_FalseEasting.setVisible(true);
+                this.jTextField_FalseEasting.setVisible(true);
+                this.jLabel_FalseNorthing.setVisible(true);
+                this.jTextField_FalseNorthing.setVisible(true);
+                if (aProjInfo.getProjectionName() == aPrjName) {
+                    this.jTextField_CentralMeridian.setText(String.valueOf(aProj.getProjectionLongitudeDegrees()));
+                    this.jTextField_RefLat.setText(String.valueOf(aProj.getProjectionLatitudeDegrees()));
+                    this.jTextField_FalseEasting.setText(String.valueOf(aProj.getFalseEasting()));
+                    this.jTextField_FalseNorthing.setText(String.valueOf(aProj.getFalseNorthing()));
+                } else {
+                    this.jTextField_CentralMeridian.setText("105");
+                    this.jTextField_RefLat.setText("90");
+                    this.jTextField_FalseEasting.setText("0");
+                    this.jTextField_FalseNorthing.setText("0");
+                }
+                break;
             case North_Polar_Stereographic_Azimuthal:
             case South_Polar_Stereographic_Azimuthal:
                 this.jPanel_Parameters.setEnabled(true);
@@ -450,6 +475,13 @@ public class FrmProjection extends javax.swing.JDialog {
                 toProjStr = "+proj=aea"
                         + " +lat_1=" + this.jTextField_StandPara1.getText()
                         + " +lat_2=" + this.jTextField_StandPara2.getText()
+                        + " +lat_0=" + this.jTextField_RefLat.getText()
+                        + " +lon_0=" + this.jTextField_CentralMeridian.getText()
+                        + " +x_0=" + this.jTextField_FalseEasting.getText()
+                        + " +y_0=" + this.jTextField_FalseNorthing.getText();
+                break;
+            case Lambert_Azimuthal_Equal_Area:
+                toProjStr = "+proj=laea"
                         + " +lat_0=" + this.jTextField_RefLat.getText()
                         + " +lon_0=" + this.jTextField_CentralMeridian.getText()
                         + " +x_0=" + this.jTextField_FalseEasting.getText()
