@@ -316,8 +316,10 @@ public class FrmViewData extends javax.swing.JFrame {
                             aDataInfo.readDataInfo(inFile);
                             StationData inStData = aDataInfo.getNullStationData();
                             ProjectionInfo fromProj = KnownCoordinateSystems.geographic.world.WGS1984;
-                            StationData midStData = inStData.project(fromProj, projInfo);
-                            StationData outStData = ((GridData) _data).toStation(midStData);
+                            //StationData midStData = inStData.project(fromProj, projInfo);
+                            //StationData outStData = ((GridData) _data).toStation(midStData);
+                            inStData.projInfo = fromProj;
+                            StationData outStData = ((GridData)_data).toStation(inStData);
                             outStData.saveAsCSVFile(fileName, "data");
                         } catch (FileNotFoundException ex) {
                             Logger.getLogger(FrmViewData.class.getName()).log(Level.SEVERE, null, ex);

@@ -19,6 +19,11 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -124,6 +129,10 @@ import static org.meteoinfo.shape.ShapeTypes.CurvePolygon;
 import static org.meteoinfo.shape.ShapeTypes.Polygon;
 import static org.meteoinfo.shape.ShapeTypes.Polyline;
 import org.meteoinfo.data.DataTypes;
+import org.meteoinfo.jts.geom.Geometry;
+import org.meteoinfo.jts.operation.union.CascadedPolygonUnion;
+import org.meteoinfo.shape.PolygonShape;
+import org.meteoinfo.shape.ShapeSelection;
 import org.xml.sax.SAXException;
 
 /**
@@ -342,7 +351,7 @@ public class FrmMain extends JFrame implements IApplication {
         jToolBar_Edit = new javax.swing.JToolBar();
         jButton_EditStartOrEnd = new javax.swing.JButton();
         jButton_EditSave = new javax.swing.JButton();
-        jSeparator19 = new javax.swing.JToolBar.Separator();
+        //jSeparator19 = new javax.swing.JToolBar.Separator();
         jButton_EditTool = new javax.swing.JButton();
         //jSeparator20 = new javax.swing.JToolBar.Separator();
         jButton_EditNewFeature = new javax.swing.JButton();
@@ -367,7 +376,15 @@ public class FrmMain extends JFrame implements IApplication {
         jMenu_Edit = new javax.swing.JMenu();
         jMenuItem_Undo = new javax.swing.JMenuItem();
         jMenuItem_Redo = new javax.swing.JMenuItem();
+        jMenuItem_Cut = new javax.swing.JMenuItem();
+        jMenuItem_Copy = new javax.swing.JMenuItem();
+        jMenuItem_Paste = new javax.swing.JMenuItem();
         jMenuItem_NewLayer = new javax.swing.JMenuItem();
+        jMenuItem_AddRing = new javax.swing.JMenuItem();
+        jMenuItem_FillRing = new javax.swing.JMenuItem();
+        jMenuItem_DeleteRing = new javax.swing.JMenuItem();
+        jMenuItem_SplitFeature = new javax.swing.JMenuItem();
+        jMenuItem_MergeFeature = new javax.swing.JMenuItem();
         jMenu_View = new javax.swing.JMenu();
         jMenuItem_Layers = new javax.swing.JMenuItem();
         jMenuItem_AttributeData = new javax.swing.JMenuItem();
@@ -394,6 +411,9 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_SelByLocation = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         jMenuItem_ClearSelection = new javax.swing.JMenuItem();
+        jMenu_GeoProcessing = new javax.swing.JMenu();
+        jMenuItem_Buffer = new javax.swing.JMenuItem();
+        jMenuItem_Clipping = new javax.swing.JMenuItem();
         jMenu_Tools = new javax.swing.JMenu();
         jMenuItem_Script = new javax.swing.JMenuItem();
         jMenuItem_ScriptConsole = new javax.swing.JMenuItem();
@@ -401,8 +421,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Options = new javax.swing.JMenuItem();
         jSeparator17 = new javax.swing.JPopupMenu.Separator();
         jMenuItem_OutputMapData = new javax.swing.JMenuItem();
-        jMenuItem_AddXYData = new javax.swing.JMenuItem();
-        jMenuItem_Clipping = new javax.swing.JMenuItem();
+        jMenuItem_AddXYData = new javax.swing.JMenuItem();        
         jMenuItem_Animator = new javax.swing.JMenuItem();
         jMenu_NetCDFData = new javax.swing.JMenu();
         jMenuItem_JoinNCFiles = new javax.swing.JMenuItem();
@@ -441,6 +460,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_AddLayer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_AddLayer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_AddLayer.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_AddLayerActionPerformed(evt);
             }
@@ -453,6 +473,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_OpenData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_OpenData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_OpenData.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_OpenDataActionPerformed(evt);
             }
@@ -465,6 +486,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_RemoveDataLayers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_RemoveDataLayers.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_RemoveDataLayers.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_RemoveDataLayersActionPerformed(evt);
             }
@@ -478,6 +500,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_SelectElement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_SelectElement.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_SelectElement.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_SelectElementActionPerformed(evt);
             }
@@ -490,6 +513,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_ZoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ZoomIn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_ZoomIn.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ZoomInActionPerformed(evt);
             }
@@ -502,6 +526,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_ZoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ZoomOut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_ZoomOut.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ZoomOutActionPerformed(evt);
             }
@@ -514,6 +539,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_Pan.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Pan.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_Pan.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_PanActionPerformed(evt);
             }
@@ -526,6 +552,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_FullExtent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_FullExtent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_FullExtent.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_FullExtentActionPerformed(evt);
             }
@@ -538,6 +565,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_ZoomToLayer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_ZoomToLayer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_ZoomToLayer.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ZoomToLayerActionPerformed(evt);
             }
@@ -687,6 +715,7 @@ public class FrmMain extends JFrame implements IApplication {
         jButton_Measurement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Measurement.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton_Measurement.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_MeasurementActionPerformed(evt);
             }
@@ -1137,6 +1166,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Folder_1_16x16x8.png"))); // NOI18N
         jMenuItem_Open.setText(bundle.getString("FrmMain.jMenuItem_Open.text")); // NOI18N
         jMenuItem_Open.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_OpenActionPerformed(evt);
             }
@@ -1147,6 +1177,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Disk_1_16x16x8.png"))); // NOI18N
         jMenuItem_Save.setText(bundle.getString("FrmMain.jMenuItem_Save.text")); // NOI18N
         jMenuItem_Save.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_SaveActionPerformed(evt);
             }
@@ -1155,6 +1186,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_SaveAs.setText(bundle.getString("FrmMain.jMenuItem_SaveAs.text")); // NOI18N
         jMenuItem_SaveAs.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_SaveAsActionPerformed(evt);
             }
@@ -1192,6 +1224,46 @@ public class FrmMain extends JFrame implements IApplication {
         jMenu_Edit.add(jMenuItem_Redo);
         jMenu_Edit.add(new javax.swing.JPopupMenu.Separator());
 
+        jMenu_Edit.setText(bundle.getString("FrmMain.jMenu_Edit.text")); // NOI18N
+        jMenu_Edit.setMnemonic(KeyEvent.VK_E);
+
+        jMenuItem_Cut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSMI_EditCut.Image.png"))); // NOI18N
+        jMenuItem_Cut.setText(bundle.getString("FrmMain.jMenuItem_Cut.text")); // NOI18N
+        jMenuItem_Cut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_Cut.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_CutActionPerformed(evt);
+            }
+        });
+        jMenuItem_Cut.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_Cut);
+
+        jMenuItem_Copy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/menuEditCopy.Image.png"))); // NOI18N
+        jMenuItem_Copy.setText(bundle.getString("FrmMain.jMenuItem_Copy.text")); // NOI18N
+        jMenuItem_Copy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_Copy.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_CopyActionPerformed(evt);
+            }
+        });
+        jMenuItem_Copy.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_Copy);
+
+        jMenuItem_Paste.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/pasteToolStripButton.Image.png"))); // NOI18N
+        jMenuItem_Paste.setText(bundle.getString("FrmMain.jMenuItem_Paste.text")); // NOI18N
+        jMenuItem_Paste.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_Paste.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_PasteActionPerformed(evt);
+            }
+        });
+        jMenuItem_Paste.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_Paste);
+        jMenu_Edit.add(new javax.swing.JPopupMenu.Separator());
+
         jMenuItem_NewLayer.setText(bundle.getString("FrmMain.jMenuItem_NewLayer.text")); // NOI18N        
         jMenuItem_NewLayer.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -1200,6 +1272,62 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
         jMenu_Edit.add(jMenuItem_NewLayer);
+        jMenu_Edit.add(new javax.swing.JPopupMenu.Separator());
+
+        jMenuItem_AddRing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/ring_add.png"))); // NOI18N
+        jMenuItem_AddRing.setText(bundle.getString("FrmMain.jMenuItem_AddRing.text")); // NOI18N        
+        jMenuItem_AddRing.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AddRingActionPerformed(evt);
+            }
+        });
+        jMenuItem_AddRing.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_AddRing);
+
+        jMenuItem_FillRing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/ring.png"))); // NOI18N
+        jMenuItem_FillRing.setText(bundle.getString("FrmMain.jMenuItem_FillRing.text")); // NOI18N        
+        jMenuItem_FillRing.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_FillRingActionPerformed(evt);
+            }
+        });
+        jMenuItem_FillRing.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_FillRing);
+
+        jMenuItem_DeleteRing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/ring_delete.png"))); // NOI18N
+        jMenuItem_DeleteRing.setText(bundle.getString("FrmMain.jMenuItem_DeleteRing.text")); // NOI18N        
+        jMenuItem_DeleteRing.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_DeleteRingActionPerformed(evt);
+            }
+        });
+        jMenuItem_DeleteRing.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_DeleteRing);
+
+        jMenuItem_SplitFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/split.png"))); // NOI18N
+        jMenuItem_SplitFeature.setText(bundle.getString("FrmMain.jMenuItem_SplitFeature.text")); // NOI18N        
+        jMenuItem_SplitFeature.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_SplitFeatureActionPerformed(evt);
+            }
+        });
+        jMenuItem_SplitFeature.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_SplitFeature);
+
+        jMenuItem_MergeFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/merge.png"))); // NOI18N
+        jMenuItem_MergeFeature.setText(bundle.getString("FrmMain.jMenuItem_MergeFeature.text")); // NOI18N        
+        jMenuItem_MergeFeature.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_MergeFeatureActionPerformed(evt);
+            }
+        });
+        jMenuItem_MergeFeature.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_MergeFeature);
 
         jMenuBar_Main.add(jMenu_Edit);
 
@@ -1210,6 +1338,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Layers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Layers.png"))); // NOI18N
         jMenuItem_Layers.setText(bundle.getString("FrmMain.jMenuItem_Layers.text")); // NOI18N
         jMenuItem_Layers.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_LayersActionPerformed(evt);
             }
@@ -1237,6 +1366,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_MapProperty.setText(bundle.getString("FrmMain.jMenuItem_MapProperty.text")); // NOI18N
         jMenuItem_MapProperty.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_MapPropertyActionPerformed(evt);
             }
@@ -1245,6 +1375,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_MaskOut.setText(bundle.getString("FrmMain.jMenuItem_MaskOut.text")); // NOI18N
         jMenuItem_MaskOut.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_MaskOutActionPerformed(evt);
             }
@@ -1254,6 +1385,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_Projection.setText(bundle.getString("FrmMain.jMenuItem_Projection.text")); // NOI18N
         jMenuItem_Projection.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_ProjectionActionPerformed(evt);
             }
@@ -1267,6 +1399,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_InsertMapFrame.setText(bundle.getString("FrmMain.jMenuItem_InsertMapFrame.text")); // NOI18N
         jMenuItem_InsertMapFrame.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_InsertMapFrameActionPerformed(evt);
             }
@@ -1276,6 +1409,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_InsertTitle.setText(bundle.getString("FrmMain.jMenuItem_InsertTitle.text")); // NOI18N
         jMenuItem_InsertTitle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_InsertTitleActionPerformed(evt);
             }
@@ -1284,6 +1418,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_InsertText.setText(bundle.getString("FrmMain.jMenuItem_InsertText.text")); // NOI18N
         jMenuItem_InsertText.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_InsertTextActionPerformed(evt);
             }
@@ -1294,6 +1429,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_InsertLegend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSMI_InsertLegend.Image.png"))); // NOI18N
         jMenuItem_InsertLegend.setText(bundle.getString("FrmMain.jMenuItem_InsertLegend.text")); // NOI18N
         jMenuItem_InsertLegend.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_InsertLegendActionPerformed(evt);
             }
@@ -1302,6 +1438,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_InsertScaleBar.setText(bundle.getString("FrmMain.jMenuItem_InsertScaleBar.text")); // NOI18N
         jMenuItem_InsertScaleBar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_InsertScaleBarActionPerformed(evt);
             }
@@ -1356,7 +1493,32 @@ public class FrmMain extends JFrame implements IApplication {
         jMenu_Selection.add(jMenuItem_ClearSelection);
 
         jMenuBar_Main.add(jMenu_Selection);
+        
+        //GeoProcessing menu
+        jMenu_GeoProcessing.setText(bundle.getString("FrmMain.jMenu_GeoProcessing.text"));
+        jMenu_GeoProcessing.setMnemonic(KeyEvent.VK_G);
+        
+        jMenuItem_Buffer.setText(bundle.getString("FrmMain.jMenuItem_Buffer.text")); // NOI18N
+        jMenuItem_Buffer.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_BufferActionPerformed(evt);
+            }
+        });
+        jMenu_GeoProcessing.add(jMenuItem_Buffer);
+        
+        jMenuItem_Clipping.setText(bundle.getString("FrmMain.jMenuItem_Clipping.text")); // NOI18N
+        jMenuItem_Clipping.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ClippingActionPerformed(evt);
+            }
+        });
+        jMenu_GeoProcessing.add(jMenuItem_Clipping);
+        
+        jMenuBar_Main.add(jMenu_GeoProcessing);
 
+        //Tools menu
         jMenu_Tools.setText(bundle.getString("FrmMain.jMenu_Tools.text")); // NOI18N
         jMenu_Tools.setMnemonic(KeyEvent.VK_T);
 
@@ -1368,7 +1530,7 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
         jMenu_Tools.add(jMenuItem_Script);
-        
+
         jMenuItem_ScriptConsole.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/console.png"))); // NOI18N
         jMenuItem_ScriptConsole.setText(bundle.getString("FrmMain.jMenuItem_ScriptConsole.text")); // NOI18N
         jMenuItem_ScriptConsole.addActionListener(new java.awt.event.ActionListener() {
@@ -1403,15 +1565,7 @@ public class FrmMain extends JFrame implements IApplication {
                 jMenuItem_AddXYDataActionPerformed(evt);
             }
         });
-        jMenu_Tools.add(jMenuItem_AddXYData);
-
-        jMenuItem_Clipping.setText(bundle.getString("FrmMain.jMenuItem_Clipping.text")); // NOI18N
-        jMenuItem_Clipping.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_ClippingActionPerformed(evt);
-            }
-        });
-        jMenu_Tools.add(jMenuItem_Clipping);
+        jMenu_Tools.add(jMenuItem_AddXYData);        
 
         jMenuItem_Animator.setText(bundle.getString("FrmMain.jMenuItem_Animator.text")); // NOI18N
         jMenuItem_Animator.addActionListener(new java.awt.event.ActionListener() {
@@ -1421,7 +1575,7 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
         jMenu_Tools.add(jMenuItem_Animator);
-        
+
         jMenu_NetCDFData.setText(bundle.getString("FrmMain.jMenu_NetCDFData.text"));
         jMenuItem_JoinNCFiles.setText(bundle.getString("FrmMain.jMenuItem_JoinNCFiles.text")); // NOI18N
         jMenuItem_JoinNCFiles.addActionListener(new java.awt.event.ActionListener() {
@@ -1504,11 +1658,12 @@ public class FrmMain extends JFrame implements IApplication {
         this.setLocation(this._options.getMainFormLocation());
         boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
                 getInputArguments().toString().contains("jdwp");
-        if (isDebug) {
-            this.setSize(1000, 650);
-        } else {
-            this.setSize(this._options.getMainFormSize());
-        }
+//        if (isDebug) {
+//            this.setSize(1000, 650);
+//        } else {
+//            this.setSize(this._options.getMainFormSize());
+//        }
+        this.setSize(this._options.getMainFormSize());
         String pluginPath = this._startupPath + File.separator + "plugins" + File.separator + "plugins.xml";
         try {
             this._plugins.loadConfigFile(pluginPath);
@@ -1517,9 +1672,7 @@ public class FrmMain extends JFrame implements IApplication {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
+        } catch (ParserConfigurationException | SAXException ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
         _mapView = _mapDocument.getActiveMapFrame().getMapView();
@@ -1586,10 +1739,16 @@ public class FrmMain extends JFrame implements IApplication {
                     if (selLayer.getLayerType() == LayerTypes.VectorLayer) {
                         if (((VectorLayer) selLayer).isEditing()) {
                             if (((VectorLayer) selLayer).hasSelectedShapes()) {
+                                jMenuItem_Cut.setEnabled(true);
+                                jMenuItem_Copy.setEnabled(true);
+                                jMenuItem_Paste.setEnabled(true);
+                                jMenuItem_MergeFeature.setEnabled(true);
                                 jButton_EditRemoveFeature.setEnabled(true);
                                 jButton_EditFeatureVertices.setEnabled(true);
-
                             } else {
+                                jMenuItem_Cut.setEnabled(false);
+                                jMenuItem_Copy.setEnabled(false);
+                                jMenuItem_MergeFeature.setEnabled(false);
                                 jButton_EditRemoveFeature.setEnabled(false);
                                 jButton_EditFeatureVertices.setEnabled(false);
                             }
@@ -1727,12 +1886,13 @@ public class FrmMain extends JFrame implements IApplication {
     public MapView getMapView() {
         return this._mapDocument.getActiveMapFrame().getMapView();
     }
-    
+
     /**
      * Get map layout
+     *
      * @return Map layout
      */
-    public MapLayout getMapLyout(){
+    public MapLayout getMapLyout() {
         return this._mapLayout;
     }
 
@@ -1755,9 +1915,10 @@ public class FrmMain extends JFrame implements IApplication {
     public JMenuBar getMainMenuBar() {
         return this.jMenuBar_Main;
     }
-    
+
     /**
      * Get plugin menu
+     *
      * @return Plugin menu
      */
     @Override
@@ -1908,11 +2069,7 @@ public class FrmMain extends JFrame implements IApplication {
             try {
                 this._options.loadConfigFile(fn);
                 this._mapDocument.setFont(this._options.getLegendFont());
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
-                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (ParserConfigurationException | SAXException | IOException ex) {
                 Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1954,7 +2111,7 @@ public class FrmMain extends JFrame implements IApplication {
             Plugin plugin = new Plugin();
             plugin.setJarFileName(jarFileName);
             String className = GlobalUtil.getPluginClassName(jarFileName);
-            if (className == null){
+            if (className == null) {
                 return null;
             } else {
                 plugin.setClassName(className);
@@ -1993,8 +2150,9 @@ public class FrmMain extends JFrame implements IApplication {
 
     /**
      * Load plugins
+     *
      * @throws MalformedURLException
-     * @throws IOException 
+     * @throws IOException
      */
     public void loadPlugins() throws MalformedURLException, IOException {
         String pluginPath = this._startupPath + File.separator + "plugins";
@@ -2147,6 +2305,7 @@ public class FrmMain extends JFrame implements IApplication {
 
     /**
      * Load plugin
+     *
      * @param plugin Plugin
      */
     public void loadPlugin(Plugin plugin) {
@@ -2202,7 +2361,7 @@ public class FrmMain extends JFrame implements IApplication {
 
     @Override
     public void setCurrentTool(JButton currentTool) {
-        if (!(_currentTool == null)) {
+        if (_currentTool != null) {
             _currentTool.setSelected(false);
         }
         _currentTool = currentTool;
@@ -2325,6 +2484,63 @@ public class FrmMain extends JFrame implements IApplication {
         this.refreshUndoRedo();
     }
 
+    private void jMenuItem_CutActionPerformed(ActionEvent evt) {
+        VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
+        List<Shape> selShapes = layer.getSelectedShapes();
+
+        UndoableEdit edit = (new MapViewUndoRedo()).new RemoveFeaturesEdit(_mapView, layer, selShapes);
+        currentUndoManager.addEdit(edit);
+        this.refreshUndoRedo();
+
+        for (Shape shape : selShapes) {
+            layer.editRemoveShape(shape);
+        }
+        this.jButton_EditRemoveFeature.setEnabled(false);
+        _mapView.paintLayers();
+
+        ShapeSelection shapeSelection = new ShapeSelection(selShapes);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(shapeSelection, null);
+    }
+
+    private void jMenuItem_CopyActionPerformed(ActionEvent evt) {
+        VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
+        List<Shape> selShapes = layer.getSelectedShapes();
+        List<Shape> r = new ArrayList<>();
+        for (Shape s : selShapes) {
+            r.add((Shape) s.clone());
+        }
+        ShapeSelection shapeSelection = new ShapeSelection(r);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(shapeSelection, null);
+    }
+
+    private void jMenuItem_PasteActionPerformed(ActionEvent evt) {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable t = clipboard.getContents(null);
+        if (t == null) {
+            return;
+        }
+
+        VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
+        if (layer.isEditing()) {
+            DataFlavor dataFlavors = new DataFlavor(org.meteoinfo.shape.Shape.class, "Shape Object");
+            if (t.isDataFlavorSupported(dataFlavors)) {
+                try {
+                    List<Shape> shapes = (List<Shape>) t.getTransferData(dataFlavors);
+                    for (Shape shape : shapes) {
+                        layer.editAddShape(shape);
+                    }
+                    this._mapView.paintLayers();
+                    UndoableEdit edit = (new MapViewUndoRedo()).new AddFeaturesEdit(this._mapView, layer, shapes);
+                    currentUndoManager.addEdit(edit);
+                    this.refreshUndoRedo();
+                } catch (UnsupportedFlavorException | IOException ex) {
+                } catch (Exception ex) {
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
     private void jMenuItem_NewLayerActionPerformed(ActionEvent evt) {
         Object[] options = {"Point Layer", "Polyline Layer", "Polygon Layer"};
         String option = (String) JOptionPane.showInputDialog(this, "Select Layer Type:",
@@ -2342,6 +2558,55 @@ public class FrmMain extends JFrame implements IApplication {
             this._mapDocument.getActiveMapFrame().addLayer(layer);
             this._mapDocument.paintGraphics();
         }
+    }
+
+    private void jMenuItem_AddRingActionPerformed(ActionEvent evt) {
+        _mapView.setMouseTool(MouseTools.Edit_AddRing);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_AddRing);
+    }
+
+    private void jMenuItem_FillRingActionPerformed(ActionEvent evt) {
+        _mapView.setMouseTool(MouseTools.Edit_FillRing);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_FillRing);
+    }
+
+    private void jMenuItem_DeleteRingActionPerformed(ActionEvent evt) {
+        _mapView.setMouseTool(MouseTools.Edit_DeleteRing);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_DeleteRing);
+    }
+
+    private void jMenuItem_SplitFeatureActionPerformed(ActionEvent evt) {
+        _mapView.setMouseTool(MouseTools.Edit_SplitFeature);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_SplitFeature);
+    }
+
+    private void jMenuItem_MergeFeatureActionPerformed(ActionEvent evt) {
+        VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
+        List<Shape> selShapes = layer.getSelectedShapes();
+        if (selShapes.size() < 2) {
+            JOptionPane.showMessageDialog(this, "Union option need at least two features are selected!");
+            return;
+        }
+
+        List<Geometry> geos = new ArrayList<>();
+        for (int i = 0; i < selShapes.size(); i++) {
+            geos.add(selShapes.get(i).toGeometry());
+        }
+        Geometry mgeo = CascadedPolygonUnion.union(geos);
+        PolygonShape bShape = new PolygonShape(mgeo);
+        
+        for (Shape shape : selShapes) {
+            layer.editRemoveShape(shape);
+        }
+        try {
+            layer.editAddShape(bShape);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        _mapView.paintLayers();
+        UndoableEdit edit = (new MapViewUndoRedo()).new UnionFeaturesEdit(this._mapView, layer, bShape, selShapes);
+        currentUndoManager.addEdit(edit);
+        this.refreshUndoRedo();
     }
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {
@@ -2523,10 +2788,10 @@ public class FrmMain extends JFrame implements IApplication {
         frmTE.setLocationRelativeTo(this);
         frmTE.setVisible(true);
     }
-    
-    private void jMenuItem_ScriptConsoleActionPerformed(java.awt.event.ActionEvent evt){
+
+    private void jMenuItem_ScriptConsoleActionPerformed(java.awt.event.ActionEvent evt) {
         FrmConsole frmConsole = new FrmConsole(this);
-        frmConsole.setTitle("Jython Console");        
+        frmConsole.setTitle("Jython Console");
         frmConsole.setLocationRelativeTo(this);
         frmConsole.setVisible(true);
         frmConsole.InitializeConsole();
@@ -3050,7 +3315,7 @@ public class FrmMain extends JFrame implements IApplication {
                 }
             }
             this.setCursor(Cursor.getDefaultCursor());
-        }        
+        }
     }
 
     private void jButton_EditStartOrEndActionPerformed(ActionEvent evt) {
@@ -3078,6 +3343,12 @@ public class FrmMain extends JFrame implements IApplication {
                         this.jButton_EditNewFeature.setEnabled(false);
                         this.jButton_EditRemoveFeature.setEnabled(false);
                         this.jButton_EditFeatureVertices.setEnabled(false);
+
+                        this.jMenuItem_AddRing.setEnabled(false);
+                        this.jMenuItem_FillRing.setEnabled(false);
+                        this.jMenuItem_SplitFeature.setEnabled(false);
+                        this.jMenuItem_DeleteRing.setEnabled(false);
+
                         if (result == JOptionPane.YES_OPTION) {
                             layer.saveFile();
                         } else if (result == JOptionPane.NO_OPTION) {
@@ -3097,9 +3368,16 @@ public class FrmMain extends JFrame implements IApplication {
                     this.jButton_EditNewFeature.setEnabled(false);
                     this.jButton_EditRemoveFeature.setEnabled(false);
                     this.jButton_EditFeatureVertices.setEnabled(false);
+
+                    this.jMenuItem_AddRing.setEnabled(false);
+                    this.jMenuItem_FillRing.setEnabled(false);
+                    this.jMenuItem_SplitFeature.setEnabled(false);
+                    this.jMenuItem_DeleteRing.setEnabled(false);
+
                     currentUndoManager = undoManager;
                     this.refreshUndoRedo();
                 }
+                this.jButton_SelectElement.doClick();
             } else {
                 selLayerNode.setEditing(true);
                 this.jButton_EditTool.setEnabled(true);
@@ -3109,6 +3387,16 @@ public class FrmMain extends JFrame implements IApplication {
                     this.jButton_EditFeatureVertices.setEnabled(true);
                 }
                 this.jButton_EditStartOrEnd.setSelected(true);
+
+                if (layer.getShapeType().isPolygon()) {
+                    this.jMenuItem_AddRing.setEnabled(true);
+                    this.jMenuItem_FillRing.setEnabled(true);
+                    this.jMenuItem_SplitFeature.setEnabled(true);
+                    this.jMenuItem_DeleteRing.setEnabled(true);
+                } else if (layer.getShapeType().isLine()) {
+                    this.jMenuItem_SplitFeature.setEnabled(true);
+                }
+
                 currentUndoManager = layer.getUndoManager();
                 this.refreshUndoRedo();
                 this.jButton_EditTool.doClick();
@@ -3199,6 +3487,12 @@ public class FrmMain extends JFrame implements IApplication {
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }
+    
+    private void jMenuItem_BufferActionPerformed(ActionEvent evt){
+        FrmBuffer frm = new FrmBuffer(this, false);
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }
 
     private void jMenuItem_ClippingActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -3212,7 +3506,7 @@ public class FrmMain extends JFrame implements IApplication {
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }
-    
+
     private void jMenuItem_JoinNCFilesActionPerformed(java.awt.event.ActionEvent evt) {
         FrmJoinNCFiles frm = new FrmJoinNCFiles(this, false);
         frm.setLocationRelativeTo(this);
@@ -3248,23 +3542,25 @@ public class FrmMain extends JFrame implements IApplication {
         _mapDocument.paintGraphics();
         _mapView.zoomToExtent(_mapView.getViewExtent());
     }
+
     // </editor-fold>
     // <editor-fold desc="Others">
     /**
      * Refresh map document and map view / map layout
      */
-    public void refresh(){
+    public void refresh() {
         this._mapDocument.paintGraphics();
-        if (this.jTabbedPane_Main.getSelectedIndex() == 0)
+        if (this.jTabbedPane_Main.getSelectedIndex() == 0) {
             this._mapView.paintLayers();
-        else
+        } else {
             this._mapLayout.paintGraphics();
+        }
     }
-    
+
     /**
      * Refresh map view / map layer
      */
-    public void refreshMap(){
+    public void refreshMap() {
         int selIndex = this.jTabbedPane_Main.getSelectedIndex();
         switch (selIndex) {
             case 0:    //MapView
@@ -3373,7 +3669,6 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_About;
     private javax.swing.JMenuItem jMenuItem_AttributeData;
     private javax.swing.JMenuItem jMenuItem_ClearSelection;
-    private javax.swing.JMenuItem jMenuItem_Clipping;
     private javax.swing.JMenuItem jMenuItem_Help;
     private javax.swing.JMenuItem jMenuItem_InsertLegend;
     private javax.swing.JMenuItem jMenuItem_InsertMapFrame;
@@ -3403,7 +3698,15 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_SelByLocation;
     private javax.swing.JMenuItem jMenuItem_Undo;
     private javax.swing.JMenuItem jMenuItem_Redo;
+    private javax.swing.JMenuItem jMenuItem_Cut;
+    private javax.swing.JMenuItem jMenuItem_Copy;
+    private javax.swing.JMenuItem jMenuItem_Paste;
     private javax.swing.JMenuItem jMenuItem_NewLayer;
+    private javax.swing.JMenuItem jMenuItem_AddRing;
+    private javax.swing.JMenuItem jMenuItem_FillRing;
+    private javax.swing.JMenuItem jMenuItem_DeleteRing;
+    private javax.swing.JMenuItem jMenuItem_SplitFeature;
+    private javax.swing.JMenuItem jMenuItem_MergeFeature;
     private javax.swing.JMenu jMenu_Help;
     private javax.swing.JMenu jMenu_Insert;
     private javax.swing.JMenu jMenu_Plugin;
@@ -3412,6 +3715,9 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenu jMenu_Tools;
     private javax.swing.JMenu jMenu_View;
     private javax.swing.JMenu jMenu_Edit;
+    private javax.swing.JMenu jMenu_GeoProcessing;
+    private javax.swing.JMenuItem jMenuItem_Buffer;
+    private javax.swing.JMenuItem jMenuItem_Clipping;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel_Status;
     private javax.swing.JPanel jPanel_LayoutTab;
@@ -3426,8 +3732,8 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
-    private javax.swing.JToolBar.Separator jSeparator19;
-    private javax.swing.JToolBar.Separator jSeparator20;
+    //private javax.swing.JToolBar.Separator jSeparator19;
+    //private javax.swing.JToolBar.Separator jSeparator20;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JPopupMenu.Separator jSeparator7;
