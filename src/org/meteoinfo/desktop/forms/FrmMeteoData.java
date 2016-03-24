@@ -180,6 +180,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jMenu_ASCII = new javax.swing.JMenu();
         jMenuItem_ASCII_LonLat = new javax.swing.JMenuItem();
         jMenuItem_ASCII_SYNOP = new javax.swing.JMenuItem();
+        jMenuItem_ASCII_METAR = new javax.swing.JMenuItem();
         jMenuItem_ASCII_EsriGrid = new javax.swing.JMenuItem();
         jMenuItem_ASCII_SurferGrid = new javax.swing.JMenuItem();
         jMenuItem_MICAPS = new javax.swing.JMenuItem();
@@ -457,6 +458,14 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
         });   
         jMenu_ASCII.add(jMenuItem_ASCII_SYNOP);
+        jMenuItem_ASCII_METAR.setText("METAR Data");
+        jMenuItem_ASCII_METAR.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onMETARClick(e);
+            }
+        });   
+        jMenu_ASCII.add(jMenuItem_ASCII_METAR);
         jMenu_ASCII.add(new JSeparator());
         jMenuItem_ASCII_EsriGrid.setText("Esri ASCII Grid Data");
         jMenuItem_ASCII_EsriGrid.addActionListener(new java.awt.event.ActionListener() {
@@ -2016,6 +2025,24 @@ public class FrmMeteoData extends javax.swing.JDialog {
             addMeteoData(aDataInfo);
         }
     }
+    
+    private void onMETARClick(ActionEvent e) {
+        String path = this.getStartupPath();
+        File pathDir = new File(path);
+
+        JFileChooser aDlg = new JFileChooser();
+        aDlg.setCurrentDirectory(pathDir);
+        if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
+            File file = aDlg.getSelectedFile();
+            //this._parent.setCurrentDataFolder(file.getParent());
+            System.setProperty("user.dir", file.getParent());
+
+            MeteoDataInfo aDataInfo = new MeteoDataInfo();
+            String stFile = this._parent.getStartupPath() + "\\station\\METAR_Stations.csv";
+            aDataInfo.openMETARData(file.getAbsolutePath(), stFile);
+            addMeteoData(aDataInfo);
+        }
+    }
 
     private void onMICAPSDataClick(ActionEvent e) {
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -3089,6 +3116,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private javax.swing.JMenu jMenu_ASCII;
     private javax.swing.JMenuItem jMenuItem_ASCII_LonLat;
     private javax.swing.JMenuItem jMenuItem_ASCII_SYNOP;
+    private javax.swing.JMenuItem jMenuItem_ASCII_METAR;
     private javax.swing.JMenuItem jMenuItem_ASCII_EsriGrid;
     private javax.swing.JMenuItem jMenuItem_ASCII_SurferGrid;
     private javax.swing.JMenuItem jMenuItem_MICAPS;
