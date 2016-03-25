@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
-    <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Arial" GridFontSize="12" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="380" Left="51" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="34" Width="650">
-      <Extents xMax="100.48411134704294" xMin="81.31951510159523" yMax="48.671855402688905" yMin="39.295118130782555"/>
+    <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Arial" GridFontSize="12" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="380" Left="42" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="36" Width="619">
+      <Extents xMax="120.97517738874629" xMin="60.82844905989188" yMax="58.69759976137709" yMin="29.269373772094355"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="" SetMaskLayer="false"/>
       <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees " RefCutLon="180.0" RefLon="0.0"/>
       <GroupLayer>
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\grads\test.shp" Handle="5" IsMaskout="true" LayerDrawType="Shaded" LayerName="Shaded_PS_Surface_1987-01-02 00:00" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+          <LegendScheme BreakNum="12" FieldName="PS_Low" HasNoData="false" LegendType="GraduatedColor" MaxValue="1048.0577392578125" MinValue="481.911376953125" ShapeType="Polygon" UNDEF="-2.56E33">
+            <Breaks>
+              <Break BackColor="0x00ffffff" Caption="&gt; 1000" Color="0xfff00082" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="1048.0577392578125" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="1000.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="950 - 1000" Color="0xfffa3c3c" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="1000.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="950.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="900 - 950" Color="0xfff08228" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="950.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="900.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="850 - 900" Color="0xffe6af2d" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="900.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="850.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="800 - 850" Color="0xffe6dc32" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="850.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="800.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="750 - 800" Color="0xffa0e632" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="800.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="750.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="700 - 750" Color="0xff00dc00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="750.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="700.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="650 - 700" Color="0xff00c8c8" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="700.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="650.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="600 - 650" Color="0xff00a0ff" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="650.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="600.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="550 - 600" Color="0xff1e3cff" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="600.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="550.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="500 - 550" Color="0xff6e00dc" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="550.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="500.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="&lt; 500" Color="0xffa000c8" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="500.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="481.911376953125" Style="NONE" StyleSize="8" Tag=""/>
+            </Breaks>
+          </LegendScheme>
+          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+          <Graphics/>
+          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+              <Breaks/>
+            </LegendScheme>
+          </ChartSet>
+          <ChartGraphics/>
+          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
+        </Layer>
         <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
@@ -78,7 +105,7 @@
   </MapFrames>
   <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="false">
     <LayoutElements>
-      <LayoutMap DrawBackColor="false" DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Arial" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="380" Left="51" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="34" Width="650"/>
+      <LayoutMap DrawBackColor="false" DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Arial" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="380" Left="42" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="36" Width="619"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="22" IsTitle="false" Left="309" Top="9" Width="106">
         <Graphic>
           <Shape Selected="false" ShapeType="Point" Visible="true">
@@ -89,7 +116,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="37" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="182" LegendLayer="" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="444" Width="403"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="240" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="668" LegendLayer="Shaded_PS_Surface_1987-01-02 00:00" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="126" Width="120"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="20" IsTitle="false" Left="643" Top="448" Width="20">
         <Graphic>
           <Shape Selected="false" ShapeType="WindArraw" Visible="true">
