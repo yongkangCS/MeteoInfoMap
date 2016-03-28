@@ -131,7 +131,9 @@ import static org.meteoinfo.shape.ShapeTypes.Polyline;
 import org.meteoinfo.data.DataTypes;
 import org.meteoinfo.jts.geom.Geometry;
 import org.meteoinfo.jts.operation.union.CascadedPolygonUnion;
+import org.meteoinfo.jts.operation.union.UnaryUnionOp;
 import org.meteoinfo.shape.PolygonShape;
+import org.meteoinfo.shape.ShapeFactory;
 import org.meteoinfo.shape.ShapeSelection;
 import org.xml.sax.SAXException;
 
@@ -383,6 +385,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_AddRing = new javax.swing.JMenuItem();
         jMenuItem_FillRing = new javax.swing.JMenuItem();
         jMenuItem_DeleteRing = new javax.swing.JMenuItem();
+        jMenuItem_ReformFeature = new javax.swing.JMenuItem();
         jMenuItem_SplitFeature = new javax.swing.JMenuItem();
         jMenuItem_MergeFeature = new javax.swing.JMenuItem();
         jMenu_View = new javax.swing.JMenu();
@@ -1306,6 +1309,17 @@ public class FrmMain extends JFrame implements IApplication {
         });
         jMenuItem_DeleteRing.setEnabled(false);
         jMenu_Edit.add(jMenuItem_DeleteRing);
+        
+        jMenuItem_ReformFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/reform_edit.png"))); // NOI18N
+        jMenuItem_ReformFeature.setText(bundle.getString("FrmMain.jMenuItem_ReformFeature.text")); // NOI18N        
+        jMenuItem_ReformFeature.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ReformFeatureActionPerformed(evt);
+            }
+        });
+        jMenuItem_ReformFeature.setEnabled(false);
+        jMenu_Edit.add(jMenuItem_ReformFeature);
 
         jMenuItem_SplitFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/split.png"))); // NOI18N
         jMenuItem_SplitFeature.setText(bundle.getString("FrmMain.jMenuItem_SplitFeature.text")); // NOI18N        
@@ -2574,6 +2588,11 @@ public class FrmMain extends JFrame implements IApplication {
         _mapView.setMouseTool(MouseTools.Edit_DeleteRing);
         _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_DeleteRing);
     }
+    
+    private void jMenuItem_ReformFeatureActionPerformed(ActionEvent evt) {
+        _mapView.setMouseTool(MouseTools.Edit_ReformFeature);
+        _mapDocument.getMapLayout().setMouseMode(MouseMode.Map_Edit_ReformFeature);
+    }
 
     private void jMenuItem_SplitFeatureActionPerformed(ActionEvent evt) {
         _mapView.setMouseTool(MouseTools.Edit_SplitFeature);
@@ -2592,8 +2611,8 @@ public class FrmMain extends JFrame implements IApplication {
         for (int i = 0; i < selShapes.size(); i++) {
             geos.add(selShapes.get(i).toGeometry());
         }
-        Geometry mgeo = CascadedPolygonUnion.union(geos);
-        PolygonShape bShape = new PolygonShape(mgeo);
+        Geometry mgeo = UnaryUnionOp.union(geos);
+        Shape bShape = ShapeFactory.createShape(mgeo);
         
         for (Shape shape : selShapes) {
             layer.editRemoveShape(shape);
@@ -3348,6 +3367,7 @@ public class FrmMain extends JFrame implements IApplication {
                         this.jMenuItem_FillRing.setEnabled(false);
                         this.jMenuItem_SplitFeature.setEnabled(false);
                         this.jMenuItem_DeleteRing.setEnabled(false);
+                        this.jMenuItem_ReformFeature.setEnabled(false);
 
                         if (result == JOptionPane.YES_OPTION) {
                             layer.saveFile();
@@ -3373,6 +3393,7 @@ public class FrmMain extends JFrame implements IApplication {
                     this.jMenuItem_FillRing.setEnabled(false);
                     this.jMenuItem_SplitFeature.setEnabled(false);
                     this.jMenuItem_DeleteRing.setEnabled(false);
+                    this.jMenuItem_ReformFeature.setEnabled(false);
 
                     currentUndoManager = undoManager;
                     this.refreshUndoRedo();
@@ -3393,8 +3414,10 @@ public class FrmMain extends JFrame implements IApplication {
                     this.jMenuItem_FillRing.setEnabled(true);
                     this.jMenuItem_SplitFeature.setEnabled(true);
                     this.jMenuItem_DeleteRing.setEnabled(true);
+                    this.jMenuItem_ReformFeature.setEnabled(true);
                 } else if (layer.getShapeType().isLine()) {
                     this.jMenuItem_SplitFeature.setEnabled(true);
+                    this.jMenuItem_ReformFeature.setEnabled(true);
                 }
 
                 currentUndoManager = layer.getUndoManager();
@@ -3705,6 +3728,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_AddRing;
     private javax.swing.JMenuItem jMenuItem_FillRing;
     private javax.swing.JMenuItem jMenuItem_DeleteRing;
+    private javax.swing.JMenuItem jMenuItem_ReformFeature;
     private javax.swing.JMenuItem jMenuItem_SplitFeature;
     private javax.swing.JMenuItem jMenuItem_MergeFeature;
     private javax.swing.JMenu jMenu_Help;
