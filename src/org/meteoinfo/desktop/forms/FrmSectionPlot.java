@@ -1517,13 +1517,13 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         //Set lon/lat
         this.jComboBox_Lon1.removeAllItems();
-        for (i = 0; i < (_meteoDataInfo.getDataInfo()).getXDimension().getDimLength(); i++) {
+        for (i = 0; i < (_meteoDataInfo.getDataInfo()).getXDimension().getLength(); i++) {
             this.jComboBox_Lon1.addItem(String.valueOf((_meteoDataInfo.getDataInfo()).getXDimension().getDimValue().get(i)));
         }
         this.jComboBox_Lon1.setSelectedIndex(0);
 
         this.jComboBox_Lat1.removeAllItems();
-        for (i = 0; i < (_meteoDataInfo.getDataInfo()).getYDimension().getDimLength(); i++) {
+        for (i = 0; i < (_meteoDataInfo.getDataInfo()).getYDimension().getLength(); i++) {
             this.jComboBox_Lat1.addItem(String.valueOf((_meteoDataInfo.getDataInfo()).getYDimension().getDimValue().get(i)));
         }
         this.jComboBox_Lat1.setSelectedIndex(0);

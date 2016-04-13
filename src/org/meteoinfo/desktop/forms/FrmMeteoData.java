@@ -912,7 +912,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                         this.jComboBox_Level.addItem("Surface");
                         this.jComboBox_Level.setSelectedIndex(0);
                     } else {
-                        for (i = 0; i < ldim.getDimLength(); i++) {
+                        for (i = 0; i < ldim.getLength(); i++) {
                             this.jComboBox_Level.addItem(String.valueOf(ldim.getDimValue().get(i)));
                         }
                         if (this.jComboBox_Level.getItemCount() > _meteoDataInfo.getLevelIndex()) {
@@ -924,7 +924,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     this.jComboBox_Level.setSelectedIndex(0);
                 }
             } else {
-                for (i = 0; i < var.getZDimension().getDimLength(); i++) {
+                for (i = 0; i < var.getZDimension().getLength(); i++) {
                     this.jComboBox_Level.addItem(String.valueOf(var.getZDimension().getDimValue().get(i)));
                 }
                 if (this.jComboBox_Level.getItemCount() > _meteoDataInfo.getLevelIndex()) {
