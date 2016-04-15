@@ -57,7 +57,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="240" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="668" LegendLayer="Raster_xco2_Surface_18700-06-07 08:50" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="126" Width="139"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="240" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="668" LegendLayer="" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="126" Width="139"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="20" IsTitle="false" Left="643" Top="448" Width="20">
         <Graphic>
           <Shape Selected="false" ShapeType="WindArraw" Visible="true">
