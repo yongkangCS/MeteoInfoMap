@@ -2,7 +2,7 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Arial" GridFontSize="12" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="380" Left="42" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="36" Width="619">
-      <Extents xMax="180.0" xMin="-180.0" yMax="83.62359619140625" yMin="-90.0"/>
+      <Extents xMax="107.48209897962276" xMin="105.44790102037724" yMax="30.18764001230717" yMin="29.192359987692825"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="" SetMaskLayer="false"/>
@@ -40,6 +40,160 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
+        <Layer AvoidCollision="false" Expanded="true" FileName="C:\TEMP\ceshi.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="ceshi.shp" LayerType="VectorLayer" ShapeType="Point" TransparencyPerc="0" Visible="true">
+          <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Point" UNDEF="-9999.0">
+            <Breaks>
+              <Break Angle="0.0" Caption="" CharIndex="0" Color="0xff000000" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" Size="5.0" StartValue="0" Style="Circle" Tag=""/>
+            </Breaks>
+          </LegendScheme>
+          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+          <Graphics/>
+          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="true" DrawLabel="true" FieldNames="alkanes" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.39" MinSize="0" MinValue="0.14" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+              <Breaks>
+                <Break BackColor="0x00ffffff" Caption="alkanes" Color="0xffb30fae" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag="alkanes"/>
+              </Breaks>
+            </LegendScheme>
+          </ChartSet>
+          <ChartGraphics>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.54" Y="29.4"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.27" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="0" XShift="0" YShift="0"/>
+              <StartPosition X="106.54" Y="29.4"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.54" Y="29.81"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.39" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="1" XShift="0" YShift="0"/>
+              <StartPosition X="106.54" Y="29.81"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.42" Y="29.82"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.19" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="2" XShift="0" YShift="0"/>
+              <StartPosition X="106.42" Y="29.82"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.52" Y="29.59"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.19" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="3" XShift="0" YShift="0"/>
+              <StartPosition X="106.52" Y="29.59"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.55" Y="29.68"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.16" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="4" XShift="0" YShift="0"/>
+              <StartPosition X="106.55" Y="29.68"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.48" Y="29.49"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.34" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="5" XShift="0" YShift="0"/>
+              <StartPosition X="106.48" Y="29.49"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.27" Y="29.98"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.24" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="6" XShift="0" YShift="0"/>
+              <StartPosition X="106.27" Y="29.98"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.66" Y="29.63"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.28" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="7" XShift="0" YShift="0"/>
+              <StartPosition X="106.66" Y="29.63"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="false">
+                <Points>
+                  <Point X="106.51" Y="29.58"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.29" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="8" XShift="0" YShift="0"/>
+              <StartPosition X="106.51" Y="29.58"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.53" Y="29.5"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.24" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="9" XShift="0" YShift="0"/>
+              <StartPosition X="106.53" Y="29.5"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.63" Y="29.54"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.25" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="10" XShift="0" YShift="0"/>
+              <StartPosition X="106.63" Y="29.54"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="false">
+                <Points>
+                  <Point X="106.46" Y="29.57"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.14" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="11" XShift="0" YShift="0"/>
+              <StartPosition X="106.46" Y="29.57"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.3" Y="29.6"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.28" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="12" XShift="0" YShift="0"/>
+              <StartPosition X="106.3" Y="29.6"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.63" Y="29.72"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.29" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="13" XShift="0" YShift="0"/>
+              <StartPosition X="106.63" Y="29.72"/>
+            </Graphic>
+            <Graphic>
+              <Shape Selected="false" ShapeType="Point" Visible="true">
+                <Points>
+                  <Point X="106.57" Y="29.56"/>
+                </Points>
+              </Shape>
+              <Legend ChartData="0.29" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="14" XShift="0" YShift="0"/>
+              <StartPosition X="106.57" Y="29.56"/>
+            </Graphic>
+          </ChartGraphics>
+          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
+        </Layer>
       </GroupLayer>
       <Graphics/>
     </MapFrame>
@@ -57,7 +211,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="240" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="668" LegendLayer="" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="126" Width="139"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="131" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="668" LegendLayer="ceshi.shp" LegendStyle="Normal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="126" Width="85"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="20" IsTitle="false" Left="643" Top="448" Width="20">
         <Graphic>
           <Shape Selected="false" ShapeType="WindArraw" Visible="true">
