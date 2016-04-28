@@ -9,18 +9,18 @@
       <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees " RefCutLon="180.0" RefLon="0.0"/>
       <GroupLayer>
         <Group Expanded="true" GroupHandle="1" GroupName="CWT">
-          <Layer AvoidCollision="true" Expanded="true" FileName="sample\cwt.shp" Handle="9" IsMaskout="false" LayerDrawType="GridFill" LayerName="cwt.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+          <Layer AvoidCollision="true" Expanded="true" FileName="sample\cwt.shp" Handle="1" IsMaskout="false" LayerDrawType="GridFill" LayerName="cwt.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
             <LegendScheme BreakNum="4" FieldName="WCWT" HasNoData="false" LegendType="GraduatedColor" MaxValue="368.0075" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
               <Breaks>
-                <Break BackColor="0xffffffff" Caption="&lt; 150" Color="0xffffffff" DrawFill="false" DrawOutline="false" DrawShape="true" EndValue="150" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0"/>
-                <Break BackColor="0xffffffff" Caption="150 - 200" Color="0xffffe0c0" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="200" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="150"/>
-                <Break BackColor="0xffffffff" Caption="200 - 300" Color="0xffff8000" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="300" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="200"/>
-                <Break BackColor="0xffffffff" Caption="&gt; 300" Color="0xffff0000" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="10000" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="300"/>
+                <Break BackColor="0x00ffffff" Caption="&lt; 150" Color="0xffffffff" DrawFill="false" DrawOutline="false" DrawShape="true" EndValue="150" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
+                <Break BackColor="0x00ffffff" Caption="150 - 200" Color="0xffffe0c0" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="200" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="150" Style="NONE" StyleSize="8" Tag=""/>
+                <Break BackColor="0x00ffffff" Caption="200 - 300" Color="0xffff8000" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="300" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="200" Style="NONE" StyleSize="8" Tag=""/>
+                <Break BackColor="0x00ffffff" Caption="&gt; 300" Color="0xffff0000" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="10000" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="300" Style="NONE" StyleSize="8" Tag=""/>
               </Breaks>
             </LegendScheme>
             <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="Arial" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
             <Graphics/>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
               <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
                 <Breaks/>
               </LegendScheme>
@@ -30,20 +30,20 @@
           </Layer>
         </Group>
         <Group Expanded="true" GroupHandle="2" GroupName="PSCF">
-          <Layer AvoidCollision="true" Expanded="false" FileName="sample\pscf.shp" Handle="8" IsMaskout="false" LayerDrawType="GridFill" LayerName="pscf.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="false">
+          <Layer AvoidCollision="true" Expanded="false" FileName="sample\pscf.shp" Handle="2" IsMaskout="false" LayerDrawType="GridFill" LayerName="pscf.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="false">
             <LegendScheme BreakNum="6" FieldName="WPSCF" HasNoData="false" LegendType="GraduatedColor" MaxValue="0.529268292682927" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
               <Breaks>
-                <Break BackColor="0xffffffff" Caption="&lt; 0.3" Color="0xffffffff" DrawFill="false" DrawOutline="false" DrawShape="true" EndValue="0.3" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0"/>
-                <Break BackColor="0xffffffff" Caption="0.3 - 0.4" Color="0xffffe0c0" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="0.4" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.3"/>
-                <Break BackColor="0xffffffff" Caption="0.4 - 0.5" Color="0xffffc080" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="0.5" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.4"/>
-                <Break BackColor="0xffffffff" Caption="0.5 - 0.6" Color="0xffffc0ff" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="0.6" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.5"/>
-                <Break BackColor="0xffffffff" Caption="0.6 - 0.7" Color="0xffff00ff" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="0.7" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.6"/>
-                <Break BackColor="0xffffffff" Caption="&gt; 0.7" Color="0xffff0000" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="1.1" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.7"/>
+                <Break BackColor="0x00ffffff" Caption="&lt; 0.3" Color="0xffffffff" DrawFill="false" DrawOutline="false" DrawShape="true" EndValue="0.3" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
+                <Break BackColor="0x00ffffff" Caption="0.3 - 0.4" Color="0xffffe0c0" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="0.4" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.3" Style="NONE" StyleSize="8" Tag=""/>
+                <Break BackColor="0x00ffffff" Caption="0.4 - 0.5" Color="0xffffc080" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="0.5" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.4" Style="NONE" StyleSize="8" Tag=""/>
+                <Break BackColor="0x00ffffff" Caption="0.5 - 0.6" Color="0xffffc0ff" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="0.6" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.5" Style="NONE" StyleSize="8" Tag=""/>
+                <Break BackColor="0x00ffffff" Caption="0.6 - 0.7" Color="0xffff00ff" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="0.7" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.6" Style="NONE" StyleSize="8" Tag=""/>
+                <Break BackColor="0x00ffffff" Caption="&gt; 0.7" Color="0xffff0000" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="1.1" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0.7" Style="NONE" StyleSize="8" Tag=""/>
               </Breaks>
             </LegendScheme>
             <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="Arial" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
             <Graphics/>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
               <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
                 <Breaks/>
               </LegendScheme>
@@ -53,15 +53,15 @@
           </Layer>
         </Group>
         <Group Expanded="true" GroupHandle="3" GroupName="Geo Data">
-          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
             <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
               <Breaks>
-                <Break BackColor="0xffffffff" Caption="" Color="0xffffffe5" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff666666" OutlineSize="1.0" StartValue="0"/>
+                <Break BackColor="0x00ffffff" Caption="" Color="0xffffffe5" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff666666" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
               </Breaks>
             </LegendScheme>
-            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="SimSun" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
             <Graphics/>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
               <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
                 <Breaks/>
               </LegendScheme>
@@ -69,15 +69,15 @@
             <ChartGraphics/>
             <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
           </Layer>
-          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\..\Temp\Map\china.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="china.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="false">
+          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\..\Temp\Map\china.shp" Handle="4" IsMaskout="false" LayerDrawType="Map" LayerName="china.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="false">
             <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
               <Breaks>
-                <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0"/>
+                <Break BackColor="0x00ffffff" Caption="" Color="0xfffffbc3" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
               </Breaks>
             </LegendScheme>
-            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="SimSun" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
             <Graphics/>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
               <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
                 <Breaks/>
               </LegendScheme>
@@ -85,15 +85,15 @@
             <ChartGraphics/>
             <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
           </Layer>
-          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\..\Temp\Map\bou2_4p.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\..\Temp\Map\bou2_4p.shp" Handle="5" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
             <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
               <Breaks>
-                <Break BackColor="0xffffffff" Caption="" Color="0x7ffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff666666" OutlineSize="1.0" StartValue="0"/>
+                <Break BackColor="0x00ffffff" Caption="" Color="0x7ffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff666666" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
               </Breaks>
             </LegendScheme>
-            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="SimSun" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
             <Graphics/>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
               <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
                 <Breaks/>
               </LegendScheme>
@@ -101,15 +101,15 @@
             <ChartGraphics/>
             <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
           </Layer>
-          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\..\Temp\Map\rivers.shp" Handle="4" IsMaskout="false" LayerDrawType="Map" LayerName="rivers.shp" LayerType="VectorLayer" ShapeType="Polyline" TransparencyPerc="0" Visible="false">
+          <Layer AvoidCollision="true" Expanded="false" FileName="..\..\..\..\..\..\Temp\Map\rivers.shp" Handle="6" IsMaskout="false" LayerDrawType="Map" LayerName="rivers.shp" LayerType="VectorLayer" ShapeType="Polyline" TransparencyPerc="0" Visible="false">
             <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polyline" UNDEF="-9999.0">
               <Breaks>
-                <Break Caption="" Color="0xff404040" DrawShape="true" DrawSymbol="false" EndValue="0" Size="1.0" StartValue="0" Style="Solid" SymbolColor="0xff404040" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
+                <Break Caption="" Color="0xff404040" DrawShape="true" DrawSymbol="false" EndValue="0" Size="1.0" StartValue="0" Style="Solid" SymbolColor="0xff404040" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
               </Breaks>
             </LegendScheme>
-            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="SimSun" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
             <Graphics/>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
               <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
                 <Breaks/>
               </LegendScheme>
@@ -119,15 +119,15 @@
           </Layer>
         </Group>
         <Group Expanded="true" GroupHandle="4" GroupName="Trajectory">
-          <Layer AvoidCollision="true" Expanded="true" FileName="sample\JiuquanSpr.shp" Handle="5" IsMaskout="false" LayerDrawType="TrajLine" LayerName="JiuquanSpr.shp" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="false">
+          <Layer AvoidCollision="true" Expanded="true" FileName="sample\JiuquanSpr.shp" Handle="7" IsMaskout="false" LayerDrawType="TrajLine" LayerName="JiuquanSpr.shp" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="false">
             <LegendScheme BreakNum="1" FieldName="Year" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="PolylineZ" UNDEF="-9999.0">
               <Breaks>
-                <Break Caption="" Color="0xff000000" DrawShape="true" DrawSymbol="false" EndValue="0" Size="1.0" StartValue="0" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
+                <Break Caption="" Color="0xff000000" DrawShape="true" DrawSymbol="false" EndValue="0" Size="1.0" StartValue="0" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
               </Breaks>
             </LegendScheme>
             <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="Arial" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
             <Graphics/>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
               <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
                 <Breaks/>
               </LegendScheme>
@@ -137,14 +137,14 @@
           </Layer>
         </Group>
         <Group Expanded="true" GroupHandle="5" GroupName="Cluster">
-          <Layer AvoidCollision="true" Expanded="true" FileName="sample\c5a.shp" Handle="6" IsMaskout="false" LayerDrawType="TrajLine" LayerName="c5a.shp" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="false">
+          <Layer AvoidCollision="true" Expanded="true" FileName="sample\c5a.shp" Handle="8" IsMaskout="false" LayerDrawType="TrajLine" LayerName="c5a.shp" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="false">
             <LegendScheme BreakNum="5" FieldName="Cluster" HasNoData="false" LegendType="UniqueValue" MaxValue="0.0" MinValue="0.0" ShapeType="PolylineZ" UNDEF="-9999.0">
               <Breaks>
-                <Break Caption="1" Color="0xff00a0ff" DrawShape="true" DrawSymbol="false" EndValue="1" Size="1.0" StartValue="1" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
-                <Break Caption="2" Color="0xff00dc00" DrawShape="true" DrawSymbol="false" EndValue="2" Size="1.0" StartValue="2" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
-                <Break Caption="3" Color="0xffe6dc32" DrawShape="true" DrawSymbol="false" EndValue="3" Size="1.0" StartValue="3" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
-                <Break Caption="4" Color="0xfffa3c3c" DrawShape="true" DrawSymbol="false" EndValue="4" Size="1.0" StartValue="4" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
-                <Break Caption="5" Color="0xfff00082" DrawShape="true" DrawSymbol="false" EndValue="5" Size="1.0" StartValue="5" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle"/>
+                <Break Caption="1" Color="0xff00a0ff" DrawShape="true" DrawSymbol="false" EndValue="1" Size="1.0" StartValue="1" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="2" Color="0xff00dc00" DrawShape="true" DrawSymbol="false" EndValue="2" Size="1.0" StartValue="2" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="3" Color="0xffe6dc32" DrawShape="true" DrawSymbol="false" EndValue="3" Size="1.0" StartValue="3" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="4" Color="0xfffa3c3c" DrawShape="true" DrawSymbol="false" EndValue="4" Size="1.0" StartValue="4" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="5" Color="0xfff00082" DrawShape="true" DrawSymbol="false" EndValue="5" Size="1.0" StartValue="5" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
               </Breaks>
             </LegendScheme>
             <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="true" DrawShadow="false" FieldName="Cluster" FontName="Arial" FontSize="16" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
@@ -190,7 +190,7 @@
                 <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="Arial" FontSize="16" LegendType="LabelBreak" Text="5" YShift="0.0"/>
               </Graphic>
             </Graphics>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
               <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
                 <Breaks/>
               </LegendScheme>
@@ -199,41 +199,15 @@
             <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
           </Layer>
         </Group>
-        <Group Expanded="false" GroupHandle="6" GroupName="Station">
-          <Layer AvoidCollision="true" Expanded="false" FileName="sample\station.shp" Handle="7" IsMaskout="false" LayerDrawType="Map" LayerName="station.shp" LayerType="VectorLayer" ShapeType="Point" TransparencyPerc="0" Visible="true">
-            <LegendScheme BreakNum="1" FieldName="Name" HasNoData="false" LegendType="UniqueValue" MaxValue="0.0" MinValue="0.0" ShapeType="Point" UNDEF="-9999.0">
-              <Breaks>
-                <Break Angle="0.0" Caption="Jiuquan" CharIndex="0" Color="0xffff0033" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="Jiuquan" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" Size="8.0" StartValue="Jiuquan" Style="Circle"/>
-              </Breaks>
-            </LegendScheme>
-            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="true" DrawShadow="false" FieldName="Name" FontName="Arial Bold" FontSize="14" LabelColor="0xffff0033" Offset="-10" ShadowColor="0xffffffff"/>
-            <Graphics>
-              <Graphic>
-                <Shape Selected="false" ShapeType="Point" Visible="true">
-                  <Points>
-                    <Point X="98.48" Y="39.77"/>
-                  </Points>
-                </Shape>
-                <Legend Angle="0.0" Color="0xffff0033" FontBold="true" FontName="Arial" FontSize="14" LegendType="LabelBreak" Text="Jiuquan" YShift="-10.0"/>
-              </Graphic>
-            </Graphics>
-            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" FieldNames="" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
-              <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-                <Breaks/>
-              </LegendScheme>
-            </ChartSet>
-            <ChartGraphics/>
-            <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
-          </Layer>
-        </Group>
+        <Group Expanded="false" GroupHandle="6" GroupName="Station"/>
       </GroupLayer>
       <Graphics/>
     </MapFrame>
   </MapFrames>
   <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="false">
     <LayoutElements>
-      <LayoutMap DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="22" Width="606"/>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="80" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="657" LegendLayer="cwt.shp" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="131" Width="33"/>
+      <LayoutMap DrawBackColor="false" DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="22" Width="606"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="80" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="657" LegendLayer="cwt.shp" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="131" Width="33"/>
     </LayoutElements>
   </Layout>
 </MeteoInfo>

@@ -2,13 +2,80 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Arial" GridFontSize="12" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="380" Left="42" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="36" Width="619">
-      <Extents xMax="107.48209897962276" xMin="105.44790102037724" yMax="30.18764001230717" yMin="29.192359987692825"/>
-      <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
+      <Extents xMax="180.0" xMin="-180.0" yMax="84.8811050263962" yMin="-91.25750883498995"/>
+      <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.0"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="" SetMaskLayer="false"/>
       <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees " RefCutLon="180.0" RefLon="0.0"/>
       <GroupLayer>
-        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\grads\test.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="test.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+          <LegendScheme BreakNum="52" FieldName="PS_Low" HasNoData="false" LegendType="GraduatedColor" MaxValue="1050.0" MinValue="481.911376953" ShapeType="Polygon" UNDEF="-9999.0">
+            <Breaks>
+              <Break BackColor="0x00ffffff" Caption="&lt; 500" Color="0xfff20000" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="500.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="481.911376953" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="500 - 510" Color="0xfffe0000" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="510.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="500.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="510 - 520" Color="0xffff0b00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="520.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="510.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="520 - 530" Color="0xffff1700" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="530.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="520.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="530 - 540" Color="0xffff2300" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="540.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="530.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="540 - 550" Color="0xffff2f00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="550.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="540.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="550 - 560" Color="0xffff3b00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="560.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="550.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="560 - 570" Color="0xffff4700" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="570.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="560.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="570 - 580" Color="0xffff5300" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="580.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="570.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="580 - 590" Color="0xffff5f00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="590.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="580.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="590 - 600" Color="0xffff6b00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="600.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="590.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="600 - 610" Color="0xffff7700" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="610.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="600.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="610 - 620" Color="0xffff8300" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="620.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="610.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="620 - 630" Color="0xffff8f00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="630.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="620.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="630 - 640" Color="0xffff9b00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="640.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="630.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="640 - 650" Color="0xffffa700" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="650.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="640.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="650 - 660" Color="0xffffb300" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="660.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="650.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="660 - 670" Color="0xffffbf00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="670.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="660.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="670 - 680" Color="0xffffcb00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="680.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="670.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="680 - 690" Color="0xffffd700" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="690.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="680.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="690 - 700" Color="0xffffe300" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="700.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="690.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="700 - 710" Color="0xffffef00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="710.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="700.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="710 - 720" Color="0xfffffb00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="720.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="710.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="720 - 730" Color="0xffffff00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="730.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="720.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="730 - 740" Color="0xffffff00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="740.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="730.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="740 - 750" Color="0xffffff00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="750.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="740.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="750 - 760" Color="0xffffff00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="760.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="750.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="760 - 770" Color="0xffffff00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="770.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="760.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="770 - 780" Color="0xffffff00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="780.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="770.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="780 - 790" Color="0xffffff00" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="790.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="780.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="790 - 800" Color="0xfff1ff02" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="800.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="790.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="800 - 810" Color="0xffdaff06" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="810.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="800.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="810 - 820" Color="0xffc3ff0a" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="820.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="810.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="820 - 830" Color="0xffacff0f" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="830.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="820.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="830 - 840" Color="0xff94ff13" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="840.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="830.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="840 - 850" Color="0xff7dff17" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="850.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="840.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="850 - 860" Color="0xff66ff1b" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="860.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="850.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="860 - 870" Color="0xff54fe23" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="870.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="860.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="870 - 880" Color="0xff47fb2e" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="880.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="870.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="880 - 890" Color="0xff3af939" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="890.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="880.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="890 - 900" Color="0xff2ef745" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="900.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="890.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="900 - 910" Color="0xff21f550" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="910.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="900.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="910 - 920" Color="0xff14f35b" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="920.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="910.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="920 - 930" Color="0xff08f166" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="930.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="920.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="930 - 940" Color="0xff00e775" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="940.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="930.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="940 - 950" Color="0xff00d189" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="950.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="940.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="950 - 960" Color="0xff00ba9e" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="960.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="950.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="960 - 970" Color="0xff00a4b2" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="970.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="960.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="970 - 980" Color="0xff008dc7" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="980.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="970.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="980 - 990" Color="0xff0077db" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="990.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="980.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="990 - 1000" Color="0xff0060ef" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="1000.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="990.0" Style="NONE" StyleSize="8" Tag=""/>
+              <Break BackColor="0x00ffffff" Caption="&gt; 1000" Color="0xff004dfd" DrawFill="true" DrawOutline="false" DrawShape="true" EndValue="1050.0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="1000.0" Style="NONE" StyleSize="8" Tag=""/>
+            </Breaks>
+          </LegendScheme>
+          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+          <Graphics/>
+          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+              <Breaks/>
+            </LegendScheme>
+          </ChartSet>
+          <ChartGraphics/>
+          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
+        </Layer>
+        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0x00ccffcc" Caption="" Color="0xffccccff" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
@@ -24,7 +91,7 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
-        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="10" Tag=""/>
@@ -38,160 +105,6 @@
             </LegendScheme>
           </ChartSet>
           <ChartGraphics/>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
-        </Layer>
-        <Layer AvoidCollision="false" Expanded="true" FileName="C:\TEMP\ceshi.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="ceshi.shp" LayerType="VectorLayer" ShapeType="Point" TransparencyPerc="0" Visible="true">
-          <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Point" UNDEF="-9999.0">
-            <Breaks>
-              <Break Angle="0.0" Caption="" CharIndex="0" Color="0xff000000" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" Size="5.0" StartValue="0" Style="Circle" Tag=""/>
-            </Breaks>
-          </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
-          <Graphics/>
-          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="true" DrawLabel="true" FieldNames="alkanes" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.39" MinSize="0" MinValue="0.14" Thickness="5" View3D="false" XShift="0" YShift="0">
-            <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-              <Breaks>
-                <Break BackColor="0x00ffffff" Caption="alkanes" Color="0xffb30fae" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag="alkanes"/>
-              </Breaks>
-            </LegendScheme>
-          </ChartSet>
-          <ChartGraphics>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.54" Y="29.4"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.27" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="0" XShift="0" YShift="0"/>
-              <StartPosition X="106.54" Y="29.4"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.54" Y="29.81"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.39" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="1" XShift="0" YShift="0"/>
-              <StartPosition X="106.54" Y="29.81"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.42" Y="29.82"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.19" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="2" XShift="0" YShift="0"/>
-              <StartPosition X="106.42" Y="29.82"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.52" Y="29.59"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.19" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="3" XShift="0" YShift="0"/>
-              <StartPosition X="106.52" Y="29.59"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.55" Y="29.68"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.16" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="4" XShift="0" YShift="0"/>
-              <StartPosition X="106.55" Y="29.68"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.48" Y="29.49"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.34" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="5" XShift="0" YShift="0"/>
-              <StartPosition X="106.48" Y="29.49"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.27" Y="29.98"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.24" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="6" XShift="0" YShift="0"/>
-              <StartPosition X="106.27" Y="29.98"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.66" Y="29.63"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.28" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="7" XShift="0" YShift="0"/>
-              <StartPosition X="106.66" Y="29.63"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="106.51" Y="29.58"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.29" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="8" XShift="0" YShift="0"/>
-              <StartPosition X="106.51" Y="29.58"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.53" Y="29.5"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.24" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="9" XShift="0" YShift="0"/>
-              <StartPosition X="106.53" Y="29.5"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.63" Y="29.54"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.25" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="10" XShift="0" YShift="0"/>
-              <StartPosition X="106.63" Y="29.54"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="false">
-                <Points>
-                  <Point X="106.46" Y="29.57"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.14" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="11" XShift="0" YShift="0"/>
-              <StartPosition X="106.46" Y="29.57"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.3" Y="29.6"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.28" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="12" XShift="0" YShift="0"/>
-              <StartPosition X="106.3" Y="29.6"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.63" Y="29.72"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.29" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="13" XShift="0" YShift="0"/>
-              <StartPosition X="106.63" Y="29.72"/>
-            </Graphic>
-            <Graphic>
-              <Shape Selected="false" ShapeType="Point" Visible="true">
-                <Points>
-                  <Point X="106.57" Y="29.56"/>
-                </Points>
-              </Shape>
-              <Legend ChartData="0.29" ChartType="BarChart" Color="0xffff0000" FontName="Arial" FontSize="12" LabelColor="0xff000000" LegendType="ChartBreak" ShapeIndex="14" XShift="0" YShift="0"/>
-              <StartPosition X="106.57" Y="29.56"/>
-            </Graphic>
-          </ChartGraphics>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
       </GroupLayer>
@@ -211,7 +124,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="131" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="668" LegendLayer="ceshi.shp" LegendStyle="Normal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="126" Width="85"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="375" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="673" LegendLayer="test.shp" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="37" Width="43"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="20" IsTitle="false" Left="643" Top="448" Width="20">
         <Graphic>
           <Shape Selected="false" ShapeType="WindArraw" Visible="true">
