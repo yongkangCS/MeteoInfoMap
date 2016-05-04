@@ -72,8 +72,8 @@ public class FrmSectionPlot extends javax.swing.JFrame {
     private GridData _gridData = null;
     private int _lastAddedLayerHandle;
     private PlotDimension _plotDimension;
-    private List<String> _XGridStrs = new ArrayList<String>();
-    private List<String> _YGridStrs = new ArrayList<String>();
+    private List<String> _XGridStrs = new ArrayList<>();
+    private List<String> _YGridStrs = new ArrayList<>();
     private boolean _useSameLegendScheme = false;
     private LegendScheme _legendScheme = null;
     private boolean _isLoading = false;
@@ -1220,6 +1220,8 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         //this.mapLayout1.addElement(new LayoutMap(this.mapLayout1.getMapFrames().get(0)));
         LayoutLegend legend = this.mapLayout1.addLegend(660, 100);
         legend.setLegendStyle(LegendStyles.Bar_Vertical);
+        legend.setWidth(36);
+        legend.setHeight(295);
         this.mapLayout1.addText("MeteoInfo: Meteorological Data Infomation System", 320, 20, "Arial", 16);
         this.mapLayout1.paintGraphics();
 
