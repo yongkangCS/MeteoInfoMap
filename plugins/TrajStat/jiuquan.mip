@@ -2,7 +2,7 @@
 <MeteoInfo File="jiuquan.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Dialog.plain" GridFontSize="12" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="22" Width="606">
-      <Extents xMax="109.33616094024893" xMin="79.52952978790546" yMax="49.10662385932705" yMin="33.16339639343505"/>
+      <Extents xMax="128.8747796547862" xMin="59.990911073368174" yMax="58.59739269900689" yMin="23.67262755375521"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff00ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="Xinjiang.wmp" SetMaskLayer="false"/>
@@ -137,14 +137,14 @@
           </Layer>
         </Group>
         <Group Expanded="true" GroupHandle="5" GroupName="Cluster">
-          <Layer AvoidCollision="true" Expanded="true" FileName="sample\c5a.shp" Handle="8" IsMaskout="false" LayerDrawType="TrajLine" LayerName="c5a.shp" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="false">
+          <Layer AvoidCollision="true" Expanded="true" FileName="sample\c5a.shp" Handle="8" IsMaskout="false" LayerDrawType="TrajLine" LayerName="c5a.shp" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="true">
             <LegendScheme BreakNum="5" FieldName="Cluster" HasNoData="false" LegendType="UniqueValue" MaxValue="0.0" MinValue="0.0" ShapeType="PolylineZ" UNDEF="-9999.0">
               <Breaks>
-                <Break Caption="1" Color="0xff00a0ff" DrawShape="true" DrawSymbol="false" EndValue="1" Size="1.0" StartValue="1" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-                <Break Caption="2" Color="0xff00dc00" DrawShape="true" DrawSymbol="false" EndValue="2" Size="1.0" StartValue="2" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-                <Break Caption="3" Color="0xffe6dc32" DrawShape="true" DrawSymbol="false" EndValue="3" Size="1.0" StartValue="3" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-                <Break Caption="4" Color="0xfffa3c3c" DrawShape="true" DrawSymbol="false" EndValue="4" Size="1.0" StartValue="4" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-                <Break Caption="5" Color="0xfff00082" DrawShape="true" DrawSymbol="false" EndValue="5" Size="1.0" StartValue="5" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="1" Color="0xff00a0ff" DrawShape="true" DrawSymbol="false" EndValue="1" Size="1.5" StartValue="1" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="2" Color="0xff00dc00" DrawShape="true" DrawSymbol="false" EndValue="2" Size="1.5" StartValue="2" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="3" Color="0xffe6dc32" DrawShape="true" DrawSymbol="false" EndValue="3" Size="1.5" StartValue="3" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="4" Color="0xfffa3c3c" DrawShape="true" DrawSymbol="false" EndValue="4" Size="1.5" StartValue="4" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+                <Break Caption="5" Color="0xfff00082" DrawShape="true" DrawSymbol="false" EndValue="5" Size="1.5" StartValue="5" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
               </Breaks>
             </LegendScheme>
             <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="true" DrawShadow="false" FieldName="Cluster" FontName="Arial" FontSize="16" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
@@ -199,7 +199,41 @@
             <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
           </Layer>
         </Group>
-        <Group Expanded="false" GroupHandle="6" GroupName="Station"/>
+        <Group Expanded="true" GroupHandle="6" GroupName="Station">
+          <Layer AvoidCollision="false" Expanded="false" FileName="sample\station.shp" Handle="9" IsMaskout="false" LayerDrawType="Map" LayerName="station.shp" LayerType="VectorLayer" ShapeType="Point" TransparencyPerc="0" Visible="true">
+            <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Point" UNDEF="-9999.0">
+              <Breaks>
+                <Break Angle="0.0" Caption="" CharIndex="0" Color="0xff000000" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" Size="8.0" StartValue="0" Style="Circle" Tag=""/>
+              </Breaks>
+            </LegendScheme>
+            <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="true" DrawShadow="false" FieldName="Name" FontName="Arial" FontSize="14" LabelColor="0xff000000" Offset="15" ShadowColor="0xffffffff"/>
+            <Graphics>
+              <Graphic>
+                <Shape Selected="false" ShapeType="Point" Visible="true">
+                  <Points>
+                    <Point X="98.48" Y="39.77"/>
+                  </Points>
+                </Shape>
+                <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="Arial" FontSize="14" LegendType="LabelBreak" Text="Jiuquan" YShift="15.0"/>
+              </Graphic>
+              <Graphic>
+                <Shape Selected="false" ShapeType="Point" Visible="true">
+                  <Points>
+                    <Point X="116.47" Y="39.8"/>
+                  </Points>
+                </Shape>
+                <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="Arial" FontSize="14" LegendType="LabelBreak" Text="Beijing" YShift="15.0"/>
+              </Graphic>
+            </Graphics>
+            <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+              <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+                <Breaks/>
+              </LegendScheme>
+            </ChartSet>
+            <ChartGraphics/>
+            <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
+          </Layer>
+        </Group>
       </GroupLayer>
       <Graphics/>
     </MapFrame>
@@ -207,7 +241,7 @@
   <Layout BackColor="0xffffffff" ForeColor="0xff000000" Landscape="true" PaperSizeHeight="750" PaperSizeName="Custom" PaperSizeWidth="500" SmoothingMode="false">
     <LayoutElements>
       <LayoutMap DrawBackColor="false" DrawDegreeSymbol="false" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" ElementType="LayoutMap" GridFontName="Dialog.plain" GridFontSize="12" GridLabelPosition="LeftBottom" GridLineColor="0xffa9a9a9" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="416" Left="41" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="22" Width="606"/>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="80" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="657" LegendLayer="cwt.shp" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="131" Width="33"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="80" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="657" LegendLayer="c5a.shp" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="131" Width="33"/>
     </LayoutElements>
   </Layout>
 </MeteoInfo>
