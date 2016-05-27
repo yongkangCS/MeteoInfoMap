@@ -130,9 +130,7 @@ import static org.meteoinfo.shape.ShapeTypes.Polygon;
 import static org.meteoinfo.shape.ShapeTypes.Polyline;
 import org.meteoinfo.data.DataTypes;
 import org.meteoinfo.jts.geom.Geometry;
-import org.meteoinfo.jts.operation.union.CascadedPolygonUnion;
 import org.meteoinfo.jts.operation.union.UnaryUnionOp;
-import org.meteoinfo.shape.PolygonShape;
 import org.meteoinfo.shape.ShapeFactory;
 import org.meteoinfo.shape.ShapeSelection;
 import org.xml.sax.SAXException;
@@ -1362,6 +1360,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_AttributeData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/TSMI_AttriData.Image.png"))); // NOI18N
         jMenuItem_AttributeData.setText(bundle.getString("FrmMain.jMenuItem_AttributeData.text")); // NOI18N
         jMenuItem_AttributeData.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_AttributeDataActionPerformed(evt);
             }
@@ -1371,6 +1370,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_LayoutProperty.setText(bundle.getString("FrmMain.jMenuItem_LayoutProperty.text")); // NOI18N
         jMenuItem_LayoutProperty.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_LayoutPropertyActionPerformed(evt);
             }
@@ -1461,6 +1461,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_InsertNorthArrow.setText(bundle.getString("FrmMain.jMenuItem_InsertNorthArrow.text")); // NOI18N
         jMenuItem_InsertNorthArrow.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_InsertNorthArrowActionPerformed(evt);
             }
@@ -1470,6 +1471,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_InsertWindArrow.setText(bundle.getString("FrmMain.jMenuItem_InsertWindArrow.text")); // NOI18N
         jMenuItem_InsertWindArrow.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_InsertWindArrowActionPerformed(evt);
             }
@@ -1483,6 +1485,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_SelByAttr.setText(bundle.getString("FrmMain.jMenuItem_SelByAttr.text")); // NOI18N
         jMenuItem_SelByAttr.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_SelByAttrActionPerformed(evt);
             }
@@ -1491,6 +1494,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_SelByLocation.setText(bundle.getString("FrmMain.jMenuItem_SelByLocation.text")); // NOI18N
         jMenuItem_SelByLocation.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_SelByLocationActionPerformed(evt);
             }
@@ -1500,6 +1504,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_ClearSelection.setText(bundle.getString("FrmMain.jMenuItem_ClearSelection.text")); // NOI18N
         jMenuItem_ClearSelection.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_ClearSelectionActionPerformed(evt);
             }
@@ -1539,6 +1544,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Script.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/snake.png"))); // NOI18N
         jMenuItem_Script.setText(bundle.getString("FrmMain.jMenuItem_Script.text")); // NOI18N
         jMenuItem_Script.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_ScriptActionPerformed(evt);
             }
@@ -1558,6 +1564,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_Options.setText(bundle.getString("FrmMain.jMenuItem_Options.text")); // NOI18N
         jMenuItem_Options.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_OptionsActionPerformed(evt);
             }
@@ -1567,6 +1574,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_OutputMapData.setText(bundle.getString("FrmMain.jMenuItem_OutputMapData.text")); // NOI18N
         jMenuItem_OutputMapData.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_OutputMapDataActionPerformed(evt);
             }
@@ -1575,6 +1583,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_AddXYData.setText(bundle.getString("FrmMain.jMenuItem_AddXYData.text")); // NOI18N
         jMenuItem_AddXYData.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_AddXYDataActionPerformed(evt);
             }
@@ -1609,6 +1618,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_PluginManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/plugin_edit_green.png"))); // NOI18N
         jMenuItem_PluginManager.setText(bundle.getString("FrmMain.jMenuItem_PluginManager.text")); // NOI18N
         jMenuItem_PluginManager.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_PluginManagerActionPerformed(evt);
             }
@@ -1623,6 +1633,7 @@ public class FrmMain extends JFrame implements IApplication {
 
         jMenuItem_About.setText(bundle.getString("FrmMain.jMenuItem_About.text")); // NOI18N
         jMenuItem_About.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_AboutActionPerformed(evt);
             }
@@ -1633,6 +1644,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Help.setText(bundle.getString("FrmMain.jMenuItem_Help.text")); // NOI18N
         jMenuItem_Help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/help.png")));
         jMenuItem_Help.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_HelpActionPerformed(evt);
             }
@@ -2882,26 +2894,30 @@ public class FrmMain extends JFrame implements IApplication {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         // TODO add your handling code here:
         int result = JOptionPane.showConfirmDialog(null, "If save the project?", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
-            String aFile = _projectFile.getFileName();
-            try {
-                _projectFile.saveProjFile(aFile);
-                this.saveConfigureFile();
-                _plugins.saveConfigFile();
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            //this.dispose();
-            System.exit(0);
-        } else if (result == JOptionPane.NO_OPTION) {
-            //this.dispose();
-            try {
-                this.saveConfigureFile();
-                _plugins.saveConfigFile();
-            } catch (Exception e) {
-            }
-            System.exit(0);
-        } else if (result == JOptionPane.CANCEL_OPTION) {
+        switch (result) {
+            case JOptionPane.YES_OPTION:
+                String aFile = _projectFile.getFileName();
+                try {
+                    _projectFile.saveProjFile(aFile);
+                    this.saveConfigureFile();
+                    _plugins.saveConfigFile();
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //this.dispose();
+                System.exit(0);
+            case JOptionPane.NO_OPTION:
+                //this.dispose();
+                try {
+                    this.saveConfigureFile();
+                    _plugins.saveConfigFile();
+                } catch (Exception e) {
+                }
+                System.exit(0);
+            case JOptionPane.CANCEL_OPTION:
+                break;
+            default:
+                break;
         }
     }
 
