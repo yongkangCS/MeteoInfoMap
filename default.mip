@@ -2,13 +2,32 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Arial" GridFontSize="12" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="358" Left="48" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="30" Width="644">
-      <Extents xMax="150.72440973854555" xMin="66.15958859950084" yMax="55.42751428074806" yMin="16.581096702641346"/>
+      <Extents xMax="362.5" xMin="-2.5" yMax="92.0" yMin="-92.0"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="" SetMaskLayer="false"/>
       <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees "/>
       <GroupLayer>
-        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer FileName="..\..\..\..\Temp\grads\test.asc" Handle="4" IsMaskout="true" LayerDrawType="Raster" LayerName="Raster_PS_Surface_1987-01-02 00:00" LayerType="RasterLayer" SetTransColor="false" TransparencyColor="0xfff00082" TransparencyPerc="0" Visible="true">
+          <LegendScheme BreakNum="12" FieldName="" HasNoData="false" LegendType="GraduatedColor" MaxValue="1048.0577392578125" MinValue="481.911376953125" ShapeType="Image" UNDEF="-2.56E33">
+            <Breaks>
+              <Break Caption="&lt; 500" Color="0xffa000c8" EndValue="500.0" IsNoData="false" StartValue="481.911376953125" Tag=""/>
+              <Break Caption="500 - 550" Color="0xff6e00dc" EndValue="550.0" IsNoData="false" StartValue="500.0" Tag=""/>
+              <Break Caption="550 - 600" Color="0xff1e3cff" EndValue="600.0" IsNoData="false" StartValue="550.0" Tag=""/>
+              <Break Caption="600 - 650" Color="0xff00a0ff" EndValue="650.0" IsNoData="false" StartValue="600.0" Tag=""/>
+              <Break Caption="650 - 700" Color="0xff00c8c8" EndValue="700.0" IsNoData="false" StartValue="650.0" Tag=""/>
+              <Break Caption="700 - 750" Color="0xff00dc00" EndValue="750.0" IsNoData="false" StartValue="700.0" Tag=""/>
+              <Break Caption="750 - 800" Color="0xffa0e632" EndValue="800.0" IsNoData="false" StartValue="750.0" Tag=""/>
+              <Break Caption="800 - 850" Color="0xffe6dc32" EndValue="850.0" IsNoData="false" StartValue="800.0" Tag=""/>
+              <Break Caption="850 - 900" Color="0xffe6af2d" EndValue="900.0" IsNoData="false" StartValue="850.0" Tag=""/>
+              <Break Caption="900 - 950" Color="0xfff08228" EndValue="950.0" IsNoData="false" StartValue="900.0" Tag=""/>
+              <Break Caption="950 - 1000" Color="0xfffa3c3c" EndValue="1000.0" IsNoData="false" StartValue="950.0" Tag=""/>
+              <Break Caption="&gt; 1000" Color="0xfff00082" EndValue="1048.0577392578125" IsNoData="false" StartValue="1000.0" Tag=""/>
+            </Breaks>
+          </LegendScheme>
+          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
+        </Layer>
+        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0x00ccffcc" Caption="" Color="0xffccccff" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
@@ -24,7 +43,7 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
-        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\Distribution\Java\MeteoInfo\MeteoInfo\map\country1.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="10" Tag=""/>
@@ -84,7 +103,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="34" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="60" LegendLayer="" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="427" Width="573"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="34" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="60" LegendLayer="Raster_PS_Surface_1987-01-02 00:00" LegendStyle="Bar_Horizontal" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="427" Width="573"/>
       <LayoutGraphic ElementType="LayoutGraphic" Height="20" IsTitle="false" Left="643" Top="448" Width="20">
         <Graphic>
           <Shape Selected="false" ShapeType="WindArraw" Visible="true">

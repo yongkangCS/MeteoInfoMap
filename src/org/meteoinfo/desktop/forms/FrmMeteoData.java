@@ -81,8 +81,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
     // <editor-fold desc="Variables">
     //ResourceBundle bundle;
-    private FrmMain _parent;
-    private List<MeteoDataInfo> _dataInfoList = new ArrayList<>();
+    private final FrmMain _parent;
+    private final List<MeteoDataInfo> _dataInfoList;
     private MeteoDataInfo _meteoDataInfo = new MeteoDataInfo();
     DrawType2D _2DDrawType;
     private GridData _gridData = new GridData();
@@ -99,7 +99,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private int _skipX = 1;
     private boolean _hasUndefData;
     private boolean _isLoading = false;
-    private MeteoDataDrawSet _meteoDataDrawSet = new MeteoDataDrawSet();
+    private final MeteoDataDrawSet _meteoDataDrawSet = new MeteoDataDrawSet();
     private InterpolationSetting _interpolationSetting = new InterpolationSetting();
     private boolean _enableAnimation = true;
     private boolean _isRunning = false;
@@ -114,8 +114,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
      */
     public FrmMeteoData(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        
         _parent = (FrmMain) parent;
         initComponents();
+        
+        this._dataInfoList = new ArrayList<>();
 
         int height = this.jToolBar1.getHeight() + this.jComboBox_DrawType.getY()
                 + this.jComboBox_DrawType.getHeight() + 90;
@@ -1401,8 +1404,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     frmInter.setLocationRelativeTo(this);
                     frmInter.setVisible(true);
                     if (frmInter.isOK()) {
-                        this._interpolationSetting = frmInter.getParameters();
-                        //ContourDraw.createGridXY(_gridInterp.GridDataSet, ref m_X, ref m_Y);
+                        this._interpolationSetting = frmInter.getParameters();                      
                         this.jButton_Draw.setEnabled(true);
                         _useSameGridInterSet = true;
                     }
@@ -1418,27 +1420,12 @@ public class FrmMeteoData extends javax.swing.JDialog {
                         this._parent.getMapDocument().getActiveMapFrame().removeLayerByHandle(this._lastAddedLayerHandle);
                         this._lastAddedLayerHandle = this._parent.getMapDocument().getActiveMapFrame().addLayer(layer);
                     }
-//                        frmComboBox frmCB = new frmComboBox();
-//                        frmCB.Text = "Weather Symbol Set";
-//                        string[] symbols = new string[] { "All Weather", "SDS", "SDS, Haze", "Smoke", "Haze", "Mist", "Smoke, Haze, Mist", "Fog" };
-//                        frmCB.SetComboBox(symbols);
-//                        if (frmCB.ShowDialog() == DialogResult.OK)
-//                        {
-//                            m_MeteoDataDrawSet.WeatherType = frmCB.GetSelectedItem();
-//                            VectorLayer aLayer = new VectorLayer(ShapeTypes.Point);
-//                            string LName = CB_Variable.Text + "_" + CB_Level.Text + "_" + CB_Time.Text;
-//                            aLayer = DrawMeteoData.CreateWeatherSymbolLayer(_stationData,
-//                                    m_MeteoDataDrawSet.WeatherType, LName);
-//                            frmMain.CurrentWin.MapDocument.ActiveMapFrame.RemoveLayerByHandle(_lastAddedLayerHandle);
-//                            aLayer.ProjInfo = _meteoDataInfo.ProjInfo;
-//                            _lastAddedLayerHandle = frmMain.CurrentWin.MapDocument.ActiveMapFrame.InsertPolylineLayer(aLayer);
-//                        }
                     break;
                 case Vector:
                 case Barb:
                 case Streamline:
                     FrmUVSet aFrmUVSet = new FrmUVSet((JFrame) SwingUtilities.getWindowAncestor(this), true);
-                    List<String> vList = new ArrayList<String>();
+                    List<String> vList = new ArrayList<>();
                     for (int i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
                         vList.add(this.jComboBox_Variable.getItemAt(i).toString());
                     }
@@ -1495,7 +1482,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 case Vector:
                 case Barb:
                     FrmUVSet aFrmUVSet = new FrmUVSet((JFrame) SwingUtilities.getWindowAncestor(this), true);
-                    List<String> vList = new ArrayList<String>();
+                    List<String> vList = new ArrayList<>();
                     for (int i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
                         vList.add(this.jComboBox_Variable.getItemAt(i).toString());
                     }
@@ -3069,15 +3056,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmMeteoData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmMeteoData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmMeteoData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmMeteoData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the dialog */
