@@ -40,28 +40,6 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
-        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\traj\201410.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="201410.shp" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="true">
-          <LegendScheme BreakNum="7" FieldName="Geometry_M" HasNoData="false" LegendType="GraduatedColor" MaxValue="6705.2998046875" MinValue="0.0" ShapeType="PolylineZ" UNDEF="-9999.0">
-            <Breaks>
-              <Break Caption="&lt; 1000" Color="0xffa000c8" DrawShape="true" DrawSymbol="false" EndValue="1000.0" Size="1.0" StartValue="0.0" Style="Solid" SymbolColor="0xffa000c8" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="Circle" Tag=""/>
-              <Break Caption="1000 - 2000" Color="0xff00a0ff" DrawShape="true" DrawSymbol="false" EndValue="2000.0" Size="1.0" StartValue="1000.0" Style="Solid" SymbolColor="0xff00a0ff" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="Square" Tag=""/>
-              <Break Caption="2000 - 3000" Color="0xff00dc00" DrawShape="true" DrawSymbol="false" EndValue="3000.0" Size="1.0" StartValue="2000.0" Style="Solid" SymbolColor="0xff00dc00" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-              <Break Caption="3000 - 4000" Color="0xffe6dc32" DrawShape="true" DrawSymbol="false" EndValue="4000.0" Size="1.0" StartValue="3000.0" Style="Solid" SymbolColor="0xffe6dc32" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="DownTriangle" Tag=""/>
-              <Break Caption="4000 - 5000" Color="0xfff08228" DrawShape="true" DrawSymbol="false" EndValue="5000.0" Size="1.0" StartValue="4000.0" Style="Solid" SymbolColor="0xfff08228" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="Diamond" Tag=""/>
-              <Break Caption="5000 - 6000" Color="0xfffa3c3c" DrawShape="true" DrawSymbol="false" EndValue="6000.0" Size="1.0" StartValue="5000.0" Style="Solid" SymbolColor="0xfffa3c3c" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="XCross" Tag=""/>
-              <Break Caption="&gt; 6000" Color="0xfff00082" DrawShape="true" DrawSymbol="false" EndValue="6705.2998046875" Size="1.0" StartValue="6000.0" Style="Solid" SymbolColor="0xfff00082" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="Plus" Tag=""/>
-            </Breaks>
-          </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
-          <Graphics/>
-          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
-            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-              <Breaks/>
-            </LegendScheme>
-          </ChartSet>
-          <ChartGraphics/>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
-        </Layer>
       </GroupLayer>
       <Graphics/>
     </MapFrame>
