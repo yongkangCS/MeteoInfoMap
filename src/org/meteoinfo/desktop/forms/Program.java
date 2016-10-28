@@ -61,7 +61,8 @@ public class Program {
                 runApplication(true);
             } else if (args[0].equalsIgnoreCase("-r")) {
                 String fontPath = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "fonts";
-                List<String> fontFns = GlobalUtil.getFiles(fontPath, ".ttf");
+                //fontPath = "D:\\MyProgram\\java\\MeteoInfoDev\\MeteoInfo\\fonts";
+                List<String> fontFns = GlobalUtil.getFiles(fontPath, ".ttc");
                 for (String fontFn : fontFns){
                     System.out.println("Register: " + fontFn);
                     FontUtil.registerFont(fontFn);
