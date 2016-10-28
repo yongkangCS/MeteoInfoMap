@@ -63,6 +63,7 @@ public class Program {
                 String fontPath = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "fonts";
                 List<String> fontFns = GlobalUtil.getFiles(fontPath, ".ttf");
                 for (String fontFn : fontFns){
+                    System.out.println("Register: " + fontFn);
                     FontUtil.registerFont(fontFn);
                 }
                 runApplication();
