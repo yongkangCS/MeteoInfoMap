@@ -59,6 +59,13 @@ public class Program {
                 }
             } else if (args[0].equalsIgnoreCase("-eng")) {
                 runApplication(true);
+            } else if (args[0].equalsIgnoreCase("-r")) {
+                String fontPath = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "fonts";
+                List<String> fontFns = GlobalUtil.getFiles(fontPath, ".ttf");
+                for (String fontFn : fontFns){
+                    FontUtil.registerFont(fontFn);
+                }
+                runApplication();
             } else {
                 String fn = args[0];
                 if (new File(fn).isFile()) {
