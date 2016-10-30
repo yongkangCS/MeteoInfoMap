@@ -3310,7 +3310,7 @@ public class FrmMain extends JFrame implements IApplication {
         JFileChooser aDlg = new JFileChooser();
         //aDlg.setAcceptAllFileFilterUsed(false);
         aDlg.setCurrentDirectory(pathDir);
-        String[] fileExts = new String[]{"shp", "bil", "bip", "bsq", "wmp", "bln", "gif", "jpg", "png", "tif"};
+        String[] fileExts = new String[]{"shp", "bil", "bip", "bsq", "wmp", "bln", "gif", "jpg", "png", "tif", "asc"};
         GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "Supported Formats");
         aDlg.addChoosableFileFilter(mapFileFilter);
         fileExts = new String[]{"shp"};
