@@ -2,8 +2,8 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Arial" GridFontSize="12" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="404" Left="48" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="30" Width="592">
-      <Extents xMax="174.42001024416004" xMin="39.0911077643037" yMax="67.04446932285077" yMin="-0.28334285618223376"/>
-      <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.2"/>
+      <Extents xMax="174.42001024416004" xMin="39.0911077643037" yMax="67.04446932285077" yMin="-0.2833428561822311"/>
+      <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.0"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="china.shp" SetMaskLayer="false"/>
       <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees "/>
@@ -70,7 +70,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="408" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="653" LegendLayer="Raster_Absolute_vorticity_isobaric_1000.0_2011-04-16 00:00" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="33" Width="54"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="408" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="656" LegendLayer="Raster_PS_Surface_1987-01-02 00:00" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="33" Width="43"/>
     </LayoutElements>
   </Layout>
 </MeteoInfo>
