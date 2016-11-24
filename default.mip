@@ -2,7 +2,7 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Arial" GridFontSize="12" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash" GridXDelt="30.0" GridXOrigin="0.0" GridYDelt="30.0" GridYOrigin="-90.0" Height="404" Left="48" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="30" Width="592">
-      <Extents xMax="174.42001024416004" xMin="39.0911077643037" yMax="67.04446932285077" yMin="-0.2833428561822311"/>
+      <Extents xMax="162.1616350344574" xMin="45.80999908042092" yMax="70.75420772641047" yMin="-0.42179303876830687"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.0"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="Dash"/>
       <MaskOut MaskLayer="china.shp" SetMaskLayer="false"/>
@@ -28,6 +28,22 @@
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0xffffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="10" Tag=""/>
+            </Breaks>
+          </LegendScheme>
+          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+          <Graphics/>
+          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+              <Breaks/>
+            </LegendScheme>
+          </ChartSet>
+          <ChartGraphics/>
+          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
+        </Layer>
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\grads\test1.shp" Handle="3" IsMaskout="true" LayerDrawType="Barb" LayerName="Barb_PS_Surface_1987-01-02 00:00" LayerType="VectorLayer" ShapeType="Point" TransparencyPerc="0" Visible="true">
+          <LegendScheme BreakNum="1" FieldName="WindSpeed" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Point" UNDEF="-9999.0">
+            <Breaks>
+              <Break Angle="0.0" Caption="" CharIndex="0" Color="0xff0000ff" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="0" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" Size="10.0" StartValue="0" Style="Circle" Tag=""/>
             </Breaks>
           </LegendScheme>
           <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
@@ -70,7 +86,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="408" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="656" LegendLayer="Raster_PS_Surface_1987-01-02 00:00" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="33" Width="43"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" Height="408" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="656" LegendLayer="" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="33" Width="43"/>
     </LayoutElements>
   </Layout>
 </MeteoInfo>
