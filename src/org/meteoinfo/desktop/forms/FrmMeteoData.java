@@ -1078,6 +1078,31 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     this.jComboBox_Time.addItem(format.format(aTime));
                 }
                 break;
+            case MICAPS_120:
+                cal = Calendar.getInstance();
+                cal.setTime(_meteoDataInfo.getDataInfo().getTimes().get(0));
+                cal.add(Calendar.HOUR, -1);
+                aTime = cal.getTime();
+                aFile = _meteoDataInfo.getFileName();
+                path = new File(aFile).getParent();
+                format = new SimpleDateFormat("yyyyMMddHH");
+                for (int i = 0; i < 100; i++) {
+                    aFile = path + File.separator + format.format(aTime) + ".000";
+                    if (new File(aFile).exists()) {
+                        break;
+                    }
+                    cal.add(Calendar.HOUR, -1);
+                    aTime = cal.getTime();
+                }
+                if (new File(aFile).exists()) {
+                    _meteoDataInfo.openMICAPSData(aFile);
+                    DefaultListModel listModel = (DefaultListModel) this.jList_DataFiles.getModel();
+                    listModel.set(this.jList_DataFiles.getSelectedIndex(), new File(aFile).getName());
+                    format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    this.jComboBox_Time.removeAllItems();
+                    this.jComboBox_Time.addItem(format.format(aTime));
+                }
+                break;
             case ISH:
 //                    aTime = ((ISHDataInfo)_meteoDataInfo.DataInfo).dateTime.AddHours(-1);
 //                    aFile = ((ISHDataInfo)_meteoDataInfo.DataInfo).fileName;
@@ -1137,6 +1162,31 @@ public class FrmMeteoData extends javax.swing.JDialog {
                         break;
                     }
                     cal.add(Calendar.HOUR, 3);
+                    aTime = cal.getTime();
+                }
+                if (new File(aFile).exists()) {
+                    _meteoDataInfo.openMICAPSData(aFile);
+                    DefaultListModel listModel = (DefaultListModel) this.jList_DataFiles.getModel();
+                    listModel.set(this.jList_DataFiles.getSelectedIndex(), new File(aFile).getName());
+                    format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    this.jComboBox_Time.removeAllItems();
+                    this.jComboBox_Time.addItem(format.format(aTime));
+                }
+                break;
+            case MICAPS_120:
+                cal = Calendar.getInstance();
+                cal.setTime(_meteoDataInfo.getDataInfo().getTimes().get(0));
+                cal.add(Calendar.HOUR, 1);
+                aTime = cal.getTime();
+                aFile = _meteoDataInfo.getFileName();
+                path = new File(aFile).getParent();
+                format = new SimpleDateFormat("yyyyMMddHH");
+                for (int i = 0; i < 100; i++) {
+                    aFile = path + File.separator + format.format(aTime) + ".000";
+                    if (new File(aFile).exists()) {
+                        break;
+                    }
+                    cal.add(Calendar.HOUR, 1);
                     aTime = cal.getTime();
                 }
                 if (new File(aFile).exists()) {
@@ -2353,6 +2403,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             case MICAPS_7:
             case MICAPS_11:
             case MICAPS_13:
+            case MICAPS_120:
                 this.jButton_NexTime.setEnabled(true);
                 this.jButton_PreTime.setEnabled(true);
                 break;
