@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="config.xml" Type="configurefile">
-  <Path OpenPath="U:\data\micaps\2015\plot"/>
+  <Path OpenPath="D:\MyProgram\CSharp\TrajStat\bin\Debug\Sample"/>
   <Font>
     <TextFont FontName="宋体" FontSize="15"/>
     <LegendFont FontName="宋体" FontSize="12"/>
