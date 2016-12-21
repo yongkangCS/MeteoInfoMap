@@ -40,25 +40,6 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
-        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\CSharp\TrajStat\bin\Debug\Sample\cluster4.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="cluster4.shp" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="true">
-          <LegendScheme BreakNum="4" FieldName="Ratio" HasNoData="false" LegendType="UniqueValue" MaxValue="0.0" MinValue="0.0" ShapeType="PolylineZ" UNDEF="-9999.0">
-            <Breaks>
-              <Break Caption="45.3%" Color="0xffa000c8" DrawShape="true" DrawSymbol="false" EndValue="45.3%" Size="1.0" StartValue="45.3%" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-              <Break Caption="24.6%" Color="0xff6e00dc" DrawShape="true" DrawSymbol="false" EndValue="24.6%" Size="1.0" StartValue="24.6%" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-              <Break Caption="14.1%" Color="0xff1e3cff" DrawShape="true" DrawSymbol="false" EndValue="14.1%" Size="1.0" StartValue="14.1%" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-              <Break Caption="15.9%" Color="0xff00a0ff" DrawShape="true" DrawSymbol="false" EndValue="15.9%" Size="1.0" StartValue="15.9%" Style="Solid" SymbolColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-            </Breaks>
-          </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
-          <Graphics/>
-          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
-            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-              <Breaks/>
-            </LegendScheme>
-          </ChartSet>
-          <ChartGraphics/>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
-        </Layer>
       </GroupLayer>
       <Graphics/>
     </MapFrame>
