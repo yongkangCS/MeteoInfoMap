@@ -183,6 +183,8 @@ public class PluginCollection extends ArrayList<Plugin> {
                 plugin.setDescription(attrs.getNamedItem("Description").getNodeValue());
                 String jarPath = attrs.getNamedItem("JarPath").getNodeValue();
                 jarPath = this._pluginPath + File.separator + jarPath;
+                if (!new File(jarPath).exists())
+                    continue;
                 plugin.setJarFileName(jarPath);
                 plugin.setClassName(attrs.getNamedItem("ClassName").getNodeValue());
                 plugin.setLoad(Boolean.parseBoolean(attrs.getNamedItem("IsLoad").getNodeValue()));
