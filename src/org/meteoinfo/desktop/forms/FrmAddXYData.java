@@ -308,7 +308,7 @@ public class FrmAddXYData extends javax.swing.JDialog {
                 int latIdx = this.jComboBox_LatField.getSelectedIndex();
                 double lon, lat;
                 String inFile = this.jTextField_InputFile.getText();
-                sr = new BufferedReader(new InputStreamReader(new FileInputStream(inFile), "gbk"));
+                sr = new BufferedReader(new InputStreamReader(new FileInputStream(inFile), "UTF-8"));
                 //sr = new BufferedReader(new FileReader(new File(inFile)));
                 String[] dataArray;
                 sr.readLine();    //First line - title                
@@ -353,15 +353,19 @@ public class FrmAddXYData extends javax.swing.JDialog {
                 this._parent.getMapDocument().getActiveMapFrame().addLayer(aLayer);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(FrmAddXYData.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             } catch (IOException ex) {
                 Logger.getLogger(FrmAddXYData.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             } catch (Exception ex) {
                 Logger.getLogger(FrmAddXYData.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             } finally {
                 try {
                     sr.close();
                 } catch (IOException ex) {
                     Logger.getLogger(FrmAddXYData.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                 }
             }
         }
