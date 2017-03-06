@@ -103,6 +103,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private InterpolationSetting _interpolationSetting = new InterpolationSetting();
     private boolean _enableAnimation = true;
     private boolean _isRunning = false;
+    private boolean windColor = false;
+    private boolean smooth = true;
     // </editor-fold>
     // <editor-fold desc="Constructor">
 
@@ -252,6 +254,12 @@ public class FrmMeteoData extends javax.swing.JDialog {
         });
 
         jCheckBox_ColorVar.setText(bundle.getString("FrmMeteoData.jCheckBox_ColorVar.text")); // NOI18N
+        jCheckBox_ColorVar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_ColorVarActionPerformed(evt);
+            }
+        });
 
         jLabel_Variable.setText(bundle.getString("FrmMeteoData.jLabel_Variable.text")); // NOI18N
 
@@ -973,10 +981,19 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
 
             //Set CHB_ColorVar visible
+            java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/meteoinfo/desktop/bundle/Bundle_FrmMeteoData");
             switch (_2DDrawType) {
                 case Vector:
                 case Barb:
+                    this.jCheckBox_ColorVar.setText(bundle.getString("FrmMeteoData.jCheckBox_ColorVar.text"));
                     this.jCheckBox_ColorVar.setVisible(true);
+                    this.jCheckBox_ColorVar.setSelected(this.windColor);
+                    break;
+                case Contour:
+                case Shaded:
+                    this.jCheckBox_ColorVar.setText(bundle.getString("FrmMeteoData.jCheckBox_Smooth.text"));
+                    this.jCheckBox_ColorVar.setVisible(true);
+                    this.jCheckBox_ColorVar.setSelected(this.smooth);
                     break;
                 default:
                     this.jCheckBox_ColorVar.setVisible(false);
@@ -1610,6 +1627,19 @@ public class FrmMeteoData extends javax.swing.JDialog {
         this.jButton_NexTime.setEnabled(false);
         _useSameLegendScheme = false;
         _meteoDataInfo.setLevelIndex(this.jComboBox_Level.getSelectedIndex());
+    }
+    
+    private void jCheckBox_ColorVarActionPerformed(java.awt.event.ActionEvent evt) {
+        switch (_2DDrawType){
+            case Vector:
+            case Barb:
+                this.windColor = this.jCheckBox_ColorVar.isSelected();
+                break;
+            case Contour:
+            case Shaded:
+                this.smooth = this.jCheckBox_ColorVar.isSelected();
+                break;
+        }
     }
 
     private void jCheckBox_Big_EndianActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2717,7 +2747,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             case Contour:
                 lName = "Contour_" + lName;
                 //LegendManage.setContoursAndColors(aLS, _cValues, _cColors);
-                aLayer = DrawMeteoData.createContourLayer(_gridData, aLS, lName, fieldName, true);
+                aLayer = DrawMeteoData.createContourLayer(_gridData, aLS, lName, fieldName, smooth);
                 if (aLayer != null) {
                     ((VectorLayer) aLayer).getLabelSet().setShadowColor(_parent.getMapDocument().getActiveMapFrame().getMapView().getBackground());
                     ((VectorLayer) aLayer).addLabelsContourDynamic(_parent.getMapDocument().getActiveMapFrame().getMapView().getViewExtent());
@@ -2726,7 +2756,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             case Shaded:
                 lName = "Shaded_" + lName;
                 //LegendManage.setContoursAndColors(aLS, _cValues, _cColors);
-                aLayer = DrawMeteoData.createShadedLayer(_gridData, aLS, lName, fieldName, true);
+                aLayer = DrawMeteoData.createShadedLayer(_gridData, aLS, lName, fieldName, smooth);
                 break;
             case Grid_Fill:
                 lName = "GridFill_" + lName;
@@ -2743,18 +2773,13 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 if (uvData != null) {
                     GridData uData = uvData[0];
                     GridData vData = uvData[1];
-                    if (this.jCheckBox_ColorVar.isSelected()) {
-                        //LegendManage.SetContoursAndColors(aLS, ref _cValues, ref _cColors);
-                    } else {
-                        //lName = lNameS;
-                    }
                     lName = "Vector_" + lName;
-                    if (this.jCheckBox_ColorVar.isSelected()) {
+                    if (this.windColor) {
                         if (_skipX != 1 || _skipY != 1) {
                             _gridData = _gridData.skip(_skipY, _skipX);
                         }
                     }
-                    aLayer = DrawMeteoData.createGridVectorLayer(uData, vData, _gridData, aLS, this.jCheckBox_ColorVar.isSelected(),
+                    aLayer = DrawMeteoData.createGridVectorLayer(uData, vData, _gridData, aLS, this.windColor,
                             lName, _meteoDataInfo.getMeteoUVSet().isUV());
                 } else {
                     ifAddLayer = false;
@@ -2781,21 +2806,13 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 if (uvData != null) {
                     GridData uData = uvData[0];
                     GridData vData = uvData[1];
-//                        if (this.jCheckBox_ColorVar.isSelected())
-//                        {
-//                            LegendManage.SetContoursAndColors(aLS, ref _cValues, ref _cColors);
-//                        }
-//                        else
-//                        {
-//                            LName = LNameS;
-//                        }
                     lName = "Barb_" + lName;
-                    if (this.jCheckBox_ColorVar.isSelected()) {
+                    if (this.windColor) {
                         if (_skipX != 1 || _skipY != 1) {
                             _gridData = _gridData.skip(_skipY, _skipX);
                         }
                     }
-                    aLayer = DrawMeteoData.createGridBarbLayer(uData, vData, _gridData, aLS, this.jCheckBox_ColorVar.isSelected(), lName, true);
+                    aLayer = DrawMeteoData.createGridBarbLayer(uData, vData, _gridData, aLS, this.windColor, lName, true);
                 } else {
                     ifAddLayer = false;
                 }
@@ -2869,12 +2886,12 @@ public class FrmMeteoData extends javax.swing.JDialog {
             case Contour:
                 LegendManage.setContoursAndColors(aLS, _cValues, _cColors);
                 LName = "Contour_" + LName;
-                aLayer = DrawMeteoData.createContourLayer(_gridData, aLS, LName, fieldName, true);
+                aLayer = DrawMeteoData.createContourLayer(_gridData, aLS, LName, fieldName, smooth);
                 break;
             case Shaded:
                 LegendManage.setContoursAndColors(aLS, _cValues, _cColors);
                 LName = "Shaded_" + LName;
-                aLayer = DrawMeteoData.createShadedLayer(_gridData, aLS, LName, fieldName, true);
+                aLayer = DrawMeteoData.createShadedLayer(_gridData, aLS, LName, fieldName, smooth);
                 break;
             case Raster:
                 LName = "Raster_" + LName;
@@ -2890,13 +2907,13 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     switch (_2DDrawType) {
                         case Vector:
                         case Barb:
-                            if (this.jCheckBox_ColorVar.isSelected()) {
+                            if (this.windColor) {
                                 LegendManage.setContoursAndColors(aLS, _cValues, _cColors);
                             }
 
                             if (_2DDrawType == DrawType2D.Vector) {
                                 LName = "Vector_" + LName;
-                                if (this.jCheckBox_ColorVar.isSelected()) {
+                                if (this.windColor) {
                                     aLayer = DrawMeteoData.createSTVectorLayer(stUData, stVData, _stationData,
                                             aLS, LName, _meteoDataInfo.getMeteoUVSet().isUV());
                                 } else {
@@ -2905,7 +2922,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                                 }
                             } else {
                                 LName = "Barb_" + LName;
-                                if (this.jCheckBox_ColorVar.isSelected()) {
+                                if (this.windColor) {
                                     aLayer = DrawMeteoData.createSTBarbLayer(stUData, stVData, _stationData,
                                             aLS, LName, _meteoDataInfo.getMeteoUVSet().isUV());
                                 } else {
