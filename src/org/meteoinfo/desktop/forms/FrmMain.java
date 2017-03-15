@@ -2455,7 +2455,9 @@ public class FrmMain extends JFrame implements IApplication {
         if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
             File aFile = aDlg.getSelectedFile();
             System.setProperty("user.dir", aFile.getParent());
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             openProjectFile(aFile.getAbsolutePath());
+            this.setCursor(Cursor.getDefaultCursor());
         }
     }
 
@@ -2463,7 +2465,9 @@ public class FrmMain extends JFrame implements IApplication {
         // TODO add your handling code here:
         String aFile = _projectFile.getFileName();
         try {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             _projectFile.saveProjFile(aFile);
+            this.setCursor(Cursor.getDefaultCursor());
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
