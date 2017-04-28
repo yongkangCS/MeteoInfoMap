@@ -26,7 +26,7 @@ public class FrmAbout extends javax.swing.JDialog {
     public FrmAbout(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setTitle("About MeteoInfo");
+        this.setTitle("About MeteoInfoMap");
         this.jLabel11.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
@@ -58,7 +58,7 @@ public class FrmAbout extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/MeteoInfo_logo.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
-        jLabel2.setText("MeteoInfo - Java Edition");
+        jLabel2.setText("MeteoInfoMap");
 
         jLabel3.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
         jLabel3.setText("GIS software for meteorological data");
@@ -108,7 +108,6 @@ public class FrmAbout extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -123,7 +122,10 @@ public class FrmAbout extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
                                     .addComponent(jLabel9)
-                                    .addComponent(jLabel6))))
+                                    .addComponent(jLabel6)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel2)))
                         .addGap(0, 24, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -134,7 +136,7 @@ public class FrmAbout extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)

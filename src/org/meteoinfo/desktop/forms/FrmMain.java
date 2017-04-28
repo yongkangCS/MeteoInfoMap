@@ -277,7 +277,7 @@ public class FrmMain extends JFrame implements IApplication {
         } catch (Exception e) {
         }
         this.setIconImage(image);
-        this.setTitle("MeteoInfo");
+        this.setTitle("MeteoInfoMap");
         this.jMenuItem_Layers.setSelected(true);
         this.jButton_SelectElement.doClick();
 
@@ -2128,7 +2128,7 @@ public class FrmMain extends JFrame implements IApplication {
             } catch (IOException ex) {
                 Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.setTitle("MeteoInfo - " + new File(pFile).getName());
+            this.setTitle("MeteoInfoMap - " + new File(pFile).getName());
         }
     }
 
@@ -2494,7 +2494,7 @@ public class FrmMain extends JFrame implements IApplication {
             } catch (ParserConfigurationException ex) {
                 Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.setTitle("MeteoInfo - " + file.getName());
+            this.setTitle("MeteoInfoMap - " + file.getName());
         }
     }
 
@@ -2862,7 +2862,7 @@ public class FrmMain extends JFrame implements IApplication {
     private void jMenuItem_HelpActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         Help help = new Help();
-        help.setTitle("MeteoInfo - Help");
+        help.setTitle("MeteoInfoMap - Help");
         help.setIconImage("/org/meteoinfo/desktop/resources/MeteoInfo_1_16x16x8.png");
         help.setSize(800, 700);
         help.setLocationRelativeTo(this);
@@ -3581,7 +3581,6 @@ public class FrmMain extends JFrame implements IApplication {
         setMapView();
         //setMapLayout();
 
-        //this.Text = "MeteoInfo - " + Path.GetFileNameWithoutExtension(projFile);
         _mapDocument.paintGraphics();
         _mapView.zoomToExtent(_mapView.getViewExtent());
     }
