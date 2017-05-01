@@ -415,6 +415,7 @@ public class FrmMain extends JFrame implements IApplication {
         jMenu_GeoProcessing = new javax.swing.JMenu();
         jMenuItem_Buffer = new javax.swing.JMenuItem();
         jMenuItem_Clipping = new javax.swing.JMenuItem();
+        jMenuItem_Convexhull = new javax.swing.JMenuItem();
         jMenu_Tools = new javax.swing.JMenu();
         jMenuItem_Script = new javax.swing.JMenuItem();
         jMenuItem_ScriptConsole = new javax.swing.JMenuItem();
@@ -1534,6 +1535,15 @@ public class FrmMain extends JFrame implements IApplication {
             }
         });
         jMenu_GeoProcessing.add(jMenuItem_Clipping);
+        
+        jMenuItem_Convexhull.setText(bundle.getString("FrmMain.jMenuItem_Convexhull.text")); // NOI18N
+        jMenuItem_Convexhull.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ConvexhullActionPerformed(evt);
+            }
+        });
+        jMenu_GeoProcessing.add(jMenuItem_Convexhull);
         
         jMenuBar_Main.add(jMenu_GeoProcessing);
 
@@ -3543,6 +3553,12 @@ public class FrmMain extends JFrame implements IApplication {
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }
+    
+    private void jMenuItem_ConvexhullActionPerformed(java.awt.event.ActionEvent evt) {
+        FrmConvexhull frm = new FrmConvexhull(this, false);
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }
 
     private void jMenuItem_AnimatorActionPerformed(java.awt.event.ActionEvent evt) {
         FrmGifAnimator frm = new FrmGifAnimator(this, false);
@@ -3761,6 +3777,7 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenu jMenu_GeoProcessing;
     private javax.swing.JMenuItem jMenuItem_Buffer;
     private javax.swing.JMenuItem jMenuItem_Clipping;
+    private javax.swing.JMenuItem jMenuItem_Convexhull;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel_Status;
     private javax.swing.JPanel jPanel_LayoutTab;
