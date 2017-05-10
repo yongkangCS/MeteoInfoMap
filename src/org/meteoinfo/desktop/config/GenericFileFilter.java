@@ -35,6 +35,8 @@ public class GenericFileFilter extends FileFilter {
      * this is the array of file extensions that you wish to create a file
      * filter for. <br> description - this is the description that will be
      * displayed in the file chooser dialog box.
+     * @param filesExtsIn File extensions
+     * @param description Description
      */
     public GenericFileFilter(String[] filesExtsIn, String description) {
         if (filesExtsIn.length == 1) {//we only have one file
@@ -60,6 +62,8 @@ public class GenericFileFilter extends FileFilter {
      * This is the method to allow a file to bee added to the displayed list or
      * not. This method is called by the model that handles the FileChooser
      * dialog
+     * @param f File
+     * @return Boolean
      */
     @Override
     public boolean accept(File f) {
@@ -91,6 +95,7 @@ public class GenericFileFilter extends FileFilter {
 
     /**
      * This is the method defined by the model
+     * @return 
      */
     @Override
     public String getDescription() {
@@ -102,9 +107,9 @@ public class GenericFileFilter extends FileFilter {
      */
     private String getExtension(File file) {
         String filename = file.getName();
-        int length = filename.length();
+        int len = filename.length();
         int i = filename.lastIndexOf('.');
-        if (i > 0 && i < length - 1) {
+        if (i > 0 && i < len - 1) {
             return filename.substring(i + 1).toLowerCase();
         }
         return null;
