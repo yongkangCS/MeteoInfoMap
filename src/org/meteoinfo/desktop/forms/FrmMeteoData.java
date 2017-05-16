@@ -403,18 +403,18 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jSplitButton_OpenData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Folder_1_16x16x8.png"))); // NOI18N
         jSplitButton_OpenData.setText("  ");
         jSplitButton_OpenData.setToolTipText(bundle.getString("FrmMeteoData.jButton_OpenData.toolTipText"));
-        //jSplitButton_OpenData.setFocusable(false);
-        jSplitButton_OpenData.addSplitButtonActionListener(new SplitButtonActionListener() {
-            @Override
-            public void buttonClicked(java.awt.event.ActionEvent evt) {
-                jButton_OpenDataActionPerformed(evt);
-            }
-
-            @Override
-            public void splitButtonClicked(ActionEvent e) {
-                
-            }
-        });
+        jSplitButton_OpenData.setFocusable(false);
+//        jSplitButton_OpenData.addSplitButtonActionListener(new SplitButtonActionListener() {
+//            @Override
+//            public void buttonClicked(java.awt.event.ActionEvent evt) {
+//                jButton_OpenDataActionPerformed(evt);
+//            }
+//
+//            @Override
+//            public void splitButtonClicked(ActionEvent e) {
+//                
+//            }
+//        });
         jMenuItem_NetCDF.setText("NetCDF, GRIB, HDF...");
         jMenuItem_NetCDF.addActionListener(new java.awt.event.ActionListener() {
             @Override
