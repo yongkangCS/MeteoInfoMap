@@ -2605,6 +2605,7 @@ public class FrmMain extends JFrame implements IApplication {
             VectorLayer layer = new VectorLayer(type);
             layer.setLayerName("New " + option);
             layer.editAddField("ID", DataTypes.Integer);
+            layer.setProjInfo(this._mapDocument.getActiveMapFrame().getMapView().getProjection().getProjInfo());
             this._mapDocument.getActiveMapFrame().addLayer(layer);
             this._mapDocument.paintGraphics();
         }
