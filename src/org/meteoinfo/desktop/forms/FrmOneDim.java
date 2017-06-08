@@ -61,7 +61,7 @@ public class FrmOneDim extends javax.swing.JFrame {
     private org.meteoinfo.chart.ChartPanel _chartPanel;
     private PlotDimension _plotDimension;
     private String _graphType;
-    private List<PointD> _pointList = new ArrayList<PointD>();
+    private List<PointD> _pointList = new ArrayList<>();
     private boolean _isLoading = false;
     private boolean isSamePlotDim = false;
     private boolean _enableAnimation = true;
@@ -863,7 +863,7 @@ public class FrmOneDim extends javax.swing.JFrame {
             this.jComboBox_PlotDim.addItem(PlotDimension.Lat.toString());
         }
 
-        List<String> dimItems = new ArrayList<String>();
+        List<String> dimItems = new ArrayList<>();
         for (int i = 0; i < this.jComboBox_PlotDim.getItemCount(); i++) {
             dimItems.add(this.jComboBox_PlotDim.getItemAt(i).toString());
         }
@@ -1334,6 +1334,7 @@ public class FrmOneDim extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new FrmOneDim(null, null).setVisible(true);
             }
