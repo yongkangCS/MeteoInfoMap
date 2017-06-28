@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import org.meteoinfo.desktop.config.PythonInteractiveInterpreter;
 import org.meteoinfo.global.util.GlobalUtil;
 import org.meteoinfo.console.JConsole;
+import org.meteoinfo.desktop.codecomplete.JIntrospect;
 import org.python.core.Py;
 
 /**
@@ -54,8 +55,7 @@ public class FrmConsole extends javax.swing.JFrame {
         console.setLocale(Locale.getDefault());
         System.out.println(console.getFont());
         console.setPreferredSize(new Dimension(600, 400));
-        console.println(new ImageIcon(this.getClass().getResource("/org/meteoinfo/desktop/resources/jython_small_c.png")));
-        this.getContentPane().add(console, BorderLayout.CENTER);
+        console.println(new ImageIcon(this.getClass().getResource("/org/meteoinfo/desktop/resources/jython_small_c.png")));        
 
 //        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
 //                getInputArguments().toString().contains("jdwp");
@@ -82,6 +82,9 @@ public class FrmConsole extends javax.swing.JFrame {
 
         new Thread(interp).start();
         this.setCursor(Cursor.getDefaultCursor());
+        JIntrospect nameComplete = new JIntrospect(interp);
+        console.setNameCompletion(nameComplete);
+        this.getContentPane().add(console, BorderLayout.CENTER);
     }
 
     /**
