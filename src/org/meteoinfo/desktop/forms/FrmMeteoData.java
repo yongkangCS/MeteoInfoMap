@@ -73,7 +73,6 @@ import org.meteoinfo.legend.LegendType;
 import org.meteoinfo.legend.PointBreak;
 import org.meteoinfo.projection.ProjectionInfo;
 import org.meteoinfo.shape.ShapeTypes;
-import org.meteoinfo.ui.SplitButtonActionListener;
 
 /**
  *
