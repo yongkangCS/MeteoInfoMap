@@ -357,6 +357,7 @@ public class FrmProjection extends javax.swing.JDialog {
                 break;
             case Robinson:
             case Molleweide:
+            case Hammer_Eckert:
                 this.jPanel_Parameters.setEnabled(true);
                 for (Component aControl : this.jPanel_Parameters.getComponents()) {
                     aControl.setVisible(false);
@@ -512,6 +513,10 @@ public class FrmProjection extends javax.swing.JDialog {
                 break;
             case Molleweide:
                 toProjStr = "+proj=moll"
+                        + " +lon_0=" + this.jTextField_CentralMeridian.getText();
+                break;
+            case Hammer_Eckert:
+                toProjStr = "+proj=hammer"
                         + " +lon_0=" + this.jTextField_CentralMeridian.getText();
                 break;
             case Orthographic_Azimuthal:
