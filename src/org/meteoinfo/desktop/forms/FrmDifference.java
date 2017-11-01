@@ -13,12 +13,13 @@ import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.VectorLayer;
 import org.meteoinfo.map.MapView;
+import org.meteoinfo.shape.PolygonShape;
 
 /**
  *
  * @author yaqiang
  */
-public class FrmIntersection extends javax.swing.JDialog {
+public class FrmDifference extends javax.swing.JDialog {
 
     List<VectorLayer> _vLayers = new ArrayList<>();
     List<VectorLayer> _polygonLayers = new ArrayList<>();
@@ -29,7 +30,7 @@ public class FrmIntersection extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public FrmIntersection(JFrame parent, boolean modal) {
+    public FrmDifference(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
@@ -40,7 +41,7 @@ public class FrmIntersection extends javax.swing.JDialog {
     private void initialize() {
         MapView mapView = _parent.getMapDocument().getActiveMapFrame().getMapView();
         this.jComboBox_SubjectLayer.removeAllItems();
-        this.jComboBox_IntersectionLayer.removeAllItems();
+        this.jComboBox_DifferenceLayer.removeAllItems();
         for (int i = 0; i < mapView.getLayerNum(); i++) {
             MapLayer layer = mapView.getLayers().get(i);
             if (layer.getLayerType() == LayerTypes.VectorLayer) {
@@ -51,7 +52,7 @@ public class FrmIntersection extends javax.swing.JDialog {
                     case PolygonZ:
                     case PolygonM:
                         this._polygonLayers.add((VectorLayer) layer);
-                        this.jComboBox_IntersectionLayer.addItem(layer.getLayerName());
+                        this.jComboBox_DifferenceLayer.addItem(layer.getLayerName());
                         break;
                 }
             }
@@ -60,8 +61,8 @@ public class FrmIntersection extends javax.swing.JDialog {
         if (this.jComboBox_SubjectLayer.getItemCount() > 0) {
             this.jComboBox_SubjectLayer.setSelectedIndex(0);
         }
-        if (this.jComboBox_IntersectionLayer.getItemCount() > 0) {
-            this.jComboBox_IntersectionLayer.setSelectedIndex(0);
+        if (this.jComboBox_DifferenceLayer.getItemCount() > 0) {
+            this.jComboBox_DifferenceLayer.setSelectedIndex(0);
         }
     }
 
@@ -77,28 +78,28 @@ public class FrmIntersection extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jComboBox_SubjectLayer = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox_IntersectionLayer = new javax.swing.JComboBox();
-        jCheckBox_SelFeatureOnly_Intersection = new javax.swing.JCheckBox();
+        jComboBox_DifferenceLayer = new javax.swing.JComboBox();
+        jCheckBox_SelFeatureOnly_Difference = new javax.swing.JCheckBox();
         jButton_Apply = new javax.swing.JButton();
         jCheckBox_SelFeatureOnly_Subject = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Intersection");
+        setTitle("Difference");
 
         jLabel1.setText("Subject layer:");
 
         jComboBox_SubjectLayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel2.setText("Intersection layer:");
+        jLabel2.setText("Difference layer:");
 
-        jComboBox_IntersectionLayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox_IntersectionLayer.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox_DifferenceLayer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_DifferenceLayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_IntersectionLayerActionPerformed(evt);
+                jComboBox_DifferenceLayerActionPerformed(evt);
             }
         });
 
-        jCheckBox_SelFeatureOnly_Intersection.setText("Selected features only");
+        jCheckBox_SelFeatureOnly_Difference.setText("Selected features only");
 
         jButton_Apply.setText("Apply");
         jButton_Apply.addActionListener(new java.awt.event.ActionListener() {
@@ -121,12 +122,12 @@ public class FrmIntersection extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox_SubjectLayer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox_IntersectionLayer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox_DifferenceLayer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBox_SelFeatureOnly_Subject)
                             .addComponent(jLabel1)
-                            .addComponent(jCheckBox_SelFeatureOnly_Intersection)
+                            .addComponent(jCheckBox_SelFeatureOnly_Difference)
                             .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -143,9 +144,9 @@ public class FrmIntersection extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox_IntersectionLayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox_DifferenceLayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox_SelFeatureOnly_Intersection)
+                .addComponent(jCheckBox_SelFeatureOnly_Difference)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jButton_Apply)
                 .addContainerGap())
@@ -156,7 +157,7 @@ public class FrmIntersection extends javax.swing.JDialog {
 
     private void jButton_ApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ApplyActionPerformed
         // TODO add your handling code here:
-        if (this.jComboBox_SubjectLayer.getSelectedItem().toString().equals(this.jComboBox_IntersectionLayer.getSelectedItem().toString())) {
+        if (this.jComboBox_SubjectLayer.getSelectedItem().toString().equals(this.jComboBox_DifferenceLayer.getSelectedItem().toString())) {
             JOptionPane.showMessageDialog(null, "The two layers are same!");
             return;
         }
@@ -165,9 +166,15 @@ public class FrmIntersection extends javax.swing.JDialog {
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
         VectorLayer fromLayer = _vLayers.get(this.jComboBox_SubjectLayer.getSelectedIndex());
-        VectorLayer clipLayer = _polygonLayers.get(this.jComboBox_IntersectionLayer.getSelectedIndex());
-        boolean onlySel = this.jCheckBox_SelFeatureOnly_Intersection.isSelected();
-        VectorLayer newLayer = fromLayer.clip(clipLayer, onlySel);
+        VectorLayer clipLayer = _polygonLayers.get(this.jComboBox_DifferenceLayer.getSelectedIndex());
+        boolean onlySel = this.jCheckBox_SelFeatureOnly_Subject.isSelected();
+        List<PolygonShape> clipShapes;
+        if (this.jCheckBox_SelFeatureOnly_Difference.isSelected()){
+            clipShapes = (List<PolygonShape>)clipLayer.getSelectedShapes();
+        } else {
+            clipShapes = (List<PolygonShape>)clipLayer.getShapes();
+        }
+        VectorLayer newLayer = fromLayer.difference(clipShapes, onlySel);
         newLayer.setLayerName("Intersection_" + newLayer.getLayerName());
         _parent.getMapDocument().getActiveMapFrame().addLayer(newLayer);
 
@@ -175,21 +182,21 @@ public class FrmIntersection extends javax.swing.JDialog {
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jButton_ApplyActionPerformed
 
-    private void jComboBox_IntersectionLayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_IntersectionLayerActionPerformed
+    private void jComboBox_DifferenceLayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_DifferenceLayerActionPerformed
         // TODO add your handling code here:
-        if (this.jComboBox_IntersectionLayer.getItemCount() > 0) {
-            VectorLayer aLayer = _polygonLayers.get(this.jComboBox_IntersectionLayer.getSelectedIndex());
+        if (this.jComboBox_DifferenceLayer.getItemCount() > 0) {
+            VectorLayer aLayer = _polygonLayers.get(this.jComboBox_DifferenceLayer.getSelectedIndex());
             List<Integer> selIndexes = aLayer.getSelectedShapeIndexes();
             if (selIndexes.size() > 0) {
-                this.jCheckBox_SelFeatureOnly_Intersection.setEnabled(true);
-                this.jCheckBox_SelFeatureOnly_Intersection.setText("Selected features only (" + String.valueOf(selIndexes.size()) + " features selected)");
+                this.jCheckBox_SelFeatureOnly_Difference.setEnabled(true);
+                this.jCheckBox_SelFeatureOnly_Difference.setText("Selected features only (" + String.valueOf(selIndexes.size()) + " features selected)");
             } else {
-                this.jCheckBox_SelFeatureOnly_Intersection.setEnabled(false);
-                this.jCheckBox_SelFeatureOnly_Intersection.setSelected(false);
-                this.jCheckBox_SelFeatureOnly_Intersection.setText("Selected features only");
+                this.jCheckBox_SelFeatureOnly_Difference.setEnabled(false);
+                this.jCheckBox_SelFeatureOnly_Difference.setSelected(false);
+                this.jCheckBox_SelFeatureOnly_Difference.setText("Selected features only");
             }
         }
-    }//GEN-LAST:event_jComboBox_IntersectionLayerActionPerformed
+    }//GEN-LAST:event_jComboBox_DifferenceLayerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,15 +214,16 @@ public class FrmIntersection extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmIntersection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmIntersection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmIntersection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmIntersection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmDifference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -223,7 +231,7 @@ public class FrmIntersection extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                FrmIntersection dialog = new FrmIntersection(new FrmMain(), true);
+                FrmDifference dialog = new FrmDifference(new FrmMain(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -236,9 +244,9 @@ public class FrmIntersection extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Apply;
-    private javax.swing.JCheckBox jCheckBox_SelFeatureOnly_Intersection;
+    private javax.swing.JCheckBox jCheckBox_SelFeatureOnly_Difference;
     private javax.swing.JCheckBox jCheckBox_SelFeatureOnly_Subject;
-    private javax.swing.JComboBox jComboBox_IntersectionLayer;
+    private javax.swing.JComboBox jComboBox_DifferenceLayer;
     private javax.swing.JComboBox jComboBox_SubjectLayer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

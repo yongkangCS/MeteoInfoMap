@@ -417,6 +417,8 @@ public class FrmMain extends JFrame implements IApplication {
         jMenuItem_Clipping = new javax.swing.JMenuItem();
         jMenuItem_Convexhull = new javax.swing.JMenuItem();
         jMenuItem_Intersection = new javax.swing.JMenuItem();
+        jMenuItem_Difference = new javax.swing.JMenuItem();
+        jMenuItem_SymDifference = new javax.swing.JMenuItem();
         jMenu_Tools = new javax.swing.JMenu();
         jMenuItem_Script = new javax.swing.JMenuItem();
         jMenuItem_ScriptConsole = new javax.swing.JMenuItem();
@@ -1555,6 +1557,24 @@ public class FrmMain extends JFrame implements IApplication {
         });
         jMenu_GeoProcessing.add(jMenuItem_Intersection);
         
+        jMenuItem_Difference.setText(bundle.getString("FrmMain.jMenuItem_Difference.text")); // NOI18N
+        jMenuItem_Difference.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_DifferenceActionPerformed(evt);
+            }
+        });
+        jMenu_GeoProcessing.add(jMenuItem_Difference);
+        
+        jMenuItem_SymDifference.setText(bundle.getString("FrmMain.jMenuItem_SymDifference.text")); // NOI18N
+        jMenuItem_SymDifference.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_SymDifferenceActionPerformed(evt);
+            }
+        });
+        jMenu_GeoProcessing.add(jMenuItem_SymDifference);
+        
         jMenuBar_Main.add(jMenu_GeoProcessing);
 
         //Tools menu
@@ -2536,7 +2556,7 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jMenuItem_CutActionPerformed(ActionEvent evt) {
         VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
-        List<Shape> selShapes = layer.getSelectedShapes();
+        List<Shape> selShapes = (List<Shape>)layer.getSelectedShapes();
 
         UndoableEdit edit = (new MapViewUndoRedo()).new RemoveFeaturesEdit(_mapView, layer, selShapes);
         currentUndoManager.addEdit(edit);
@@ -2554,7 +2574,7 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jMenuItem_CopyActionPerformed(ActionEvent evt) {
         VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
-        List<Shape> selShapes = layer.getSelectedShapes();
+        List<Shape> selShapes = (List<Shape>)layer.getSelectedShapes();
         List<Shape> r = new ArrayList<>();
         for (Shape s : selShapes) {
             r.add((Shape) s.clone());
@@ -2638,7 +2658,7 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jMenuItem_MergeFeatureActionPerformed(ActionEvent evt) {
         VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
-        List<Shape> selShapes = layer.getSelectedShapes();
+        List<Shape> selShapes = (List<Shape>)layer.getSelectedShapes();
         if (selShapes.size() < 2) {
             JOptionPane.showMessageDialog(this, "Union option need at least two features are selected!");
             return;
@@ -3491,7 +3511,7 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jButton_EditRemoveFeatureActionPerformed(ActionEvent evt) {
         VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
-        List<Shape> selShapes = layer.getSelectedShapes();
+        List<Shape> selShapes = (List<Shape>)layer.getSelectedShapes();
 
         UndoableEdit edit = (new MapViewUndoRedo()).new RemoveFeaturesEdit(_mapView, layer, selShapes);
         currentUndoManager.addEdit(edit);
@@ -3506,7 +3526,7 @@ public class FrmMain extends JFrame implements IApplication {
 
     private void jButton_EditFeatureVerticesActionPerformed(ActionEvent evt) {
         VectorLayer layer = (VectorLayer) _mapDocument.getActiveMapFrame().getMapView().getSelectedLayer();
-        List<Shape> selShapes = layer.getSelectedShapes();
+        List<Shape> selShapes = (List<Shape>)layer.getSelectedShapes();
         if (selShapes.size() != 1) {
             JOptionPane.showMessageDialog(this, "Select one editable feature to edit.", "Edit Vertices", JOptionPane.WARNING_MESSAGE);
             return;
@@ -3573,6 +3593,18 @@ public class FrmMain extends JFrame implements IApplication {
     
     private void jMenuItem_IntersectionActionPerformed(java.awt.event.ActionEvent evt) {
         FrmIntersection frm = new FrmIntersection(this, false);
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }
+    
+    private void jMenuItem_DifferenceActionPerformed(java.awt.event.ActionEvent evt) {
+        FrmDifference frm = new FrmDifference(this, false);
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }
+    
+    private void jMenuItem_SymDifferenceActionPerformed(java.awt.event.ActionEvent evt) {
+        FrmSymDifference frm = new FrmSymDifference(this, false);
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }
@@ -3796,6 +3828,8 @@ public class FrmMain extends JFrame implements IApplication {
     private javax.swing.JMenuItem jMenuItem_Clipping;
     private javax.swing.JMenuItem jMenuItem_Convexhull;
     private javax.swing.JMenuItem jMenuItem_Intersection;
+    private javax.swing.JMenuItem jMenuItem_Difference;
+    private javax.swing.JMenuItem jMenuItem_SymDifference;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel_Status;
     private javax.swing.JPanel jPanel_LayoutTab;
