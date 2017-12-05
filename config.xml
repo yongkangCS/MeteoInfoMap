@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="config.xml" Type="configurefile">
-  <Path OpenPath="D:\Temp\traj"/>
+  <Path OpenPath="D:\Temp\ascii"/>
   <Font>
     <TextFont FontName="宋体" FontSize="15"/>
     <LegendFont FontName="宋体" FontSize="12"/>
   </Font>
   <ScriptLanguage Language="Jython"/>
-  <Startup MainFormLocation="21,14" MainFormSize="1525,802" ShowMeteoDataDlg="true"/>
+  <Startup MainFormLocation="8,15" MainFormSize="1258,735" ShowMeteoDataDlg="false"/>
 </MeteoInfo>
