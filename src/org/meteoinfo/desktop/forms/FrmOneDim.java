@@ -37,7 +37,7 @@ import org.meteoinfo.data.meteodata.Variable;
 import org.meteoinfo.data.meteodata.hysplit.HYSPLITTrajDataInfo;
 import org.meteoinfo.desktop.config.GenericFileFilter;
 import org.meteoinfo.global.PointD;
-import org.meteoinfo.global.image.AnimatedGifEncoder;
+import org.meteoinfo.image.AnimatedGifEncoder;
 import org.meteoinfo.layer.LayerDrawType;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layout.LayoutChart;

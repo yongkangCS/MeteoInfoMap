@@ -57,7 +57,7 @@ import org.meteoinfo.legend.MapFrame;
 import org.meteoinfo.legend.NodeTypes;
 import org.meteoinfo.legend.PointBreak;
 import org.meteoinfo.desktop.config.GenericFileFilter;
-import org.meteoinfo.global.image.AnimatedGifEncoder;
+import org.meteoinfo.image.AnimatedGifEncoder;
 import org.meteoinfo.shape.ShapeTypes;
 
 /**
@@ -767,8 +767,8 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         //Get X/Y
         //GetXYCoords();
         getXYGridStrs();
-        this.mapLayout1.getActiveMapFrame().getMapView().setXGridStrs(new ArrayList<String>(_XGridStrs));
-        this.mapLayout1.getActiveMapFrame().getMapView().setYGridStrs(new ArrayList<String>(_YGridStrs));
+        this.mapLayout1.getActiveMapFrame().getMapView().setXGridStrs(new ArrayList<>(_XGridStrs));
+        this.mapLayout1.getActiveMapFrame().getMapView().setYGridStrs(new ArrayList<>(_YGridStrs));
 
         //Draw 2D figure
         switch (_meteoDataInfo.getDataType()) {
@@ -825,8 +825,8 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         //Get X/Y
         //GetXYCoords();
         getXYGridStrs();
-        this.mapLayout1.getActiveMapFrame().getMapView().setXGridStrs(new ArrayList<String>(_XGridStrs));
-        this.mapLayout1.getActiveMapFrame().getMapView().setYGridStrs(new ArrayList<String>(_YGridStrs));
+        this.mapLayout1.getActiveMapFrame().getMapView().setXGridStrs(new ArrayList<>(_XGridStrs));
+        this.mapLayout1.getActiveMapFrame().getMapView().setYGridStrs(new ArrayList<>(_YGridStrs));
 
         //Draw 2D figure
         switch (_meteoDataInfo.getDataType()) {
@@ -1327,7 +1327,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
             this.jComboBox_PlotDim.addItem(PlotDimension.Level_Time.toString());
         }
 
-        List<String> dimItems = new ArrayList<String>();
+        List<String> dimItems = new ArrayList<>();
         for (int i = 0; i < this.jComboBox_PlotDim.getItemCount(); i++) {
             dimItems.add(this.jComboBox_PlotDim.getItemAt(i).toString());
         }
@@ -1749,7 +1749,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
 
         //Set U/V strings
         if (!_meteoDataInfo.getMeteoUVSet().isFixUVStr()) {
-            List<String> vList = new ArrayList<String>();
+            List<String> vList = new ArrayList<>();
             for (i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
                 vList.add(this.jComboBox_Variable.getItemAt(i).toString());
             }
@@ -1833,7 +1833,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
     }
 
     private List<String> getLonGridStr() {
-        List<String> GStrList = new ArrayList<String>();
+        List<String> GStrList = new ArrayList<>();
         String drawStr;
         int i;
 
@@ -1866,7 +1866,7 @@ public class FrmSectionPlot extends javax.swing.JFrame {
     }
 
     private List<String> getLatGridStr() {
-        List<String> GStrList = new ArrayList<String>();
+        List<String> GStrList = new ArrayList<>();
         String drawStr;
         int i;
 
@@ -1894,10 +1894,10 @@ public class FrmSectionPlot extends javax.swing.JFrame {
     }
 
     private List<String> getTimeGridStr() {
-        List<String> GStrList = new ArrayList<String>();
+        List<String> GStrList = new ArrayList<>();
         int i;
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        List<Date> DTList = new ArrayList<Date>();
+        List<Date> DTList = new ArrayList<>();
         for (i = 0; i < this.jComboBox_Time1.getItemCount(); i++) {
             try {
                 DTList.add(dateFormat.parse(this.jComboBox_Time1.getItemAt(i).toString()));

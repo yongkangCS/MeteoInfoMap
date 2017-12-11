@@ -12,7 +12,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.meteoinfo.desktop.config.GenericFileFilter;
-import org.meteoinfo.global.image.ImageUtil;
+import org.meteoinfo.image.ImageUtil;
 
 /**
  *

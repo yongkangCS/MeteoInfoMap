@@ -4,7 +4,6 @@
  */
 package org.meteoinfo.desktop.forms;
 
-import com.sun.glass.events.KeyEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -60,7 +59,7 @@ import org.meteoinfo.geoprocess.analysis.InterpolationSetting;
 import org.meteoinfo.global.Extent;
 import org.meteoinfo.global.PointD;
 import org.meteoinfo.global.PointF;
-import org.meteoinfo.global.image.AnimatedGifEncoder;
+import org.meteoinfo.image.AnimatedGifEncoder;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
 import org.meteoinfo.layer.RasterLayer;
@@ -3168,6 +3167,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 FrmMeteoData dialog = new FrmMeteoData(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
