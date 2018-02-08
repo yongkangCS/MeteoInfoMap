@@ -2,14 +2,32 @@
 <MeteoInfo File="default.mip" Type="projectfile">
   <MapFrames>
     <MapFrame Active="true" DrawGridLabel="true" DrawGridLine="false" DrawNeatLine="true" Expanded="true" GridFontName="Arial" GridFontSize="12" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="DASH" GridXDelt="10.0" GridXOrigin="0.0" GridYDelt="10.0" GridYOrigin="0.0" Height="404" Left="48" Name="New Map Frame" NeatLineColor="0xff000000" NeatLineSize="1.0" Order="0" Top="30" Width="592">
-      <Extents xMax="1.2320671167081486E7" xMin="1.230153040402873E7" yMax="2945478.140962928" yMin="2932232.0291191293"/>
+      <Extents xMax="180.0" xMin="-180.0" yMax="90.0" yMin="-90.0"/>
       <MapProperty BackColor="0xffffffff" ForeColor="0xff000000" HighSpeedWheelZoom="true" MultiGlobalDraw="true" PointSmoothingMode="true" SelectColor="0xff66ffff" SmoothingMode="false" XYScaleFactor="1.0"/>
       <GridLine DrawGridLine="false" DrawGridTickLine="false" GridLineColor="0xff808080" GridLineSize="1.0" GridLineStyle="DASH"/>
       <MaskOut MaskLayer="china.shp" SetMaskLayer="false"/>
-      <Projection IsLonLatMap="false" ProjStr="+proj=merc +a=6378137 +b=6378137 "/>
+      <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees "/>
       <GroupLayer>
-        <Layer Handle="1" IsMaskout="false" LayerDrawType="Image" LayerName="WebMap_GoogleSatelliteMap" LayerType="WebMapLayer" TransparencyPerc="0" Visible="true" WebMapProvider="GoogleSatelliteMap"/>
-        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer FileName="..\..\..\..\Temp\grads\test.bil" Handle="1" Interpolation="bilinear" IsMaskout="true" LayerDrawType="Raster" LayerName="Raster_PS_Surface_1987-01-02 00:00" LayerType="RasterLayer" SetTransColor="false" TransparencyColor="0xfff00082" TransparencyPerc="0" Visible="true">
+          <LegendScheme BreakNum="12" FieldName="" HasNoData="false" LegendType="GraduatedColor" MaxValue="1098.0577392578125" MinValue="481.911376953125" ShapeType="Image" UNDEF="-2.56E33">
+            <Breaks>
+              <Break Caption="&lt; 500" Color="0xffa000c8" EndValue="500.0" IsNoData="false" StartValue="481.911376953125" Tag=""/>
+              <Break Caption="500 - 550" Color="0xff6e00dc" EndValue="550.0" IsNoData="false" StartValue="500.0" Tag=""/>
+              <Break Caption="550 - 600" Color="0xff1e3cff" EndValue="600.0" IsNoData="false" StartValue="550.0" Tag=""/>
+              <Break Caption="600 - 650" Color="0xff00a0ff" EndValue="650.0" IsNoData="false" StartValue="600.0" Tag=""/>
+              <Break Caption="650 - 700" Color="0xff00c8c8" EndValue="700.0" IsNoData="false" StartValue="650.0" Tag=""/>
+              <Break Caption="700 - 750" Color="0xff00dc00" EndValue="750.0" IsNoData="false" StartValue="700.0" Tag=""/>
+              <Break Caption="750 - 800" Color="0xffa0e632" EndValue="800.0" IsNoData="false" StartValue="750.0" Tag=""/>
+              <Break Caption="800 - 850" Color="0xffe6dc32" EndValue="850.0" IsNoData="false" StartValue="800.0" Tag=""/>
+              <Break Caption="850 - 900" Color="0xffe6af2d" EndValue="900.0" IsNoData="false" StartValue="850.0" Tag=""/>
+              <Break Caption="900 - 950" Color="0xfff08228" EndValue="950.0" IsNoData="false" StartValue="900.0" Tag=""/>
+              <Break Caption="950 - 1000" Color="0xfffa3c3c" EndValue="1000.0" IsNoData="false" StartValue="950.0" Tag=""/>
+              <Break Caption="&gt; 1000" Color="0xfff00082" EndValue="1098.0577392578125" IsNoData="false" StartValue="1000.0" Tag=""/>
+            </Breaks>
+          </LegendScheme>
+          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
+        </Layer>
+        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0x00ffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
@@ -25,7 +43,7 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
-        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\Map\country1.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\Map\country1.shp" Handle="4" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0x00ffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
@@ -41,36 +59,10 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
-        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\GeoData\China\4M\hyd2_4l.shp" Handle="4" IsMaskout="false" LayerDrawType="Map" LayerName="hyd2_4l.shp" LayerType="VectorLayer" ShapeType="Polyline" TransparencyPerc="0" Visible="true">
-          <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polyline" UNDEF="-9999.0">
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\Map\res1_4m.shp" Handle="5" IsMaskout="false" LayerDrawType="Map" LayerName="res1_4m.shp" LayerType="VectorLayer" ShapeType="Point" TransparencyPerc="0" Visible="true">
+          <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Point" UNDEF="-9999.0">
             <Breaks>
-              <Break Caption="" Color="0xff00ffff" DrawShape="true" DrawSymbol="false" EndValue="0" FillSymbol="false" Size="1.0" StartValue="0" Style="SOLID" SymbolColor="0xff404040" SymbolFillColor="0xffff0000" SymbolInterval="1" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
-            </Breaks>
-          </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
-          <Graphics/>
-          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
-            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
-              <Breaks/>
-            </LegendScheme>
-          </ChartSet>
-          <ChartGraphics/>
-          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
-        </Layer>
-        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\ascii\test.shp" Handle="5" IsMaskout="true" LayerDrawType="StationPoint" LayerName="StationPoint_ybfs_" LayerType="VectorLayer" ShapeType="Point" TransparencyPerc="0" Visible="true">
-          <LegendScheme BreakNum="11" FieldName="ybfs" HasNoData="false" LegendType="GraduatedColor" MaxValue="4.992708333" MinValue="2.113541667" ShapeType="Point" UNDEF="-9999.0">
-            <Breaks>
-              <Break Angle="0.0" Caption="&lt; 2.2" CharIndex="0" Color="0xffa000c8" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="2.2" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="2.113541667" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="2.2 - 2.4" CharIndex="0" Color="0xff6e00dc" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="2.4" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="2.2" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="2.4 - 2.6" CharIndex="0" Color="0xff00a0ff" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="2.6" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="2.4" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="2.6 - 2.8" CharIndex="0" Color="0xff00c8c8" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="2.8" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="2.6" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="2.8 - 3" CharIndex="0" Color="0xff00dc00" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="3.0" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="2.8" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="3 - 3.2" CharIndex="0" Color="0xffa0e632" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="3.2" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="3.0" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="3.2 - 3.4" CharIndex="0" Color="0xffe6dc32" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="3.4" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="3.2" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="3.4 - 3.6" CharIndex="0" Color="0xffe6af2d" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="3.6" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="3.4" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="3.6 - 3.8" CharIndex="0" Color="0xfff08228" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="3.8" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="3.6" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="3.8 - 4" CharIndex="0" Color="0xfffa3c3c" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="4.0" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="3.8" Style="Circle" Tag=""/>
-              <Break Angle="0.0" Caption="&gt; 4" CharIndex="0" Color="0xfff00082" DrawFill="true" DrawOutline="true" DrawShape="true" EndValue="4.992708333" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="8.0" StartValue="4.0" Style="Circle" Tag=""/>
+              <Break Angle="0.0" Caption="" CharIndex="0" Color="0xff000000" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" FontName="Arial" ImagePath="" IsNoData="false" MarkerType="Simple" OutlineColor="0xff000000" OutlineSize="1.0" Size="10.0" StartValue="0" Style="CIRCLE_STAR" Tag=""/>
             </Breaks>
           </LegendScheme>
           <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
@@ -100,7 +92,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" ForceDrawOutline="true" Height="349" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="650" LegendLayer="StationPoint_ybfs_" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="63" Width="39"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" ForceDrawOutline="true" Height="349" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="650" LegendLayer="Raster_PS_Surface_1987-01-02 00:00" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="63" Width="39"/>
     </LayoutElements>
   </Layout>
 </MeteoInfo>
