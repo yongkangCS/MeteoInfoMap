@@ -5,7 +5,10 @@
 package org.meteoinfo.desktop.forms;
 
 import java.util.List;
-import javax.swing.JOptionPane;
+import javax.swing.DefaultComboBoxModel;
+import org.meteoinfo.data.meteodata.DataInfo;
+import org.meteoinfo.data.meteodata.MeteoDataInfo;
+import org.meteoinfo.data.meteodata.Variable;
 
 /**
  *
@@ -17,6 +20,7 @@ public class FrmUVSet extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmUVSet
+     *
      * @param parent
      * @param modal
      */
@@ -47,6 +51,8 @@ public class FrmUVSet extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jComboBox_UDir = new javax.swing.JComboBox();
         jComboBox_VSpeed = new javax.swing.JComboBox();
+        jComboBox_UData = new javax.swing.JComboBox();
+        jComboBox_VData = new javax.swing.JComboBox();
         jButton_OK = new javax.swing.JButton();
         jButton_Cancel = new javax.swing.JButton();
 
@@ -77,9 +83,9 @@ public class FrmUVSet extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jRadioButton_UV)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jRadioButton_DirSpeed)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,10 +98,6 @@ public class FrmUVSet extends javax.swing.JDialog {
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Skip Factors"));
-
-        jLabel1.setText("X Skip:");
-
-        jLabel2.setText("Y Skip:");
 
         jSpinner_XSkip.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
 
@@ -133,17 +135,30 @@ public class FrmUVSet extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel3.setText("U/Direction:");
-
-        jLabel4.setText("V/Speed:");
-
         jComboBox_UDir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_UDir.setPreferredSize(new java.awt.Dimension(142, 24));
 
         jComboBox_VSpeed.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_VSpeed.setPreferredSize(new java.awt.Dimension(142, 24));
 
+        jComboBox_UData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_UData.setPreferredSize(new java.awt.Dimension(142, 24));
+        jComboBox_UData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_UDataActionPerformed(evt);
+            }
+        });
+
+        jComboBox_VData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_VData.setPreferredSize(new java.awt.Dimension(142, 24));
+        jComboBox_VData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_VDataActionPerformed(evt);
+            }
+        });
+
         jButton_OK.setText("OK");
+        jButton_OK.setPreferredSize(new java.awt.Dimension(69, 23));
         jButton_OK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_OKActionPerformed(evt);
@@ -151,6 +166,7 @@ public class FrmUVSet extends javax.swing.JDialog {
         });
 
         jButton_Cancel.setText("Cancel");
+        jButton_Cancel.setPreferredSize(new java.awt.Dimension(6, 23));
         jButton_Cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_CancelActionPerformed(evt);
@@ -161,32 +177,44 @@ public class FrmUVSet extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox_VSpeed, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jComboBox_UDir, 0, 150, Short.MAX_VALUE)
-                            .addComponent(jComboBox_VSpeed, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox_UDir, 0, 159, Short.MAX_VALUE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jComboBox_UData, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jComboBox_VData, 0, 235, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Cancel))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton_OK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton_Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(35, 35, 35))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -194,35 +222,21 @@ public class FrmUVSet extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jComboBox_UDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox_VSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addComponent(jComboBox_UData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_Cancel)
-                    .addComponent(jButton_OK))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBox_VSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jButton_OK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox_VData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OKActionPerformed
-        // TODO add your handling code here:
-        if (this.jComboBox_UDir.getSelectedIndex() < 0 || this.jComboBox_VSpeed.getSelectedIndex() < 0) {
-            JOptionPane.showMessageDialog(null, "Please select U/V (Direction/Speed) variable!");
-        } else {
-            _isOK = true;
-            this.dispose();
-        }
-    }//GEN-LAST:event_jButton_OKActionPerformed
-
-    private void jButton_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CancelActionPerformed
-        // TODO add your handling code here:
-        _isOK = false;
-        this.dispose();
-    }//GEN-LAST:event_jButton_CancelActionPerformed
 
     private void jRadioButton_UVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_UVActionPerformed
         // TODO add your handling code here:
@@ -231,6 +245,95 @@ public class FrmUVSet extends javax.swing.JDialog {
     private void jRadioButton_DirSpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_DirSpeedActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton_DirSpeedActionPerformed
+
+    private void jButton_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OKActionPerformed
+        // TODO add your handling code here:
+        this._isOK = true;
+        this.dispose();
+    }//GEN-LAST:event_jButton_OKActionPerformed
+
+    private void jButton_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton_CancelActionPerformed
+
+    private void jComboBox_UDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_UDataActionPerformed
+        // TODO add your handling code here:
+        MeteoDataInfo mdi = (MeteoDataInfo) this.jComboBox_UData.getSelectedItem();
+        this.updateUData(mdi);
+    }//GEN-LAST:event_jComboBox_UDataActionPerformed
+
+    private void updateUData(MeteoDataInfo mdi){
+        DataInfo aDataInfo = mdi.getDataInfo();
+        this.jComboBox_UDir.removeAllItems();
+        for (int i = 0; i < aDataInfo.getVariables().size(); i++) {
+            Variable var = aDataInfo.getVariables().get(i);
+            if (mdi.isSWATHData()) {
+                Variable lonvar = aDataInfo.getVariable("longitude");
+                if (var.dimensionContains(lonvar)) {
+                    this.jComboBox_UDir.addItem(var.getName());
+                }
+            } else {
+                if (var.isPlottable()) {
+                    this.jComboBox_UDir.addItem(var.getName());
+                }
+            }
+        }
+        if (mdi.getVariableIndex() < this.jComboBox_UDir.getItemCount()) {
+            this.jComboBox_UDir.setSelectedIndex(mdi.getVariableIndex());
+        } else {
+            if (this.jComboBox_UDir.getItemCount() > 0) {
+                this.jComboBox_UDir.setSelectedIndex(0);
+            }
+        }
+    }
+    
+    private void jComboBox_VDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_VDataActionPerformed
+        // TODO add your handling code here:
+        MeteoDataInfo mdi = (MeteoDataInfo) this.jComboBox_VData.getSelectedItem();
+        this.updateVData(mdi);
+    }//GEN-LAST:event_jComboBox_VDataActionPerformed
+
+    private void updateVData(MeteoDataInfo mdi){
+        DataInfo aDataInfo = mdi.getDataInfo();
+        this.jComboBox_VSpeed.removeAllItems();
+        for (int i = 0; i < aDataInfo.getVariables().size(); i++) {
+            Variable var = aDataInfo.getVariables().get(i);
+            if (mdi.isSWATHData()) {
+                Variable lonvar = aDataInfo.getVariable("longitude");
+                if (var.dimensionContains(lonvar)) {
+                    this.jComboBox_VSpeed.addItem(var.getName());
+                }
+            } else {
+                if (var.isPlottable()) {
+                    this.jComboBox_VSpeed.addItem(var.getName());
+                }
+            }
+        }
+        if (mdi.getVariableIndex() < this.jComboBox_VSpeed.getItemCount()) {
+            this.jComboBox_VSpeed.setSelectedIndex(mdi.getVariableIndex());
+        } else {
+            if (this.jComboBox_VSpeed.getItemCount() > 0) {
+                this.jComboBox_VSpeed.setSelectedIndex(0);
+            }
+        }
+    }
+    
+    /**
+     * Set U/V data info
+     *
+     * @param dfs Data info list
+     */
+    public void setUVData(List<MeteoDataInfo> dfs) {
+        DefaultComboBoxModel umodel = new DefaultComboBoxModel();
+        DefaultComboBoxModel vmodel = new DefaultComboBoxModel();
+        for (int i = 0; i < dfs.size(); i++) {
+            umodel.addElement(dfs.get(i));
+            vmodel.addElement(dfs.get(i));
+        }
+        this.jComboBox_UData.setModel(umodel);
+        this.jComboBox_VData.setModel(vmodel);
+    }
 
     /**
      * Set U/V items
@@ -259,37 +362,77 @@ public class FrmUVSet extends javax.swing.JDialog {
             this.jRadioButton_DirSpeed.setSelected(true);
         }
     }
-    
+
     /**
      * Set U/Wind directory variable name
+     *
      * @param ustr U/Wind directory variable name
      */
-    public void setUStr(String ustr){
+    public void setUStr(String ustr) {
         this.jComboBox_UDir.setSelectedItem(ustr);
     }
-    
+
     /**
      * Set V/Wind speed variable name
+     *
      * @param vstr V/Wind speed variable name
      */
-    public void setVStr(String vstr){
+    public void setVStr(String vstr) {
         this.jComboBox_VSpeed.setSelectedItem(vstr);
     }
-    
+
     /**
      * Set x skip value
+     *
      * @param xskip X skip
      */
-    public void setXSkip(int xskip){
+    public void setXSkip(int xskip) {
         this.jSpinner_XSkip.setValue(xskip);
+    }
+
+    /**
+     * Set y skip value
+     *
+     * @param yskip Y skip
+     */
+    public void setYSkip(int yskip) {
+        this.jSpinner_YSkip.setValue(yskip);
+    }
+
+    /**
+     * Get U data info
+     *
+     * @return U data info
+     */
+    public MeteoDataInfo getUData() {
+        return (MeteoDataInfo) this.jComboBox_UData.getSelectedItem();
     }
     
     /**
-     * Set y skip value
-     * @param yskip Y skip
+     * Set U data info
+     * @param value U data info
      */
-    public void setYSkip(int yskip){
-        this.jSpinner_YSkip.setValue(yskip);
+    public void setUData(MeteoDataInfo value){
+        this.jComboBox_UData.setSelectedItem(value);
+        this.updateUData(value);
+    }
+
+    /**
+     * Get V data info
+     *
+     * @return V data info
+     */
+    public MeteoDataInfo getVData() {
+        return (MeteoDataInfo) this.jComboBox_VData.getSelectedItem();
+    }
+    
+    /**
+     * Set V data info
+     * @param value V data info
+     */
+    public void setVData(MeteoDataInfo value){
+        this.jComboBox_VData.setSelectedItem(value);
+        this.updateVData(value);
     }
 
     /**
@@ -360,7 +503,7 @@ public class FrmUVSet extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(FrmUVSet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the dialog */
@@ -382,7 +525,9 @@ public class FrmUVSet extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton_Cancel;
     private javax.swing.JButton jButton_OK;
+    private javax.swing.JComboBox jComboBox_UData;
     private javax.swing.JComboBox jComboBox_UDir;
+    private javax.swing.JComboBox jComboBox_VData;
     private javax.swing.JComboBox jComboBox_VSpeed;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

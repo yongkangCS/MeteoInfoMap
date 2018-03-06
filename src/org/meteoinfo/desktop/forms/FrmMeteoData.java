@@ -45,6 +45,7 @@ import org.meteoinfo.data.meteodata.GridDataSetting;
 import org.meteoinfo.data.meteodata.MeteoDataDrawSet;
 import org.meteoinfo.data.meteodata.MeteoDataInfo;
 import org.meteoinfo.data.meteodata.MeteoDataType;
+import org.meteoinfo.data.meteodata.MeteoUVSet;
 import org.meteoinfo.data.meteodata.PlotDimension;
 import org.meteoinfo.data.meteodata.StationInfoData;
 import org.meteoinfo.data.meteodata.StationModelData;
@@ -84,6 +85,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
     private final FrmMain _parent;
     private final List<MeteoDataInfo> _dataInfoList;
     private MeteoDataInfo _meteoDataInfo = new MeteoDataInfo();
+    private MeteoUVSet meteoUVSet = new MeteoUVSet();
     DrawType2D _2DDrawType;
     private GridData _gridData = new GridData();
     private StationData _stationData = new StationData();
@@ -116,10 +118,10 @@ public class FrmMeteoData extends javax.swing.JDialog {
      */
     public FrmMeteoData(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+
         _parent = (FrmMain) parent;
         initComponents();
-        
+
         this._dataInfoList = new ArrayList<>();
 
         int height = this.jToolBar1.getHeight() + this.jComboBox_DrawType.getY()
@@ -287,48 +289,48 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jPanel_DataSet.setLayout(jPanel_DataSetLayout);
         jPanel_DataSetLayout.setHorizontalGroup(
                 jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel_Variable)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBox_Level, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox_Time, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox_DrawType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox_Variable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                                        .addComponent(jCheckBox_ColorVar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jCheckBox_Big_Endian)))
-                        .addContainerGap()));
+                        .addGroup(jPanel_DataSetLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel_Variable)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jComboBox_Level, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jComboBox_Time, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jComboBox_DrawType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jComboBox_Variable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel_DataSetLayout.createSequentialGroup()
+                                                .addComponent(jCheckBox_ColorVar)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jCheckBox_Big_Endian)))
+                                .addContainerGap()));
         jPanel_DataSetLayout.setVerticalGroup(
                 jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel_DataSetLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel_Variable)
-                                .addComponent(jComboBox_Variable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(jComboBox_Level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jComboBox_DrawType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                        .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jCheckBox_ColorVar)
-                                .addComponent(jCheckBox_Big_Endian))
-                        .addContainerGap()));
+                        .addGroup(jPanel_DataSetLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel_Variable)
+                                        .addComponent(jComboBox_Variable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jComboBox_Level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jComboBox_DrawType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addGroup(jPanel_DataSetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jCheckBox_ColorVar)
+                                        .addComponent(jCheckBox_Big_Endian))
+                                .addContainerGap()));
 
         jSplitPane1.setRightComponent(jPanel_DataSet);
 
@@ -366,18 +368,18 @@ public class FrmMeteoData extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton_RemoveAllData)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                        .addComponent(jScrollPane1)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jButton_RemoveAllData)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_RemoveAllData)
-                        .addGap(10, 10, 10)));
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton_RemoveAllData)
+                                .addGap(10, 10, 10)));
 
         jSplitPane1.setLeftComponent(jPanel1);
 
@@ -397,7 +399,6 @@ public class FrmMeteoData extends javax.swing.JDialog {
 //            }
 //        });
 //        jToolBar1.add(jButton_OpenData);
-        
         jSplitButton_OpenData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/meteoinfo/desktop/resources/Folder_1_16x16x8.png"))); // NOI18N
         jSplitButton_OpenData.setText("  ");
         jSplitButton_OpenData.setToolTipText(bundle.getString("FrmMeteoData.jButton_OpenData.toolTipText"));
@@ -422,7 +423,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
         });
         jPopupMenu_OpenData.add(jMenuItem_NetCDF);
         //jMenu_OpenData.add(jMenuItem_NetCDF);
-        
+
         jMenuItem_GrADS.setText("GrADS Data");
         jMenuItem_GrADS.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -432,17 +433,17 @@ public class FrmMeteoData extends javax.swing.JDialog {
         });
         jPopupMenu_OpenData.add(jMenuItem_GrADS);
         //jMenu_OpenData.add(jMenuItem_GrADS);
-        
+
         jMenuItem_ARL.setText("ARL Data");
         jMenuItem_ARL.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onARLDataClick(e);
             }
-        });        
+        });
         jPopupMenu_OpenData.add(jMenuItem_ARL);
         //jMenu_OpenData.add(jMenuItem_ARL);
-        
+
         jMenu_HYSPLIT.setText("HYSPLIT Data");
         jMenuItem_HYSPLIT_Traj.setText("Trajectory Data");
         jMenuItem_HYSPLIT_Traj.addActionListener(new java.awt.event.ActionListener() {
@@ -450,7 +451,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onHYSPLITTrajDataClick(e);
             }
-        });   
+        });
         jMenu_HYSPLIT.add(jMenuItem_HYSPLIT_Traj);
         jMenuItem_HYSPLIT_Conc.setText("Concentration Data");
         jMenuItem_HYSPLIT_Conc.addActionListener(new java.awt.event.ActionListener() {
@@ -458,7 +459,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onHYSPLITConcDataClick(e);
             }
-        });   
+        });
         jMenu_HYSPLIT.add(jMenuItem_HYSPLIT_Conc);
         jMenuItem_HYSPLIT_Particle.setText("Particle Data");
         jMenuItem_HYSPLIT_Particle.addActionListener(new java.awt.event.ActionListener() {
@@ -466,11 +467,11 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onHYSPLITPartDataClick(e);
             }
-        });   
+        });
         jMenu_HYSPLIT.add(jMenuItem_HYSPLIT_Particle);
         jPopupMenu_OpenData.add(jMenu_HYSPLIT);
         //jMenu_OpenData.add(jMenu_HYSPLIT);
-        
+
         jMenu_ASCII.setText("ASCII Data");
         jMenuItem_ASCII_LonLat.setText("Lon/Lat Station Data");
         jMenuItem_ASCII_LonLat.addActionListener(new java.awt.event.ActionListener() {
@@ -478,7 +479,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onLonLatStationsClick(e);
             }
-        });   
+        });
         jMenu_ASCII.add(jMenuItem_ASCII_LonLat);
         jMenuItem_ASCII_SYNOP.setText("SYNOP Data");
         jMenuItem_ASCII_SYNOP.addActionListener(new java.awt.event.ActionListener() {
@@ -486,7 +487,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onSYNOPClick(e);
             }
-        });   
+        });
         jMenu_ASCII.add(jMenuItem_ASCII_SYNOP);
         jMenuItem_ASCII_METAR.setText("METAR Data");
         jMenuItem_ASCII_METAR.addActionListener(new java.awt.event.ActionListener() {
@@ -494,7 +495,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onMETARClick(e);
             }
-        });   
+        });
         jMenu_ASCII.add(jMenuItem_ASCII_METAR);
         jMenu_ASCII.add(new JSeparator());
         jMenuItem_ASCII_EsriGrid.setText("Esri ASCII Grid Data");
@@ -503,7 +504,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onASCIIGridDataClick(e);
             }
-        });   
+        });
         jMenu_ASCII.add(jMenuItem_ASCII_EsriGrid);
         jMenuItem_ASCII_SurferGrid.setText("Surfer ASCII Grid Data");
         jMenuItem_ASCII_SurferGrid.addActionListener(new java.awt.event.ActionListener() {
@@ -511,21 +512,21 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onSurferGridDataClick(e);
             }
-        });   
+        });
         jMenu_ASCII.add(jMenuItem_ASCII_SurferGrid);
         jPopupMenu_OpenData.add(jMenu_ASCII);
         //jMenu_OpenData.add(jMenu_ASCII);
-        
+
         jMenuItem_MICAPS.setText("MICAPS Data");
         jMenuItem_MICAPS.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onMICAPSDataClick(e);
             }
-        });        
+        });
         jPopupMenu_OpenData.add(jMenuItem_MICAPS);
         //jMenu_OpenData.add(jMenuItem_MICAPS);
-        
+
         jMenu_MM5.setText("MM5 Data");
         jMenuItem_MM5_Output.setText("MM5 Output Data");
         jMenuItem_MM5_Output.addActionListener(new java.awt.event.ActionListener() {
@@ -533,7 +534,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onMM5DataClick(e);
             }
-        });   
+        });
         jMenu_MM5.add(jMenuItem_MM5_Output);
         jMenuItem_MM5_Inter.setText("MM5 Intermediate Data");
         jMenuItem_MM5_Inter.addActionListener(new java.awt.event.ActionListener() {
@@ -541,26 +542,25 @@ public class FrmMeteoData extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 onMM5IMDataClick(e);
             }
-        });   
-        jMenu_MM5.add(jMenuItem_MM5_Inter);        
+        });
+        jMenu_MM5.add(jMenuItem_MM5_Inter);
         jPopupMenu_OpenData.add(jMenu_MM5);
         //jMenu_OpenData.add(jMenu_MM5);
-        
+
         jMenuItem_AWX.setText("AWX Data");
         jMenuItem_AWX.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onAWXDataClick(e);
             }
-        });        
+        });
         jPopupMenu_OpenData.add(jMenuItem_AWX);
         //jMenu_OpenData.add(jMenuItem_AWX);
-        
+
         //jMenu_OpenData.setText(bundle.getString("FrmMeteoData.jMenu_OpenData.text"));
         //jMenu_OpenData.setMnemonic(KeyEvent.VK_O);
         //jMenuBar_Main.add(jMenu_OpenData);
         //setJMenuBar(jMenuBar_Main);
-        
         jSplitButton_OpenData.setPopupMenu(jPopupMenu_OpenData);
         jToolBar1.add(jSplitButton_OpenData);
 
@@ -972,8 +972,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
             }
         }
     }
-    
-    private void jButton_OpenDataActionPerformed(java.awt.event.ActionEvent evt){
+
+    private void jButton_OpenDataActionPerformed(java.awt.event.ActionEvent evt) {
         FrmOpenData frm = new FrmOpenData(this, false);
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
@@ -1505,7 +1505,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     frmInter.setLocationRelativeTo(this);
                     frmInter.setVisible(true);
                     if (frmInter.isOK()) {
-                        this._interpolationSetting = frmInter.getParameters();                      
+                        this._interpolationSetting = frmInter.getParameters();
                         this.jButton_Draw.setEnabled(true);
                         _useSameGridInterSet = true;
                     }
@@ -1525,36 +1525,8 @@ public class FrmMeteoData extends javax.swing.JDialog {
                 case Vector:
                 case Barb:
                 case Streamline:
-                    FrmUVSet aFrmUVSet = new FrmUVSet((JFrame) SwingUtilities.getWindowAncestor(this), true);
-                    List<String> vList = new ArrayList<>();
-                    for (int i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
-                        vList.add(this.jComboBox_Variable.getItemAt(i).toString());
-                    }
-                    if (_meteoDataInfo.getMeteoUVSet().isUV()) {
-                        aFrmUVSet.setUV(true);
-                    } else {
-                        aFrmUVSet.setUV(false);
-                    }
-                    aFrmUVSet.setUVItems(vList);
-                    aFrmUVSet.setUStr(_meteoDataInfo.getMeteoUVSet().getUStr());
-                    aFrmUVSet.setVStr(_meteoDataInfo.getMeteoUVSet().getVStr());
-                    aFrmUVSet.setXSkip(_skipX);
-                    aFrmUVSet.setYSkip(_skipY);
-                    aFrmUVSet.setLocationRelativeTo(this);
-                    aFrmUVSet.setVisible(true);
-                    if (aFrmUVSet.isOK()) {
-                        String[] uvStr = aFrmUVSet.getUVItems();
-                        String uStr = uvStr[0];
-                        String vStr = uvStr[1];
-                        _meteoDataInfo.getMeteoUVSet().setUV(aFrmUVSet.isUV());
-                        _meteoDataInfo.getMeteoUVSet().setUStr(uStr);
-                        _meteoDataInfo.getMeteoUVSet().setVStr(vStr);
-                        _meteoDataInfo.getMeteoUVSet().setFixUVStr(true);
-                        _skipX = aFrmUVSet.getXSkip();
-                        _skipY = aFrmUVSet.getYSkip();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "U/V (Direction/Speed) variables were not set!");
-                    }
+                    this.meteoUVSet.setUV(false);
+                    this.setMeteoUV();
                     break;
             }
         } else if (_meteoDataInfo.isGridData()) {
@@ -1582,38 +1554,50 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     break;
                 case Vector:
                 case Barb:
-                    FrmUVSet aFrmUVSet = new FrmUVSet((JFrame) SwingUtilities.getWindowAncestor(this), true);
-                    List<String> vList = new ArrayList<>();
-                    for (int i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
-                        vList.add(this.jComboBox_Variable.getItemAt(i).toString());
-                    }
-                    if (_meteoDataInfo.getMeteoUVSet().isUV()) {
-                        aFrmUVSet.setUV(true);
-                    } else {
-                        aFrmUVSet.setUV(false);
-                    }
-                    aFrmUVSet.setUVItems(vList);
-                    aFrmUVSet.setUStr(_meteoDataInfo.getMeteoUVSet().getUStr());
-                    aFrmUVSet.setVStr(_meteoDataInfo.getMeteoUVSet().getVStr());
-                    aFrmUVSet.setXSkip(_skipX);
-                    aFrmUVSet.setYSkip(_skipY);
-                    aFrmUVSet.setLocationRelativeTo(this);
-                    aFrmUVSet.setVisible(true);
-                    if (aFrmUVSet.isOK()) {
-                        String[] uvStr = aFrmUVSet.getUVItems();
-                        String uStr = uvStr[0];
-                        String vStr = uvStr[1];
-                        _meteoDataInfo.getMeteoUVSet().setUV(aFrmUVSet.isUV());
-                        _meteoDataInfo.getMeteoUVSet().setUStr(uStr);
-                        _meteoDataInfo.getMeteoUVSet().setVStr(vStr);
-                        _meteoDataInfo.getMeteoUVSet().setFixUVStr(true);
-                        _skipX = aFrmUVSet.getXSkip();
-                        _skipY = aFrmUVSet.getYSkip();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "U/V (Direction/Speed) variables were not set!");
-                    }
+                    this.setMeteoUV();
                     break;
             }
+        }
+    }
+
+    private void setMeteoUV() {
+        if (this.meteoUVSet.getUDataInfo() == null || (!this._dataInfoList.contains(this.meteoUVSet.getUDataInfo()))){
+            this.meteoUVSet.setUDataInfo(_meteoDataInfo);
+            this.meteoUVSet.setVDataInfo(_meteoDataInfo);
+            this.meteoUVSet.setFixUVStr(_meteoDataInfo.getMeteoUVSet().isFixUVStr());
+            this.meteoUVSet.setUV(_meteoDataInfo.getMeteoUVSet().isUV());
+            this.meteoUVSet.setUStr(_meteoDataInfo.getMeteoUVSet().getUStr());
+            this.meteoUVSet.setVStr(_meteoDataInfo.getMeteoUVSet().getVStr());
+        }
+        FrmUVSet aFrmUVSet = new FrmUVSet((JFrame) SwingUtilities.getWindowAncestor(this), true);
+        if (this.meteoUVSet.isUV()) {
+            aFrmUVSet.setUV(true);
+        } else {
+            aFrmUVSet.setUV(false);
+        }
+        aFrmUVSet.setUVData(_dataInfoList);
+        aFrmUVSet.setUData(this.meteoUVSet.getUDataInfo());
+        aFrmUVSet.setVData(this.meteoUVSet.getVDataInfo());
+        aFrmUVSet.setUStr(this.meteoUVSet.getUStr());
+        aFrmUVSet.setVStr(this.meteoUVSet.getVStr());
+        aFrmUVSet.setXSkip(_skipX);
+        aFrmUVSet.setYSkip(_skipY);
+        aFrmUVSet.setLocationRelativeTo(this);
+        aFrmUVSet.setVisible(true);
+        if (aFrmUVSet.isOK()) {
+            String[] uvStr = aFrmUVSet.getUVItems();
+            String uStr = uvStr[0];
+            String vStr = uvStr[1];
+            this.meteoUVSet.setUV(aFrmUVSet.isUV());
+            this.meteoUVSet.setUDataInfo(aFrmUVSet.getUData());
+            this.meteoUVSet.setUStr(uStr);
+            this.meteoUVSet.setVDataInfo(aFrmUVSet.getVData());
+            this.meteoUVSet.setVStr(vStr);
+            this.meteoUVSet.setFixUVStr(true);
+            _skipX = aFrmUVSet.getXSkip();
+            _skipY = aFrmUVSet.getYSkip();
+        } else {
+            //JOptionPane.showMessageDialog(null, "U/V (Direction/Speed) variables were not set!");
         }
     }
 
@@ -1662,9 +1646,9 @@ public class FrmMeteoData extends javax.swing.JDialog {
         _useSameLegendScheme = false;
         _meteoDataInfo.setLevelIndex(this.jComboBox_Level.getSelectedIndex());
     }
-    
+
     private void jCheckBox_ColorVarActionPerformed(java.awt.event.ActionEvent evt) {
-        switch (_2DDrawType){
+        switch (_2DDrawType) {
             case Vector:
             case Barb:
                 this.windColor = this.jCheckBox_ColorVar.isSelected();
@@ -2071,15 +2055,16 @@ public class FrmMeteoData extends javax.swing.JDialog {
         File pathDir = new File(path);
 
         JFileChooser aDlg = new JFileChooser();
+        aDlg.setMultiSelectionEnabled(true);
         aDlg.setCurrentDirectory(pathDir);
         if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
-            File file = aDlg.getSelectedFile();
-            //this._parent.setCurrentDataFolder(file.getParent());
-            System.setProperty("user.dir", file.getParent());
-
-            MeteoDataInfo aDataInfo = new MeteoDataInfo();
-            aDataInfo.openNetCDFData(file.getAbsolutePath());
-            addMeteoData(aDataInfo);
+            File[] files = aDlg.getSelectedFiles();
+            System.setProperty("user.dir", files[0].getParent());
+            for (File file : files) {
+                MeteoDataInfo aDataInfo = new MeteoDataInfo();
+                aDataInfo.openNetCDFData(file.getAbsolutePath());
+                addMeteoData(aDataInfo);
+            }
         }
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -2126,7 +2111,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             addMeteoData(aDataInfo);
         }
     }
-    
+
     private void onMETARClick(ActionEvent e) {
         String path = this.getStartupPath();
         File pathDir = new File(path);
@@ -2324,6 +2309,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
                     this.jComboBox_DrawType.addItem(DrawType2D.Barb.toString());
                     this.jComboBox_DrawType.addItem(DrawType2D.Contour.toString());
                     this.jComboBox_DrawType.addItem(DrawType2D.Shaded.toString());
+                    this.jComboBox_DrawType.addItem(DrawType2D.Streamline.toString());
                     break;
             }
         } else if (_meteoDataInfo.isSWATHData()) {
@@ -3043,39 +3029,30 @@ public class FrmMeteoData extends javax.swing.JDialog {
     }
 
     private GridData[] getUVGridData() {
-        int i;
+        if (this.meteoUVSet.getUDataInfo() == null || (!this._dataInfoList.contains(this.meteoUVSet.getUDataInfo()))){
+            this.meteoUVSet.setUDataInfo(_meteoDataInfo);
+            this.meteoUVSet.setVDataInfo(_meteoDataInfo);
+            this.meteoUVSet.setFixUVStr(_meteoDataInfo.getMeteoUVSet().isFixUVStr());
+            this.meteoUVSet.setUV(_meteoDataInfo.getMeteoUVSet().isUV());
+            this.meteoUVSet.setUStr(_meteoDataInfo.getMeteoUVSet().getUStr());
+            this.meteoUVSet.setVStr(_meteoDataInfo.getMeteoUVSet().getVStr());
+        }
 
         //Set U/V strings
-        if (!_meteoDataInfo.getMeteoUVSet().isFixUVStr()) {
+        if (!this.meteoUVSet.isFixUVStr()) {
             List<String> vList = new ArrayList<>();
-            for (i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
+            for (int i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
                 vList.add(this.jComboBox_Variable.getItemAt(i).toString());
             }
 
-            if (!_meteoDataInfo.getMeteoUVSet().autoSetUVStr(vList)) {
-                FrmUVSet aFrmUVSet = new FrmUVSet((JFrame) SwingUtilities.getWindowAncestor(this), true);
-                aFrmUVSet.setUVItems(vList);
-                aFrmUVSet.setUV(true);
-                if (aFrmUVSet.isOK()) {
-                    String[] uvStr = aFrmUVSet.getUVItems();
-                    String uStr = uvStr[0];
-                    String vStr = uvStr[1];
-                    _meteoDataInfo.getMeteoUVSet().setUV(aFrmUVSet.isUV());
-                    _meteoDataInfo.getMeteoUVSet().setUStr(uStr);
-                    _meteoDataInfo.getMeteoUVSet().setVStr(vStr);
-                    _meteoDataInfo.getMeteoUVSet().setFixUVStr(true);
-                    _skipX = aFrmUVSet.getXSkip();
-                    _skipY = aFrmUVSet.getYSkip();
-                } else {
-                    JOptionPane.showMessageDialog(null, "U/V variables were not set!");
-                    return null;
-                }
+            if (!this.meteoUVSet.autoSetUVStr(vList)) {
+                this.setMeteoUV();
             }
         }
 
         //Get U/V grid data            
-        GridData udata = _meteoDataInfo.getGridData(_meteoDataInfo.getMeteoUVSet().getUStr());
-        GridData vdata = _meteoDataInfo.getGridData(_meteoDataInfo.getMeteoUVSet().getVStr());
+        GridData udata = this.meteoUVSet.getUDataInfo().getGridData(this.meteoUVSet.getUStr());
+        GridData vdata = this.meteoUVSet.getVDataInfo().getGridData(this.meteoUVSet.getVStr());
 
         if (udata == null || vdata == null) {
             return null;
@@ -3099,39 +3076,31 @@ public class FrmMeteoData extends javax.swing.JDialog {
     }
 
     private StationData[] getUVStationData() {
-        int i;
-
+        if (this.meteoUVSet.getUDataInfo() == null || (!this._dataInfoList.contains(this.meteoUVSet.getUDataInfo()))){
+            this.meteoUVSet.setUDataInfo(_meteoDataInfo);
+            this.meteoUVSet.setVDataInfo(_meteoDataInfo);
+            this.meteoUVSet.setFixUVStr(_meteoDataInfo.getMeteoUVSet().isFixUVStr());
+            this.meteoUVSet.setUV(_meteoDataInfo.getMeteoUVSet().isUV());
+            this.meteoUVSet.setUStr(_meteoDataInfo.getMeteoUVSet().getUStr());
+            this.meteoUVSet.setVStr(_meteoDataInfo.getMeteoUVSet().getVStr());
+        }
+        
         //Set U/V strings
-        if (!_meteoDataInfo.getMeteoUVSet().isFixUVStr()) {
+        if (!this.meteoUVSet.isFixUVStr()) {
             List<String> vList = new ArrayList<>();
-            for (i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
+            for (int i = 0; i < this.jComboBox_Variable.getItemCount(); i++) {
                 vList.add(this.jComboBox_Variable.getItemAt(i).toString());
             }
 
-            if (!_meteoDataInfo.getMeteoUVSet().autoSetUVStr(vList)) {
-                FrmUVSet aFrmUVSet = new FrmUVSet((JFrame) SwingUtilities.getWindowAncestor(this), true);
-                aFrmUVSet.setUVItems(vList);
-                aFrmUVSet.setUV(false);
-                if (aFrmUVSet.isOK()) {
-                    String[] uvStr = aFrmUVSet.getUVItems();
-                    String uStr = uvStr[0];
-                    String vStr = uvStr[1];
-                    _meteoDataInfo.getMeteoUVSet().setUV(aFrmUVSet.isUV());
-                    _meteoDataInfo.getMeteoUVSet().setUStr(uStr);
-                    _meteoDataInfo.getMeteoUVSet().setVStr(vStr);
-                    _meteoDataInfo.getMeteoUVSet().setFixUVStr(true);
-                    _skipX = (int) aFrmUVSet.getXSkip();
-                    _skipY = (int) aFrmUVSet.getYSkip();
-                } else {
-                    JOptionPane.showMessageDialog(null, "U/V variables were not set!");
-                    return null;
-                }
+            if (!this.meteoUVSet.autoSetUVStr(vList)) {
+                this.meteoUVSet.setUV(false);
+                this.setMeteoUV();
             }
         }
 
         //Get U/V station data
-        StationData uData = _meteoDataInfo.getStationData(_meteoDataInfo.getMeteoUVSet().getUStr());
-        StationData vData = _meteoDataInfo.getStationData(_meteoDataInfo.getMeteoUVSet().getVStr());
+        StationData uData = this.meteoUVSet.getUDataInfo().getStationData(this.meteoUVSet.getUStr());
+        StationData vData = this.meteoUVSet.getVDataInfo().getStationData(this.meteoUVSet.getVStr());
 
         if (uData == null || vData == null) {
             return null;
@@ -3162,7 +3131,7 @@ public class FrmMeteoData extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(FrmMeteoData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the dialog */
