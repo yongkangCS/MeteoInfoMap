@@ -135,6 +135,10 @@ public class FrmUVSet extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel3.setText("U/Direction:");
+
+        jLabel4.setText("V/Speed:");
+
         jComboBox_UDir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_UDir.setPreferredSize(new java.awt.Dimension(142, 24));
 
