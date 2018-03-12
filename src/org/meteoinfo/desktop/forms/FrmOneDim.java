@@ -533,7 +533,9 @@ public class FrmOneDim extends javax.swing.JFrame {
 
                 //Get data
                 _meteoDataInfo.setLonIndex(this.jComboBox_Lon1.getSelectedIndex());
-                _meteoDataInfo.setLatIndex(this.jComboBox_Lat1.getSelectedIndex());
+                double y = Double.parseDouble(this.jComboBox_Lat1.getSelectedItem().toString());
+                Dimension ydim = _meteoDataInfo.getDataInfo().getYDimension();                
+                _meteoDataInfo.setLatIndex(ydim.getValueIndex(y));
                 _meteoDataInfo.setLevelIndex(this.jComboBox_Level1.getSelectedIndex());
                 _meteoDataInfo.setTimeIndex(this.jComboBox_Time1.getSelectedIndex());
 

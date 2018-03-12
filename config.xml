@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="config.xml" Type="configurefile">
-  <Path OpenPath="C:\TEMP\dingminghu\antarctic"/>
+  <Path OpenPath="D:\Temp\nc"/>
   <Font>
     <TextFont FontName="宋体" FontSize="15"/>
     <LegendFont FontName="宋体" FontSize="12"/>
   </Font>
   <ScriptLanguage Language="Jython"/>
-  <Startup MainFormLocation="-6,-6" MainFormSize="1287,693" ShowMeteoDataDlg="false"/>
+  <Startup MainFormLocation="-6,-6" MainFormSize="1287,693" ShowMeteoDataDlg="true"/>
 </MeteoInfo>
