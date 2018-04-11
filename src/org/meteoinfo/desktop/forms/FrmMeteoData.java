@@ -54,7 +54,7 @@ import org.meteoinfo.data.meteodata.Variable;
 import org.meteoinfo.data.meteodata.grads.GrADSDataInfo;
 import org.meteoinfo.data.meteodata.micaps.MICAPS7DataInfo;
 import org.meteoinfo.data.meteodata.netcdf.NetCDFDataInfo;
-import org.meteoinfo.drawing.PointStyle;
+import org.meteoinfo.legend.PointStyle;
 import org.meteoinfo.geoprocess.analysis.InterpolationMethods;
 import org.meteoinfo.geoprocess.analysis.InterpolationSetting;
 import org.meteoinfo.global.Extent;
