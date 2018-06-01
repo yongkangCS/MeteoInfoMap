@@ -274,7 +274,7 @@ public class FrmMain extends JFrame implements IApplication {
         BufferedImage image = null;
         try {
             image = ImageIO.read(this.getClass().getResource("/org/meteoinfo/desktop/resources/MeteoInfo_1_16x16x8.png"));
-        } catch (Exception e) {
+        } catch (IOException e) {
         }
         this.setIconImage(image);
         this.setTitle("MeteoInfoMap");
@@ -2161,11 +2161,7 @@ public class FrmMain extends JFrame implements IApplication {
         if (new File(pFile).exists()) {
             try {
                 _projectFile.loadProjFile(pFile);
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
-                Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (ParserConfigurationException | SAXException | IOException ex) {
                 Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.setTitle("MeteoInfoMap - " + new File(pFile).getName());
@@ -3642,12 +3638,15 @@ public class FrmMain extends JFrame implements IApplication {
         }
         //Application.DoEvents();
         loadProjectFile(projFile);
-        _mapView = _mapDocument.getActiveMapFrame().getMapView();
+        MapView mapView = _mapDocument.getActiveMapFrame().getMapView();
+        mapView.setSize(_mapView.getSize());
+        _mapView = mapView;
         setMapView();
         //setMapLayout();
 
         _mapDocument.paintGraphics();
-        _mapView.zoomToExtent(_mapView.getViewExtent());
+        //_mapView.zoomToExtent(_mapView.getViewExtent());
+        _mapView.paintLayers();
     }
 
     // </editor-fold>
