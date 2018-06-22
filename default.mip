@@ -8,13 +8,13 @@
       <MaskOut MaskLayer="china.shp" SetMaskLayer="false"/>
       <Projection IsLonLatMap="true" ProjStr="+title=long/lat:WGS84 +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees "/>
       <GroupLayer>
-        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer AvoidCollision="false" Expanded="true" FileName="..\..\..\..\Temp\Map\bou2_4p.shp" Handle="1" IsMaskout="false" LayerDrawType="Map" LayerName="bou2_4p.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0x00ffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff808080" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
             </Breaks>
           </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="SimSun" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
           <Graphics/>
           <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
             <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
@@ -24,13 +24,33 @@
           <ChartGraphics/>
           <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
         </Layer>
-        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\Map\country1.shp" Handle="3" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
+        <Layer AvoidCollision="false" Expanded="false" FileName="..\..\..\..\Temp\Map\country1.shp" Handle="2" IsMaskout="false" LayerDrawType="Map" LayerName="country1.shp" LayerType="VectorLayer" ShapeType="Polygon" TransparencyPerc="0" Visible="true">
           <LegendScheme BreakNum="1" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="-9999.0">
             <Breaks>
               <Break BackColor="0x00ffffff" Caption="" Color="0xfffffbc3" DrawFill="false" DrawOutline="true" DrawShape="true" EndValue="0" OutlineColor="0xff000000" OutlineSize="1.0" StartValue="0" Style="NONE" StyleSize="8" Tag=""/>
             </Breaks>
           </LegendScheme>
-          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="宋体" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="SimSun" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
+          <Graphics/>
+          <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
+            <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
+              <Breaks/>
+            </LegendScheme>
+          </ChartSet>
+          <ChartGraphics/>
+          <VisibleScale EnableMaxVisScale="false" EnableMinVisScale="false" MaxVisScale="0.0" MinVisScale="0.0"/>
+        </Layer>
+        <Layer AvoidCollision="false" Expanded="false" FileName="C:\Temp\toWangTao\traj_1.shp" Handle="3" IsMaskout="false" LayerDrawType="TrajLine" LayerName="Trajectory_Lines" LayerType="VectorLayer" ShapeType="PolylineZ" TransparencyPerc="0" Visible="true">
+          <LegendScheme BreakNum="5" FieldName="ID" HasNoData="false" LegendType="UniqueValue" MaxValue="0.0" MinValue="0.0" ShapeType="PolylineZ" UNDEF="0.0">
+            <Breaks>
+              <Break Caption="1" Color="0xff00a0ff" DrawShape="true" DrawSymbol="true" EndValue="1" FillSymbol="false" Size="2.0" StartValue="1" Style="SOLID" SymbolColor="0xff00a0ff" SymbolFillColor="0xff00a0ff" SymbolInterval="6" SymbolSize="8.0" SymbolStyle="Circle" Tag=""/>
+              <Break Caption="2" Color="0xff00dc00" DrawShape="true" DrawSymbol="true" EndValue="2" FillSymbol="false" Size="2.0" StartValue="2" Style="SOLID" SymbolColor="0xff00dc00" SymbolFillColor="0xff00dc00" SymbolInterval="6" SymbolSize="8.0" SymbolStyle="Square" Tag=""/>
+              <Break Caption="3" Color="0xffe6dc32" DrawShape="true" DrawSymbol="true" EndValue="3" FillSymbol="false" Size="2.0" StartValue="3" Style="SOLID" SymbolColor="0xffe6dc32" SymbolFillColor="0xffe6dc32" SymbolInterval="6" SymbolSize="8.0" SymbolStyle="UpTriangle" Tag=""/>
+              <Break Caption="4" Color="0xfffa3c3c" DrawShape="true" DrawSymbol="true" EndValue="4" FillSymbol="false" Size="2.0" StartValue="4" Style="SOLID" SymbolColor="0xfffa3c3c" SymbolFillColor="0xfffa3c3c" SymbolInterval="6" SymbolSize="8.0" SymbolStyle="DownTriangle" Tag=""/>
+              <Break Caption="5" Color="0xfff00082" DrawShape="true" DrawSymbol="true" EndValue="5" FillSymbol="false" Size="2.0" StartValue="5" Style="SOLID" SymbolColor="0xfff00082" SymbolFillColor="0xfff00082" SymbolInterval="6" SymbolSize="8.0" SymbolStyle="Diamond" Tag=""/>
+            </Breaks>
+          </LegendScheme>
+          <LabelSet AlignType="Center" AutoDecimal="true" AvoidCollision="true" DecimalDigits="2" DrawLabels="false" DrawShadow="false" FieldName="" FontName="Arial" FontSize="12" LabelColor="0xff000000" Offset="0" ShadowColor="0xffffffff"/>
           <Graphics/>
           <ChartSet AlignType="Center" AvoidCollision="true" BarWidth="8" ChartType="BarChart" DrawCharts="false" DrawLabel="false" FieldNames="" FontName="Arial" FontSize="12" LabelColor="0xff000000" MaxSize="50" MaxValue="0.0" MinSize="0" MinValue="0.0" Thickness="5" View3D="false" XShift="0" YShift="0">
             <LegendScheme BreakNum="0" FieldName="" HasNoData="false" LegendType="SingleSymbol" MaxValue="0.0" MinValue="0.0" ShapeType="Polygon" UNDEF="0.0">
@@ -57,7 +77,7 @@
           <Legend Angle="0.0" Color="0xff000000" FontBold="false" FontName="宋体" FontSize="16" LegendType="LabelBreak" Text="$\rm{Unit:} \mu g \ m^{-3}$" YShift="0.0"/>
         </Graphic>
       </LayoutGraphic>
-      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" ForceDrawOutline="true" Height="349" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="650" LegendLayer="" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="63" Width="39"/>
+      <LayoutLegend BackColor="0x00000000" ColumnNumber="1" DrawBackColor="false" DrawChartBreaks="true" DrawNeatLine="false" ElementType="LayoutLegend" FontName="Arial" FontSize="10" ForceDrawOutline="true" Height="349" LayerUpdateType="FirstMeteoLayer" LayoutMapIndex="0" Left="650" LegendLayer="Trajectory_Lines" LegendStyle="Bar_Vertical" NeatLineColor="0xff000000" NeatLineSize="1.0" Top="63" Width="39"/>
     </LayoutElements>
   </Layout>
 </MeteoInfo>

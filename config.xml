@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="config.xml" Type="configurefile">
-  <Path OpenPath="D:\Temp\traj\Sample"/>
+  <Path OpenPath="C:\TEMP\toWangTao"/>
   <Font>
-    <TextFont FontName="宋体" FontSize="15"/>
-    <LegendFont FontName="宋体" FontSize="12"/>
+    <TextFont FontName="SimSun" FontSize="15"/>
+    <LegendFont FontName="SimSun" FontSize="12"/>
   </Font>
   <ScriptLanguage Language="Jython"/>
-  <Startup MainFormLocation="-6,0" MainFormSize="1498,849" ShowMeteoDataDlg="false"/>
+  <Startup MainFormLocation="-5,5" MainFormSize="1358,759" ShowMeteoDataDlg="true"/>
 </MeteoInfo>
