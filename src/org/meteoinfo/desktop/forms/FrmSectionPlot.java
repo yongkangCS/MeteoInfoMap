@@ -40,6 +40,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import org.meteoinfo.data.meteodata.DimensionType;
 import org.meteoinfo.layer.FrmLabelSet;
 import org.meteoinfo.layer.LayerTypes;
 import org.meteoinfo.layer.MapLayer;
@@ -1538,6 +1539,11 @@ public class FrmSectionPlot extends javax.swing.JFrame {
         for (i = 0; i < _meteoDataInfo.getDataInfo().getVariableNum(); i++) {
             Variable var = _meteoDataInfo.getDataInfo().getVariables().get(i);
             if (var.isPlottable()) {
+                if (var.getDimNumber() == 2){
+                    if (var.getDimension(DimensionType.T) == null &&  var.getDimension(DimensionType.Z) == null){
+                        continue;
+                    }
+                }
                 this.jComboBox_Variable.addItem(var.getName());
             }
         }

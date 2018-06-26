@@ -31,6 +31,7 @@ import org.meteoinfo.data.GridData;
 import org.meteoinfo.data.XYDataset;
 import org.meteoinfo.data.XYListDataset;
 import org.meteoinfo.data.meteodata.Dimension;
+import org.meteoinfo.data.meteodata.DimensionType;
 import org.meteoinfo.data.meteodata.MeteoDataInfo;
 import org.meteoinfo.data.meteodata.PlotDimension;
 import org.meteoinfo.data.meteodata.Variable;
@@ -1112,7 +1113,7 @@ public class FrmOneDim extends javax.swing.JFrame {
         this.jComboBox_Variable.removeAllItems();
         for (i = 0; i < _meteoDataInfo.getDataInfo().getVariableNum(); i++) {
             Variable var = _meteoDataInfo.getDataInfo().getVariables().get(i);
-            if (var.isPlottable()) {
+            if (var.isPlottable()) {                
                 this.jComboBox_Variable.addItem(var.getName());
             }
         }
