@@ -70,8 +70,8 @@ public class Program {
                         System.exit(0);
                     }
                 }
-            } else if (args[0].equalsIgnoreCase("-eng")) {
-                runApplication(true);
+            } else if (args[0].equalsIgnoreCase("-eng") || args[0].equalsIgnoreCase("-cn")) {
+                runApplication(args[0].substring(1));
             } else if (args[0].equalsIgnoreCase("-r")) {
                 String fontPath = GlobalUtil.getAppPath(FrmMain.class) + File.separator + "fonts";
                 //fontPath = "D:\\MyProgram\\java\\MeteoInfoDev\\MeteoInfo\\fonts";
@@ -201,10 +201,10 @@ public class Program {
     }
 
     private static void runApplication() {
-        runApplication(false);
+        runApplication(null);
     }
 
-    private static void runApplication(final boolean isEng) {
+    private static void runApplication(final String locale) {
         /* Set look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -279,8 +279,15 @@ public class Program {
 //                    Locale.setDefault(Locale.ENGLISH);
 //                }
 
-                if (isEng) {
-                    Locale.setDefault(Locale.ENGLISH);
+                if (locale != null){
+                    switch (locale.toLowerCase()){
+                        case "eng":
+                            Locale.setDefault(Locale.ENGLISH);
+                            break;
+                        case "cn":
+                            Locale.setDefault(Locale.CHINA);
+                            break;
+                    }
                 }
 
                 StackWindow sw = null;

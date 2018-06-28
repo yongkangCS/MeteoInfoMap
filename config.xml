@@ -2,8 +2,8 @@
 <MeteoInfo File="config.xml" Type="configurefile">
   <Path OpenPath="D:\Temp\nc"/>
   <Font>
-    <TextFont FontName="SimSun" FontSize="15"/>
-    <LegendFont FontName="SimSun" FontSize="12"/>
+    <TextFont FontName="宋体" FontSize="15"/>
+    <LegendFont FontName="宋体" FontSize="12"/>
   </Font>
   <ScriptLanguage Language="Jython"/>
   <Startup MainFormLocation="-5,5" MainFormSize="1384,781" ShowMeteoDataDlg="true"/>
