@@ -1789,19 +1789,19 @@ public class FrmMeteoData extends javax.swing.JDialog {
         return aDataInfo;
     }
 
-    /**
-     * Open HYSPLIT trajectory data files
-     *
-     * @param fileNames HYSPLIT trajectory data file names
-     * @return MeteoDataInfo
-     */
-    public MeteoDataInfo openHYSPLITTrajData(String[] fileNames) {
-        MeteoDataInfo aDataInfo = new MeteoDataInfo();
-        aDataInfo.openHYSPLITTrajData(fileNames);
-        addMeteoData(aDataInfo);
-
-        return aDataInfo;
-    }
+//    /**
+//     * Open HYSPLIT trajectory data files
+//     *
+//     * @param fileNames HYSPLIT trajectory data file names
+//     * @return MeteoDataInfo
+//     */
+//    public MeteoDataInfo openHYSPLITTrajData(String[] fileNames) {
+//        MeteoDataInfo aDataInfo = new MeteoDataInfo();
+//        aDataInfo.openHYSPLITTrajData(fileNames);
+//        addMeteoData(aDataInfo);
+//
+//        return aDataInfo;
+//    }
 
     /**
      * Open NetCDF, GRIB, HDF... data file
@@ -2033,16 +2033,12 @@ public class FrmMeteoData extends javax.swing.JDialog {
         aDlg.setMultiSelectionEnabled(true);
         if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
             File[] files = aDlg.getSelectedFiles();
-            String[] fileNames = new String[files.length];
-            for (int i = 0; i < files.length; i++) {
-                fileNames[i] = files[i].getAbsolutePath();
-            }
-            //this._parent.setCurrentDataFolder(files[0].getParent());
             System.setProperty("user.dir", files[0].getParent());
-
-            MeteoDataInfo aDataInfo = new MeteoDataInfo();
-            aDataInfo.openHYSPLITTrajData(fileNames);
-            addMeteoData(aDataInfo);
+            for (File file : files) {
+                MeteoDataInfo aDataInfo = new MeteoDataInfo();
+                aDataInfo.openHYSPLITTrajData(file.getAbsolutePath());
+                addMeteoData(aDataInfo);
+            }
         }
 
         this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
