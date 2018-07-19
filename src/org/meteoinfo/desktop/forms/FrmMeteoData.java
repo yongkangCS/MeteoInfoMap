@@ -2199,13 +2199,15 @@ public class FrmMeteoData extends javax.swing.JDialog {
         String[] fileExts = new String[]{"awx"};
         GenericFileFilter mapFileFilter = new GenericFileFilter(fileExts, "AWX Data (*.awx)");
         aDlg.setFileFilter(mapFileFilter);
+        aDlg.setMultiSelectionEnabled(true);
         if (JFileChooser.APPROVE_OPTION == aDlg.showOpenDialog(this)) {
-            File file = aDlg.getSelectedFile();
-            System.setProperty("user.dir", file.getParent());
-
-            MeteoDataInfo aDataInfo = new MeteoDataInfo();
-            aDataInfo.openAWXData(file.getAbsolutePath());
-            addMeteoData(aDataInfo);
+            File[] files = aDlg.getSelectedFiles();
+            System.setProperty("user.dir", files[0].getParent());
+            for (File file : files) {
+                MeteoDataInfo aDataInfo = new MeteoDataInfo();
+                aDataInfo.openAWXData(file.getAbsolutePath());
+                addMeteoData(aDataInfo);
+            }
         }
     }
 
