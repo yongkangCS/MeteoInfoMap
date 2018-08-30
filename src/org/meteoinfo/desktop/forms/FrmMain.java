@@ -129,6 +129,7 @@ import static org.meteoinfo.shape.ShapeTypes.CurvePolygon;
 import static org.meteoinfo.shape.ShapeTypes.Polygon;
 import static org.meteoinfo.shape.ShapeTypes.Polyline;
 import org.meteoinfo.data.DataTypes;
+import org.meteoinfo.data.mapdata.ShapeFileManage;
 import org.meteoinfo.jts.geom.Geometry;
 import org.meteoinfo.jts.operation.union.UnaryUnionOp;
 import org.meteoinfo.shape.ShapeFactory;
@@ -3348,7 +3349,8 @@ public class FrmMain extends JFrame implements IApplication {
         String path = System.getProperty("user.dir");
         File pathDir = new File(path);
 
-        JFileChooser aDlg = new JFileChooser();
+        //JFileChooser aDlg = new JFileChooser();
+        ShapeFileChooser aDlg = new ShapeFileChooser();
         //aDlg.setAcceptAllFileFilterUsed(false);
         aDlg.setCurrentDirectory(pathDir);
         String[] fileExts = new String[]{"shp", "bil", "bip", "bsq", "wmp", "bln", "gif", "jpg", "png", "tif", "asc"};
@@ -3367,12 +3369,24 @@ public class FrmMain extends JFrame implements IApplication {
             for (File aFile : files) {
                 MapLayer aLayer = null;
                 try {
-                    //aLayer = ShapeFileManage.loadShapeFile(aFile.getAbsolutePath());
-                    String fn = aFile.getAbsolutePath();
-                    aLayer = MapDataManage.loadLayer(fn);
+                    String fn = aFile.getAbsolutePath();                    
                     String ext = GlobalUtil.getFileExtension(fn);
-                    if (ext.equalsIgnoreCase("bil") || ext.equalsIgnoreCase("bip") || ext.equalsIgnoreCase("bsq")) {
-                        aLayer.setProjInfo(this._mapDocument.getActiveMapFrame().getMapView().getProjection().getProjInfo());
+                    switch (ext.toLowerCase()){
+                        case "shp":
+                            String encoding = aDlg.getEncoding();
+                            aLayer = ShapeFileManage.loadShapeFile(fn, encoding);
+                            break;
+                        default:
+                            aLayer = MapDataManage.loadLayer(fn);
+                            break;
+                    }
+                    
+                    switch (ext.toLowerCase()){
+                        case "bil":
+                        case "bip":
+                        case "bsq":                            
+                            aLayer.setProjInfo(this._mapDocument.getActiveMapFrame().getMapView().getProjection().getProjInfo());
+                            break;
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
