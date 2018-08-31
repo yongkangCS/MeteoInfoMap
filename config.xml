@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <MeteoInfo File="config.xml" Type="configurefile">
-  <Path OpenPath="W:\geodata_20180713\实体数据\全球1：100万地形数据\全球1：100万地形数据(全集)"/>
+  <Path OpenPath="D:\Temp\Map"/>
   <Font>
     <TextFont FontName="宋体" FontSize="15"/>
     <LegendFont FontName="宋体" FontSize="12"/>
   </Font>
   <ScriptLanguage Language="Jython"/>
-  <Startup MainFormLocation="-5,5" MainFormSize="1384,781" ShowMeteoDataDlg="false"/>
+  <Startup MainFormLocation="-7,-7" MainFormSize="1295,695" ShowMeteoDataDlg="false"/>
 </MeteoInfo>

@@ -92,7 +92,7 @@ public class FrmAbout extends javax.swing.JDialog {
         jLabel10.setText("Homepage:");
 
         jLabel_web.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel_web.setText("htt://www.meteothinker.com");
+        jLabel_web.setText("htt://www.meteothinker.org");
         jLabel_web.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel_web.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -104,7 +104,7 @@ public class FrmAbout extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 272, Short.MAX_VALUE)
+            .addGap(0, 284, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
