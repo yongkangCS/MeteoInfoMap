@@ -9,6 +9,9 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.SortedMap;
@@ -17,15 +20,17 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.meteoinfo.io.IOUtil;
 
 /**
  *
- * @author Yaqiang Wang 
+ * @author Yaqiang Wang
  */
 public class ShapeFileChooser extends JFileChooser {
-    
+
     JComboBox encodingCB;
-    
+    JPanel panel;
+
     /**
      * Constructor
      */
@@ -42,25 +47,50 @@ public class ShapeFileChooser extends JFileChooser {
             cbm.addElement(e.displayName());
         }
         encodingCB.setModel(cbm);
-        JPanel panel = new JPanel(new GridBagLayout());
+        panel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(5, 10, 0, 0);
         constraints.gridx = 0;
-        constraints.gridy = 0; 
+        constraints.gridy = 0;
         panel.add(new JLabel("Encoding:"), constraints);
         constraints.gridy = 1;
-        panel.add(encodingCB, constraints);
+        panel.add(encodingCB, constraints);    
         setAccessory(panel);
+        //panel.setVisible(false);
+
+        this.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                String prop = pce.getPropertyName();
+
+                //If a file became selected, find out which one.
+                if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(prop)) {
+                    File file = (File) pce.getNewValue();
+                    String fn = file.getAbsolutePath();
+                    if (fn.toLowerCase().endsWith(".shp")) {
+                        String encoding = IOUtil.encodingDetectShp(fn);
+                        if (encoding.equals("ISO8859_1"))
+                            encoding = "UTF-8";
+                        encodingCB.setSelectedItem(encoding);
+                        panel.setVisible(true);
+                    } else {
+                        panel.setVisible(false);
+                    }
+                    repaint();
+                }
+            }
+        });
     }
-    
+
     /**
      * Get encoding string
+     *
      * @return Encoding string
      */
     public String getEncoding() {
         String encoding = this.encodingCB.getSelectedItem().toString();
-        if (encoding.equals("System")){
+        if (encoding.equals("System")) {
             encoding = Charset.defaultCharset().displayName();
         }
         return encoding;
