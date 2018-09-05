@@ -67,17 +67,19 @@ public class ShapeFileChooser extends JFileChooser {
                 //If a file became selected, find out which one.
                 if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(prop)) {
                     File file = (File) pce.getNewValue();
-                    String fn = file.getAbsolutePath();
-                    if (fn.toLowerCase().endsWith(".shp")) {
-                        String encoding = IOUtil.encodingDetectShp(fn);
-                        if (encoding.equals("ISO8859_1"))
-                            encoding = "UTF-8";
-                        encodingCB.setSelectedItem(encoding);
-                        panel.setVisible(true);
-                    } else {
-                        panel.setVisible(false);
+                    if (file != null && file.isFile()){
+                        String fn = file.getAbsolutePath();
+                        if (fn.toLowerCase().endsWith(".shp")) {
+                            String encoding = IOUtil.encodingDetectShp(fn);
+                            if (encoding.equals("ISO8859_1"))
+                                encoding = "UTF-8";
+                            encodingCB.setSelectedItem(encoding);
+                            panel.setVisible(true);
+                        } else {
+                            panel.setVisible(false);
+                        }
+                        repaint();
                     }
-                    repaint();
                 }
             }
         });
