@@ -119,7 +119,7 @@ import org.meteoinfo.map.MouseTools;
 import org.meteoinfo.plugin.IApplication;
 import org.meteoinfo.plugin.IPlugin;
 import org.meteoinfo.projection.KnownCoordinateSystems;
-import org.meteoinfo.projection.ProjectionInfo;
+import org.meteoinfo.projection.info.ProjectionInfo;
 import org.meteoinfo.projection.ProjectionNames;
 import org.meteoinfo.projection.Reproject;
 import org.meteoinfo.shape.Shape;

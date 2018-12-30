@@ -24,7 +24,7 @@ import org.meteoinfo.desktop.config.GenericFileFilter;
 import org.meteoinfo.global.MIMath;
 import org.meteoinfo.projection.KnownCoordinateSystems;
 import org.meteoinfo.table.RowHeaderTable;
-import org.meteoinfo.projection.ProjectionInfo;
+import org.meteoinfo.projection.info.ProjectionInfo;
 
 /**
  *

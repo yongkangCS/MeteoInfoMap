@@ -5,7 +5,7 @@
 package org.meteoinfo.desktop.forms;
 
 import org.meteoinfo.projection.KnownCoordinateSystems;
-import org.meteoinfo.projection.ProjectionInfo;
+import org.meteoinfo.projection.info.ProjectionInfo;
 import org.meteoinfo.projection.ProjectionNames;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -20,6 +20,7 @@ public class FrmProjection extends javax.swing.JDialog {
 
     private final FrmMain _parent;
     private boolean _isLoading = false;
+    private ProjectionInfo projInfo;
 
     /**
      * Creates new form FrmProjection
@@ -221,6 +222,14 @@ public class FrmProjection extends javax.swing.JDialog {
         _isLoading = true;
         this.jComboBox_Projection.removeAllItems();
         for (ProjectionNames pName : ProjectionNames.values()) {
+            switch (pName) {
+                case Lambert_Equal_Area_Conic:
+                case Lambert_Azimuthal_Equal_Area:
+                case Stereographic_Azimuthal:
+                case Wagner3:
+                case Undefine:
+                    continue;
+            }
             this.jComboBox_Projection.addItem(pName.toString());
         }
         _isLoading = false;
@@ -559,7 +568,7 @@ public class FrmProjection extends javax.swing.JDialog {
                 break;
         }
 
-        ProjectionInfo toProj = new ProjectionInfo(toProjStr);
+        ProjectionInfo toProj = ProjectionInfo.factory(toProjStr);
         _parent.getMapDocument().getActiveMapFrame().getMapView().projectLayers(toProj);
 
         this.setCursor(Cursor.getDefaultCursor());

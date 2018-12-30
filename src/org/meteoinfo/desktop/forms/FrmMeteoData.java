@@ -71,7 +71,7 @@ import org.meteoinfo.legend.LegendManage;
 import org.meteoinfo.legend.LegendScheme;
 import org.meteoinfo.legend.LegendType;
 import org.meteoinfo.legend.PointBreak;
-import org.meteoinfo.projection.ProjectionInfo;
+import org.meteoinfo.projection.info.ProjectionInfo;
 import org.meteoinfo.shape.ShapeTypes;
 
 /**
